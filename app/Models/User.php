@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * @property mixed $picture
+ */
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
@@ -43,5 +46,19 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function getUserPic(): string
+    {
+        if($this->picture !== null) {
+            return asset('backend/assets/profile/'.$this->picture);
+        }else{
+            return asset('backend/assets/images/no-image.png');
+        }
+    }
+
+    public function userInfo(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(UserDetail::class, 'user_id');
     }
 }
