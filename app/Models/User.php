@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 
 /**
  * @property mixed $picture
+ * @method static where(string $string, mixed $email)
  */
 class User extends Authenticatable
 {
@@ -51,9 +52,9 @@ class User extends Authenticatable
     public function getUserPic(): string
     {
         if($this->picture !== null) {
-            return asset('backend/assets/profile/'.$this->picture);
+            return asset('portal/assets/profile/'.$this->picture);
         }else{
-            return asset('backend/assets/images/no-image.png');
+            return asset('portal/assets/img/Image 1.png');
         }
     }
 

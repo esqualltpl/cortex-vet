@@ -2,13 +2,19 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Models\User;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
+/**
+ * @property mixed $email
+ * @property mixed $type
+ */
 class LoginRequest extends FormRequest
 {
     /**
@@ -41,9 +47,15 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
-            RateLimiter::hit($this->throttleKey());
+        if (User::where('email', $this->email)->where('status', Crypt::decrypt($this->type))->count() > 0) {
+            if (!Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+                RateLimiter::hit($this->throttleKey());
 
+                throw ValidationException::withMessages([
+                    'email' => trans('auth.failed'),
+                ]);
+            }
+        } else {
             throw ValidationException::withMessages([
                 'email' => trans('auth.failed'),
             ]);
