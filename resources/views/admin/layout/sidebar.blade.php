@@ -44,7 +44,7 @@
                 </a>
             </li>--}}
             <li class="nav-item active">
-                <a class="nav-link active" href="index.html">
+                <a class="nav-link active" href="javascript:">
                     <span class="sidenav-mini-icon">
                         <img src="{{ asset('portal/assets/img/dashboard white.png') }}" alt="icon"/>
                     </span>
@@ -52,7 +52,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="VeterinaryPractitioners.html">
+                <a class="nav-link" href="javascript:">
                     <span class="sidenav-mini-icon">
                         <img src="{{ asset('portal/assets/img/Veterinary Practitioners purple.png') }}" alt="icon"/>
                     </span>
@@ -60,7 +60,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="VeterinaryNeurologists.html">
+                <a class="nav-link" href="javascript:">
                     <span class="sidenav-mini-icon">
                         <img src="{{ asset('portal/assets/img/Veterinary Neurologists purple.png') }}" alt="icon"/>
                     </span>
@@ -68,7 +68,7 @@
                 </a>
             </li>
             <li class="nav-item ">
-                <a class="nav-link" href="Resources.html">
+                <a class="nav-link" href="javascript:">
                     <span class="sidenav-mini-icon">
                         <img src="{{ asset('portal/assets/img/Resources purple.png') }}" alt="icon"/>
                     </span>
@@ -76,7 +76,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="Patients.html">
+                <a class="nav-link" href="javascript:">
                       <span class="sidenav-mini-icon">
                           <img src="{{ asset('portal/assets/img/patien.png') }}" alt="icon"/>
                       </span>
@@ -84,7 +84,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="Setting.html">
+                <a class="nav-link" href="javascript:">
                     <span class="sidenav-mini-icon">
                         <img src="{{ asset('portal/assets/img/Settings purple.png') }}" alt="icon"/>
                     </span>
