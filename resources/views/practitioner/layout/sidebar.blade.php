@@ -43,51 +43,27 @@
                           style="color:{{ Request::is('admin') ? "#00AB55 !important" : 'color:#3C4856 !important'}};font-weight: 400;">Dashboard</span>
                 </a>
             </li>--}}
-            <li class="nav-item active">
-                <a class="nav-link active" href="index.html">
-                    <span class="sidenav-mini-icon">
-                        <img src="{{ asset('portal/assets/img/dashboard white.png') }}" alt="icon"/>
-                    </span>
+            <li class="nav-item  active">
+                <a class="nav-link active" href="javascript:">
+                    <span class="sidenav-mini-icon"><img alt="icon" src="{{ asset('portal/assets/img/dashboard white.png') }}" /></span>
                     <span class="sidenav-normal ms-2 ps-1"> Dashboard </span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="VeterinaryPractitioners.html">
-                    <span class="sidenav-mini-icon">
-                        <img src="{{ asset('portal/assets/img/Veterinary Practitioners purple.png') }}" alt="icon"/>
-                    </span>
-                    <span class="sidenav-normal  ms-2  ps-1"> Veterinary Practitioners </span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="VeterinaryNeurologists.html">
-                    <span class="sidenav-mini-icon">
-                        <img src="{{ asset('portal/assets/img/Veterinary Neurologists purple.png') }}" alt="icon"/>
-                    </span>
-                    <span class="sidenav-normal  ms-2  ps-1"> Veterinary Neurologists </span>
+            <li class="nav-item  ">
+                <a class="nav-link" href="javascript:">
+                    <span class="sidenav-mini-icon"><img alt="icon" src="{{ asset('portal/assets/img/Veterinary Practitioners purple.png') }}" /></span>
+                    <span class="sidenav-normal ms-2 ps-1"> Neuro Assessment </span>
                 </a>
             </li>
             <li class="nav-item ">
-                <a class="nav-link" href="Resources.html">
-                    <span class="sidenav-mini-icon">
-                        <img src="{{ asset('portal/assets/img/Resources purple.png') }}" alt="icon"/>
-                    </span>
-                    <span class="sidenav-normal  ms-2  ps-1"> Resources</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="Patients.html">
-                      <span class="sidenav-mini-icon">
-                          <img src="{{ asset('portal/assets/img/patien.png') }}" alt="icon"/>
-                      </span>
+                <a class="nav-link" href="javascript:">
+                    <span class="sidenav-mini-icon"><img alt="icon" src="{{ asset('portal/assets/img/patien.png') }}" /></span>
                     <span class="sidenav-normal ms-2 ps-1"> Patients </span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="Setting.html">
-                    <span class="sidenav-mini-icon">
-                        <img src="{{ asset('portal/assets/img/Settings purple.png') }}" alt="icon"/>
-                    </span>
+            <li class="nav-item ">
+                <a class="nav-link" href="javascript:">
+                    <span class="sidenav-mini-icon"><img alt="icon" src="{{ asset('portal/assets/img/Settings purple.png') }}" /></span>
                     <span class="sidenav-normal ms-2 ps-1"> Settings </span>
                 </a>
             </li>
