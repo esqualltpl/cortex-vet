@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('portal/assets/img/apple-icon.png') }}">
     <link rel="icon" type="image/png" href="{{ asset('portal/assets/img/Fav Icon.png') }}">
-    <title>Forgot Password | {{config('app.name')}} </title>
+    <title>Login | {{config('app.name')}} </title>
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700"/>
     <!-- Nucleo Icons -->
     <link href="{{ asset('portal/assets/css/nucleo-icons.css') }}" rel="stylesheet"/>
@@ -39,16 +39,16 @@
                 <div class="row">
                     <div class="col-md-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 start-0 text-center justify-content-start flex-column"
                          style="background-color: #EFE6FB;">
-                        <img src="{{ asset('portal/assets/img/Images.png') }}" class="img-fluid mx-auto" width="60%"
+                        <img src="{{ asset('portal/assets/img/Images.png') }}" class="img-fluid mx-auto" width="70%"
                              style="margin-top: 30%" alt="side Image"/>
                     </div>
-                    <div class="col-xl-4 col-lg-4 col-md-4 d-flex flex-column ms-lg-auto px-1 me-lg-8 mt-5">
-                        <form method="POST" action="{{ route('password.email') }}">
+                    <div class="col-xl-5 col-lg-5 col-md-5 d-flex flex-column ms-lg-auto px-1 me-lg-5 mt-5">
+                        <form method="post" action="{{ route('login') }}">
                             @csrf
-                            <input type="hidden" name="type" value="{{ Crypt::encrypt('Super Admin') }}">
+                            <input type="hidden" name="type" value="{{ Crypt::encrypt('Neurologist') }}">
                             @if (session('status'))
-                                <div class="text-white alert alert-success alert-dismissible" role="alert">
-                                    <span class="text-sm"><b>Success!</b> {{ session('status') ?? 'Success' }}</span>
+                                <div class="text-white alert alert-success alert-dismissible " role="alert">
+                                    <span class="text-sm"><b>Success!</b> {{ session('success') ?? 'Success' }}</span>
                                     <button type="button" class="btn-close text-lg py-3 opacity-10"
                                             data-bs-dismiss="alert"
                                             aria-label="Close">
@@ -66,35 +66,49 @@
                                     </button>
                                 </div>
                             @endif
-                            <div class="">
-                                <div class="text-center ">
-                                    <img src="{{ asset('portal/assets/img/Forgot Password.png') }}" alt="">
-                                    <h3 class="font-weight-bolder text-center mt-3">Forgot Password</h3>
-                                    <p class=" text-center my-3">No worries, we'll send you reset instruction</p>
+                            <div style="margin-top: 0px;">
+                                <div class="text-start pb-0">
+                                    <h4 class="font-weight-bolder text-start">Login to your account</h4>
+                                    <p class="text-sm">Don't have an account? <a href="{{ route('neurologist.authentication.sign.up') }}" class="text-info font-weight-bold" style="text-decoration: none;">Sign Up</a></p>
                                 </div>
+
                                 <div class="pt-2">
                                     <div class="col-md-12">
-                                        <label class="form-label font-weight-bold" style=" font-family: 'Poppins', sans-serif !important">Email</label>
+                                        <label class="form-label font-weight-bold"
+                                               style=" font-family: 'Poppins', sans-serif !important">Email</label>
                                         <div class="input-group input-group-outline mb-3">
-                                            <input type="email" name="email" class="form-control w-100  @error('email') is-invalid @enderror" @if(old('email')) value="{{ old('email') }}"
-                                                   @endif placeholder="Enter your email" aria-describedby="emailHelp" onfocus="focused(this)" onfocusout="defocused(this)">
+                                            <input type="email" class="form-control w-100 @error('email') is-invalid @enderror" name="email"   @if(old('email')) value="{{ old('email') }}" @endif
+                                            aria-describedby="emailHelp" onfocus="focused(this)" onfocusout="defocused(this)">
                                             @error('email')
                                             <span class="invalid-feedback" role="alert">{{ $message }}</span>
                                             @enderror
                                         </div>
                                     </div>
+                                    <div class="col-md-12">
+                                        <label class="form-label font-weight-bold"
+                                               style=" font-family: 'Poppins', sans-serif !important">Password</label>
+                                        <div class="input-group input-group-outline mb-3">
+                                            <input type="password" class="form-control w-100 @error('password') is-invalid @enderror" name="password"
+                                                   aria-describedby="emailHelp" onfocus="focused(this)"
+                                                   onfocusout="defocused(this)" style=" border-radius: 0.375rem; ">
+                                            <div class="input-group-append">
+                                                    <span class="input-group-text toggle-password">
+                                                        <i class="fa fa-eye" style="cursor: pointer; padding-right: 8px;"></i>
+                                                    </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="text-end">
+                                        <a href="{{ route('neurologist.authentication.forgot') }}" class="text-end" style="color: #2e97a9 !important;">
+                                            <p class="text-end font-weight-bolder text-sm">Forgot Password?</p>
+                                        </a>
+                                    </p>
                                 </div>
                             </div>
-                            <div class="d-flex justify-content-center">
-                                <button type="submit" class="btn btn-primary w-90 btn-lg py-2 text-white mb-2">
-                                    Reset Password
+                            <div class="d-flex justify-content-end mt-5">
+                                <button type="submit" class="btn btn-primary btn-md py-2 text-white mb-2">
+                                    Sign In
                                 </button>
-                            </div>
-                            <div class="text-center mt-4">
-                                <a href="{{ route('admin.authentication.login') }}" class="text-start text-decoration-none" style="color: #41A0B0 !important;">
-                                    <i class="fa fa-arrow-left"></i>
-                                    <span class="mb-0 px-2" style="color: #41A0B0 !important; font-weight: bold">Back to Login</span>
-                                </a>
                             </div>
                         </form>
                     </div>

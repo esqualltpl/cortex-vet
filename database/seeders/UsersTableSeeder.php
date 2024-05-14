@@ -22,8 +22,8 @@ class UsersTableSeeder extends Seeder
             0 =>
                 array(
                     'id' => 1,
-                    'name' => 'Test Supervisor',
-                    'email' => 'supervisor@cortexvet.com',
+                    'name' => 'Test Super Admin',
+                    'email' => 'superadmin@cortexvet.com',
                     'email_verified_at' => NULL,
                     'password' => Hash::make('123456789'),
                     'status' => 'Super Admin',

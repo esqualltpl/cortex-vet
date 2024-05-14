@@ -20,6 +20,6 @@ class Practitioner
             return $next($request);
         }
 
-        return redirect()->route('admin.authentication.login')->with('error', "Login first to access the practitioner portal.");
+        return redirect()->route('practitioner.authentication.login')->with('error', "Login first to access the practitioner portal.");
     }
 }

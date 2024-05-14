@@ -55,6 +55,7 @@
             background-size: 30px 12px !important;
         }
         /*//------Dropdown Arrow End------\\*/
+
     </style>
     @yield('style')
 </head>

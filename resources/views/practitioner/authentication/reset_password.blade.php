@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('portal/assets/img/apple-icon.png') }}">
     <link rel="icon" type="image/png" href="{{ asset('portal/assets/img/Fav Icon.png') }}">
-    <title>Forgot Password | {{config('app.name')}} </title>
+    <title>Reset Password | {{config('app.name')}} </title>
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700"/>
     <!-- Nucleo Icons -->
     <link href="{{ asset('portal/assets/css/nucleo-icons.css') }}" rel="stylesheet"/>
@@ -43,42 +43,55 @@
                              style="margin-top: 30%" alt="side Image"/>
                     </div>
                     <div class="col-xl-4 col-lg-4 col-md-4 d-flex flex-column ms-lg-auto px-1 me-lg-8 mt-5">
-                        <form method="POST" action="{{ route('password.email') }}">
+                        <form method="POST" action="{{ route('password.store') }}">
                             @csrf
-                            <input type="hidden" name="type" value="{{ Crypt::encrypt('Super Admin') }}">
-                            @if (session('status'))
-                                <div class="text-white alert alert-success alert-dismissible" role="alert">
-                                    <span class="text-sm"><b>Success!</b> {{ session('status') ?? 'Success' }}</span>
-                                    <button type="button" class="btn-close text-lg py-3 opacity-10"
-                                            data-bs-dismiss="alert"
-                                            aria-label="Close">
-
-                                    </button>
-                                </div>
-                            @endif
-                            @if (session('error'))
+                            @if ($errors->any())
                                 <div class="text-white alert alert-danger alert-dismissible " role="alert">
-                                    <span class="text-sm"><b>Error!</b> {{ session('error') ?? 'Error' }}</span>
-                                    <button type="button" class="btn-close text-lg py-3 opacity-10"
-                                            data-bs-dismiss="alert"
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                    <button type="button" class="btn-close text-lg py-3 opacity-10" data-bs-dismiss="alert"
                                             aria-label="Close">
-
                                     </button>
                                 </div>
                             @endif
                             <div class="">
                                 <div class="text-center ">
                                     <img src="{{ asset('portal/assets/img/Forgot Password.png') }}" alt="">
-                                    <h3 class="font-weight-bolder text-center mt-3">Forgot Password</h3>
-                                    <p class=" text-center my-3">No worries, we'll send you reset instruction</p>
+                                    <h3 class="font-weight-bolder text-center mt-3">Set New Password</h3>
+                                    <p class=" text-center my-3">Your new password must be different to previously used</p>
                                 </div>
+                                <!-- Password Reset Token -->
+                                <input type="hidden" name="token" value="{{ $request->route('token') }}">
+                                <input type="hidden" name="email" value="{{ old('email', $request->email) }}">
+
                                 <div class="pt-2">
                                     <div class="col-md-12">
-                                        <label class="form-label font-weight-bold" style=" font-family: 'Poppins', sans-serif !important">Email</label>
+                                        <label class="form-label font-weight-bold" style="font-family: 'Poppins', sans-serif !important">Password</label>
                                         <div class="input-group input-group-outline mb-3">
-                                            <input type="email" name="email" class="form-control w-100  @error('email') is-invalid @enderror" @if(old('email')) value="{{ old('email') }}"
-                                                   @endif placeholder="Enter your email" aria-describedby="emailHelp" onfocus="focused(this)" onfocusout="defocused(this)">
-                                            @error('email')
+                                            <input style=" border-radius: 0.375rem; " type="password" name="password" placeholder="******" class="form-control w-100 @error('password') is-invalid @enderror" aria-describedby="emailHelp" onfocus="focused(this)" onfocusout="defocused(this)">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text toggle-password">
+                                                    <i class="fa fa-eye"  style="cursor: pointer; padding-right: 8px;"></i>
+                                                </span>
+                                            </div>
+                                            @error('password')
+                                            <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="form-label font-weight-bold" style="font-family: 'Poppins', sans-serif !important">Confirm Password</label>
+                                        <div class="input-group input-group-outline mb-3">
+                                            <input style=" border-radius: 0.375rem; " type="password" name="password_confirmation" placeholder="******" class="form-control w-100 @error('password_confirmation') is-invalid @enderror" aria-describedby="emailHelp" onfocus="focused(this)" onfocusout="defocused(this)">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text toggle-password">
+                                                    <i class="fa fa-eye" style="cursor: pointer; padding-right: 8px;"></i>
+                                                </span>
+                                            </div>
+                                            @error('password_confirmation')
                                             <span class="invalid-feedback" role="alert">{{ $message }}</span>
                                             @enderror
                                         </div>
@@ -86,12 +99,12 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-center">
-                                <button type="submit" class="btn btn-primary w-90 btn-lg py-2 text-white mb-2">
+                                <button type="submit" class="btn btn-primary mt-4 w-90 btn-lg py-2 text-white mb-2">
                                     Reset Password
                                 </button>
                             </div>
                             <div class="text-center mt-4">
-                                <a href="{{ route('admin.authentication.login') }}" class="text-start text-decoration-none" style="color: #41A0B0 !important;">
+                                <a href="{{ route('practitioner.authentication.login') }}" class="text-start text-decoration-none" style="color: #41A0B0 !important;">
                                     <i class="fa fa-arrow-left"></i>
                                     <span class="mb-0 px-2" style="color: #41A0B0 !important; font-weight: bold">Back to Login</span>
                                 </a>
