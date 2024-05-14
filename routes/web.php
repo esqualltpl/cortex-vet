@@ -31,7 +31,9 @@ require __DIR__ . '/practitioner.php';
 | Check User and Redirect to Relevant Portal Route
 |--------------------------------------------------------------------------
 */
-Route::get('/', function () {})->middleware('check.user');
+Route::get('/', function () {
+    return view('welcome');
+})->middleware('check.user');
 /*------------------------------------------------------------------------*/
 
 /*
