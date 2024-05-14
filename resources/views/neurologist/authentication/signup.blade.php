@@ -144,14 +144,18 @@
                                 <a href="{{ route('neurologist.authentication.login') }}" class="text-info font-weight-bold" style="text-decoration: none;">Sign In</a>
                             </p>
                             <div class="d-flex p-2" style="background-color: #EAF4F6;border-radius: 5px;">
-                                <div class="form-check px-0">
-                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio1" disabled>
+                                <div class="form-check px-0" onclick="window.location.href = '{{ route('practitioner.authentication.sign.up') }}'">
+                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio1">
                                     <label class="custom-control-label mb-0" for="customRadio1">Practitioner</label>
                                 </div>
+
                                 <div class="form-check mx-5">
+                                    <a href="/">
                                     <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio2" checked>
                                     <label class="custom-control-label mb-0" for="customRadio2">Neurologist</label>
+                                    </a>
                                 </div>
+
                             </div>
 
                             <p class="mt-2"><b>Doctor's Information</b></p>

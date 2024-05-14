@@ -149,7 +149,7 @@
                                     <label class="custom-control-label mb-0" for="customRadio1">Practitioner</label>
                                 </div>
                                 <div class="form-check mx-5">
-                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio2" disabled>
+                                    <input class="form-check-input" onclick="window.location.href = '{{ route('neurologist.authentication.sign.up') }}'" type="radio" name="flexRadioDefault" id="customRadio2">
                                     <label class="custom-control-label mb-0" for="customRadio2">Neurologist</label>
                                 </div>
                             </div>
