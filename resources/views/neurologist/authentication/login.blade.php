@@ -69,7 +69,9 @@
                             <div style="margin-top: 0px;">
                                 <div class="text-start pb-0">
                                     <h4 class="font-weight-bolder text-start">Login to your account</h4>
+                                    <p class="text-sm">Don't have an account? <a href="{{ route('neurologist.authentication.sign.up') }}" class="text-info font-weight-bold" style="text-decoration: none;">Sign Up</a></p>
                                 </div>
+
                                 <div class="pt-2">
                                     <div class="col-md-12">
                                         <label class="form-label font-weight-bold"
