@@ -75,6 +75,7 @@
                                         <label class="form-label font-weight-bold"
                                                style=" font-family: 'Poppins', sans-serif !important">Email</label>
                                         <div class="input-group input-group-outline mb-3">
+                                            <i class="fa fa-envelope fa-regular" aria-hidden="true"></i>
                                             <input type="email" class="form-control w-100 @error('email') is-invalid @enderror" name="email"   @if(old('email')) value="{{ old('email') }}" @endif
                                             aria-describedby="emailHelp" onfocus="focused(this)" onfocusout="defocused(this)">
                                             @error('email')

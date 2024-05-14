@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -51,11 +52,25 @@ class NewPasswordController extends Controller
             }
         );
 
+        /* Check User Type */
+        $userInfo = User::where('email', $request->email)->first();
+        if($userInfo->status == 'Super Admin')
+            $user_route = 'admin.authentication.resetPassword.success';
+        elseif($userInfo->status == 'Neurologist')
+            $user_route = 'neurologist.authentication.resetPassword.success';
+        elseif ($userInfo->status == 'Practitioner')
+            $user_route = 'practitioner.authentication.resetPassword.success';
+        else
+            $user_route = '';
+
         // If the password was successfully reset, we will redirect the user back to
         // the application's home authenticated view. If there is an error we can
         // redirect them back to where they came from with their error message.
         return $status == Password::PASSWORD_RESET
-            ? redirect()->route('admin.authentication.resetPassword.success', ['email' => Crypt::encrypt($request->email), 'password' => Crypt::encrypt($request->password)])->with('status', __($status))
+            ? $user_route != ''?
+                redirect()->route($user_route, ['email' => Crypt::encrypt($request->email), 'password' => Crypt::encrypt($request->password)])->with('status', __($status))
+                : back()->withInput($request->only('email'))
+                    ->withErrors(['email' => 'Unable to reset the password now, please try again later.'])
             : back()->withInput($request->only('email'))
                 ->withErrors(['email' => __($status)]);
     }

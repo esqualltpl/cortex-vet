@@ -45,7 +45,7 @@
                     <div class="col-xl-4 col-lg-4 col-md-4 d-flex flex-column ms-lg-auto px-1 me-lg-8 mt-5">
                         <form method="POST" action="{{ route('password.email') }}">
                             @csrf
-                            <input type="hidden" name="type" value="{{ Crypt::encrypt('Super Admin') }}">
+                            <input type="hidden" name="type" value="{{ Crypt::encrypt('Practitioner') }}">
                             @if (session('status'))
                                 <div class="text-white alert alert-success alert-dismissible" role="alert">
                                     <span class="text-sm"><b>Success!</b> {{ session('status') ?? 'Success' }}</span>
@@ -91,7 +91,7 @@
                                 </button>
                             </div>
                             <div class="text-center mt-4">
-                                <a href="{{ route('admin.authentication.login') }}" class="text-start text-decoration-none" style="color: #41A0B0 !important;">
+                                <a href="{{ route('practitioner.authentication.login') }}" class="text-start text-decoration-none" style="color: #41A0B0 !important;">
                                     <i class="fa fa-arrow-left"></i>
                                     <span class="mb-0 px-2" style="color: #41A0B0 !important; font-weight: bold">Back to Login</span>
                                 </a>

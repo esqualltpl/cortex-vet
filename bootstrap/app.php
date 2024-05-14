@@ -14,6 +14,12 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->appendToGroup('admin', [
             \App\Http\Middleware\Admin::class,
         ]);
+        $middleware->appendToGroup('neurologist', [
+            \App\Http\Middleware\Neurologist::class,
+        ]);
+        $middleware->appendToGroup('practitioner', [
+            \App\Http\Middleware\Practitioner::class,
+        ]);
         $middleware->appendToGroup('check.user', [
             \App\Http\Middleware\CheckUser::class,
         ]);

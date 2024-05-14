@@ -17,5 +17,5 @@ Route::prefix('practitioner')->group(function () {
 });
 
 Route::group(['prefix' => 'practitioner', 'middleware' => ['practitioner']], function () {
-    Route::get('/', [DashboardController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/', [DashboardController::class, 'dashboard'])->name('practitioner.dashboard');
 });
