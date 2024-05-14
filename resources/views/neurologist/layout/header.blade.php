@@ -33,6 +33,29 @@
         .navbar-vertical .navbar-nav .nav-link.active {
             background: #8871C0 !important;
         }
+
+        /*//------Validation------\\*/
+        .form-control.is-invalid {
+            border: 1px solid #d2d6da;
+            padding: 0.625rem 2.15rem !important;
+            line-height: 1.3 !important;
+        }
+        .was-validated .form-control:invalid, .form-control.is-invalid {
+            border-color: #fd5c70 !important;
+            padding-right: unset;
+            background-image: url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%23fd5c70' viewBox='0 0 12 12'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23fd5c70' stroke='none'/%3e%3c/svg%3e);
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            background-size: 1rem 1rem;
+        }
+        /*//------Validation End------\\*/
+
+        /*//------Dropdown Arrow------\\*/
+        .form-select {
+            background-size: 30px 12px !important;
+        }
+        /*//------Dropdown Arrow End------\\*/
+
     </style>
     @yield('style')
 </head>

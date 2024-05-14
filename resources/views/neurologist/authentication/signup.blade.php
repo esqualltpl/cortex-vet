@@ -107,6 +107,12 @@
             background-size: 1rem 1rem;
         }
         /*//------Validation End------\\*/
+
+        /*//------Dropdown Arrow------\\*/
+        .form-select {
+            background-size: 30px 12px !important;
+        }
+        /*//------Dropdown Arrow End------\\*/
     </style>
 </head>
 
