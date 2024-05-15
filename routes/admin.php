@@ -51,7 +51,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
         Route::delete('/delete/{id}', [PatientsController::class, 'delete'])->name('admin.patient.delete');
     });
 
-    //Patients
+    //Settings
     Route::prefix('settings')->group(function () {
         Route::get('/', [SettingsController::class, 'index'])->name('admin.settings');
         Route::prefix('student')->group(function () {

@@ -3,7 +3,7 @@
     Dashboard
 @endsection
 @section('type')
-    Admin
+    Neurologist
 @endsection
 @section('breadcrumb')
     <nav aria-label="breadcrumb">

@@ -21,7 +21,7 @@
 @endsection
 
 @section('content')
-    <div class="container-fluid py-4">
+    <div class="container-fluid py-2">
         <div class="col-12">
             <div class="mx-3">
                 <div class="tab-content card-background-white" id="v-pills-tabContent">
