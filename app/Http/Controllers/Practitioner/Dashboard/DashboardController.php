@@ -14,4 +14,9 @@ class DashboardController extends Controller
     {
         return view('practitioner.dashboard.index');
     }
+
+    public function addNewPatient(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    {
+        return view('practitioner.dashboard.add_new_patient');
+    }
 }

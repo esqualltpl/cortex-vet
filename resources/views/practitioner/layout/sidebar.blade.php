@@ -33,37 +33,35 @@
                 </div>
                 <hr class="horizontal mb-2 mt-1" style="border: 1px solid #8D8D8D !important;width: 220px;margin-left: 15px;">
             </li>
-            {{--<li class="nav-item">
-                <a href="{{ route('admin.dashboard') }}"
-                   class="nav-link {{ Request::is('admin') ? ' text-white bg-light active' : 'text-dark' }}"
-                   style="color:{{ Request::is('admin') ? "#00AB55 !important" : 'color:#3C4856 !important'}};">
-                    <i class="material-icons-round float-start"
-                       style="color:{{ Request::is('admin') ? "#00AB55 !important" : 'color:#3C4856 !important'}};">dashboard</i>
-                    <span class="nav-link-text px-3"
-                          style="color:{{ Request::is('admin') ? "#00AB55 !important" : 'color:#3C4856 !important'}};font-weight: 400;">Dashboard</span>
-                </a>
-            </li>--}}
-            <li class="nav-item  active">
-                <a class="nav-link active" href="javascript:">
-                    <span class="sidenav-mini-icon"><img alt="icon" src="{{ asset('portal/assets/img/dashboard white.png') }}" /></span>
+            <li class="nav-item {{ Request::is('practitioner') || Request::is('practitioner/add/new/patient') ? ' active' : '' }}">
+                <a class="nav-link {{ Request::is('practitioner') || Request::is('practitioner/add/new/patient') ? ' active' : '' }}" href="{{ route('practitioner.dashboard') }}">
+                    <span class="sidenav-mini-icon">
+                        <img src="{{ Request::is('practitioner') || Request::is('practitioner/add/new/patient') ? asset("portal/assets/img/dashboard white.png") : asset("portal/assets/img/Dashboard purple.png") }}" alt="icon"/>
+                    </span>
                     <span class="sidenav-normal ms-2 ps-1"> Dashboard </span>
                 </a>
             </li>
-            <li class="nav-item  ">
-                <a class="nav-link" href="javascript:">
-                    <span class="sidenav-mini-icon"><img alt="icon" src="{{ asset('portal/assets/img/Veterinary Practitioners purple.png') }}" /></span>
+            <li class="nav-item {{ Request::is('practitioner/neuro/assessment') || Request::is('practitioner/neuro/assessment/*') ? ' active' : '' }}">
+                <a class="nav-link {{ Request::is('practitioner/neuro/assessment') || Request::is('practitioner/neuro/assessment/*') ? ' active' : '' }}" href="{{ route('practitioner.neuro.assessment') }}">
+                    <span class="sidenav-mini-icon">
+                        <img src="{{ Request::is('practitioner/neuro/assessment') || Request::is('practitioner/neuro/assessment/*') ? asset("portal/assets/img/Veterinary Practitioners white.png") : asset("portal/assets/img/Veterinary Practitioners purple.png") }}" alt="icon"/>
+                    </span>
                     <span class="sidenav-normal ms-2 ps-1"> Neuro Assessment </span>
                 </a>
             </li>
-            <li class="nav-item ">
-                <a class="nav-link" href="javascript:">
-                    <span class="sidenav-mini-icon"><img alt="icon" src="{{ asset('portal/assets/img/patien.png') }}" /></span>
+            <li class="nav-item {{ Request::is('practitioner/patient/*') ? ' active' : '' }}">
+                <a class="nav-link {{ Request::is('practitioner/patient/*') ? ' active' : '' }}" href="{{ route('practitioner.patients') }}">
+                    <span class="sidenav-mini-icon">
+                        <img src="{{ Request::is('practitioner/patient/*') ? asset("portal/assets/img/Patients white.png") : asset("portal/assets/img/Patients purple.png") }}" alt="icon"/>
+                    </span>
                     <span class="sidenav-normal ms-2 ps-1"> Patients </span>
                 </a>
             </li>
-            <li class="nav-item ">
-                <a class="nav-link" href="javascript:">
-                    <span class="sidenav-mini-icon"><img alt="icon" src="{{ asset('portal/assets/img/Settings purple.png') }}" /></span>
+            <li class="nav-item {{ Request::is('practitioner/settings') || Request::is('practitioner/settings/*') ? ' active' : '' }}">
+                <a class="nav-link {{ Request::is('practitioner/settings') || Request::is('practitioner/settings/*') ? ' active' : '' }}" href="{{ route('practitioner.settings') }}">
+                    <span class="sidenav-mini-icon">
+                        <img src="{{ Request::is('practitioner/settings') || Request::is('practitioner/settings/*') ? asset("portal/assets/img/Settings white.png") : asset("portal/assets/img/Settings purple.png") }}" alt="icon"/>
+                    </span>
                     <span class="sidenav-normal ms-2 ps-1"> Settings </span>
                 </a>
             </li>

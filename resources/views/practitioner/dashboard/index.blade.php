@@ -87,7 +87,7 @@
                 <div class="card p-2">
                     <button type="button" class="btn btn-primary btn-lg text-white mt-2 mb-2"
                             style=" font-family: 'Poppins', sans-serif !important"
-                            onclick="location.href = 'javascript:'">
+                            onclick="location.href = '{{ route("practitioner.add.new.patient") }}'">
                         Add New Patient
                     </button>
                 </div>

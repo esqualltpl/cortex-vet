@@ -1,20 +1,20 @@
-@extends("neurologist.layout.master")
+@extends("practitioner.layout.master")
 @section('title')
-    Consultation Request
+    Neuro Exam
 @endsection
 @section('type')
-    Neurologist
+    Practitioner
 @endsection
 @section('breadcrumb')
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 ">
             <li class="breadcrumb-item text-sm">
                 <a class="opacity-7 text-dark" href="{{ route('admin.veterinary.practitioners') }}">
-                    <img src="{{ asset('portal/assets/img/Patients gray.png') }}" alt="icon" class="me-1" />
-                    Consultation Request
+                    <img src="{{ asset('portal/assets/img/Veterinary Practitioners gray.png') }}" alt="icon" class="me-1" />
+                    Neuro Assessment
                 </a>
             </li>
-            <li class="breadcrumb-item text-sm mx-2 text-dark active" aria-current="page">Perform Consultation</li>
+            <li class="breadcrumb-item text-sm mx-2 text-dark active" aria-current="page">Neuro Exam</li>
         </ol>
     </nav>
 @endsection
@@ -29,44 +29,7 @@
 @endsection
 
 @section('content')
-    <div class="container-fluid py-4 ">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card p-4 mt-3">
-
-                    <div class="row p-2" style="border: 1px solid #00000040; border-radius: 10px;">
-
-                        <div class="col-md-1 mt-3"> <img src="{{ asset('portal/assets/img/Consultation Request img.png') }}" alt="icon"
-                                                         class="w-100" style="border-radius: 100px;" /></div>
-                        <div class="col-lg-8 col-sm-5 mt-3 d-fle flex-wrap ">
-
-                            <div class="d-block d-md-flex gap-5">
-                                <p class="font-weight-bold text-dark w-lg-20">Requested By:
-                                </p>
-                                <p class="font-weight-normal text-dark opacity-8">Dr Henry
-                                </p>
-                            </div>
-                            <div class="d-block d-md-flex gap-5">
-                                <p class="font-weight-bold text-dark w-lg-20">Requested Time:
-                                </p>
-                                <p class="font-weight-normal text-dark opacity-8">
-                                    11:23 am</p>
-                            </div>
-
-
-                        </div>
-
-                        <div class="col-md-2 ms-auto my-4">
-                            <button class="btn btn-primary btn-lg  text-white mb-2  " type="button"
-                                    title="Accept">Accept</button>
-                        </div>
-
-
-                    </div>
-
-                </div>
-            </div>
-        </div>
+    <div class="container-fluid py-2">
         <div class="row">
             <div class="col-md-12">
                 <div class="card p-3 mt-3">
@@ -207,7 +170,8 @@
                         </div>
                         <div class="col-md-2">
                             <div>
-                                <img src="{{ asset('portal/assets/img/team-3.jpg') }}" alt="icon" class="w-40 w-md-60" style="border-radius:300px;"/>
+                                <img src="../assets/img/team-3.jpg" class="w-40 w-md-60" style="border-radius:300px;"
+                                />
                             </div>
                         </div>
                     </div>
@@ -216,7 +180,7 @@
         </div>
         <div class="row mt-4">
             <div class="col-md-12">
-                <div>
+                <div class="">
                     <div class="card-header p-0 position-relative mt-4  z-index-2">
                         <div class="bg-gradient-primary  border-radius-lg pt-4 pb-3">
                             <div class="multisteps-form__progress">
@@ -228,8 +192,6 @@
                                         title="Media">Neurological Exam Steps</button>
                                 <button class="multisteps-form__progress-btn" type="button"
                                         title="Socials">Neurolocalizations</button>
-                                <button class="multisteps-form__progress-btn" type="button"
-                                        title="Pricing">Comments</button>
                             </div>
                         </div>
                     </div>
@@ -248,7 +210,7 @@
                                         <div class="col-md-12">
                                             <label class="form-label font-weight-bold"
                                                    style=" font-family: 'Poppins', sans-serif !important">Medical
-                                                History</label>
+                                                History <span class="text-danger">*</span> </label>
                                             <div class="input-group input-group-outline mb-3">
                                                     <textarea rows="4" class="form-control w-100"
                                                               aria-describedby="emailHelp" onfocus="focused(this)"
@@ -301,7 +263,7 @@
                                     <div class="button-row d-flex mt-4">
                                         <button
                                                 class="btn btn-primary btn-sm py-2 text-white mb-2 ms-auto js-btn-next"
-                                                type="button" title="Next">Next</button>
+                                                type="button" title="Next">Conduct Exam</button>
                                     </div>
                                 </div>
                             </div>
@@ -320,7 +282,7 @@
                                         <div id="sampleVideo" style="display: none;">
                                             <div class=" p-5 border-radius-lg" style="border: 1px solid #e8e8e8;">
                                                 <div class="p-2 d-flex justify-content-center">
-                                                    <video controls class="w-md-70 w-100">
+                                                    <video controls style="width: 70%;">
                                                         <source src="{{ asset('portal/assets/img/vet sample video.mp4') }}"
                                                                 type="video/mp4">
                                                         Your browser does not support the video tag.
@@ -359,7 +321,7 @@
                                                             <div id="sampleVideoQuestion" style="display: none;">
                                                                 <div class=" p-5 border-radius-lg">
                                                                     <div class="p-2 d-flex justify-content-center">
-                                                                        <video controls class="w-md-70 w-100">
+                                                                        <video controls style="width: 70%;">
                                                                             <source
                                                                                     src="{{ asset('portal/assets/img/vet sample video.mp4') }}"
                                                                                     type="video/mp4">
@@ -374,7 +336,7 @@
                                                                 <div
                                                                         class="col-md-12 p-2 mt-3 d-flex flex-wrap justify-content-between">
                                                                     <div class="col-md-12">
-                                                                        <div class="container">
+                                                                        <div class="container m-0">
                                                                             <div class="row">
                                                                                 <div class="col-md-2 col-sm-12">
                                                                                     <p
@@ -392,18 +354,48 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-md-12">
-                                                                        <div class="container">
+                                                                        <div class="container m-0">
                                                                             <div class="row">
                                                                                 <div class="col-md-2 col-sm-12">
                                                                                     <p
                                                                                             class="font-weight-bold text-dark">
-                                                                                        Answer:</p>
+                                                                                        Answer</p>
                                                                                 </div>
                                                                                 <div class="col-md-10 col-sm-12">
-                                                                                    <p
-                                                                                            class="font-weight-bold text-dark">
-                                                                                        Normal</p>
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-2 col-sm-6">
+                                                                                            <div class="form-check ps-0 ps-sm-0">
+                                                                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio1">
+                                                                                                <label class="custom-control-label" for="customRadio1">Normal</label>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-md-2 col-sm-6">
+                                                                                            <div class="form-check ps-0 ps-sm-0">
+                                                                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio2">
+                                                                                                <label class="custom-control-label" for="customRadio2">Obtunded</label>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-md-2 col-sm-6">
+                                                                                            <div class="form-check ps-0 ps-sm-0">
+                                                                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio3">
+                                                                                                <label class="custom-control-label" for="customRadio3">Stuporous</label>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-md-2 col-sm-6">
+                                                                                            <div class="form-check ps-0 ps-sm-0">
+                                                                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio4">
+                                                                                                <label class="custom-control-label" for="customRadio4">Comatose</label>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-md-2 col-sm-6">
+                                                                                            <div class="form-check ps-0 ps-sm-0">
+                                                                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio5">
+                                                                                                <label class="custom-control-label" for="customRadio5">Select all</label>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
                                                                                 </div>
+
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -414,7 +406,7 @@
                                                                 <div
                                                                         class="col-md-12 p-2 mt-3 d-flex flex-wrap justify-content-between">
                                                                     <div class="col-md-12">
-                                                                        <div class="container">
+                                                                        <div class="container m-0">
                                                                             <div class="row">
                                                                                 <div class="col-md-2 col-sm-12">
                                                                                     <p
@@ -432,17 +424,46 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-md-12">
-                                                                        <div class="container">
+                                                                        <div class="container m-0">
                                                                             <div class="row">
                                                                                 <div class="col-md-2 col-sm-12">
                                                                                     <p
                                                                                             class="font-weight-bold text-dark">
-                                                                                        Answer:</p>
+                                                                                        Answer</p>
                                                                                 </div>
                                                                                 <div class="col-md-10 col-sm-12">
-                                                                                    <p
-                                                                                            class="font-weight-bold text-dark">
-                                                                                        Normal</p>
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-2 col-sm-6">
+                                                                                            <div class="form-check ps-0 ps-sm-0">
+                                                                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio1">
+                                                                                                <label class="custom-control-label" for="customRadio1">Normal</label>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-md-2 col-sm-6">
+                                                                                            <div class="form-check ps-0 ps-sm-0">
+                                                                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio2">
+                                                                                                <label class="custom-control-label" for="customRadio2">Obtunded</label>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-md-2 col-sm-6">
+                                                                                            <div class="form-check ps-0 ps-sm-0">
+                                                                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio3">
+                                                                                                <label class="custom-control-label" for="customRadio3">Stuporous</label>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-md-2 col-sm-6">
+                                                                                            <div class="form-check ps-0 ps-sm-0">
+                                                                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio4">
+                                                                                                <label class="custom-control-label" for="customRadio4">Comatose</label>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-md-2 col-sm-6">
+                                                                                            <div class="form-check ps-0 ps-sm-0">
+                                                                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio5">
+                                                                                                <label class="custom-control-label" for="customRadio5">Select all</label>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -482,7 +503,7 @@
                                                         <div id="sampleVideoQuestion2" style="display: none;">
                                                             <div class=" p-5 border-radius-lg">
                                                                 <div class="p-2 d-flex justify-content-center">
-                                                                    <video controls class="w-md-70 w-100">
+                                                                    <video controls style="width: 70%;">
                                                                         <source
                                                                                 src="{{ asset('portal/assets/img/vet sample video.mp4') }}"
                                                                                 type="video/mp4">
@@ -497,7 +518,7 @@
                                                             <div
                                                                     class="col-md-12 p-2 mt-3 d-flex flex-wrap justify-content-between">
                                                                 <div class="col-md-12">
-                                                                    <div class="container">
+                                                                    <div class="container m-0">
                                                                         <div class="row">
                                                                             <div class="col-md-2 col-sm-12">
                                                                                 <p
@@ -507,25 +528,56 @@
                                                                             <div class="col-md-10 col-sm-12">
                                                                                 <p
                                                                                         class="font-weight-normal text-dark opacity-8">
-                                                                                    Lorem ipsum is a dummy text
+                                                                                    Lorem ipsum is a dummy
+                                                                                    text
                                                                                 </p>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-12">
-                                                                    <div class="container">
+                                                                    <div class="container m-0">
                                                                         <div class="row">
                                                                             <div class="col-md-2 col-sm-12">
                                                                                 <p
                                                                                         class="font-weight-bold text-dark">
-                                                                                    Answer:</p>
+                                                                                    Answer</p>
                                                                             </div>
                                                                             <div class="col-md-10 col-sm-12">
-                                                                                <p
-                                                                                        class="font-weight-bold text-dark">
-                                                                                    Normal</p>
+                                                                                <div class="row">
+                                                                                    <div class="col-md-2 col-sm-6">
+                                                                                        <div class="form-check ps-0 ps-sm-0">
+                                                                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio1">
+                                                                                            <label class="custom-control-label" for="customRadio1">Normal</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-2 col-sm-6">
+                                                                                        <div class="form-check ps-0 ps-sm-0">
+                                                                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio2">
+                                                                                            <label class="custom-control-label" for="customRadio2">Obtunded</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-2 col-sm-6">
+                                                                                        <div class="form-check ps-0 ps-sm-0">
+                                                                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio3">
+                                                                                            <label class="custom-control-label" for="customRadio3">Stuporous</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-2 col-sm-6">
+                                                                                        <div class="form-check ps-0 ps-sm-0">
+                                                                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio4">
+                                                                                            <label class="custom-control-label" for="customRadio4">Comatose</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-2 col-sm-6">
+                                                                                        <div class="form-check ps-0 ps-sm-0">
+                                                                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio5">
+                                                                                            <label class="custom-control-label" for="customRadio5">Select all</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
                                                                             </div>
+
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -536,7 +588,7 @@
                                                             <div
                                                                     class="col-md-12 p-2 mt-3 d-flex flex-wrap justify-content-between">
                                                                 <div class="col-md-12">
-                                                                    <div class="container">
+                                                                    <div class="container m-0">
                                                                         <div class="row">
                                                                             <div class="col-md-2 col-sm-12">
                                                                                 <p
@@ -546,24 +598,54 @@
                                                                             <div class="col-md-10 col-sm-12">
                                                                                 <p
                                                                                         class="font-weight-normal text-dark opacity-8">
-                                                                                    Lorem ipsum is a dummy text
+                                                                                    Lorem ipsum is a dummy
+                                                                                    text
                                                                                 </p>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-12">
-                                                                    <div class="container">
+                                                                    <div class="container m-0">
                                                                         <div class="row">
                                                                             <div class="col-md-2 col-sm-12">
                                                                                 <p
                                                                                         class="font-weight-bold text-dark">
-                                                                                    Answer:</p>
+                                                                                    Answer</p>
                                                                             </div>
                                                                             <div class="col-md-10 col-sm-12">
-                                                                                <p
-                                                                                        class="font-weight-bold text-dark">
-                                                                                    Normal</p>
+                                                                                <div class="row">
+                                                                                    <div class="col-md-2 col-sm-6">
+                                                                                        <div class="form-check ps-0 ps-sm-0">
+                                                                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio1">
+                                                                                            <label class="custom-control-label" for="customRadio1">Normal</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-2 col-sm-6">
+                                                                                        <div class="form-check ps-0 ps-sm-0">
+                                                                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio2">
+                                                                                            <label class="custom-control-label" for="customRadio2">Obtunded</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-2 col-sm-6">
+                                                                                        <div class="form-check ps-0 ps-sm-0">
+                                                                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio3">
+                                                                                            <label class="custom-control-label" for="customRadio3">Stuporous</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-2 col-sm-6">
+                                                                                        <div class="form-check ps-0 ps-sm-0">
+                                                                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio4">
+                                                                                            <label class="custom-control-label" for="customRadio4">Comatose</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-2 col-sm-6">
+                                                                                        <div class="form-check ps-0 ps-sm-0">
+                                                                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio5">
+                                                                                            <label class="custom-control-label" for="customRadio5">Select all</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -604,7 +686,7 @@
                                                         <div id="sampleVideoQuestion3" style="display: none;">
                                                             <div class=" p-5 border-radius-lg">
                                                                 <div class="p-2 d-flex justify-content-center">
-                                                                    <video controls class="w-md-70 w-100">
+                                                                    <video controls style="width: 70%;">
                                                                         <source
                                                                                 src="{{ asset('portal/assets/img/vet sample video.mp4') }}"
                                                                                 type="video/mp4">
@@ -619,7 +701,7 @@
                                                             <div
                                                                     class="col-md-12 p-2 mt-3 d-flex flex-wrap justify-content-between">
                                                                 <div class="col-md-12">
-                                                                    <div class="container">
+                                                                    <div class="container m-0">
                                                                         <div class="row">
                                                                             <div class="col-md-2 col-sm-12">
                                                                                 <p
@@ -629,25 +711,56 @@
                                                                             <div class="col-md-10 col-sm-12">
                                                                                 <p
                                                                                         class="font-weight-normal text-dark opacity-8">
-                                                                                    Lorem ipsum is a dummy text
+                                                                                    Lorem ipsum is a dummy
+                                                                                    text
                                                                                 </p>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-12">
-                                                                    <div class="container">
+                                                                    <div class="container m-0">
                                                                         <div class="row">
                                                                             <div class="col-md-2 col-sm-12">
                                                                                 <p
                                                                                         class="font-weight-bold text-dark">
-                                                                                    Answer:</p>
+                                                                                    Answer</p>
                                                                             </div>
                                                                             <div class="col-md-10 col-sm-12">
-                                                                                <p
-                                                                                        class="font-weight-bold text-dark">
-                                                                                    Normal</p>
+                                                                                <div class="row">
+                                                                                    <div class="col-md-2 col-sm-6">
+                                                                                        <div class="form-check ps-0 ps-sm-0">
+                                                                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio1">
+                                                                                            <label class="custom-control-label" for="customRadio1">Normal</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-2 col-sm-6">
+                                                                                        <div class="form-check ps-0 ps-sm-0">
+                                                                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio2">
+                                                                                            <label class="custom-control-label" for="customRadio2">Obtunded</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-2 col-sm-6">
+                                                                                        <div class="form-check ps-0 ps-sm-0">
+                                                                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio3">
+                                                                                            <label class="custom-control-label" for="customRadio3">Stuporous</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-2 col-sm-6">
+                                                                                        <div class="form-check ps-0 ps-sm-0">
+                                                                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio4">
+                                                                                            <label class="custom-control-label" for="customRadio4">Comatose</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-2 col-sm-6">
+                                                                                        <div class="form-check ps-0 ps-sm-0">
+                                                                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio5">
+                                                                                            <label class="custom-control-label" for="customRadio5">Select all</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
                                                                             </div>
+
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -658,7 +771,7 @@
                                                             <div
                                                                     class="col-md-12 p-2 mt-3 d-flex flex-wrap justify-content-between">
                                                                 <div class="col-md-12">
-                                                                    <div class="container">
+                                                                    <div class="container m-0">
                                                                         <div class="row">
                                                                             <div class="col-md-2 col-sm-12">
                                                                                 <p
@@ -668,24 +781,54 @@
                                                                             <div class="col-md-10 col-sm-12">
                                                                                 <p
                                                                                         class="font-weight-normal text-dark opacity-8">
-                                                                                    Lorem ipsum is a dummy text
+                                                                                    Lorem ipsum is a dummy
+                                                                                    text
                                                                                 </p>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-12">
-                                                                    <div class="container">
+                                                                    <div class="container m-0">
                                                                         <div class="row">
                                                                             <div class="col-md-2 col-sm-12">
                                                                                 <p
                                                                                         class="font-weight-bold text-dark">
-                                                                                    Answer:</p>
+                                                                                    Answer</p>
                                                                             </div>
                                                                             <div class="col-md-10 col-sm-12">
-                                                                                <p
-                                                                                        class="font-weight-bold text-dark">
-                                                                                    Normal</p>
+                                                                                <div class="row">
+                                                                                    <div class="col-md-2 col-sm-6">
+                                                                                        <div class="form-check ps-0 ps-sm-0">
+                                                                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio1">
+                                                                                            <label class="custom-control-label" for="customRadio1">Normal</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-2 col-sm-6">
+                                                                                        <div class="form-check ps-0 ps-sm-0">
+                                                                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio2">
+                                                                                            <label class="custom-control-label" for="customRadio2">Obtunded</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-2 col-sm-6">
+                                                                                        <div class="form-check ps-0 ps-sm-0">
+                                                                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio3">
+                                                                                            <label class="custom-control-label" for="customRadio3">Stuporous</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-2 col-sm-6">
+                                                                                        <div class="form-check ps-0 ps-sm-0">
+                                                                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio4">
+                                                                                            <label class="custom-control-label" for="customRadio4">Comatose</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-2 col-sm-6">
+                                                                                        <div class="form-check ps-0 ps-sm-0">
+                                                                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio5">
+                                                                                            <label class="custom-control-label" for="customRadio5">Select all</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -725,7 +868,7 @@
                                                         <div id="sampleVideoQuestion4" style="display: none;">
                                                             <div class=" p-5 border-radius-lg">
                                                                 <div class="p-2 d-flex justify-content-center">
-                                                                    <video controls class="w-md-70 w-100">
+                                                                    <video controls style="width: 70%;">
                                                                         <source
                                                                                 src="{{ asset('portal/assets/img/vet sample video.mp4') }}"
                                                                                 type="video/mp4">
@@ -740,7 +883,7 @@
                                                             <div
                                                                     class="col-md-12 p-2 mt-3 d-flex flex-wrap justify-content-between">
                                                                 <div class="col-md-12">
-                                                                    <div class="container">
+                                                                    <div class="container m-0">
                                                                         <div class="row">
                                                                             <div class="col-md-2 col-sm-12">
                                                                                 <p
@@ -750,25 +893,56 @@
                                                                             <div class="col-md-10 col-sm-12">
                                                                                 <p
                                                                                         class="font-weight-normal text-dark opacity-8">
-                                                                                    Lorem ipsum is a dummy text
+                                                                                    Lorem ipsum is a dummy
+                                                                                    text
                                                                                 </p>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-12">
-                                                                    <div class="container">
+                                                                    <div class="container m-0">
                                                                         <div class="row">
                                                                             <div class="col-md-2 col-sm-12">
                                                                                 <p
                                                                                         class="font-weight-bold text-dark">
-                                                                                    Answer:</p>
+                                                                                    Answer</p>
                                                                             </div>
                                                                             <div class="col-md-10 col-sm-12">
-                                                                                <p
-                                                                                        class="font-weight-bold text-dark">
-                                                                                    Normal</p>
+                                                                                <div class="row">
+                                                                                    <div class="col-md-2 col-sm-6">
+                                                                                        <div class="form-check ps-0 ps-sm-0">
+                                                                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio1">
+                                                                                            <label class="custom-control-label" for="customRadio1">Normal</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-2 col-sm-6">
+                                                                                        <div class="form-check ps-0 ps-sm-0">
+                                                                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio2">
+                                                                                            <label class="custom-control-label" for="customRadio2">Obtunded</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-2 col-sm-6">
+                                                                                        <div class="form-check ps-0 ps-sm-0">
+                                                                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio3">
+                                                                                            <label class="custom-control-label" for="customRadio3">Stuporous</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-2 col-sm-6">
+                                                                                        <div class="form-check ps-0 ps-sm-0">
+                                                                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio4">
+                                                                                            <label class="custom-control-label" for="customRadio4">Comatose</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-2 col-sm-6">
+                                                                                        <div class="form-check ps-0 ps-sm-0">
+                                                                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio5">
+                                                                                            <label class="custom-control-label" for="customRadio5">Select all</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
                                                                             </div>
+
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -779,7 +953,7 @@
                                                             <div
                                                                     class="col-md-12 p-2 mt-3 d-flex flex-wrap justify-content-between">
                                                                 <div class="col-md-12">
-                                                                    <div class="container">
+                                                                    <div class="container m-0">
                                                                         <div class="row">
                                                                             <div class="col-md-2 col-sm-12">
                                                                                 <p
@@ -789,24 +963,54 @@
                                                                             <div class="col-md-10 col-sm-12">
                                                                                 <p
                                                                                         class="font-weight-normal text-dark opacity-8">
-                                                                                    Lorem ipsum is a dummy text
+                                                                                    Lorem ipsum is a dummy
+                                                                                    text
                                                                                 </p>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-12">
-                                                                    <div class="container">
+                                                                    <div class="container m-0">
                                                                         <div class="row">
                                                                             <div class="col-md-2 col-sm-12">
                                                                                 <p
                                                                                         class="font-weight-bold text-dark">
-                                                                                    Answer:</p>
+                                                                                    Answer</p>
                                                                             </div>
                                                                             <div class="col-md-10 col-sm-12">
-                                                                                <p
-                                                                                        class="font-weight-bold text-dark">
-                                                                                    Normal</p>
+                                                                                <div class="row">
+                                                                                    <div class="col-md-2 col-sm-6">
+                                                                                        <div class="form-check ps-0 ps-sm-0">
+                                                                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio1">
+                                                                                            <label class="custom-control-label" for="customRadio1">Normal</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-2 col-sm-6">
+                                                                                        <div class="form-check ps-0 ps-sm-0">
+                                                                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio2">
+                                                                                            <label class="custom-control-label" for="customRadio2">Obtunded</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-2 col-sm-6">
+                                                                                        <div class="form-check ps-0 ps-sm-0">
+                                                                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio3">
+                                                                                            <label class="custom-control-label" for="customRadio3">Stuporous</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-2 col-sm-6">
+                                                                                        <div class="form-check ps-0 ps-sm-0">
+                                                                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio4">
+                                                                                            <label class="custom-control-label" for="customRadio4">Comatose</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-2 col-sm-6">
+                                                                                        <div class="form-check ps-0 ps-sm-0">
+                                                                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio5">
+                                                                                            <label class="custom-control-label" for="customRadio5">Select all</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -846,7 +1050,7 @@
                                                         <div id="sampleVideoQuestion5" style="display: none;">
                                                             <div class=" p-5 border-radius-lg">
                                                                 <div class="p-2 d-flex justify-content-center">
-                                                                    <video controls class="w-md-70 w-100">
+                                                                    <video controls style="width: 70%;">
                                                                         <source
                                                                                 src="{{ asset('portal/assets/img/vet sample video.mp4') }}"
                                                                                 type="video/mp4">
@@ -861,7 +1065,7 @@
                                                             <div
                                                                     class="col-md-12 p-2 mt-3 d-flex flex-wrap justify-content-between">
                                                                 <div class="col-md-12">
-                                                                    <div class="container">
+                                                                    <div class="container m-0">
                                                                         <div class="row">
                                                                             <div class="col-md-2 col-sm-12">
                                                                                 <p
@@ -871,25 +1075,56 @@
                                                                             <div class="col-md-10 col-sm-12">
                                                                                 <p
                                                                                         class="font-weight-normal text-dark opacity-8">
-                                                                                    Lorem ipsum is a dummy text
+                                                                                    Lorem ipsum is a dummy
+                                                                                    text
                                                                                 </p>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-12">
-                                                                    <div class="container">
+                                                                    <div class="container m-0">
                                                                         <div class="row">
                                                                             <div class="col-md-2 col-sm-12">
                                                                                 <p
                                                                                         class="font-weight-bold text-dark">
-                                                                                    Answer:</p>
+                                                                                    Answer</p>
                                                                             </div>
                                                                             <div class="col-md-10 col-sm-12">
-                                                                                <p
-                                                                                        class="font-weight-bold text-dark">
-                                                                                    Normal</p>
+                                                                                <div class="row">
+                                                                                    <div class="col-md-2 col-sm-6">
+                                                                                        <div class="form-check ps-0 ps-sm-0">
+                                                                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio1">
+                                                                                            <label class="custom-control-label" for="customRadio1">Normal</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-2 col-sm-6">
+                                                                                        <div class="form-check ps-0 ps-sm-0">
+                                                                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio2">
+                                                                                            <label class="custom-control-label" for="customRadio2">Obtunded</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-2 col-sm-6">
+                                                                                        <div class="form-check ps-0 ps-sm-0">
+                                                                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio3">
+                                                                                            <label class="custom-control-label" for="customRadio3">Stuporous</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-2 col-sm-6">
+                                                                                        <div class="form-check ps-0 ps-sm-0">
+                                                                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio4">
+                                                                                            <label class="custom-control-label" for="customRadio4">Comatose</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-2 col-sm-6">
+                                                                                        <div class="form-check ps-0 ps-sm-0">
+                                                                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio5">
+                                                                                            <label class="custom-control-label" for="customRadio5">Select all</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
                                                                             </div>
+
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -900,7 +1135,7 @@
                                                             <div
                                                                     class="col-md-12 p-2 mt-3 d-flex flex-wrap justify-content-between">
                                                                 <div class="col-md-12">
-                                                                    <div class="container">
+                                                                    <div class="container m-0">
                                                                         <div class="row">
                                                                             <div class="col-md-2 col-sm-12">
                                                                                 <p
@@ -910,24 +1145,54 @@
                                                                             <div class="col-md-10 col-sm-12">
                                                                                 <p
                                                                                         class="font-weight-normal text-dark opacity-8">
-                                                                                    Lorem ipsum is a dummy text
+                                                                                    Lorem ipsum is a dummy
+                                                                                    text
                                                                                 </p>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-12">
-                                                                    <div class="container">
+                                                                    <div class="container m-0">
                                                                         <div class="row">
                                                                             <div class="col-md-2 col-sm-12">
                                                                                 <p
                                                                                         class="font-weight-bold text-dark">
-                                                                                    Answer:</p>
+                                                                                    Answer</p>
                                                                             </div>
                                                                             <div class="col-md-10 col-sm-12">
-                                                                                <p
-                                                                                        class="font-weight-bold text-dark">
-                                                                                    Normal</p>
+                                                                                <div class="row">
+                                                                                    <div class="col-md-2 col-sm-6">
+                                                                                        <div class="form-check ps-0 ps-sm-0">
+                                                                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio1">
+                                                                                            <label class="custom-control-label" for="customRadio1">Normal</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-2 col-sm-6">
+                                                                                        <div class="form-check ps-0 ps-sm-0">
+                                                                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio2">
+                                                                                            <label class="custom-control-label" for="customRadio2">Obtunded</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-2 col-sm-6">
+                                                                                        <div class="form-check ps-0 ps-sm-0">
+                                                                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio3">
+                                                                                            <label class="custom-control-label" for="customRadio3">Stuporous</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-2 col-sm-6">
+                                                                                        <div class="form-check ps-0 ps-sm-0">
+                                                                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio4">
+                                                                                            <label class="custom-control-label" for="customRadio4">Comatose</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-2 col-sm-6">
+                                                                                        <div class="form-check ps-0 ps-sm-0">
+                                                                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio5">
+                                                                                            <label class="custom-control-label" for="customRadio5">Select all</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -967,7 +1232,7 @@
                                                         <div id="sampleVideoQuestion6" style="display: none;">
                                                             <div class=" p-5 border-radius-lg">
                                                                 <div class="p-2 d-flex justify-content-center">
-                                                                    <video controls class="w-md-70 w-100">
+                                                                    <video controls style="width: 70%;">
                                                                         <source
                                                                                 src="{{ asset('portal/assets/img/vet sample video.mp4') }}"
                                                                                 type="video/mp4">
@@ -982,7 +1247,7 @@
                                                             <div
                                                                     class="col-md-12 p-2 mt-3 d-flex flex-wrap justify-content-between">
                                                                 <div class="col-md-12">
-                                                                    <div class="container">
+                                                                    <div class="container m-0">
                                                                         <div class="row">
                                                                             <div class="col-md-2 col-sm-12">
                                                                                 <p
@@ -992,25 +1257,56 @@
                                                                             <div class="col-md-10 col-sm-12">
                                                                                 <p
                                                                                         class="font-weight-normal text-dark opacity-8">
-                                                                                    Lorem ipsum is a dummy text
+                                                                                    Lorem ipsum is a dummy
+                                                                                    text
                                                                                 </p>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-12">
-                                                                    <div class="container">
+                                                                    <div class="container m-0">
                                                                         <div class="row">
                                                                             <div class="col-md-2 col-sm-12">
                                                                                 <p
                                                                                         class="font-weight-bold text-dark">
-                                                                                    Answer:</p>
+                                                                                    Answer</p>
                                                                             </div>
                                                                             <div class="col-md-10 col-sm-12">
-                                                                                <p
-                                                                                        class="font-weight-bold text-dark">
-                                                                                    Obtunded</p>
+                                                                                <div class="row">
+                                                                                    <div class="col-md-2 col-sm-6">
+                                                                                        <div class="form-check ps-0 ps-sm-0">
+                                                                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio1">
+                                                                                            <label class="custom-control-label" for="customRadio1">Normal</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-2 col-sm-6">
+                                                                                        <div class="form-check ps-0 ps-sm-0">
+                                                                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio2">
+                                                                                            <label class="custom-control-label" for="customRadio2">Obtunded</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-2 col-sm-6">
+                                                                                        <div class="form-check ps-0 ps-sm-0">
+                                                                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio3">
+                                                                                            <label class="custom-control-label" for="customRadio3">Stuporous</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-2 col-sm-6">
+                                                                                        <div class="form-check ps-0 ps-sm-0">
+                                                                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio4">
+                                                                                            <label class="custom-control-label" for="customRadio4">Comatose</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-2 col-sm-6">
+                                                                                        <div class="form-check ps-0 ps-sm-0">
+                                                                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio5">
+                                                                                            <label class="custom-control-label" for="customRadio5">Select all</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
                                                                             </div>
+
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1021,7 +1317,7 @@
                                                             <div
                                                                     class="col-md-12 p-2 mt-3 d-flex flex-wrap justify-content-between">
                                                                 <div class="col-md-12">
-                                                                    <div class="container">
+                                                                    <div class="container m-0">
                                                                         <div class="row">
                                                                             <div class="col-md-2 col-sm-12">
                                                                                 <p
@@ -1031,24 +1327,54 @@
                                                                             <div class="col-md-10 col-sm-12">
                                                                                 <p
                                                                                         class="font-weight-normal text-dark opacity-8">
-                                                                                    Lorem ipsum is a dummy text
+                                                                                    Lorem ipsum is a dummy
+                                                                                    text
                                                                                 </p>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-12">
-                                                                    <div class="container">
+                                                                    <div class="container m-0">
                                                                         <div class="row">
                                                                             <div class="col-md-2 col-sm-12">
                                                                                 <p
                                                                                         class="font-weight-bold text-dark">
-                                                                                    Answer:</p>
+                                                                                    Answer</p>
                                                                             </div>
                                                                             <div class="col-md-10 col-sm-12">
-                                                                                <p
-                                                                                        class="font-weight-bold text-dark">
-                                                                                    Normal</p>
+                                                                                <div class="row">
+                                                                                    <div class="col-md-2 col-sm-6">
+                                                                                        <div class="form-check ps-0 ps-sm-0">
+                                                                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio1">
+                                                                                            <label class="custom-control-label" for="customRadio1">Normal</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-2 col-sm-6">
+                                                                                        <div class="form-check ps-0 ps-sm-0">
+                                                                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio2">
+                                                                                            <label class="custom-control-label" for="customRadio2">Obtunded</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-2 col-sm-6">
+                                                                                        <div class="form-check ps-0 ps-sm-0">
+                                                                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio3">
+                                                                                            <label class="custom-control-label" for="customRadio3">Stuporous</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-2 col-sm-6">
+                                                                                        <div class="form-check ps-0 ps-sm-0">
+                                                                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio4">
+                                                                                            <label class="custom-control-label" for="customRadio4">Comatose</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-2 col-sm-6">
+                                                                                        <div class="form-check ps-0 ps-sm-0">
+                                                                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio5">
+                                                                                            <label class="custom-control-label" for="customRadio5">Select all</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -1061,10 +1387,10 @@
                                             </div>
                                         </div>
                                         <div class="button-row d-flex justify-content-end gap-3 mt-4">
-                                            <button class="btn btn-primary btn-sm py-2 text-white mb-2 js-btn-next" type="button"
-                                                    title="Back">Back</button>
-                                            <button class="btn btn-primary btn-sm py-2 text-white mb-2 js-btn-next" type="button"
-                                                    title="Next">Next</button>
+                                            <!-- <button class="btn bg-gradient-primary mb-0 js-btn-next" type="button"
+                                                title="Back">Back</button> -->
+                                            <button class="btn btn-primary btn-sm py-2 text-white mb-2 ms-auto js-btn-next" type="button"
+                                                    title="Next">Localize</button>
                                         </div>
                                     </div>
                                 </div>
@@ -1084,81 +1410,9 @@
                                         </div>
                                     </div>
                                     <div class="button-row d-flex justify-content-end gap-3 mt-4">
+                                        <button class="btn btn-primary  text-white js-btn-next" type="button" onclick="window.location.href = 'index.html'">Consult Neurologist</button>
                                         <button class="btn btn-primary  text-white js-btn-next" type="button"
-                                                title="Next">Back</button>
-                                        <button class="btn btn-primary  text-white js-btn-next" type="button"
-                                                title="Next">Next</button>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <!--single form panel-->
-                            <div class="multisteps-form__panel pt-3 border-radius-xl bg-white "
-                                 data-animation="FadeIn">
-
-                                <div class="multisteps-form__content  p-3">
-                                    <div class="d-flex justify-content-end mt-3">
-                                        <div>
-                                            <button type="button" class="btn btn-outline-primary py-2 mb-2"
-                                                    style="font-family: 'Poppins', sans-serif !important"
-                                                    onclick="addDifferential()">
-                                                <i class="fa fa-plus-circle text-lg mx-1" aria-hidden="true"></i>
-                                                Add Comments
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-12">
-                                        <label class="form-label font-weight-bold"
-                                               style=" font-family: 'Poppins', sans-serif !important">Comment
-                                            1
-                                        </label>
-                                        <div class="input-group input-group-outline mb-3">
-                                                <textarea rows="4" class="form-control w-100"
-                                                          aria-describedby="emailHelp" onfocus="focused(this)"
-                                                          onfocusout="defocused(this)" style="resize: none;"
-                                                          placeholder="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <label class="form-label font-weight-bold"
-                                               style=" font-family: 'Poppins', sans-serif !important">Comment 2
-                                        </label>
-                                        <div class="input-group input-group-outline mb-3">
-                                                <textarea rows="4" class="form-control w-100"
-                                                          aria-describedby="emailHelp" onfocus="focused(this)"
-                                                          onfocusout="defocused(this)" style="resize: none;"
-                                                          placeholder="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,"></textarea>
-                                        </div>
-                                    </div>
-                                    <div id="differentialsContainer" class="col-md-12">
-                                        <!-- The first differential input field section -->
-                                        <div class="differential-section" style="display: none;">
-                                            <label class="form-label font-weight-bold"
-                                                   style="font-family: 'Poppins', sans-serif !important">Comment
-                                                3</label>
-                                            <div class="input-group input-group-outline mb-3">
-                                                    <textarea rows="4" class="form-control w-100"
-                                                              aria-describedby="emailHelp" onfocus="focused(this)"
-                                                              onfocusout="defocused(this)" style="resize: none;"
-                                                              placeholder="Enter your comment"></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="button-row d-flex justify-content-start justify-content-sm-end flex-wrap gap-3 mt-4">
-                                        <button
-                                                class="btn btn-primary btn-sm py-2 text-white mb-2 js-btn-submit"
-                                                type="button" title="Next">Back</button>
-                                        <button
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#sendEmail"
-                                                class="btn btn-primary btn-sm py-2 text-white mb-2 js-btn-submit"
-                                                type="button" title="Next"><i class="fa fa-user text-lg mx-1" aria-hidden="true"></i>Communicate Directly</button>
-                                        <button
-                                                class="btn btn-primary btn-sm py-2 text-white mb-2 js-btn-submit"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#successMessage"
-                                                type="button" title="Next"><i class="fa fa-envelope-o text-lg mx-1" aria-hidden="true"></i>Share through Email</button>
+                                                title="Next">Finish</button>
                                     </div>
 
                                 </div>
@@ -1168,74 +1422,10 @@
                 </div>
             </div>
         </div>
-
-    </div>
-    <div class="modal fade" id="sendEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog  modal-dialog-centered modal-md " role="document">
-            <div class="modal-content ">
-                <div class=" modal-header">
-                    <h6><i class="fa fa-user me-2 text-info" aria-hidden="true"></i>Communicate Directly</h6>
-                    <button type="button" class="btn-close text-dark float-end" data-bs-dismiss="modal"
-                            aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <label class="font-weight-bold">Enter Email to share call link</label>
-                            <div class="input-group input-group-outline mb-1 ">
-                                <input type="text" class="form-control" value="Lorem ipsum" name="Name"
-                                       placeholder="henry@gmail.com" aria-label="Name">
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-end">
-                            <button type="button" class="btn mt-3  btn-primary  btn-sm py-2 text-white mb-2">
-                                Communicate Directly
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="successMessage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog  modal-dialog-centered " role="document" style="">
-            <div class="modal-content ">
-                <div class=" modal-header" style="background-color: #34C89C;border-bottom: none;">
-
-                    <button type="button" class="btn-close text-dark float-end" data-bs-dismiss="modal"
-                            aria-label="Close">
-
-                    </button>
-                </div>
-                <div class="modal-body" style="background-color: #34C89C;">
-                    <div class="d-flex justify-content-center">
-                        <img src="{{ asset('portal/assets/img/happy emoji.png') }}" alt="icon" />
-                    </div>
-                    <div class="text-center  m-3 p-3">
-
-                        <p class="text-white">Patient's complete report along with your comments has been successfully emailed to Dr. John Practitioner.</p>
-                    </div>
-
-                </div>
-                <div class="">
-                    <div class="my-3">
-                        <a href="">
-                            <p class="text-center font-weight-bold text-info ">Continue</p>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 @endsection
 
 @section('script')
-    <script src="{{ asset('portal/assets/js/plugins/datatables.js') }}"></script>
     <script src="{{ asset('portal/assets/js/plugins/multistep-form.js') }}"></script>
     <script>
 
@@ -1255,6 +1445,22 @@
         const sampleVideoQuestion = document.getElementById('sampleVideoQuestion');
         const flexSwitchCheckDefault23 = document.getElementById('flexSwitchCheckDefault23');
         const flexSwitchCheckDefaultQuestion = document.getElementById('flexSwitchCheckDefaultQuestion');
+
+        function toggleVideoVisibility() {
+            if (flexSwitchCheckDefault23.checked) {
+                sampleVideo.style.display = 'block';
+            } else {
+                sampleVideo.style.display = 'none';
+            }
+        }
+
+        function toggleQuestionsVideoVisibility() {
+            if (flexSwitchCheckDefaultQuestion.checked) {
+                sampleVideoQuestion.style.display = 'block';
+            } else {
+                sampleVideoQuestion.style.display = 'none';
+            }
+        }
 
         function toggleVideo(elementId, state) {
             const element = document.getElementById(elementId);
