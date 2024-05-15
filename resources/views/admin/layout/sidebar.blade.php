@@ -76,7 +76,7 @@
             <li class="nav-item {{ Request::is('admin/settings') || Request::is('admin/settings/*') ? ' active' : '' }}">
                 <a class="nav-link {{ Request::is('admin/settings') || Request::is('admin/settings/*') ? ' active' : '' }}" href="{{ route('admin.settings') }}">
                     <span class="sidenav-mini-icon">
-                        <img src="{{ Request::is('admin/settings') || Request::is('admin/settings/*') ? asset("portal/assets/img/Settings white.png") : asset("portal/assets/img/Settings purple.png") }}" alt="icon"/>
+                        <img src="{{ Request::is('admin/settings') || Request::is('admin/settings/*') ? asset("portal/assets/img/settings white.png") : asset("portal/assets/img/Settings purple.png") }}" alt="icon"/>
                     </span>
                     <span class="sidenav-normal ms-2 ps-1"> Settings </span>
                 </a>

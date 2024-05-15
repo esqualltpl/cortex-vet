@@ -60,7 +60,7 @@
             <li class="nav-item {{ Request::is('neurologist/settings') || Request::is('neurologist/settings/*') ? ' active' : '' }}">
                 <a class="nav-link {{ Request::is('neurologist/settings') || Request::is('neurologist/settings/*') ? ' active' : '' }}" href="{{ route('neurologist.settings') }}">
                     <span class="sidenav-mini-icon">
-                        <img src="{{ Request::is('neurologist/settings') || Request::is('neurologist/settings/*') ? asset("portal/assets/img/Settings white.png") : asset("portal/assets/img/Settings purple.png") }}" alt="icon"/>
+                        <img src="{{ Request::is('neurologist/settings') || Request::is('neurologist/settings/*') ? asset("portal/assets/img/settings white.png") : asset("portal/assets/img/Settings purple.png") }}" alt="icon"/>
                     </span>
                     <span class="sidenav-normal ms-2 ps-1"> Settings </span>
                 </a>
