@@ -170,7 +170,7 @@
                         </div>
                         <div class="col-md-2">
                             <div>
-                                <img src="../assets/img/team-3.jpg" class="w-40 w-md-60" style="border-radius:300px;"
+                                <img src="{{ asset('portal/assets/img/team-3.jpg') }}" alt="icon" class="w-40 w-md-60" style="border-radius:300px;"
                                 />
                             </div>
                         </div>
