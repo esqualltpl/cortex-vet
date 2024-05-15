@@ -9,7 +9,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 ">
             <li class="breadcrumb-item text-sm">
-                <a class="opacity-7 text-dark" href="{{ route('admin.veterinary.practitioners') }}">
+                <a class="opacity-7 text-dark" href="{{ route('practitioner.patients') }}">
                     <img src="{{ asset('portal/assets/img/Patients gray.png') }}" alt="icon" class="me-1" />
                     Patients
                 </a>
@@ -193,7 +193,7 @@
                         </td>
 
                         <td class="text-sm ">
-                            <a href="Report.html" class="text-info text-decoration-underline">   Neuro Exam 1</a>
+                            <a href="{{ route('practitioner.patient.neuro.exam', 1) }}" class="text-info text-decoration-underline">   Neuro Exam 1</a>
                         </td>
                         <td class="">
                             <div class="input-group input-group-outline w-50" data-bs-toggle="modal"
@@ -202,7 +202,7 @@
                             </div>
                         </td>
                         <td class="">
-                            <a href="Report.html"><i class="material-symbols-outlined">
+                            <a href="{{ route('practitioner.patient.neuro.exam', 1) }}"><i class="material-symbols-outlined">
                                     note_alt
                                 </i></a>
                         </td>
@@ -217,13 +217,13 @@
                         </td>
 
                         <td class="text-sm ">
-                            <a href="Report.html" class="text-info text-decoration-underline">   Neuro Exam 1</a>
+                            <a href="{{ route('practitioner.patient.neuro.exam', 1) }}" class="text-info text-decoration-underline">   Neuro Exam 1</a>
                         </td>
                         <td class="">
                             <i class="fa fa-sticky-note-o" aria-hidden="true"></i>
                         </td>
                         <td class="">
-                            <a href="Report.html"><i class="material-symbols-outlined">
+                            <a href="{{ route('practitioner.patient.neuro.exam', 1) }}"><i class="material-symbols-outlined">
                                     note_alt
                                 </i></a>
                         </td>

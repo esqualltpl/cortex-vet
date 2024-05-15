@@ -10,7 +10,7 @@
         <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 ">
             <li class="breadcrumb-item text-sm">
                 <a class="opacity-7 text-dark" href="{{ route('admin.settings') }}">
-                    <img src="{{ asset('portal/assets/img/Settings gray.png') }}" alt="icon" class="me-1"/>
+                    <img src="{{ asset('portal/assets/img/settings gray.png') }}" alt="icon" class="me-1"/>
                     Settings
                 </a>
             </li>

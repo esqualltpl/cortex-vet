@@ -48,6 +48,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
     Route::prefix('patient')->group(function () {
         Route::get('/list', [PatientsController::class, 'index'])->name('admin.patients');
         Route::get('/detail/{id}', [PatientsController::class, 'detail'])->name('admin.patient.detail');
+        Route::get('/neuro/exam/{id}', [PatientsController::class, 'neuroExam'])->name('admin.patient.neuro.exam');
         Route::delete('/delete/{id}', [PatientsController::class, 'delete'])->name('admin.patient.delete');
     });
 

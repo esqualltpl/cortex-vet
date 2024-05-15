@@ -16,4 +16,9 @@ class PatientsController extends Controller
     {
         return view('neurologist.patients.detail');
     }
+
+    public function neuroExam($id): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    {
+        return view('neurologist.patients.neuro_exam');
+    }
 }

@@ -69,7 +69,7 @@
                                     10-01-2024 ,11:10 Am
                                 </td>
                                 <td class="text-sm">
-                                    <a href="{{ route('neurologist.patient.detail', 1) }}">
+                                    <a href="{{ route('practitioner.patient.detail', 1) }}">
                                         <img src="{{ asset('portal/assets/img/view.png') }}" alt="icon">
                                     </a>
                                 </td>
@@ -92,7 +92,7 @@
                                     10-01-2024 ,11:10 Am
                                 </td>
                                 <td class="text-sm">
-                                    <a href="{{ route('neurologist.patient.detail', 1) }}">
+                                    <a href="{{ route('practitioner.patient.detail', 1) }}">
                                         <img src="{{ asset('portal/assets/img/view.png') }}" alt="icon">
                                     </a>
                                 </td>
@@ -115,7 +115,7 @@
                                     10-01-2024 ,11:10 Am
                                 </td>
                                 <td class="text-sm">
-                                    <a href="{{ route('neurologist.patient.detail', 1) }}">
+                                    <a href="{{ route('practitioner.patient.detail', 1) }}">
                                         <img src="{{ asset('portal/assets/img/view.png') }}" alt="icon">
                                     </a>
                                 </td>
@@ -138,7 +138,7 @@
                                     10-01-2024 ,11:10 Am
                                 </td>
                                 <td class="text-sm">
-                                    <a href="{{ route('neurologist.patient.detail', 1) }}">
+                                    <a href="{{ route('practitioner.patient.detail', 1) }}">
                                         <img src="{{ asset('portal/assets/img/view.png') }}" alt="icon">
                                     </a>
                                 </td>
@@ -162,7 +162,7 @@
                                     10-01-2024 ,11:10 Am
                                 </td>
                                 <td class="text-sm">
-                                    <a href="{{ route('neurologist.patient.detail', 1) }}">
+                                    <a href="{{ route('practitioner.patient.detail', 1) }}">
                                         <img src="{{ asset('portal/assets/img/view.png') }}" alt="icon">
                                     </a>
                                 </td>
@@ -185,7 +185,7 @@
                                     10-01-2024 ,11:10 Am
                                 </td>
                                 <td class="text-sm">
-                                    <a href="{{ route('neurologist.patient.detail', 1) }}">
+                                    <a href="{{ route('practitioner.patient.detail', 1) }}">
                                         <img src="{{ asset('portal/assets/img/view.png') }}" alt="icon">
                                     </a>
                                 </td>

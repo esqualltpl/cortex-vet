@@ -10,7 +10,7 @@
         <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm">
                 <a class="opacity-7 text-dark" href="{{ url()->current() }}">
-                    <img src="{{ asset('portal/assets/img/Settings gray.png') }}" alt="icon" />
+                    <img src="{{ asset('portal/assets/img/settings gray.png') }}" alt="icon" />
                 </a>
             </li>
             <li class=" text-sm mx-2 text-dark active opacity-7" aria-current="page">Settings</li>

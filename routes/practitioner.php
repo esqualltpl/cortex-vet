@@ -35,6 +35,7 @@ Route::group(['prefix' => 'practitioner', 'middleware' => ['practitioner']], fun
     Route::prefix('patient')->group(function () {
         Route::get('/list', [PatientsController::class, 'index'])->name('practitioner.patients');
         Route::get('/detail/{id}', [PatientsController::class, 'detail'])->name('practitioner.patient.detail');
+        Route::get('/neuro/exam/{id}', [PatientsController::class, 'neuroExam'])->name('practitioner.patient.neuro.exam');
     });
 
     //Settings
