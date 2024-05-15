@@ -10,10 +10,10 @@
         <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 ">
             <li class="breadcrumb-item text-sm">
                 <a class="opacity-7 text-dark" href="{{ route('admin.veterinary.practitioners') }}">
-                    <img src="{{ asset('portal/assets/img/Veterinary Practitioners gray.png') }}" alt="icon" />
+                    <img src="{{ asset('portal/assets/img/Veterinary Practitioners gray.png') }}" alt="icon" class="me-1" />
+                    Veterinary Practitioners
                 </a>
             </li>
-            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="{{ route('admin.veterinary.practitioners') }}">Veterinary Practitioners</a></li>
             <li class="breadcrumb-item text-sm mx-2 text-dark active" aria-current="page">Ryan Holland</li>
         </ol>
     </nav>
