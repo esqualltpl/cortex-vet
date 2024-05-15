@@ -10,7 +10,7 @@
         <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 ">
             <li class="breadcrumb-item text-sm">
                 <a class="opacity-7 text-dark" href="{{ route('neurologist.consultation.request') }}">
-                    <img src="{{ asset('portal/assets/img/Consultation Request purple.png') }}" alt="icon" class="me-1" />
+                    <img src="{{ asset('portal/assets/img/Consultation Request gray.png') }}" alt="icon" class="me-1" />
                     Consultation Request
                 </a>
             </li>
