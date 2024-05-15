@@ -33,60 +33,50 @@
                 </div>
                 <hr class="horizontal mb-2 mt-1" style="border: 1px solid #8D8D8D !important;width: 220px;margin-left: 15px;">
             </li>
-            {{--<li class="nav-item">
-                <a href="{{ route('admin.dashboard') }}"
-                   class="nav-link {{ Request::is('admin') ? ' text-white bg-light active' : 'text-dark' }}"
-                   style="color:{{ Request::is('admin') ? "#00AB55 !important" : 'color:#3C4856 !important'}};">
-                    <i class="material-icons-round float-start"
-                       style="color:{{ Request::is('admin') ? "#00AB55 !important" : 'color:#3C4856 !important'}};">dashboard</i>
-                    <span class="nav-link-text px-3"
-                          style="color:{{ Request::is('admin') ? "#00AB55 !important" : 'color:#3C4856 !important'}};font-weight: 400;">Dashboard</span>
-                </a>
-            </li>--}}
-            <li class="nav-item active">
-                <a class="nav-link active" href="javascript:">
+            <li class="nav-item {{ Request::is('admin') ? ' active' : '' }}">
+                <a class="nav-link {{ Request::is('admin') ? ' active' : '' }}" href="{{ route('admin.dashboard') }}">
                     <span class="sidenav-mini-icon">
-                        <img src="{{ asset('portal/assets/img/dashboard white.png') }}" alt="icon"/>
+                        <img src="{{ Request::is('admin') ? asset("portal/assets/img/dashboard white.png") : asset("portal/assets/img/Dashboard purple.png") }}" alt="icon"/>
                     </span>
                     <span class="sidenav-normal ms-2 ps-1"> Dashboard </span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="javascript:">
+            <li class="nav-item {{ Request::is('admin/veterinary/practitioners') || Request::is('admin/veterinary/practitioner/*') ? ' active' : '' }}">
+                <a class="nav-link {{ Request::is('admin/veterinary/practitioners') || Request::is('admin/veterinary/practitioner/*') ? ' active' : '' }}" href="{{ route('admin.veterinary.practitioners') }}">
                     <span class="sidenav-mini-icon">
-                        <img src="{{ asset('portal/assets/img/Veterinary Practitioners purple.png') }}" alt="icon"/>
+                        <img src="{{ Request::is('admin/veterinary/practitioners') || Request::is('admin/veterinary/practitioner/*') ? asset("portal/assets/img/Veterinary Practitioners white.png") : asset("portal/assets/img/Veterinary Practitioners purple.png") }}" alt="icon"/>
                     </span>
-                    <span class="sidenav-normal  ms-2  ps-1"> Veterinary Practitioners </span>
+                    <span class="sidenav-normal ms-2 ps-1"> Veterinary Practitioners </span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="javascript:">
+            <li class="nav-item {{ Request::is('admin/veterinary/neurologists') || Request::is('admin/veterinary/neurologist/*') ? ' active' : '' }}">
+                <a class="nav-link {{ Request::is('admin/veterinary/neurologists') || Request::is('admin/veterinary/neurologist/*') ? ' active' : '' }}" href="{{ route('admin.veterinary.neurologists') }}">
                     <span class="sidenav-mini-icon">
-                        <img src="{{ asset('portal/assets/img/Veterinary Neurologists purple.png') }}" alt="icon"/>
+                        <img src="{{ Request::is('admin/veterinary/neurologists') || Request::is('admin/veterinary/neurologist/*') ? asset("portal/assets/img/Veterinary Neurologists white.png") : asset("portal/assets/img/Veterinary Neurologists purple.png") }}" alt="icon"/>
                     </span>
-                    <span class="sidenav-normal  ms-2  ps-1"> Veterinary Neurologists </span>
+                    <span class="sidenav-normal ms-2 ps-1"> Veterinary Neurologists </span>
                 </a>
             </li>
-            <li class="nav-item ">
-                <a class="nav-link" href="javascript:">
+            <li class="nav-item {{ Request::is('admin/resources') || Request::is('admin/resources/*') ? ' active' : '' }}">
+                <a class="nav-link {{ Request::is('admin/resources') || Request::is('admin/resources/*') ? ' active' : '' }}" href="{{ route('admin.resources') }}">
                     <span class="sidenav-mini-icon">
-                        <img src="{{ asset('portal/assets/img/Resources purple.png') }}" alt="icon"/>
+                        <img src="{{ Request::is('admin/resources') || Request::is('admin/resources/*') ? asset("portal/assets/img/Resources white.png") : asset("portal/assets/img/Resources purple.png") }}" alt="icon"/>
                     </span>
-                    <span class="sidenav-normal  ms-2  ps-1"> Resources</span>
+                    <span class="sidenav-normal ms-2 ps-1"> Resources </span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="javascript:">
-                      <span class="sidenav-mini-icon">
-                          <img src="{{ asset('portal/assets/img/patien.png') }}" alt="icon"/>
-                      </span>
+            <li class="nav-item {{ Request::is('admin/patient/*') ? ' active' : '' }}">
+                <a class="nav-link {{ Request::is('admin/patient/*') ? ' active' : '' }}" href="{{ route('admin.patients') }}">
+                    <span class="sidenav-mini-icon">
+                        <img src="{{ Request::is('admin/patient/*') ? asset("portal/assets/img/Patients white.png") : asset("portal/assets/img/Patients purple.png") }}" alt="icon"/>
+                    </span>
                     <span class="sidenav-normal ms-2 ps-1"> Patients </span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="javascript:">
+            <li class="nav-item {{ Request::is('admin/settings') || Request::is('admin/settings/*') ? ' active' : '' }}">
+                <a class="nav-link {{ Request::is('admin/settings') || Request::is('admin/settings/*') ? ' active' : '' }}" href="{{ route('admin.settings') }}">
                     <span class="sidenav-mini-icon">
-                        <img src="{{ asset('portal/assets/img/Settings purple.png') }}" alt="icon"/>
+                        <img src="{{ Request::is('admin/settings') || Request::is('admin/setting/*') ? asset("portal/assets/img/Settings white.png") : asset("portal/assets/img/Settings purple.png") }}" alt="icon"/>
                     </span>
                     <span class="sidenav-normal ms-2 ps-1"> Settings </span>
                 </a>
