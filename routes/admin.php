@@ -54,5 +54,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
     //Patients
     Route::prefix('settings')->group(function () {
         Route::get('/', [SettingsController::class, 'index'])->name('admin.settings');
+        Route::prefix('student')->group(function () {
+            Route::get('add', [SettingsController::class, 'studentAdd'])->name('admin.settings.student.add');
+            Route::get('edit/{id}', [SettingsController::class, 'studentEdit'])->name('admin.settings.student.edit');
+
+        });
     });
 });

@@ -11,14 +11,13 @@ class SettingsController extends Controller
     {
         return view('admin.settings.index');
     }
-
-    public function detail($id): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    public function studentAdd(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
-        return view('admin.neurologists.detail');
+        return view('admin.settings.student_add');
     }
 
-    public function delete(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    public function studentEdit($id): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
-        return view('admin.neurologists.index');
+        return view('admin.settings.student_edit');
     }
 }
