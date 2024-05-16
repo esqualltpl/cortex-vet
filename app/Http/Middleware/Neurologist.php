@@ -20,6 +20,6 @@ class Neurologist
             return $next($request);
         }
 
-        return redirect()->route('neurologist.authentication.login')->with('error', "Login first to access the neurologist portal.");
+        return redirect()->route('login')->with('error', "Login first to access the neurologist portal.");
     }
 }

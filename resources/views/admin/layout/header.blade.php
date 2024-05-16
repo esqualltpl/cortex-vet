@@ -18,6 +18,8 @@
     <link id="pagestyle" href="{{ asset('portal/assets/css/material-dashboard.css?v=3.0.5') }}" rel="stylesheet" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.3/animate.min.css">
+
     {{--<style>
         .card .card-footer {
             padding: 3%;
@@ -55,6 +57,26 @@
             background-size: 30px 12px !important;
         }
         /*//------Dropdown Arrow End------\\*/
+
+        /*//------Bootstrap Notification Color------\\*/
+        button.close {
+            background: none !important;
+            border: none !important;
+            font-size: 17px !important;
+        }
+        .alert-success {
+            background-image: linear-gradient(195deg, #dff0d8 0%, #d6e9c6 100%) !important;
+        }
+        .alert-info {
+            background-image: linear-gradient(195deg, #d9edf7 0%, #bce8f1 100%) !important;
+        }
+        .alert-warning {
+            background-image: linear-gradient(195deg, #fcf8e3 0%, #faebcc 100%) !important;
+        }
+        .alert-danger {
+            background-image: linear-gradient(195deg, #f2dede 0%, #ebccd1 100%) !important;
+        }
+        /*//------Bootstrap Notification Color------\\*/
     </style>
     @yield('style')
 </head>

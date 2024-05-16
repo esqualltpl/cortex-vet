@@ -41,7 +41,7 @@
                         <table class="table table-flush" id="datatable-basic">
                             <thead class="thead-light">
                             <tr>
-                                <th> ID</th>
+                                <th>ID</th>
                                 <th>Doctor Name</th>
                                 <th>Email</th>
                                 <th>Contact</th>
@@ -49,160 +49,35 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td class="text-sm text-info">
-                                    P-001
-                                </td>
-                                <td class="text-sm ">
-                                    Ryan Holland
-                                </td>
-                                <td class="text-sm">
-                                    ryanholland@gmail.com
-                                </td>
+                            @php($sn = 0)
+                            @foreach($neurologists as $neurologist)
+                                @php($sn = $sn+1)
+                                <tr class="remove-{{ $sn }}">
+                                    <td class="text-sm text-info">
+                                        P-{{ $neurologist->id ?? 0 }}
+                                    </td>
+                                    <td class="text-sm ">
+                                        {{ $neurologist->name ?? '' }}
+                                    </td>
+                                    <td class="text-sm">
+                                        {{ $neurologist->email ?? '' }}
+                                    </td>
 
-                                <td class="text-sm "><img src="{{ asset('portal/assets/img/Patient Count.png') }}" alt="icon" /> 15</td>
-                                <td class="text-sm">
-                                    <a href="javascript:" class="mx-1" data-bs-toggle="modal"
-                                       data-bs-target="#deleteUser">
-                                        <img src="{{ asset('portal/assets/img/Delete.png') }}" alt="icon">
-                                    </a>
-                                    <a href="{{ route('admin.veterinary.neurologist.detail', 1) }}">
-                                        <img src="{{ asset('portal/assets/img/view.png') }}" alt="icon">
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-sm text-info">
-                                    P-002
-                                </td>
-                                <td class="text-sm ">
-                                    Ryan Holland
-                                </td>
-                                <td class="text-sm">
-                                    ryanholland@gmail.com
-                                </td>
-
-                                <td class="text-sm "><img src="{{ asset('portal/assets/img/Patient Count.png') }}" alt="icon" /> 23</td>
-                                <td class="text-sm">
-                                    <a href="javascript:" class="mx-1" data-bs-toggle="modal"
-                                       data-bs-target="#deleteUser">
-                                        <img src="{{ asset('portal/assets/img/Delete.png') }}" alt="icon">
-                                    </a>
-                                    <a href="{{ route('admin.veterinary.neurologist.detail', 1) }}">
-                                        <img src="{{ asset('portal/assets/img/view.png') }}" alt="icon">
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-sm text-info">
-                                    P-003
-                                </td>
-                                <td class="text-sm ">
-                                    Ryan Holland
-                                </td>
-                                <td class="text-sm">
-                                    ryanholland@gmail.com
-                                </td>
-
-                                <td class="text-sm "><img src="{{ asset('portal/assets/img/Patient Count.png') }}" alt="icon" /> 43</td>
-                                <td class="text-sm">
-                                    <a href="javascript:" class="mx-1" data-bs-toggle="modal"
-                                       data-bs-target="#deleteUser">
-                                        <img src="{{ asset('portal/assets/img/Delete.png') }}" alt="icon">
-                                    </a>
-                                    <a href="{{ route('admin.veterinary.neurologist.detail', 1) }}">
-                                        <img src="{{ asset('portal/assets/img/view.png') }}" alt="icon">
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-sm text-info">
-                                    P-004
-                                </td>
-                                <td class="text-sm ">
-                                    Ryan Holland
-                                </td>
-                                <td class="text-sm">
-                                    ryanholland@gmail.com
-                                </td>
-
-                                <td class="text-sm "><img src="{{ asset('portal/assets/img/Patient Count.png') }}" alt="icon" /> 23</td>
-                                <td class="text-sm">
-                                    <a href="javascript:" class="mx-1" data-bs-toggle="modal"
-                                       data-bs-target="#deleteUser">
-                                        <img src="{{ asset('portal/assets/img/Delete.png') }}" alt="icon">
-                                    </a>
-                                    <a href="{{ route('admin.veterinary.neurologist.detail', 1) }}">
-                                        <img src="{{ asset('portal/assets/img/view.png') }}" alt="icon">
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-sm text-info">
-                                    P-005
-                                </td>
-                                <td class="text-sm ">
-                                    Ryan Holland
-                                </td>
-                                <td class="text-sm">
-                                    ryanholland@gmail.com
-                                </td>
-
-                                <td class="text-sm "><img src="{{ asset('portal/assets/img/Patient Count.png') }}" alt="icon" /> 54</td>
-                                <td class="text-sm">
-                                    <a href="javascript:" class="mx-1" data-bs-toggle="modal"
-                                       data-bs-target="#deleteUser">
-                                        <img src="{{ asset('portal/assets/img/Delete.png') }}" alt="icon">
-                                    </a>
-                                    <a href="{{ route('admin.veterinary.neurologist.detail', 1) }}">
-                                        <img src="{{ asset('portal/assets/img/view.png') }}" alt="icon">
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-sm text-info">
-                                    P-006
-                                </td>
-                                <td class="text-sm ">
-                                    Ryan Holland
-                                </td>
-                                <td class="text-sm">
-                                    ryanholland@gmail.com
-                                </td>
-
-                                <td class="text-sm "><img src="{{ asset('portal/assets/img/Patient Count.png') }}" alt="icon" /> 13</td>
-                                <td class="text-sm">
-                                    <a href="javascript:" class="mx-1" data-bs-toggle="modal"
-                                       data-bs-target="#deleteUser">
-                                        <img src="{{ asset('portal/assets/img/Delete.png') }}" alt="icon">
-                                    </a>
-                                    <a href="{{ route('admin.veterinary.neurologist.detail', 1) }}">
-                                        <img src="{{ asset('portal/assets/img/view.png') }}" alt="icon">
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-sm text-info">
-                                    P-007
-                                </td>
-                                <td class="text-sm ">
-                                    Ryan Holland
-                                </td>
-                                <td class="text-sm">
-                                    ryanholland@gmail.com
-                                </td>
-
-                                <td class="text-sm "><img src="{{ asset('portal/assets/img/Patient Count.png') }}" alt="icon" /> 21</td>
-                                <td class="text-sm">
-                                    <a href="javascript:" class="mx-1" data-bs-toggle="modal"
-                                       data-bs-target="#deleteUser">
-                                        <img src="{{ asset('portal/assets/img/Delete.png') }}" alt="icon">
-                                    </a>
-                                    <a href="{{ route('admin.veterinary.neurologist.detail', 1) }}">
-                                        <img src="{{ asset('portal/assets/img/view.png') }}" alt="icon">
-                                    </a>
-                                </td>
-                            </tr>
+                                    <td class="text-sm "><img src="{{ asset('portal/assets/img/Patient Count.png') }}" alt="icon"/> 0</td>
+                                    <td class="text-sm">
+                                        <a href="javascript:" class="mx-1 request-remove-data"
+                                           data-removed-name="{{ $neurologist->name ?? '' }}"
+                                           data-removed-class="remove-{{ $sn ?? 0 }}"
+                                           data-action-url="{{ route('admin.veterinary.neurologist.delete', Crypt::encrypt($neurologist->id)) }}"
+                                        >
+                                            <img src="{{ asset('portal/assets/img/Delete.png') }}" alt="icon">
+                                        </a>
+                                        <a href="{{ route('admin.veterinary.neurologist.detail', Crypt::encrypt($neurologist->id)) }}">
+                                            <img src="{{ asset('portal/assets/img/view.png') }}" alt="icon">
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
                             </tbody>
 
                         </table>
@@ -211,31 +86,34 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="deleteUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog  modal-dialog-centered " role="document" style="">
+        <div class="modal fade" id="deleteUserModal" data-bs-backdrop="static" data-bs-keyboard="false"
+             tabindex="-1" role="dialog" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered " role="document" style="">
                 <div class="modal-content ">
                     <div class=" modal-header" style="background-color: #FD4F4E;border-bottom: none;">
-
-                        <button type="button" class="btn-close text-dark float-end" data-bs-dismiss="modal"
-                                aria-label="Close">
-
-                        </button>
+                        <button type="button" class="btn-close text-dark float-end" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body" style="background-color: #FD4F4E;">
                         <div class="d-flex justify-content-center">
-                            <img src="../assets/img/Sad Emoji.png" />
+                            <img src="{{ asset('portal/assets/img/Sad Emoji.png') }}" alt="icon"/>
                         </div>
                         <div class="text-center  m-3 p-3">
-
-                            <p class="text-white">Are you sure to want to delete "Rayan Holland"</p>
+                            <p class="text-white">Are you sure to want to delete <span class="text-bold removed-item-name">Ryan Holland</span></p>
                         </div>
-
                     </div>
-                    <div class="">
+                    <div class="conformation">
                         <div class="my-3">
-                            <a href="">
-                                <p class="text-center font-weight-bold text-info ">Continue</p>
+
+                            <a href="javascript:">
+                                <p class="justify-content-center font-weight-bold text-info removed-data d-flex">
+                                    <span>
+                                        Continue
+                                    </span>
+                                    <span id="removed-data-loader" class="spinner-border overflow-hidden d-none" role="status"
+                                          style="height: 15px !important;width: 15px !important;margin: 5px !important;">
+                                        <span class="sr-only">Loading...</span>
+                                    </span>
+                                </p>
                             </a>
                         </div>
                     </div>
@@ -255,5 +133,29 @@
                 perPage: 10
             });
         }
+
+        $(document).on('click', '.request-remove-data', function (e) {
+            let removedClass = $(this).attr('data-removed-class');
+            let actionURL = $(this).attr('data-action-url');
+            let removedName = $(this).attr('data-removed-name');
+
+            $('.removed-data').attr('data-removed-class', removedClass);
+            $('.removed-data').attr('data-action-url', actionURL);
+            $('.removed-item-name').html(removedName);
+            $('#deleteUserModal').modal('show');
+        });
+
+        $(document).on('click', '.removed-data', function (e) {
+            let actionType = 'delete';
+            let loaderId = 'removed-data-loader';
+            let closedModalId = 'deleteUserModal';
+            let removedClass = $(this).attr('data-removed-class');
+            let actionURL = $(this).attr('data-action-url');
+            let processData = {
+                "_token": "{{ csrf_token() }}",
+            };
+
+            ajaxCall(actionURL, actionType, processData, removedClass, closedModalId, loaderId);
+        });
     </script>
 @endsection

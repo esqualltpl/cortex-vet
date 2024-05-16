@@ -58,6 +58,45 @@ class UsersTableSeeder extends Seeder
                     'updated_at' => NULL,
                     'deleted_at' => NULL,
                 ),
+            3 =>
+                array(
+                    'id' => 4,
+                    'name' => 'KM Super Admin',
+                    'email' => 'khadija.testing1@gmail.com',
+                    'email_verified_at' => NULL,
+                    'password' => Hash::make('123456789'),
+                    'status' => 'Super Admin',
+                    'remember_token' => NULL,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => NULL,
+                    'deleted_at' => NULL,
+                ),
+            4 =>
+                array(
+                    'id' => 5,
+                    'name' => 'KM Neurologist',
+                    'email' => 'km.testing12@gmail.com ',
+                    'email_verified_at' => NULL,
+                    'password' => Hash::make('123456789'),
+                    'status' => 'Neurologist',
+                    'remember_token' => NULL,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => NULL,
+                    'deleted_at' => NULL,
+                ),
+            5 =>
+                array(
+                    'id' => 6,
+                    'name' => 'KM Practitioner',
+                    'email' => 'khadija1997.pm@gmail.com',
+                    'email_verified_at' => NULL,
+                    'password' => Hash::make('123456789'),
+                    'status' => 'Practitioner',
+                    'remember_token' => NULL,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => NULL,
+                    'deleted_at' => NULL,
+                ),
         ));
     }
 }

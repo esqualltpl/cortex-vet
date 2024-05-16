@@ -61,6 +61,7 @@
                                     <td class="text-sm "><img src="{{ asset('portal/assets/img/Patient Count.png') }}" alt="icon"/> 0</td>
                                     <td class="text-sm">
                                         <a href="javascript:" class="mx-1 request-remove-data"
+                                           data-removed-name="{{ $practitioner->name ?? '' }}"
                                            data-removed-class="remove-{{ $sn ?? 0 }}"
                                            data-action-url="{{ route('admin.veterinary.practitioner.delete', Crypt::encrypt($practitioner->id)) }}"
                                         >
@@ -90,7 +91,7 @@
                             <img src="{{ asset('portal/assets/img/Sad Emoji.png') }}" alt="icon"/>
                         </div>
                         <div class="text-center  m-3 p-3">
-                            <p class="text-white">Are you sure to want to delete "Ryan Holland"</p>
+                            <p class="text-white">Are you sure to want to delete <span class="text-bold removed-item-name">Ryan Holland</span></p>
                         </div>
                     </div>
                     <div class="conformation">
@@ -129,75 +130,25 @@
         $(document).on('click', '.request-remove-data', function (e) {
             let removedClass = $(this).attr('data-removed-class');
             let actionURL = $(this).attr('data-action-url');
+            let removedName = $(this).attr('data-removed-name');
 
             $('.removed-data').attr('data-removed-class', removedClass);
             $('.removed-data').attr('data-action-url', actionURL);
+            $('.removed-item-name').html(removedName);
             $('#deleteUserModal').modal('show');
         });
 
         $(document).on('click', '.removed-data', function (e) {
             let actionType = 'delete';
             let loaderId = 'removed-data-loader';
+            let closedModalId = 'deleteUserModal';
             let removedClass = $(this).attr('data-removed-class');
             let actionURL = $(this).attr('data-action-url');
             let processData = {
                 "_token": "{{ csrf_token() }}",
             };
 
-            ajaxCall(actionURL, actionType, processData, removedClass, loaderId);
+            ajaxCall(actionURL, actionType, processData, removedClass, closedModalId, loaderId);
         });
-
-        function ajaxCall(action_url, action_type, process_data, removedClass, loader_id) {
-            $.ajax({
-                url: action_url,
-                type: action_type,
-                dataType: 'json',
-                cache: false,
-                data: process_data,
-                beforeSend: function () {
-                    $(`#${loader_id}`).removeClass('d-none');
-                },
-                success: function (response) {
-                    let responseMessage = response.message;
-                    let responseStatus = response.status;
-                    /*$.notify({
-                        message: responseMessage
-                    }, {
-                        // settings
-                        type: responseStatus,
-                        z_index: 2000,
-                        animate: {
-                            enter: 'animated bounceInDown',
-                            exit: 'animated bounceOutUp'
-                        }
-                    });*/
-                    setTimeout(function () {
-                        if (response.redirect_url) {
-                            window.location.href = response.redirect_url;
-                        }
-                    }, 1000);
-                },
-                error: function (response) {
-                    console.log(response.responseJSON.errors);
-                    let errorStatus = response.status;
-                    let errorMessage = response.responseJSON.message;
-                    $.notify({
-                        message: errorMessage
-                    }, {
-                        // settings
-                        type: 'danger',
-                        z_index: 2000,
-                        animate: {
-                            enter: 'animated bounceInDown',
-                            exit: 'animated bounceOutUp'
-                        }
-                    });
-                    // location.reload();
-                },
-                complete: function (data) {
-                    $(`#${loader_id}`).addClass('d-none');
-                }
-            });
-        }
     </script>
 @endsection

@@ -20,6 +20,6 @@ class Admin
             return $next($request);
         }
 
-        return redirect()->route('admin.authentication.login')->with('error', "Login first to access the super admin portal.");
+        return redirect()->route('login')->with('error', "Login first to access the super admin portal.");
     }
 }

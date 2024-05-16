@@ -14,7 +14,7 @@
                     Veterinary Practitioners
                 </a>
             </li>
-            <li class="breadcrumb-item text-sm mx-2 text-dark active" aria-current="page">Ryan Holland</li>
+            <li class="breadcrumb-item text-sm mx-2 text-dark active" aria-current="page">{{ $practitioner->name ?? '' }}</li>
         </ol>
     </nav>
 @endsection
@@ -25,11 +25,11 @@
     <div class="container-fluid py-2">
         <div class="card p-3 ">
             <div class="d-flex ">
-                <div style="max-width: 100px;"> <img src="{{ asset('portal/assets/img/team-3.jpg') }}" alt="icon" class="w-70" style="border-radius: 100px;" /></div>
+                <div style="max-width: 100px;"> <img src="{{ $practitioner?->getUserPic() ?? '' }}" alt="icon" class="w-70" style="border-radius: 100px;" /></div>
                 <div class=" mt-3 ">
                     <div class="d-flex flex-wrap">
                         <h6>Ryan Holland</h6>
-                        <h6 class="ms-md-3">ID: <strong class="text-info">P-001</strong></h6>
+                        <h6 class="ms-md-3">ID: <strong class="text-info">P-{{ $practitioner->id ?? '' }}</strong></h6>
                     </div>
                     <p class="text-sm">Veterinary Practitioners</p>
                 </div>
@@ -48,34 +48,42 @@
                 <div class="col-md-12 mt-3 d-flex flex-wrap justify-content-between">
 
                     <div class="col-md-6  ">
-                        <p class="font-weight-bold text-dark mb-0">Email
+                        <p class="font-weight-bold text-dark mb-0">
+                            Email
                         </p>
-                        <p class="font-weight-normal text-dark opacity-8">ryanholland@gmail.com
+                        <p class="font-weight-normal text-dark opacity-8">
+                            {{ $practitioner->email ?? '' }}
                         </p>
 
                     </div>
                     <div class="col-md-6 ">
-                        <p class="font-weight-bold text-dark mb-0">Patient Count
+                        <p class="font-weight-bold text-dark mb-0">
+                            Patient Count
                         </p>
                         <p class="font-weight-normal text-dark opacity-8">
-                            30</p>
+                            0
+                        </p>
                     </div>
 
                 </div>
                 <div class="col-md-12 mt-3 d-flex flex-wrap justify-content-between">
 
                     <div class="col-md-6  ">
-                        <p class="font-weight-bold text-dark mb-0">Vet License Number
+                        <p class="font-weight-bold text-dark mb-0">
+                            Vet License Number
                         </p>
-                        <p class="font-weight-normal text-dark opacity-8">Lorem ipsum
+                        <p class="font-weight-normal text-dark opacity-8">
+                            {{ $practitioner->userInfo?->vet_license ?? '' }}
                         </p>
 
                     </div>
                     <div class="col-md-6 ">
-                        <p class="font-weight-bold text-dark mb-0">Contact Number Type (Mobile Number)
+                        <p class="font-weight-bold text-dark mb-0">
+                            Contact Number Type (Mobile Number)
                         </p>
                         <p class="font-weight-normal text-dark opacity-8">
-                            (966) 641-5386</p>
+                            {{ $practitioner->userInfo?->contact_type ?? '' }} ({{ $practitioner->userInfo?->contact_no ?? '' }})
+                        </p>
                     </div>
 
                 </div>
@@ -83,37 +91,44 @@
                 <div class="col-md-12 mt-3 d-flex flex-wrap justify-content-between">
 
                     <div class="col-md-6  ">
-                        <p class="font-weight-bold text-dark mb-0">Main street
+                        <p class="font-weight-bold text-dark mb-0">
+                            Main street
                         </p>
-                        <p class="font-weight-normal text-dark opacity-8">Gunners bury House,1 Chapel Hill
+                        <p class="font-weight-normal text-dark opacity-8">
+                            {{ $practitioner->userInfo?->main_street ?? '' }}
                         </p>
 
                     </div>
                     <div class="col-md-6 ">
-                        <p class="font-weight-bold text-dark mb-0">City
+                        <p class="font-weight-bold text-dark mb-0">
+                            City
                         </p>
                         <p class="font-weight-normal text-dark opacity-8">
-                            London</p>
+                            {{ $practitioner->userInfo?->city ?? '' }}
+                        </p>
                     </div>
 
                 </div>
                 <div class="col-md-12 mt-3 d-flex flex-wrap justify-content-between">
                     <div class="col-md-6  ">
-                        <p class="font-weight-bold text-dark mb-0">State/Country
+                        <p class="font-weight-bold text-dark mb-0">
+                            State/Country
                         </p>
-                        <p class="font-weight-normal text-dark opacity-8">London
+                        <p class="font-weight-normal text-dark opacity-8">
+                            {{ $practitioner->userInfo?->state ?? '' }}
                         </p>
 
                     </div>
                     <div class="col-md-6 ">
-                        <p class="font-weight-bold text-dark mb-0">Zip Code
+                        <p class="font-weight-bold text-dark mb-0">
+                            Zip Code
                         </p>
                         <p class="font-weight-normal text-dark opacity-8">
-                            A11 B12</p>
+                            {{ $practitioner->userInfo?->zip_code ?? '' }}
+                        </p>
                     </div>
 
                 </div>
-
             </div>
         </div>
     </div>
