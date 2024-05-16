@@ -46,7 +46,7 @@
                         <form method="POST" action="{{ route('password.email') }}">
                             @csrf
                             @if (session('status'))
-                                <div class="text-white alert alert-success alert-dismissible" role="alert">
+                                <div class="alert alert-success alert-dismissible" role="alert">
                                     <span class="text-sm"><b>Success!</b> {{ session('status') ?? 'Success' }}</span>
                                     <button type="button" class="btn-close text-lg py-3 opacity-10"
                                             data-bs-dismiss="alert"
@@ -56,7 +56,7 @@
                                 </div>
                             @endif
                             @if (session('error'))
-                                <div class="text-white alert alert-danger alert-dismissible " role="alert">
+                                <div class="alert alert-danger alert-dismissible " role="alert">
                                     <span class="text-sm"><b>Error!</b> {{ session('error') ?? 'Error' }}</span>
                                     <button type="button" class="btn-close text-lg py-3 opacity-10"
                                             data-bs-dismiss="alert"

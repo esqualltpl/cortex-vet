@@ -57,26 +57,6 @@
             background-size: 30px 12px !important;
         }
         /*//------Dropdown Arrow End------\\*/
-
-        /*//------Bootstrap Notification Color------\\*/
-        button.close {
-            background: none !important;
-            border: none !important;
-            font-size: 17px !important;
-        }
-        .alert-success {
-            background-image: linear-gradient(195deg, #dff0d8 0%, #d6e9c6 100%) !important;
-        }
-        .alert-info {
-            background-image: linear-gradient(195deg, #d9edf7 0%, #bce8f1 100%) !important;
-        }
-        .alert-warning {
-            background-image: linear-gradient(195deg, #fcf8e3 0%, #faebcc 100%) !important;
-        }
-        .alert-danger {
-            background-image: linear-gradient(195deg, #f2dede 0%, #ebccd1 100%) !important;
-        }
-        /*//------Bootstrap Notification Color------\\*/
     </style>
     @yield('style')
 </head>

@@ -46,7 +46,7 @@
                         <form method="POST" action="{{ route('password.store') }}">
                             @csrf
                             @if ($errors->any())
-                                <div class="text-white alert alert-danger alert-dismissible " role="alert">
+                                <div class="alert alert-danger alert-dismissible " role="alert">
                                     <ul>
                                         @foreach ($errors->all() as $error)
                                             <li>{{ $error }}</li>
