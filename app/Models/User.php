@@ -54,7 +54,7 @@ class User extends Authenticatable
         if($this->picture !== null) {
             return asset('portal/assets/profile/'.$this->picture);
         }else{
-            return asset('portal/assets/img/Image 1.png');
+            return asset('portal/assets/img/no-image.png');
         }
     }
 
