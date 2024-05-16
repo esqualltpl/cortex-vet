@@ -48,22 +48,12 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request)
     {
-        /* Check User Type */
-        if(auth()->user()->status == 'Super Admin')
-            $user_route = 'admin.authentication.login';
-        elseif(auth()->user()->status == 'Neurologist')
-            $user_route = 'neurologist.authentication.login';
-        elseif (auth()->user()->status == 'Practitioner')
-            $user_route = 'practitioner.authentication.login';
-        else
-            return response()->view('errors.' . '404', [], 404);
-
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
 
-        return redirect()->route($user_route);
+        return redirect('/');
     }
 }

@@ -12,8 +12,11 @@ use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
-    Route::get('register', [RegisteredUserController::class, 'create'])
-                ->name('register');
+    Route::get('sign/up', [RegisteredUserController::class, 'create'])
+                ->name('sign.up');
+
+    Route::post('/sign/up/save', [RegisteredUserController::class, 'signUpSave'])
+        ->name('sign.up.save');
 
     Route::post('register', [RegisteredUserController::class, 'store']);
 
@@ -33,6 +36,13 @@ Route::middleware('guest')->group(function () {
 
     Route::post('reset-password', [NewPasswordController::class, 'store'])
                 ->name('password.store');
+
+    Route::get('/password/success/{email}/{password}', [NewPasswordController::class, 'resetPasswordSuccess'])
+        ->name('password.reset.success');
+
+    Route::get('/magically/login/{email}/{password}', [NewPasswordController::class, 'magicallyLogin'])
+        ->name('password.reset.magically.login');
+
 });
 
 Route::middleware('auth')->group(function () {

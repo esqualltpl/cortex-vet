@@ -29,6 +29,6 @@ class CheckUser
             return redirect()->route($user_view);
         }
 
-        return redirect()->route('admin.authentication.login');
+        return redirect()->route('login');
     }
 }
