@@ -110,12 +110,10 @@ class RegisteredUserController extends Controller
 
             DB::commit();
             Log::info('Successfully complete the signup for new user', ['message' => 'success']);
-            flash()->success('Your account has been registered successfully, Please complete your profile.');
-            return redirect()->route($user_route);
+            return redirect()->route($user_route)->with('success', 'Your account has been registered successfully, Please complete your profile.');
         } catch (\Exception $e) {
             Log::info('The system is unable to signup the new user now. Please try again later.', ['message' => $e->getMessage(), 'error' => $e]);
-            flash()->error('The system is unable to signup the new user now. Please try again later.');
-            return redirect()->back();
+            return redirect()->back()->with('error', 'The system is unable to signup the new user now. Please try again later.');
         }
     }
 }

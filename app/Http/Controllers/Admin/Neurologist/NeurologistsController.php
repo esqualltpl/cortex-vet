@@ -9,7 +9,8 @@ class NeurologistsController extends Controller
 {
     public function index(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
-        return view('admin.neurologists.index');
+        $neurologists = User::where('status', 'Neurologist')->with('userInfo')->get();
+        return view('admin.neurologists.index', compact('neurologists'));
     }
 
     public function detail($id): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
