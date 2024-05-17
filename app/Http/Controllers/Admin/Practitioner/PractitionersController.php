@@ -40,7 +40,7 @@ class PractitionersController extends Controller
             DB::commit();
             return response()->json($response);
         } catch (Exception $e) {
-            $response = ResponseMessage::ResponseNotifyError('Success!', 'The system is unable to remove the user information. Please try again later.');
+            $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to remove the user information. Please try again later.');
             Log::info('The system is unable to remove the user information. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
 
             return response()->json($response);

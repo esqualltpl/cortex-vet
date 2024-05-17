@@ -46,6 +46,23 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
     //Settings
     Route::prefix('settings')->group(function () {
         Route::get('/', [SettingsController::class, 'index'])->name('admin.settings');
+
+        //Profile Information
+        Route::prefix('profile')->group(function () {
+            Route::post('update', [SettingsController::class, 'updateProfile'])->name('admin.setting.update.profile');
+            Route::post('image/update', [SettingsController::class, 'updateProfileImage'])->name('admin.setting.update.profile.image');
+        });
+
+        //Update Password
+        Route::post('/change/password',  [SettingsController::class, 'changeProfilePassword'])->name('admin.setting.change.profile.password');
+
+        //Set Localization Form
+        Route::prefix('set/localization')->group(function () {
+            Route::get('/', [SettingsController::class, 'localizationExamFormList'])->name('admin.setting.localization.exam.form.list');
+            Route::post('exam/add', [SettingsController::class, 'examInfoAdd'])->name('admin.setting.exam.add');
+        });
+
+        //Student
         Route::prefix('student')->group(function () {
             Route::get('add', [SettingsController::class, 'studentAdd'])->name('admin.settings.student.add');
             Route::get('edit/{id}', [SettingsController::class, 'studentEdit'])->name('admin.settings.student.edit');

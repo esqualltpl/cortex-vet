@@ -54,7 +54,7 @@ class User extends Authenticatable
     public function getUserPic(): string
     {
         if($this->picture !== null) {
-            return asset('portal/assets/profile/'.$this->picture);
+            return asset('portal/assets/upload/profile-images/'.$this->picture);
         }else{
             return asset('portal/assets/img/no-image.png');
         }

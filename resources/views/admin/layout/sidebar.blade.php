@@ -14,7 +14,7 @@
             <li class="nav-item mb-2 mt-0">
                 <a style=" margin-bottom: 3px !important; margin-top: 3px !important; " data-bs-toggle="collapse" href="#ProfileNav" class="nav-link text-dark " aria-controls="ProfileNav"
                    role="button" aria-expanded="false">
-                    <img src="{{ auth()->user()?->getUserPic() ?? '' }}" class="avatar loginUserProfile" alt="User Profile">
+                    <img src="{{ auth()->user()?->getUserPic() ?? '' }}" class="avatar loginUserProfile profile-image-show" alt="User Profile">
                     <span class="nav-link-text ms-2 ps-1 text-dark">{{ auth()->user()->name ?? '' }}</span>
                 </a>
                 <div class="collapse" id="ProfileNav" style="">

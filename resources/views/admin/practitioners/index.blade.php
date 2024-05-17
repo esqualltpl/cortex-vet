@@ -148,7 +148,7 @@
                 "_token": "{{ csrf_token() }}",
             };
 
-            ajaxCall(actionURL, actionType, processData, removedClass, closedModalId, loaderId);
+            removeInfo(actionURL, actionType, processData, removedClass, closedModalId, loaderId);
         });
     </script>
 @endsection
