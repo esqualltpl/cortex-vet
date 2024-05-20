@@ -18,6 +18,11 @@
     </nav>
 @endsection
 @section('style')
+    <style>
+        button.btn.btn-primary.px-3.nav-link.cursor-pointer.btn-sm.text-white {
+            padding: 6px 0px 6px 0px;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -440,7 +445,7 @@
                                                                 <div>
                                                                     <div class="nav-item dropdown mx-2">
                                                                         <button type="button"
-                                                                                class="btn btn-primary px-3 nav-link cursor-pointer btn-sm py-2 text-white"
+                                                                                class="btn btn-primary px-3 nav-link cursor-pointer btn-sm text-white"
                                                                                 id="dropdownMenuDocs"
                                                                                 data-bs-toggle="dropdown"
                                                                                 aria-expanded="false">
