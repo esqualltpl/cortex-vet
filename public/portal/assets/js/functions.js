@@ -139,7 +139,7 @@ function uploadFile(action_url, action_type, process_data, loader_id = null, hid
 }
 
 //---------|||--- Save Info Function ---|||---------//
-function saveInfo(action_url, action_type, process_data, loader_id = null, reset_form_id = null) {
+function saveInfo(action_url, action_type, process_data, loader_id = null, reset_form_id = null, show_render_data_class = null) {
     $.ajax({
         url: action_url,
         type: action_type,
@@ -154,6 +154,7 @@ function saveInfo(action_url, action_type, process_data, loader_id = null, reset
             let responseMessage = response.message;
             let responseIcon = response.icon;
             let responseStatus = response.status;
+            let responseRenderData = response.rendered_info;
             $.notify({
                 title: responseTitle,
                 message: responseMessage,
@@ -170,6 +171,9 @@ function saveInfo(action_url, action_type, process_data, loader_id = null, reset
 
             //Reset Form
             reset_form_id !== null ? $(`#${reset_form_id}`)[0].reset() : '';
+
+            //Render Information
+            show_render_data_class !== null ? $(`.${show_render_data_class}`).append(responseRenderData) : '';
 
             //Redirect to URL
             setTimeout(function () {
@@ -196,6 +200,72 @@ function saveInfo(action_url, action_type, process_data, loader_id = null, reset
             // location.reload();
         },
         complete: function (data) {
+            loader_id !== null ? $(`#${loader_id}`).addClass('d-none') : '';
+        }
+    });
+}
+
+//---------|||--- Get Info Function ---|||---------//
+function getInfo(action_url, action_type, process_data, loader_id = null, show_render_data_class) {
+    $.ajax({
+        url: action_url,
+        type: action_type,
+        dataType: 'json',
+        cache: false,
+        data: process_data,
+        beforeSend: function () {
+            $(`.${show_render_data_class}`).addClass('d-none');
+            loader_id !== null ? $(`#${loader_id}`).removeClass('d-none') : '';
+        },
+        success: function (response) {
+            let responseTitle = response.title;
+            let responseMessage = response.message;
+            let responseIcon = response.icon;
+            let responseStatus = response.status;
+            let responseRenderData = response.rendered_info;
+            $.notify({
+                title: responseTitle,
+                message: responseMessage,
+                icon: responseIcon,
+            }, {
+                // settings
+                type: responseStatus,
+                z_index: 2000,
+                animate: {
+                    enter: 'animated bounceInDown',
+                    exit: 'animated bounceOutUp'
+                }
+            });
+
+            //Render Information
+            $(`.${show_render_data_class}`).html(responseRenderData)
+
+            //Redirect to URL
+            setTimeout(function () {
+                if (response.redirect_url) {
+                    window.location.href = response.redirect_url;
+                }
+            }, 1000);
+        },
+        error: function (response) {
+            let responseMessage = response.responseJSON.message;
+            $.notify({
+                title: 'Error!',
+                message: `<br>${responseMessage}`,
+                icon: 'fa fa-exclamation-triangle',
+            }, {
+                // settings
+                type: 'danger',
+                z_index: 2000,
+                animate: {
+                    enter: 'animated bounceInDown',
+                    exit: 'animated bounceOutUp'
+                }
+            });
+            // location.reload();
+        },
+        complete: function (data) {
+            $(`.${show_render_data_class}`).removeClass('d-none');
             loader_id !== null ? $(`#${loader_id}`).addClass('d-none') : '';
         }
     });

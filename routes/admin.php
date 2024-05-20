@@ -54,12 +54,17 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
         });
 
         //Update Password
-        Route::post('/change/password',  [SettingsController::class, 'changeProfilePassword'])->name('admin.setting.change.profile.password');
+        Route::post('/change/password', [SettingsController::class, 'changeProfilePassword'])->name('admin.setting.change.profile.password');
 
         //Set Localization Form
         Route::prefix('set/localization')->group(function () {
             Route::get('/', [SettingsController::class, 'localizationExamFormList'])->name('admin.setting.localization.exam.form.list');
-            Route::post('exam/add', [SettingsController::class, 'examInfoAdd'])->name('admin.setting.exam.add');
+
+            Route::prefix('exam')->group(function () {
+                Route::get('list', [SettingsController::class, 'SetLocalizationExamList'])->name('admin.setting.exams.list');
+                Route::post('add', [SettingsController::class, 'examInfoAdd'])->name('admin.setting.exam.add');
+                Route::post('test/options/add', [SettingsController::class, 'examTestOptionsInfoAdd'])->name('admin.setting.exam.test.options.add');
+            });
         });
 
         //Student

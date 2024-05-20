@@ -58,7 +58,8 @@
                                             </span>
                                         </p>
                                     </button>
-                                    <button class="nav-link h-navlinks py-2 my-0" id="v-pills-exam-tab"
+                                    <button class="nav-link h-navlinks py-2 my-0 exams-list-info" id="v-pills-exam-tab"
+                                            data-action-url="{{ route('admin.setting.exams.list') }}"
                                             data-bs-toggle="pill" data-bs-target="#v-pills-exam" type="button"
                                             role="tab" aria-controls="v-pills-exam" aria-selected="true" tabindex="-1">
                                         <p class="nav-link1 text-dark mb-0  text-start px-0 mx-0">
@@ -428,7 +429,7 @@
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="card p-3">
-                                                    <div id="divNine">
+                                                    <div class="set-localization-exam-form">
                                                         <div class="d-flex justify-content-between flex-wrap">
                                                             <h6>Set Localization Exam Form</h6>
                                                             <div class="d-flex flex-wrap">
@@ -453,7 +454,7 @@
                                                                                aria-hidden="true"></i>
                                                                             <span class="text-sm">
                                                                                 <span>Add Exam Step</span>
-                                                                                <div id="add-exam-step-loader" class="spinner-border text-green-700 d-none overflow-hidden" role="status"
+                                                                                <div id="addExamStep-loader" class="spinner-border text-green-700 d-none overflow-hidden" role="status"
                                                                                      style="height: 17px !important;width: 17px !important;margin-left: 5px;font-size: 16px;margin-top: 0px;color: #ffffff;">
                                                                                     <span class="sr-only">Loading...</span>
                                                                                 </div>
@@ -461,7 +462,7 @@
                                                                         </button>
                                                                         <div class="dropdown-menu dropdown-menu-animation dropdown-lg mt-0 mt-lg-3 p-3 border-radius-lg"
                                                                              aria-labelledby="dropdownMenuDocs">
-                                                                            <form id="exam-step-add-form">
+                                                                            <form id="examStepAddForm">
                                                                                 @csrf
                                                                                 <div class="d-lg-block" style="width: 100%">
                                                                                     <h6><i class="fa fa-plus mx-2" aria-hidden="true"></i>Add Exam Step</h6>
@@ -477,7 +478,6 @@
                                                                                             style=" font-family: 'Poppins', sans-serif !important">
                                                                                         <span>Add</span>
                                                                                     </button>
-                                                                                    {{--onclick="addExamStep()"--}}
                                                                                 </div>
                                                                             </form>
                                                                         </div>
@@ -486,7 +486,11 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div id="divTen" style="display: none;">
+                                                    <div id="accordion-loader" class="text-center d-none" style="margin-left: 34px;">
+                                                        <img src="{{ asset('portal/assets/img/loader.gif') }}" width="120px" alt="loader"/>
+                                                    </div>
+                                                    <div class="accordion-info"></div>
+                                                    {{--<div id="divTen" style="display: none;">
                                                         <div class="accordion-item mt-2">
                                                             <p class="accordion-header" id="headingSeven">
                                                                 <button class="accordion-button py-3 px-2 border-bottom font-weight-bold"
@@ -513,10 +517,10 @@
                                                                             <div class="input-group input-group-outline mb-3">
                                                                                 <input type="copy" name="email" class="form-control" placeholder="Link">
                                                                                 <span class="input-group-text bg-transparent"
-                                                                                    data-bs-toggle="tooltip"
-                                                                                    data-bs-placement="top"
-                                                                                    title="Referral code expires in 24 hours"><i
-                                                                                        class="material-symbols-outlined text-sm me-2">
+                                                                                      data-bs-toggle="tooltip"
+                                                                                      data-bs-placement="top"
+                                                                                      title="Referral code expires in 24 hours"><i
+                                                                                            class="material-symbols-outlined text-sm me-2">
                                                                                         content_copy
                                                                                     </i>
                                                                                 </span>
@@ -534,7 +538,6 @@
                                                             </div>
                                                         </div>
                                                     </div>
-
                                                     <div id="divEleven" style="display: block;">
                                                         <div class="accordion-item mt-2">
                                                             <p class="accordion-header" id="headingSeven">
@@ -637,7 +640,7 @@
                                                             </div>
                                                         </div>
                                                         <div id="accordionRental" class="container mt-3 mx-0 px-0"></div>
-                                                    </div>
+                                                    </div>--}}
                                                 </div>
                                             </div>
                                         </div>
@@ -1455,6 +1458,90 @@
             </div>
         </div>
 
+        <div class="modal fade" id="addTestModal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="addTestModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+                <div class="modal-content ">
+                    <div class="modal-header">
+                        <h6 class="pt-1 mb-0">Add Test</h6>
+                        <button type="button" class="btn-close text-dark float-end" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="addTestOptionsForm">
+                            @csrf
+                            <input type="hidden" name="exam_id" id="addTestOptionsId">
+                            <div class="col-md-12">
+                                <div class="d-lg-block">
+                                    <label class="form-label font-weight-bold">Test</label>
+                                    <div class="input-group input-group-outline mb-3">
+                                        <input type="text" id="examStepInput" name="test" class="form-control"
+                                               placeholder="Enter Test">
+                                    </div>
+                                    <label class="form-label font-weight-bold">Options</label>
+                                    <div class="input-group input-group-outline mb-3 d-flex gap-2 align-items-center"
+                                         id="editModal">
+                                        <input type="text" id="examStepInput" name="test_options[]" class="form-control" placeholder="Option">
+                                        <button type="button"
+                                                class="btn btn-primary btn-sm ms-auto text-sm mb-0 cursor-pointer btn-sm text-white"
+                                                style="border-radius: 50px; opacity: 0.6; width: 20px; height: 30px; display: flex; justify-content: center; align-items: center"
+                                                onclick="addOptionField(event, 'editModal')">
+                                            <i class="fa fa-plus" aria-hidden="true"
+                                               style="font-size: 0.6rem !important"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-primary float-end btn-md mt-3 mb-0 text-white save-test-options" data-action-url="{{ route('admin.setting.exam.test.options.add') }}">
+                                <span>Save</span>
+                                <div id="addTestOptions-loader" class="spinner-border text-green-700 d-none overflow-hidden" role="status"
+                                     style="height: 17px !important;width: 17px !important;margin-left: 5px;font-size: 16px;margin-top: 0px;color: #ffffff;">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="editTestModal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+                <div class="modal-content ">
+                    <div class="modal-header">
+                        <h6 class="pt-1 mb-0">Edit Test</h6>
+                        <button type="button" class="btn-close text-dark float-end" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-md-12">
+                            <div class="d-lg-block">
+                                <label class="form-label font-weight-bold">Test</label>
+                                <div class="input-group input-group-outline mb-3">
+                                    <input type="text" id="examStepInput" class="form-control"
+                                           placeholder="Enter Test">
+                                </div>
+                                <label class="form-label font-weight-bold">Options</label>
+                                <div class="input-group input-group-outline mb-3 d-flex gap-2 align-items-center"
+                                     id="editModal">
+                                    <input type="text" id="examStepInput" class="form-control"
+                                           placeholder="Option">
+                                    <button type="button"
+                                            class="btn btn-primary btn-sm ms-auto text-sm mb-0 cursor-pointer btn-sm text-white"
+                                            style="border-radius: 50px; opacity: 0.6; width: 20px; height: 30px; display: flex; justify-content: center; align-items: center"
+                                            onclick="addOptionField(event, 'editModal')">
+                                        <i class="fa fa-plus" aria-hidden="true"
+                                           style="font-size: 0.6rem !important"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="footer">
+                            <button type="button" class="btn btn-primary float-end btn-md mt-3 text-white"> Save
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="modal fade" id="deleteUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
              aria-hidden="true">
             <div class="modal-dialog  modal-dialog-centered " role="document" style="">
@@ -1495,7 +1582,7 @@
                                style="color: #38BEBC !important;"></i>Give Result Name</h6>
                         <button type="button" class="btn-close text-dark float-end" data-bs-dismiss="modal"
                                 aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+
                         </button>
                     </div>
 
@@ -1511,49 +1598,6 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="editTestModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog  modal-dialog-centered  modal-md" role="document">
-                <div class="modal-content ">
-                    <div class=" modal-header">
-                        <h6>Edit Test</h6>
-                        <button type="button" class="btn-close text-dark float-end" data-bs-dismiss="modal"
-                                aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-
-                    <div class="modal-body mb-5">
-                        <div class="col-md-12">
-                            <div>
-                                <div class="d-lg-block">
-                                    <label class="form-label font-weight-bold">Test</label>
-                                    <div class="input-group input-group-outline mb-3">
-                                        <input type="text" id="examStepInput" class="form-control"
-                                               placeholder="Enter Test">
-                                    </div>
-                                    <label class="form-label font-weight-bold">Options</label>
-                                    <div class="input-group input-group-outline mb-3 d-flex gap-2 align-items-center"
-                                         id="editModal">
-                                        <input type="text" id="examStepInput" class="form-control"
-                                               placeholder="Option">
-                                        <button type="button"
-                                                class="btn btn-primary btn-sm ms-auto text-sm mb-0 cursor-pointer btn-sm text-white"
-                                                style="border-radius: 50px; opacity: 0.6; width: 20px; height: 30px; display: flex; justify-content: center; align-items: center"
-                                                onclick="addOptionField(event, 'editModal')">
-                                            <i class="fa fa-plus" aria-hidden="true"
-                                               style="font-size: 0.6rem !important"></i>
-                                        </button>
-                                    </div>
-                                    <button type="button" class="btn btn-primary float-end btn-lg text-white"> Save
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="modal fade" id="ViewNeurolocalizations" tabindex="-1" role="dialog"
              aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog  modal-lg modal-dialog-centered " role="document">
@@ -1563,7 +1607,7 @@
                                style="color: #38BEBC !important;"></i>Spine</h6>
                         <button type="button" class="btn-close text-dark float-end" data-bs-dismiss="modal"
                                 aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+
                         </button>
                     </div>
 
@@ -1603,6 +1647,244 @@
 @section('script')
     <script src="{{ assert('portal/assets/js/plugins/datatables.js') }}"></script>
     <script>
+        $(document).on('change', '#fileInput', function (e) {
+            let actionType = 'post';
+            let file_data = new FormData();
+            let file = $(this)[0].files[0];
+            file_data.append('image', file);
+            file_data.append("_token", '{{csrf_token()}}');
+
+            let loaderId = 'profileImage-loader';
+            let hideDataId = 'profile-image-hide';
+            let showDataId = 'profile-image-show';
+            let actionURL = $(this).attr('data-action-url');
+            let processData = file_data;
+
+            uploadFile(actionURL, actionType, processData, loaderId, hideDataId, showDataId);
+        });
+
+        $(document).on('click', '.save-profile-info', function (e) {
+            let actionType = 'post';
+            let loaderId = 'save-data-loader';
+            let actionURL = $(this).attr('data-action-url');
+            let processData = $('#save-profile-info-form').serialize();
+
+            saveInfo(actionURL, actionType, processData, loaderId);
+        });
+
+        $(document).on('click', '.change-password-info', function (e) {
+            let actionType = 'post';
+            let loaderId = 'change-password-loader';
+            let formId = 'change-password-info-form';
+            let actionURL = $(this).attr('data-action-url');
+            let processData = $(`#${formId}`).serialize();
+
+            saveInfo(actionURL, actionType, processData, loaderId, formId);
+        });
+
+        $(document).on('click', '.exams-list-info', function (e) {
+            let actionType = 'get';
+            let loaderId = 'accordion-loader';
+            let actionURL = $(this).attr('data-action-url');
+            let processData = {
+                "_token": "{{ csrf_token() }}",
+            };
+            let renderClass = 'accordion-info';
+
+            getInfo(actionURL, actionType, processData, loaderId, renderClass);
+        });
+
+        $(document).on('click', '.add-exam-step-info', function (e) {
+            let actionType = 'post';
+            let loaderId = 'addExamStep-loader';
+            let actionURL = $(this).attr('data-action-url');
+            let formId = 'examStepAddForm';
+            let processData = $(`#${formId}`).serialize();
+            let renderClass = 'accordion-info';
+
+            saveInfo(actionURL, actionType, processData, loaderId, formId, renderClass);
+        });
+
+        $(document).on('click', '.exam-testOptions-add-modal', function (e) {
+            let modalId = 'addTestModal';
+            let examId = $(this).attr('data-exam-id');
+            let examTestOptionClass = $(this).attr('data-test-option-class');
+            $('#addTestOptionsId').val(examId);
+            $('.save-test-options').attr('data-test-option-class', examTestOptionClass);
+
+            $(`#${modalId}`).modal('show');
+        });
+
+        $(document).on('click', '.save-test-options', function (e) {
+            let actionType = 'post';
+            let loaderId = 'addTestOptions-loader';
+            let actionURL = $(this).attr('data-action-url');
+            let formId = 'addTestOptionsForm';
+            let processData = $(`#${formId}`).serialize();
+            let renderClass = $(this).attr('data-test-option-class');
+
+            saveInfo(actionURL, actionType, processData, loaderId, formId, renderClass);
+        });
+
+        function addOptionField(event, className) {
+            event.stopPropagation();
+            const optionsContainer = $("#" + className);
+            const newInputGroup = $("<div></div>");
+            newInputGroup.addClass('input-group input-group-outline d-flex gap-2 align-items-center'); // Corrected class adding
+            newInputGroup.html(`
+        <input type="text" class="form-control" name="test_options[]" placeholder="Option">
+        <button type="button" class="btn btn-danger btn-sm ms-auto text-sm mb-0 cursor-pointer btn-sm text-white"
+                style="border-radius: 50px; width: 20px; height: 30px; display: flex; justify-content: center; align-items: center; background: #E66D6D"
+            onclick="removeOptionField(event, this)">
+            <i class="fa fa-times" aria-hidden="true" style="font-size: 0.6rem !important;"></i>
+        </button>
+    `);
+            optionsContainer.append(newInputGroup);
+        }
+        function removeOptionField(event, button) {
+            event.stopPropagation();
+            $(button).parent().remove();
+        }
+    </script>
+    {{-- *****----------------End JS Code----------------***** --}}
+
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var editIcon = document.getElementById("editIcon");
+            var fileInput = document.getElementById("fileInput");
+
+            editIcon.addEventListener("click", function () {
+                fileInput.value = "";
+                fileInput.click();
+            });
+        });
+
+        document.querySelectorAll('.toggle-password').forEach(function (element) {
+            element.addEventListener('click', function () {
+                const passwordInput = this.parentElement.previousElementSibling;
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    this.innerHTML = '<i class="fas fa-eye-slash" style="cursor: pointer; padding-right: 8px;"></i>';
+                } else {
+                    passwordInput.type = 'password';
+                    this.innerHTML = '<i class="fas fa-eye" style="cursor: pointer; padding-right: 8px;"></i>';
+                }
+            });
+        });
+
+        if (document.getElementById('datatable-basic')) {
+            const dataTableSearch = new simpleDatatables.DataTable("#datatable-basic", {
+                searchable: true,
+                fixedHeight: false,
+                perPage: 10
+            });
+        }
+
+        if (document.getElementById('datatable-Neurolocalizations')) {
+            const dataTableSearch = new simpleDatatables.DataTable("#datatable-Neurolocalizations", {
+                searchable: true,
+                fixedHeight: false,
+                perPage: 10
+            });
+        }
+
+        function switchDocument() {
+            if (document.getElementById('Divone')) {
+
+                if (document.getElementById('Divone').style.display == 'none') {
+                    document.getElementById('Divone').style.display = 'block';
+                    document.getElementById('Divtwo').style.display = 'none';
+                } else {
+                    document.getElementById('Divone').style.display = 'none';
+                    document.getElementById('Divtwo').style.display = 'block';
+                }
+            }
+        }
+
+        function switchVisibleBasicInfo() {
+            if (document.getElementById('Divone')) {
+
+                if (document.getElementById('Divone').style.display == 'none') {
+                    document.getElementById('Divone').style.display = 'block';
+                    document.getElementById('Divtwo').style.display = 'none';
+                } else {
+                    document.getElementById('Divone').style.display = 'none';
+                    document.getElementById('Divtwo').style.display = 'block';
+                }
+            }
+        }
+
+        function switchStudent() {
+            if (document.getElementById('Divthree')) {
+
+                if (document.getElementById('Divthree').style.display == 'none') {
+                    document.getElementById('Divthree').style.display = 'block';
+                    document.getElementById('Divfour').style.display = 'none';
+                } else {
+                    document.getElementById('Divthree').style.display = 'none';
+                    document.getElementById('Divfour').style.display = 'block';
+                }
+            }
+        }
+
+        function ShowNeurolocalizations() {
+            if (document.getElementById('divFive')) {
+
+                if (document.getElementById('divFive').style.display == 'none') {
+                    document.getElementById('divFive').style.display = 'block';
+                    document.getElementById('divSix').style.display = 'none';
+                } else {
+                    document.getElementById('divFive').style.display = 'none';
+                    document.getElementById('divSix').style.display = 'block';
+                }
+            }
+        }
+
+        function ShowEdit() {
+            if (document.getElementById('divSeven')) {
+
+                if (document.getElementById('divSeven').style.display == 'none') {
+                    document.getElementById('divSeven').style.display = 'block';
+                    document.getElementById('divEight').style.display = 'none';
+                } else {
+                    document.getElementById('divSeven').style.display = 'none';
+                    document.getElementById('divEight').style.display = 'block';
+                }
+            }
+        }
+
+        function ShowUpload() {
+            var divTen = document.getElementById('divTen');
+            var divEleven = document.getElementById('divEleven');
+            var uploadButton = document.getElementById('uploadButton');
+
+            if (divTen.style.display === 'block') {
+                divTen.style.display = 'none';
+                divEleven.style.display = 'block';
+                uploadButton.innerHTML = 'Upload Instruction Video'
+            } else {
+                divTen.style.display = 'block';
+                divEleven.style.display = 'none';
+                uploadButton.innerHTML = 'Tests'
+            }
+        }
+
+        document.querySelectorAll('.toggle-password').forEach(function (element) {
+            element.addEventListener('click', function () {
+                const passwordInput = this.parentElement.previousElementSibling;
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    this.innerHTML = '<i class="fas fa-eye-slash"></i>';
+                } else {
+                    passwordInput.type = 'password';
+                    this.innerHTML = '<i class="fas fa-eye"></i>';
+                }
+            });
+        });
+    </script>
+    <script>
 
         function handleCloneQuestion(contentId) {
             var container = document.getElementById(contentId);
@@ -1615,27 +1897,6 @@
             var container = document.getElementById(containerId);
             container.style.display = 'none'
 
-        }
-
-        function addOptionField(event, className) {
-            event.stopPropagation();
-            const optionsContainer = document.getElementById(className);
-            const newInputGroup = document.createElement('div');
-            newInputGroup.classList.add('input-group', 'input-group-outline', 'd-flex', 'gap-2', 'align-items-center');
-            newInputGroup.innerHTML = `
-            <input type="text" class="form-control" placeholder="Option">
-            <button type="button" class="btn btn-danger btn-sm ms-auto text-sm mb-0 cursor-pointer btn-sm text-white"
-                    style="border-radius: 50px; width: 20px; height: 30px; display: flex; justify-content: center; align-items: center; background: #E66D6D"
-                    onclick="removeOptionField(event, this)">
-                <i class="fa fa-times" aria-hidden="true" style="font-size: 0.6rem !important;"></i>
-            </button>
-        `;
-            optionsContainer.appendChild(newInputGroup);
-        }
-
-        function removeOptionField(event, button) {
-            event.stopPropagation();
-            button.parentNode.remove();
         }
 
 
@@ -1675,7 +1936,6 @@
                 }
             });
         });
-
     </script>
     <script>
         function addExamStep() {
@@ -1918,183 +2178,5 @@
             });
         });
     </script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            var editIcon = document.getElementById("editIcon");
-            var fileInput = document.getElementById("fileInput");
 
-            editIcon.addEventListener("click", function () {
-                fileInput.value = "";
-                fileInput.click();
-            });
-        });
-
-        document.querySelectorAll('.toggle-password').forEach(function (element) {
-            element.addEventListener('click', function () {
-                const passwordInput = this.parentElement.previousElementSibling;
-                if (passwordInput.type === 'password') {
-                    passwordInput.type = 'text';
-                    this.innerHTML = '<i class="fas fa-eye-slash" style="cursor: pointer; padding-right: 8px;"></i>';
-                } else {
-                    passwordInput.type = 'password';
-                    this.innerHTML = '<i class="fas fa-eye" style="cursor: pointer; padding-right: 8px;"></i>';
-                }
-            });
-        });
-
-        $(document).on('change', '#fileInput', function (e) {
-            let actionType = 'post';
-            let file_data = new FormData();
-            let file = $(this)[0].files[0];
-            file_data.append('image', file);
-            file_data.append("_token", '{{csrf_token()}}');
-
-            let loaderId = 'profileImage-loader';
-            let hideDataId = 'profile-image-hide';
-            let showDataId = 'profile-image-show';
-            let actionURL = $(this).attr('data-action-url');
-            let processData = file_data;
-
-            uploadFile(actionURL, actionType, processData, loaderId, hideDataId, showDataId);
-        });
-
-        $(document).on('click', '.save-profile-info', function (e) {
-            let actionType = 'post';
-            let loaderId = 'save-data-loader';
-            let actionURL = $(this).attr('data-action-url');
-            let processData = $('#save-profile-info-form').serialize();
-
-            saveInfo(actionURL, actionType, processData, loaderId);
-        });
-
-        $(document).on('click', '.change-password-info', function (e) {
-            let actionType = 'post';
-            let loaderId = 'change-password-loader';
-            let formId = 'change-password-info-form';
-            let actionURL = $(this).attr('data-action-url');
-            let processData = $(`#${formId}`).serialize();
-
-            saveInfo(actionURL, actionType, processData, loaderId, formId);
-        });
-
-        $(document).on('click', '.add-exam-step-info', function (e) {
-            let actionType = 'post';
-            let loaderId = 'add-exam-step-loader';
-            let actionURL = $(this).attr('data-action-url');
-            let formId = 'exam-step-add-form';
-            let processData = $(`#${formId}`).serialize();
-
-            saveInfo(actionURL, actionType, processData, loaderId, formId);
-        });
-
-        if (document.getElementById('datatable-basic')) {
-            const dataTableSearch = new simpleDatatables.DataTable("#datatable-basic", {
-                searchable: true,
-                fixedHeight: false,
-                perPage: 10
-            });
-        }
-
-        if (document.getElementById('datatable-Neurolocalizations')) {
-            const dataTableSearch = new simpleDatatables.DataTable("#datatable-Neurolocalizations", {
-                searchable: true,
-                fixedHeight: false,
-                perPage: 10
-            });
-        }
-
-        function switchDocument() {
-            if (document.getElementById('Divone')) {
-
-                if (document.getElementById('Divone').style.display == 'none') {
-                    document.getElementById('Divone').style.display = 'block';
-                    document.getElementById('Divtwo').style.display = 'none';
-                } else {
-                    document.getElementById('Divone').style.display = 'none';
-                    document.getElementById('Divtwo').style.display = 'block';
-                }
-            }
-        }
-
-        function switchVisibleBasicInfo() {
-            if (document.getElementById('Divone')) {
-
-                if (document.getElementById('Divone').style.display == 'none') {
-                    document.getElementById('Divone').style.display = 'block';
-                    document.getElementById('Divtwo').style.display = 'none';
-                } else {
-                    document.getElementById('Divone').style.display = 'none';
-                    document.getElementById('Divtwo').style.display = 'block';
-                }
-            }
-        }
-
-        function switchStudent() {
-            if (document.getElementById('Divthree')) {
-
-                if (document.getElementById('Divthree').style.display == 'none') {
-                    document.getElementById('Divthree').style.display = 'block';
-                    document.getElementById('Divfour').style.display = 'none';
-                } else {
-                    document.getElementById('Divthree').style.display = 'none';
-                    document.getElementById('Divfour').style.display = 'block';
-                }
-            }
-        }
-
-        function ShowNeurolocalizations() {
-            if (document.getElementById('divFive')) {
-
-                if (document.getElementById('divFive').style.display == 'none') {
-                    document.getElementById('divFive').style.display = 'block';
-                    document.getElementById('divSix').style.display = 'none';
-                } else {
-                    document.getElementById('divFive').style.display = 'none';
-                    document.getElementById('divSix').style.display = 'block';
-                }
-            }
-        }
-
-        function ShowEdit() {
-            if (document.getElementById('divSeven')) {
-
-                if (document.getElementById('divSeven').style.display == 'none') {
-                    document.getElementById('divSeven').style.display = 'block';
-                    document.getElementById('divEight').style.display = 'none';
-                } else {
-                    document.getElementById('divSeven').style.display = 'none';
-                    document.getElementById('divEight').style.display = 'block';
-                }
-            }
-        }
-
-        function ShowUpload() {
-            var divTen = document.getElementById('divTen');
-            var divEleven = document.getElementById('divEleven');
-            var uploadButton = document.getElementById('uploadButton');
-
-            if (divTen.style.display === 'block') {
-                divTen.style.display = 'none';
-                divEleven.style.display = 'block';
-                uploadButton.innerHTML = 'Upload Instruction Video'
-            } else {
-                divTen.style.display = 'block';
-                divEleven.style.display = 'none';
-                uploadButton.innerHTML = 'Tests'
-            }
-        }
-
-        document.querySelectorAll('.toggle-password').forEach(function (element) {
-            element.addEventListener('click', function () {
-                const passwordInput = this.parentElement.previousElementSibling;
-                if (passwordInput.type === 'password') {
-                    passwordInput.type = 'text';
-                    this.innerHTML = '<i class="fas fa-eye-slash"></i>';
-                } else {
-                    passwordInput.type = 'password';
-                    this.innerHTML = '<i class="fas fa-eye"></i>';
-                }
-            });
-        });
-    </script>
 @endsection

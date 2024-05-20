@@ -6,9 +6,12 @@ use App\Helpers\FileUpload;
 use App\Helpers\ResponseMessage;
 use App\Http\Controllers\Controller;
 use App\Models\Exam;
+use App\Models\Testes;
+use App\Models\TestOptions;
 use App\Models\User;
 use App\Models\UserDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -146,6 +149,32 @@ class SettingsController extends Controller
         }
     }
 
+    public function SetLocalizationExamList()
+    {
+        try {
+            DB::beginTransaction();
+
+            $examsAddInfo = Exam::where('added_by', auth()->user()->id)->with('testInfo')->get();
+
+            $renderData = '';
+            foreach ($examsAddInfo as $examAddInfo) {
+                //Render Data
+                $renderData .= view('admin.settings.render.localization_exam_form_data', compact('examAddInfo'))->render();
+            }
+
+            $response = ResponseMessage::ResponseNotifySuccess('Success!', 'Exams step list get successfully.');
+            $response['rendered_info'] = $renderData;
+            Log::info('Successfully get the exams step list successfully', ['list' => 'success' ?? '']);
+            DB::commit();
+
+            return response()->json($response);
+        } catch (Exception $e) {
+            $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to get the exams step list. Please try again later.');
+            Log::info('The system is unable to add the exams step list. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
+            return response()->json($response);
+        }
+    }
+
     public function examInfoAdd(Request $request)
     {
         $request->validate([
@@ -155,13 +184,59 @@ class SettingsController extends Controller
         try {
             DB::beginTransaction();
 
-            $examAdd = new Exam;
-            $examAdd->step_name = $request->exam_name;
-            $examAdd->added_by = auth()->user()->id;
-            $examAdd->save();
+            $examAddInfo = new Exam;
+            $examAddInfo->step_name = $request->exam_name;
+            $examAddInfo->added_by = auth()->user()->id;
+            $examAddInfo->save();
+
+            //Render Data
+            $renderData = view('admin.settings.render.localization_exam_form_data', compact('examAddInfo'))->render();
 
             $response = ResponseMessage::ResponseNotifySuccess('Success!', 'Exam step add successfully.');
+            $response['rendered_info'] = $renderData;
+            Log::info('Successfully add the exam step successfully', ['added' => 'success' ?? '']);
+            DB::commit();
 
+            return response()->json($response);
+        } catch (Exception $e) {
+            $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to add the exam step. Please try again later.');
+            Log::info('The system is unable to add the exam step. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
+
+            return response()->json($response);
+        }
+    }
+
+    public function examTestOptionsInfoAdd(Request $request)
+    {
+        $request->validate([
+            'test' => ['required', 'string', 'max:255'],
+            'test_options.*' => ['required', 'string', 'max:255'],
+        ]);
+
+        try {
+            DB::beginTransaction();
+            $exam_id = Crypt::decrypt($request->exam_id);
+            $testAddInfo = new Testes;
+            $testAddInfo->exam_id = Crypt::decrypt($request->exam_id);
+            $testAddInfo->name = $request->test;
+            $testAddInfo->added_by = auth()->user()->id;
+            $testAddInfo->save();
+
+            foreach ($request->test_options as $test_option) {
+                $testOption = new TestOptions;
+                $testOption->test_id = $testAddInfo->id;
+                $testOption->name = $test_option;
+                $testOption->added_by = auth()->user()->id;
+                $testOption->save();
+            }
+
+            $testNo = Testes::where('exam_id', $exam_id)->where('added_by', auth()->user()->id)->count() ?? 0;
+
+            //Render Data
+            $renderData = view('admin.settings.render.localization_exam_test_options_data', compact('testAddInfo', 'testNo'))->render();
+
+            $response = ResponseMessage::ResponseNotifySuccess('Success!', 'Exam step add successfully.');
+            $response['rendered_info'] = $renderData;
             Log::info('Successfully add the exam step successfully', ['added' => 'success' ?? '']);
             DB::commit();
 
