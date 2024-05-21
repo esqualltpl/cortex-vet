@@ -139,7 +139,7 @@ function uploadFile(action_url, action_type, process_data, loader_id = null, hid
 }
 
 //---------|||--- Save Info Function ---|||---------//
-function saveInfo(action_url, action_type, process_data, loader_id = null, reset_form_id = null, show_render_data_class = null) {
+function saveInfo(action_url, action_type, process_data, loader_id = null, reset_form_id = null, show_render_data_class = null, close_modal_id = null, render_type = null) {
     $.ajax({
         url: action_url,
         type: action_type,
@@ -172,8 +172,11 @@ function saveInfo(action_url, action_type, process_data, loader_id = null, reset
             //Reset Form
             reset_form_id !== null ? $(`#${reset_form_id}`)[0].reset() : '';
 
+            //Reset Form
+            close_modal_id !== null ? $(`#${close_modal_id}`).modal('hide') : '';
+
             //Render Information
-            show_render_data_class !== null ? $(`.${show_render_data_class}`).append(responseRenderData) : '';
+            show_render_data_class !== null ? render_type !== null ? $(`.${show_render_data_class}`).html(responseRenderData) : $(`.${show_render_data_class}`).append(responseRenderData) : '';
 
             //Redirect to URL
             setTimeout(function () {

@@ -58,7 +58,7 @@
                             <div class="border-radius-lg"
                                  style="border:1px solid #e8e8e8;">
                                 <div class="d-flex justify-content-end gap-2 p-2 ">
-                                    <a href="" data-bs-toggle="modal" data-bs-target="#editTestModal">
+                                    <a href="javascript:" class="edit-test-options" data-action-url="{{ route('admin.setting.exam.test.options.edit', Crypt::encrypt($testInfo->id)) }}" data-test-updated-class="show-updated-test-info{{ $test_sn }}">
                                         <i class="fa fa-pencil-square-o" aria-hidden="true" style="cursor: pointer; color: #5534A5"></i>
                                     </a>
                                     <a href="">
@@ -73,7 +73,7 @@
                                                     <p class="font-weight-bold text-dark mb-0">
                                                         Test: {{ $test_sn ?? 0 }}</p>
                                                 </div>
-                                                <div class="col-md-10 col-sm-12">
+                                                <div class="col-md-10 col-sm-12 show-updated-test-info{{ $testInfo->id }}">
                                                     <p class="font-weight-normal text-dark opacity-8">
                                                         {{ $testInfo->name ?? '' }}
                                                     </p>
@@ -81,8 +81,8 @@
                                                         @foreach($testInfo->optionsInfo ?? [] as $optionKey=>$options)
                                                             @php($option_sn = $optionKey +1)
                                                         <div class="form-check ps-0">
-                                                            <input class="form-check-input" type="radio" name="test_option[]" id="customRadio{{$option_sn}}">
-                                                            <label class="custom-control-label" for="customRadio{{ $option_sn }}">{{ $options->name ?? '' }}</label>
+                                                            <input class="form-check-input" type="radio" name="test_option[{{$testInfo->id}}][]" id="customRadio{{ $options->id }}">
+                                                            <label class="custom-control-label" for="customRadio{{ $options->id }}">{{ $options->name ?? '' }}</label>
                                                         </div>
                                                         @endforeach
                                                     </div>

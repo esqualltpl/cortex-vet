@@ -164,7 +164,7 @@ class SettingsController extends Controller
 
             $response = ResponseMessage::ResponseNotifySuccess('Success!', 'Exams step list get successfully.');
             $response['rendered_info'] = $renderData;
-            Log::info('Successfully get the exams step list successfully', ['list' => 'success' ?? '']);
+            Log::info('Successfully get the exams step list', ['list' => 'success' ?? '']);
             DB::commit();
 
             return response()->json($response);
@@ -194,7 +194,7 @@ class SettingsController extends Controller
 
             $response = ResponseMessage::ResponseNotifySuccess('Success!', 'Exam step add successfully.');
             $response['rendered_info'] = $renderData;
-            Log::info('Successfully add the exam step successfully', ['added' => 'success' ?? '']);
+            Log::info('Successfully add the exam step', ['added' => 'success' ?? '']);
             DB::commit();
 
             return response()->json($response);
@@ -210,7 +210,14 @@ class SettingsController extends Controller
     {
         $request->validate([
             'test' => ['required', 'string', 'max:255'],
-            'test_options.*' => ['required', 'string', 'max:255'],
+            'test_options_old.*' => ['required', 'string', 'max:255'],
+        ], [
+            'test.required' => 'The test field is required.',
+            'test.string' => 'The test field must be a string.',
+            'test.max' => 'The test field may not be greater than 255 characters.',
+            'test_options.*.required' => 'Each test option is required.',
+            'test_options.*.string' => 'Each test option must be a string.',
+            'test_options.*.max' => 'Each test option may not be greater than 255 characters.',
         ]);
 
         try {
@@ -237,13 +244,93 @@ class SettingsController extends Controller
 
             $response = ResponseMessage::ResponseNotifySuccess('Success!', 'Exam step add successfully.');
             $response['rendered_info'] = $renderData;
-            Log::info('Successfully add the exam step successfully', ['added' => 'success' ?? '']);
+            Log::info('Successfully add the exam step', ['added' => 'success' ?? '']);
             DB::commit();
 
             return response()->json($response);
         } catch (Exception $e) {
             $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to add the exam step. Please try again later.');
             Log::info('The system is unable to add the exam step. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
+
+            return response()->json($response);
+        }
+    }
+
+    public function examTestOptionsInfoEdit(Request $request, $id)
+    {
+        try {
+            DB::beginTransaction();
+            $test_id = Crypt::decrypt($id);
+            $testInfo = Testes::with('optionsInfo')->find($test_id);
+
+            //Render Data
+            $renderData = view('admin.settings.render.localization_update_exam_test_options_form_data', compact('testInfo'))->render();
+
+            $response = ResponseMessage::ResponseNotifySuccess('Success!', 'Test information get successfully.');
+            $response['rendered_info'] = $renderData;
+            Log::info('Successfully get the test information', ['added' => 'success' ?? '']);
+            DB::commit();
+
+            return response()->json($response);
+        } catch (Exception $e) {
+            $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to get the test information. Please try again later.');
+            Log::info('The system is unable to get the test information. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
+
+            return response()->json($response);
+        }
+    }
+
+    public function examTestOptionsInfoUpdate(Request $request)
+    {
+        $request->validate([
+            'test' => ['required', 'string', 'max:255'],
+            'test_options_old.*' => ['required', 'string', 'max:255'],
+            'test_options.*' => ['required', 'string', 'max:255'],
+        ], [
+            'test.required' => 'The test field is required.',
+            'test.string' => 'The test field must be a string.',
+            'test.max' => 'The test field may not be greater than 255 characters.',
+            'test_options_old.*.required' => 'Each test option is required.',
+            'test_options_old.*.string' => 'Each test option must be a string.',
+            'test_options_old.*.max' => 'Each test option may not be greater than 255 characters.',
+            'test_options.*.required' => 'Each test option is required.',
+            'test_options.*.string' => 'Each test option must be a string.',
+            'test_options.*.max' => 'Each test option may not be greater than 255 characters.',
+        ]);
+
+        try {
+            DB::beginTransaction();
+            $test_id = Crypt::decrypt($request->test_id);
+            $testInfo = Testes::find($test_id);
+            $testInfo->name = $request->test;
+            $testInfo->save();
+
+            foreach ($request->test_options_old ?? [] as $test_option_id=>$test_option_value) {
+                $testOptionUpdate = TestOptions::find($test_option_id);
+                $testOptionUpdate->name = $test_option_value;
+                $testOptionUpdate->save();
+            }
+
+            foreach ($request->test_options ?? [] as $test_option) {
+                $testOption = new TestOptions;
+                $testOption->test_id = $test_id;
+                $testOption->name = $test_option;
+                $testOption->added_by = auth()->user()->id;
+                $testOption->save();
+            }
+
+            //Render Data
+            $renderData = view('admin.settings.render.localization_updated_exam_test_options_data', compact('testInfo'))->render();
+
+            $response = ResponseMessage::ResponseNotifySuccess('Success!', 'Exam step add successfully.');
+            $response['rendered_info'] = $renderData;
+            Log::info('Successfully update the test information', ['added' => 'success' ?? '']);
+            DB::commit();
+
+            return response()->json($response);
+        } catch (Exception $e) {
+            $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to update the test information. Please try again later.');
+            Log::info('The system is unable to update the test information. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
 
             return response()->json($response);
         }

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * @method static where(string $string, mixed $id)
+ * @method static find(int|string $test_option_id)
  */
 class TestOptions extends Model
 {

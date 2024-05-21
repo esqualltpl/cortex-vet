@@ -1474,17 +1474,17 @@
                                 <div class="d-lg-block">
                                     <label class="form-label font-weight-bold">Test</label>
                                     <div class="input-group input-group-outline mb-3">
-                                        <input type="text" id="examStepInput" name="test" class="form-control"
+                                        <input type="text" name="test" class="form-control"
                                                placeholder="Enter Test">
                                     </div>
                                     <label class="form-label font-weight-bold">Options</label>
                                     <div class="input-group input-group-outline mb-3 d-flex gap-2 align-items-center"
-                                         id="editModal">
-                                        <input type="text" id="examStepInput" name="test_options[]" class="form-control" placeholder="Option">
+                                         id="addModal">
+                                        <input type="text" name="test_options[]" class="form-control" placeholder="Option">
                                         <button type="button"
                                                 class="btn btn-primary btn-sm ms-auto text-sm mb-0 cursor-pointer btn-sm text-white"
                                                 style="border-radius: 50px; opacity: 0.6; width: 20px; height: 30px; display: flex; justify-content: center; align-items: center"
-                                                onclick="addOptionField(event, 'editModal')">
+                                                onclick="addOptionField(event, 'addModal')">
                                             <i class="fa fa-plus" aria-hidden="true"
                                                style="font-size: 0.6rem !important"></i>
                                         </button>
@@ -1512,32 +1512,10 @@
                         <button type="button" class="btn-close text-dark float-end" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="col-md-12">
-                            <div class="d-lg-block">
-                                <label class="form-label font-weight-bold">Test</label>
-                                <div class="input-group input-group-outline mb-3">
-                                    <input type="text" id="examStepInput" class="form-control"
-                                           placeholder="Enter Test">
-                                </div>
-                                <label class="form-label font-weight-bold">Options</label>
-                                <div class="input-group input-group-outline mb-3 d-flex gap-2 align-items-center"
-                                     id="editModal">
-                                    <input type="text" id="examStepInput" class="form-control"
-                                           placeholder="Option">
-                                    <button type="button"
-                                            class="btn btn-primary btn-sm ms-auto text-sm mb-0 cursor-pointer btn-sm text-white"
-                                            style="border-radius: 50px; opacity: 0.6; width: 20px; height: 30px; display: flex; justify-content: center; align-items: center"
-                                            onclick="addOptionField(event, 'editModal')">
-                                        <i class="fa fa-plus" aria-hidden="true"
-                                           style="font-size: 0.6rem !important"></i>
-                                    </button>
-                                </div>
-                            </div>
+                        <div id="editTestModal-loader" class="text-center d-none" style="margin-left: 34px;">
+                            <img src="{{ asset('portal/assets/img/loader.gif') }}" width="120px" alt="loader"/>
                         </div>
-                        <div class="footer">
-                            <button type="button" class="btn btn-primary float-end btn-md mt-3 text-white"> Save
-                            </button>
-                        </div>
+                        <div class="edit-test-modal-info"></div>
                     </div>
                 </div>
             </div>
@@ -1711,6 +1689,7 @@
             let examTestOptionClass = $(this).attr('data-test-option-class');
             $('#addTestOptionsId').val(examId);
             $('.save-test-options').attr('data-test-option-class', examTestOptionClass);
+            $('.removed-option-row').remove();
 
             $(`#${modalId}`).modal('show');
         });
@@ -1720,17 +1699,45 @@
             let loaderId = 'addTestOptions-loader';
             let actionURL = $(this).attr('data-action-url');
             let formId = 'addTestOptionsForm';
+            let closeModalId = 'addTestModal';
             let processData = $(`#${formId}`).serialize();
             let renderClass = $(this).attr('data-test-option-class');
 
-            saveInfo(actionURL, actionType, processData, loaderId, formId, renderClass);
+            saveInfo(actionURL, actionType, processData, loaderId, formId, renderClass, closeModalId);
         });
+
+        $(document).on('click', '.edit-test-options', function (e) {
+            let actionType = 'get';
+            let loaderId = 'editTestModal-loader';
+            let actionURL = $(this).attr('data-action-url');
+            let processData = {
+                "_token": "{{ csrf_token() }}",
+            };
+            let renderClass = 'edit-test-modal-info';
+
+            $(`#editTestModal`).modal('show');
+            getInfo(actionURL, actionType, processData, loaderId, renderClass);
+        });
+
+        $(document).on('click', '.update-test-options', function (e) {
+            let actionType = 'post';
+            let loaderId = 'updateTestOptions-loader';
+            let actionURL = $(this).attr('data-action-url');
+            let formId = 'updateTestOptionsForm';
+            let closeModalId = 'editTestModal';
+            let processData = $(`#${formId}`).serialize();
+            let renderClass = $(this).attr('data-test-option-class');
+            let renderType = 'html';
+
+            saveInfo(actionURL, actionType, processData, loaderId, formId, renderClass, closeModalId, renderType);
+        });
+
 
         function addOptionField(event, className) {
             event.stopPropagation();
             const optionsContainer = $("#" + className);
             const newInputGroup = $("<div></div>");
-            newInputGroup.addClass('input-group input-group-outline d-flex gap-2 align-items-center'); // Corrected class adding
+            newInputGroup.addClass('input-group input-group-outline d-flex gap-2 align-items-center removed-option-row'); // Corrected class adding
             newInputGroup.html(`
         <input type="text" class="form-control" name="test_options[]" placeholder="Option">
         <button type="button" class="btn btn-danger btn-sm ms-auto text-sm mb-0 cursor-pointer btn-sm text-white"
