@@ -24,8 +24,8 @@
 
 <body class="g-sidenav-show" style="background-color: #FAFAFA;">
 <nav class="navbar px-md-7 navbar-expand-lg position-absolute top-0 z-index-3 shadow-none my-3 navbar-transparent mt-4">
-    <a class="navbar-brand font-weight-bolder ms-lg-0 ms-md-3 text-white" href="javascript:">
-        <img src="{{ asset('portal/assets/img/Logo.png') }}" width="200px" alt="Logo"/>
+    <a class="navbar-brand font-weight-bolder ms-lg-0 ms-md-3 text-white" href="{{ url('/') }}">
+        <img src="{{ asset('portal/assets/img/Logo.png') }}" width="110px" alt="Logo"/>
         <div class="position-relative  h-100 m-3  border-radius-lg d-flex flex-column justify-content-start">
             <h2 class="">Hi,</h2>
             <h5>Welcome to Cortex Vet!</h5>
@@ -39,8 +39,7 @@
                 <div class="row">
                     <div class="col-md-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 start-0 text-center justify-content-start flex-column"
                          style="background-color: #EFE6FB;">
-                        <img src="{{ asset('portal/assets/img/Images.png') }}" class="img-fluid mx-auto" width="60%"
-                             style="margin-top: 30%" alt="side Image"/>
+                        <img src="{{ asset('portal/assets/img/Images.png') }}" class="img-fluid mx-auto" width="70%" style="margin-top: 28%" alt="side Image">
                     </div>
                     <div class="col-xl-4 col-lg-4 col-md-4 d-flex flex-column ms-lg-auto px-1 me-lg-8 mt-5">
                         <form method="POST" action="{{ route('password.email') }}">

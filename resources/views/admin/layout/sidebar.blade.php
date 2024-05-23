@@ -5,7 +5,7 @@
         <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
            aria-hidden="true" id="iconSidenav"></i>
         <a href="javascript:;" target="_blank">
-            <img src="{{ asset('portal/assets/img/Logo.png') }}" class="navbar-brand-img " alt="main_logo" style="margin-top: 21px;">
+            <img src="{{ asset('portal/assets/img/Logo.png') }}" alt="main_logo" style="margin-top: 10px;width: 95px;">
         </a>
     </div>
     <hr class="horizontal mt-0 mb-0" style="border: 1px solid #8D8D8D !important;width: 220px;margin-left: 15px;">
