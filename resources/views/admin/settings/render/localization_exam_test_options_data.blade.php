@@ -1,12 +1,18 @@
-<div id="cloningTestContainer{{ $testNo ?? '' }}">
+<div id="cloningTestContainer{{ $testNo ?? '' }}" class="remove-exam-test-{{ $testNo ?? '' }}">
     <div class="mt-2" id="cloningTest{{ $testNo ?? '' }}">
         <div class="border-radius-lg"
              style="border:1px solid #e8e8e8;">
             <div class="d-flex justify-content-end gap-2 p-2 ">
-                <a href="javascript:" class="edit-test-options" data-action-url="{{ route('admin.setting.exam.test.options.edit', Crypt::encrypt($testInfo->id)) }}" data-test-updated-class="show-updated-test-info{{ $test_sn }}">
+                <a href="javascript:" class="edit-test-options"
+                   data-action-url="{{ route('admin.setting.exam.test.options.edit', Crypt::encrypt($testAddInfo->id)) }}"
+                   data-test-updated-class="show-updated-test-info{{ $testNo }}">
                     <i class="fa fa-pencil-square-o" aria-hidden="true" style="cursor: pointer; color: #5534A5"></i>
                 </a>
-                <a href="">
+                <a href="javascript:" class="remove-exam-test-info"
+                   data-removed-name="{{ $testAddInfo->name ?? '' }}"
+                   data-removed-class="remove-exam-test-{{ $testNo ?? '' }}"
+                   data-action-url="{{ route('admin.setting.exam.test.delete', Crypt::encrypt($testAddInfo->id)) }}"
+                >
                     <i class="fa fa-times" aria-hidden="true" style="color: #E66D6D; cursor: pointer"></i>
                 </a>
             </div>
@@ -18,9 +24,9 @@
                                 <p class="font-weight-bold text-dark mb-0">
                                     Test: {{ $testNo ?? '' }}</p>
                             </div>
-                            <div class="col-md-10 col-sm-12 show-updated-test-info{{ $test_sn }}">
+                            <div class="col-md-10 col-sm-12 show-updated-test-info{{ $testAddInfo->id }}">
                                 <p class="font-weight-normal text-dark opacity-8">
-                                    {{ $testAddInfo->testInfo?->name ?? '' }}
+                                    {{ $testAddInfo->name ?? '' }}
                                 </p>
                                 <div class="test-options">
                                     @foreach($testAddInfo->optionsInfo ?? [] as $optionKey=>$options)

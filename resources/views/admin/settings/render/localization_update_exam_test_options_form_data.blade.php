@@ -10,7 +10,9 @@
             </div>
             <label class="form-label font-weight-bold">Options</label>
             <div class="input-group input-group-outline mb-3 d-flex gap-2 align-items-center" id="editModal">
+                @php($sn = 0)
                 @foreach($testInfo->optionsInfo ?? [] as $key=>$optionsInfo)
+                    @php($sn = $sn+1)
                     @if($key == 0)
                         <input type="text" name="test_options_old[{{$optionsInfo->id ?? 0}}]" class="form-control" value="{{ $optionsInfo->name ?? '' }}" placeholder="Option">
                         <button type="button" class="btn btn-primary btn-sm ms-auto text-sm mb-0 cursor-pointer btn-sm text-white"
@@ -19,11 +21,13 @@
                             <i class="fa fa-plus" aria-hidden="true" style="font-size: 0.6rem !important"></i>
                         </button>
                     @else
-                        <div class="input-group input-group-outline d-flex gap-2 align-items-center removed-option-row">
+                        <div class="input-group input-group-outline d-flex gap-2 align-items-center removed-option-row remove-old-option-{{ $sn ?? 0 }}">
                             <input type="text" class="form-control" name="test_options_old[{{$optionsInfo->id ?? 0}}]" value="{{ $optionsInfo->name ?? '' }}" placeholder="Option">
-                            <button type="button" class="btn btn-danger btn-sm ms-auto text-sm mb-0 cursor-pointer btn-sm text-white"
+                            <button type="button" class="btn btn-danger btn-sm ms-auto text-sm mb-0 cursor-pointer btn-sm text-white remove-test-old-option-data"
                                     style="border-radius: 50px; width: 20px; height: 30px; display: flex; justify-content: center; align-items: center; background: #E66D6D"
-                                    onclick="removeOptionField(event, this)">
+                                    data-removed-id="{{ Crypt::encrypt($optionsInfo->id) }}"
+                                    data-removed-class="remove-old-option-{{ $sn ?? 0 }}"
+                            >
                                 <i class="fa fa-times" aria-hidden="true" style="font-size: 0.6rem !important;"></i>
                             </button>
                         </div>
@@ -32,7 +36,9 @@
             </div>
         </div>
     </div>
-    <button type="button" class="btn btn-primary float-end btn-md mt-3 mb-0 text-white update-test-options" data-test-option-class="show-updated-test-info{{ $testInfo->id }}" data-action-url="{{ route('admin.setting.exam.test.options.update') }}">
+    <button type="button" class="btn btn-primary float-end btn-md mt-3 mb-0 text-white update-test-options"
+            data-test-option-class="show-updated-test-info{{ $testInfo->id }}"
+            data-action-url="{{ route('admin.setting.exam.test.options.update') }}">
         <span>Save</span>
         <div id="updateTestOptions-loader" class="spinner-border text-green-700 d-none overflow-hidden" role="status"
              style="height: 17px !important;width: 17px !important;margin-left: 5px;font-size: 16px;margin-top: 0px;color: #ffffff;">

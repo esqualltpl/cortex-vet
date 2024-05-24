@@ -98,7 +98,7 @@
                             <img src="{{ asset('portal/assets/img/Sad Emoji.png') }}" alt="icon"/>
                         </div>
                         <div class="text-center  m-3 p-3">
-                            <p class="text-white">Are you sure to want to delete <span class="text-bold removed-item-name">Ryan Holland</span></p>
+                            <p class="text-white">Are you sure to want to delete <span class="text-bold removed-item-name"></span></p>
                         </div>
                     </div>
                     <div class="conformation">

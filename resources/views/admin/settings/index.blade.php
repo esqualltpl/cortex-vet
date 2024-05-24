@@ -434,13 +434,12 @@
                                                             <h6>Set Localization Exam Form</h6>
                                                             <div class="d-flex flex-wrap">
                                                                 <div>
-                                                                    <button type="button" onclick="ShowUpload()"
-                                                                            id="uploadButton"
-                                                                            class="btn btn-outline-primary btn-sm py-2 mb-2"
+                                                                    <button type="button"
+                                                                            class="upload-instruction-video-toggle btn btn-outline-primary btn-sm py-2 mb-2"
                                                                             style=" font-family: 'Poppins', sans-serif !important">
                                                                         <i class="fa fa-check-circle-o text-sm mx-1"
                                                                            aria-hidden="true"></i>
-                                                                        <span>Upload Instruction Video</span>
+                                                                        <span class="upload-instruction-video-button-text">Upload Instruction Video</span>
                                                                     </button>
                                                                 </div>
                                                                 <div>
@@ -1520,37 +1519,41 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="deleteUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog  modal-dialog-centered " role="document" style="">
+        <div class="modal fade" id="deleteLocalizationExamInfoModal" data-bs-backdrop="static" data-bs-keyboard="false"
+             tabindex="-1" role="dialog" aria-labelledby="deleteLocalizationExamInfoModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered " role="document" style="">
                 <div class="modal-content ">
                     <div class=" modal-header" style="background-color: #FD4F4E;border-bottom: none;">
-
-                        <button type="button" class="btn-close text-dark float-end" data-bs-dismiss="modal"
-                                aria-label="Close">
-
-                        </button>
+                        <button type="button" class="btn-close text-dark float-end" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body" style="background-color: #FD4F4E;">
                         <div class="d-flex justify-content-center">
-                            <img src="../assets/img/Sad Emoji.png"/>
+                            <img src="{{ asset('portal/assets/img/Sad Emoji.png') }}" alt="icon"/>
                         </div>
                         <div class="text-center  m-3 p-3">
-
-                            <p class="text-white">Are you sure you want to delete the result "Spine"</p>
+                            <p class="text-white">Are you sure to want to delete <span class="text-bold removed-item-name"></span></p>
                         </div>
-
                     </div>
-                    <div class="">
+                    <div class="conformation">
                         <div class="my-3">
-                            <a href="">
-                                <p class="text-center font-weight-bold text-info ">Continue</p>
+
+                            <a href="javascript:">
+                                <p class="justify-content-center font-weight-bold text-info removed-data d-flex">
+                                    <span>
+                                        Continue
+                                    </span>
+                                    <span id="removed-data-loader" class="spinner-border overflow-hidden d-none" role="status"
+                                          style="height: 15px !important;width: 15px !important;margin: 5px !important;">
+                                        <span class="sr-only">Loading...</span>
+                                    </span>
+                                </p>
                             </a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
         <div class="modal fade" id="addcomment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
              aria-hidden="true">
             <div class="modal-dialog  modal-dialog-centered  modal-lg" role="document">
@@ -1660,6 +1663,55 @@
             saveInfo(actionURL, actionType, processData, loaderId, formId);
         });
 
+        let toggleState = true;
+        $(document).on('click', '.upload-instruction-video-toggle', function (e) {
+            $('.accordion-info').addClass('d-none');
+            $('#accordion-loader').removeClass('d-none');
+
+            setTimeout(function () {
+                if (toggleState) {
+                    $('.exam-video-data').removeClass('d-none');
+                    $('.exam-test-option-data').addClass('d-none');
+                    $('.upload-instruction-video-button-text').text('Test');
+                    $.notify({
+                        title: 'Success!',
+                        message: '<br>Upload instruction video information get successfully.',
+                        icon: 'fa fa-check',
+                    }, {
+                        // settings
+                        type: 'success',
+                        z_index: 2000,
+                        animate: {
+                            enter: 'animated bounceInDown',
+                            exit: 'animated bounceOutUp'
+                        }
+                    });
+                } else {
+                    $('.exam-test-option-data').removeClass('d-none');
+                    $('.exam-video-data').addClass('d-none');
+                    $('.upload-instruction-video-button-text').text('Upload Instruction Video');
+                    $.notify({
+                        title: 'Success!',
+                        message: '<br>Exam test information get successfully.',
+                        icon: 'fa fa-check',
+                    }, {
+                        // settings
+                        type: 'success',
+                        z_index: 2000,
+                        animate: {
+                            enter: 'animated bounceInDown',
+                            exit: 'animated bounceOutUp'
+                        }
+                    });
+                }
+
+                toggleState = !toggleState; // Toggle the state
+
+                $('#accordion-loader').addClass('d-none');
+                $('.accordion-info').removeClass('d-none');
+            }, 1000);
+        });
+
         $(document).on('click', '.exams-list-info', function (e) {
             let actionType = 'get';
             let loaderId = 'accordion-loader';
@@ -1689,6 +1741,8 @@
             let examTestOptionClass = $(this).attr('data-test-option-class');
             $('#addTestOptionsId').val(examId);
             $('.save-test-options').attr('data-test-option-class', examTestOptionClass);
+
+            $('#addTestOptionsForm')[0].reset();
             $('.removed-option-row').remove();
 
             $(`#${modalId}`).modal('show');
@@ -1732,6 +1786,49 @@
             saveInfo(actionURL, actionType, processData, loaderId, formId, renderClass, closeModalId, renderType);
         });
 
+        $(document).on('click', '.remove-test-old-option-data', function (e) {
+            let removedClass = $(this).attr('data-removed-class');
+            let removedId = $(this).attr('data-removed-id');
+            let formId = 'updateTestOptionsForm';
+
+            $(`#${formId}`).append(`<input type='hidden' name='removed_test_options[]' value='${removedId}' />`)
+            $(`.${removedClass}`).remove();
+        });
+
+        $(document).on('click', '.remove-exam-info', function (e) {
+            let removedClass = $(this).attr('data-removed-class');
+            let actionURL = $(this).attr('data-action-url');
+            let removedName = $(this).attr('data-removed-name');
+
+            $('.removed-data').attr('data-removed-class', removedClass);
+            $('.removed-data').attr('data-action-url', actionURL);
+            $('.removed-item-name').html(removedName);
+            $('#deleteLocalizationExamInfoModal').modal('show');
+        });
+
+        $(document).on('click', '.remove-exam-test-info', function (e) {
+            let removedClass = $(this).attr('data-removed-class');
+            let actionURL = $(this).attr('data-action-url');
+            let removedName = $(this).attr('data-removed-name');
+
+            $('.removed-data').attr('data-removed-class', removedClass);
+            $('.removed-data').attr('data-action-url', actionURL);
+            $('.removed-item-name').html(removedName);
+            $('#deleteLocalizationExamInfoModal').modal('show');
+        });
+
+        $(document).on('click', '.removed-data', function (e) {
+            let actionType = 'delete';
+            let loaderId = 'removed-data-loader';
+            let closedModalId = 'deleteLocalizationExamInfoModal';
+            let removedClass = $(this).attr('data-removed-class');
+            let actionURL = $(this).attr('data-action-url');
+            let processData = {
+                "_token": "{{ csrf_token() }}",
+            };
+
+            removeInfo(actionURL, actionType, processData, removedClass, closedModalId, loaderId);
+        });
 
         function addOptionField(event, className) {
             event.stopPropagation();
@@ -1748,6 +1845,7 @@
     `);
             optionsContainer.append(newInputGroup);
         }
+
         function removeOptionField(event, button) {
             event.stopPropagation();
             $(button).parent().remove();
