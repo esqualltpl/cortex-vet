@@ -1681,7 +1681,7 @@
         });
 
         let toggleState = true;
-        /*let setLocalizationFormCount = $settings['set-localization-form'] ?? 0;*/
+        /*let setLocalizationFormCount = //$settings['set-localization-form'] ?? 0;*/
         $(document).on('click', '.upload-instruction-video-toggle', function (e) {
             $('.accordion-info').addClass('d-none');
             $('#accordion-loader').removeClass('d-none');
@@ -1692,7 +1692,7 @@
                         $('.exam-video-data').removeClass('d-none');
                         $('.exam-test-option-data').addClass('d-none');
                         $('.upload-instruction-video-button-text').text('Test');
-                        /*$.notify({
+                        $.notify({
                             title: 'Success!',
                             message: '<br>Upload instruction video information get successfully.',
                             icon: 'fa fa-check',
@@ -1704,12 +1704,12 @@
                                 enter: 'animated bounceInDown',
                                 exit: 'animated bounceOutUp'
                             }
-                        });*/
+                        });
                     } else {
                         $('.exam-test-option-data').removeClass('d-none');
                         $('.exam-video-data').addClass('d-none');
                         $('.upload-instruction-video-button-text').text('Upload Instruction Video');
-                        /*$.notify({
+                        $.notify({
                             title: 'Success!',
                             message: '<br>Exam test information get successfully.',
                             icon: 'fa fa-check',
@@ -1721,7 +1721,7 @@
                                 enter: 'animated bounceInDown',
                                 exit: 'animated bounceOutUp'
                             }
-                        });*/
+                        });
                     }
 
                     toggleState = !toggleState; // Toggle the state
