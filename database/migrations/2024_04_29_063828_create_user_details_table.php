@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('user_details', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable();
-            $table->enum('contact_type', ['Work Mobile', 'Home', 'Office'])->nullable();
+            $table->enum('contact_type', ['Personal Mobile','Work Mobile', 'Home', 'Office'])->nullable();
             $table->string('contact_no')->nullable();
             $table->string('vet_license')->nullable();
             $table->string('license_state')->nullable();

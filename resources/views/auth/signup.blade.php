@@ -178,10 +178,10 @@
                                     <i class="fa fa-address-book"></i>
                                     <select class="form-select ps-3" aria-label="Default select example" name="contact_type">
                                         <option value="">Select Contact Type</option>
-                                        <option {{ old('contact_type') ?? '' == 'Personal Mobile' ? 'selected' : '' }} value="{{ Crypt::encrypt('Personal Mobile') }}">Personal Mobile</option>
-                                        <option {{ old('contact_type') ?? '' == 'Work Mobile' ? 'selected' : '' }} value="{{ Crypt::encrypt('Work Mobile') }}">Work Mobile</option>
-                                        <option {{ old('contact_type') ?? '' == 'Home' ? 'selected' : '' }} value="{{ Crypt::encrypt('Home') }}">Home</option>
-                                        <option {{ old('contact_type') ?? '' == 'Office' ? 'selected' : '' }} value="{{ Crypt::encrypt('Office') }}">Office</option>
+                                        <option {{ old('contact_type') ? Crypt::decrypt(old('contact_type')) == 'Personal Mobile' ? 'selected' : '' : '' }} value="{{ Crypt::encrypt('Personal Mobile') }}">Personal Mobile</option>
+                                        <option {{ old('contact_type') ? Crypt::decrypt(old('contact_type')) == 'Work Mobile' ? 'selected' : '' : '' }} value="{{ Crypt::encrypt('Work Mobile') }}">Work Mobile</option>
+                                        <option {{ old('contact_type') ? Crypt::decrypt(old('contact_type')) == 'Home' ? 'selected' : '' : '' }} value="{{ Crypt::encrypt('Home') }}">Home</option>
+                                        <option {{ old('contact_type') ? Crypt::decrypt(old('contact_type')) == 'Office' ? 'selected' : '' : '' }} value="{{ Crypt::encrypt('Office') }}">Office</option>
                                     </select>
                                 </div>
                             </div>
@@ -215,8 +215,8 @@
                                     <i class="fas fa-map-marker-alt"></i>
                                     <select class="form-select ps-3" aria-label="Default select example" name="address">
                                         <option value="">Address</option>
-                                        <option {{ old('address') ?? '' == 'Clinic' ? 'selected' : '' }} value="{{ Crypt::encrypt('Clinic') }}">Clinic</option>
-                                        <option {{ old('address') ?? '' == 'Home' ? 'selected' : '' }} value="{{ Crypt::encrypt('Home') }}">Home</option>
+                                        <option {{ old('address') ? Crypt::decrypt(old('address')) == 'Clinic' ? 'selected' : '' : '' }} value="{{ Crypt::encrypt('Clinic') }}">Clinic</option>
+                                        <option {{ old('address') ? Crypt::decrypt(old('address')) == 'Home' ? 'selected' : '' : '' }} value="{{ Crypt::encrypt('Home') }}">Home</option>
                                     </select>
                                 </div>
                             </div>
