@@ -1681,52 +1681,69 @@
         });
 
         let toggleState = true;
+        let setLocalizationFormCount = {{ $settings['set-localization-form'] ?? 0 }};
         $(document).on('click', '.upload-instruction-video-toggle', function (e) {
             $('.accordion-info').addClass('d-none');
             $('#accordion-loader').removeClass('d-none');
 
-            setTimeout(function () {
-                if (toggleState) {
-                    $('.exam-video-data').removeClass('d-none');
-                    $('.exam-test-option-data').addClass('d-none');
-                    $('.upload-instruction-video-button-text').text('Test');
-                    $.notify({
-                        title: 'Success!',
-                        message: '<br>Upload instruction video information get successfully.',
-                        icon: 'fa fa-check',
-                    }, {
-                        // settings
-                        type: 'success',
-                        z_index: 2000,
-                        animate: {
-                            enter: 'animated bounceInDown',
-                            exit: 'animated bounceOutUp'
-                        }
-                    });
-                } else {
-                    $('.exam-test-option-data').removeClass('d-none');
-                    $('.exam-video-data').addClass('d-none');
-                    $('.upload-instruction-video-button-text').text('Upload Instruction Video');
-                    $.notify({
-                        title: 'Success!',
-                        message: '<br>Exam test information get successfully.',
-                        icon: 'fa fa-check',
-                    }, {
-                        // settings
-                        type: 'success',
-                        z_index: 2000,
-                        animate: {
-                            enter: 'animated bounceInDown',
-                            exit: 'animated bounceOutUp'
-                        }
-                    });
-                }
+            if(setLocalizationFormCount > 0) {
+                setTimeout(function () {
+                    if (toggleState) {
+                        $('.exam-video-data').removeClass('d-none');
+                        $('.exam-test-option-data').addClass('d-none');
+                        $('.upload-instruction-video-button-text').text('Test');
+                        $.notify({
+                            title: 'Success!',
+                            message: '<br>Upload instruction video information get successfully.',
+                            icon: 'fa fa-check',
+                        }, {
+                            // settings
+                            type: 'success',
+                            z_index: 2000,
+                            animate: {
+                                enter: 'animated bounceInDown',
+                                exit: 'animated bounceOutUp'
+                            }
+                        });
+                    } else {
+                        $('.exam-test-option-data').removeClass('d-none');
+                        $('.exam-video-data').addClass('d-none');
+                        $('.upload-instruction-video-button-text').text('Upload Instruction Video');
+                        $.notify({
+                            title: 'Success!',
+                            message: '<br>Exam test information get successfully.',
+                            icon: 'fa fa-check',
+                        }, {
+                            // settings
+                            type: 'success',
+                            z_index: 2000,
+                            animate: {
+                                enter: 'animated bounceInDown',
+                                exit: 'animated bounceOutUp'
+                            }
+                        });
+                    }
 
-                toggleState = !toggleState; // Toggle the state
+                    toggleState = !toggleState; // Toggle the state
 
-                $('#accordion-loader').addClass('d-none');
-                $('.accordion-info').removeClass('d-none');
-            }, 1000);
+                    $('#accordion-loader').addClass('d-none');
+                    $('.accordion-info').removeClass('d-none');
+                }, 1000);
+            }else{
+                $.notify({
+                    title: 'Notification!',
+                    message: '<br>No exams step list found, please add exams step firstly.',
+                    icon: 'fa fa-exclamation-triangle',
+                }, {
+                    // settings
+                    type: 'warning',
+                    z_index: 2000,
+                    animate: {
+                        enter: 'animated bounceInDown',
+                        exit: 'animated bounceOutUp'
+                    }
+                });
+            }
         });
 
         $(document).on('click', '.toggle-copy', function (e) {

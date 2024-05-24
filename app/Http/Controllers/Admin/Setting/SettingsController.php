@@ -23,7 +23,7 @@ class SettingsController extends Controller
     public function index(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $settings['profile-information'] = auth()->user() ?? null;
-        $settings['set-localization-form'] = null;
+        $settings['set-localization-form'] = $examsAddInfo = Exam::where('added_by', auth()->user()->id)->with('testInfo')->count() ?? 0;
         $settings['set-results'] = null;
         $settings['payments'] = null;
         $settings['students'] = null;
@@ -210,6 +210,7 @@ class SettingsController extends Controller
             return response()->json($response);
         }
     }
+
     public function examUploadInstructionVideoOrUrl(Request $request)
     {
         // Validate the request
@@ -259,6 +260,7 @@ class SettingsController extends Controller
             return response()->json($response);
         }
     }
+
     public function examUploadInstructionVideoPreview(Request $request, $examId)
     {
         try {
@@ -447,6 +449,7 @@ class SettingsController extends Controller
             return response()->json($response);
         }
     }
+
     public function examTestInfoDelete($id)
     {
         try {
