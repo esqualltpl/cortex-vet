@@ -1553,6 +1553,23 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="viewExamUploadedVideoModal" tabindex="-1" role="dialog" data-bs-backdrop="static"
+             data-bs-keyboard="false" aria-labelledby="viewExamUploadedVideoModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content ">
+                    <div class="modal-header">
+                        <h6 class="pt-1 mb-0">Instruction Video</h6>
+                        <button type="button" class="btn-close text-dark float-end" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div id="viewExamUploadedVideo-loader" class="text-center d-none" style="margin-left: 34px;">
+                        <img src="{{ asset('portal/assets/img/loader.gif') }}" width="120px" alt="loader"/>
+                    </div>
+                    <div class="modal-body show-exam-uploaded-video">
+
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="modal fade" id="addcomment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
              aria-hidden="true">
@@ -1712,6 +1729,42 @@
             }, 1000);
         });
 
+        $(document).on('click', '.toggle-copy', function (e) {
+            e.preventDefault();
+
+            let input = $(this).attr('data-video-url-link');
+
+            $(`#${input}`).select();
+            $(`#${input}`)[0].setSelectionRange(0, 99999); // For mobile devices
+
+            document.execCommand('copy');
+        });
+
+        $(document).on('click', '.upload-exam-video-or-url', function (e) {
+            e.preventDefault();
+            let actionType = 'post';
+            let loaderId = $(this).attr('data-loader-id');
+            let formId = $(this).attr('data-form-id');
+            let actionURL = $(this).attr('data-action-url');
+            let processData = new FormData($(`#${formId}`)[0]);
+
+            uploadFile(actionURL, actionType, processData, loaderId);
+        });
+
+        $(document).on('click', '.preview-exam-uploaded-video', function (e) {
+            e.preventDefault();
+            let actionType = 'get';
+            let loaderId = 'viewExamUploadedVideo-loader';
+            let actionURL = $(this).attr('data-action-url');
+            let processData = {
+                "_token": "{{ csrf_token() }}",
+            };
+            let renderClass = 'show-exam-uploaded-video';
+
+            getInfo(actionURL, actionType, processData, loaderId, renderClass);
+        });
+
+
         $(document).on('click', '.exams-list-info', function (e) {
             let actionType = 'get';
             let loaderId = 'accordion-loader';
@@ -1720,6 +1773,10 @@
                 "_token": "{{ csrf_token() }}",
             };
             let renderClass = 'accordion-info';
+
+            //Change the toggle state & value
+            toggleState = true;
+            $('.upload-instruction-video-button-text').text('Upload Instruction Video');
 
             getInfo(actionURL, actionType, processData, loaderId, renderClass);
         });

@@ -11,40 +11,51 @@
     <div id="collapseLocalizationExamFormData{{ $examAddInfo->id ?? 0 }}" class="accordion-collapse collapse" aria-labelledby="localizationExamFormData{{ $examAddInfo->id ?? 0 }}"
          data-bs-parent="#accordionRental">
         <div id="examVideoData{{ $examAddInfo->id ?? 0 }}" class="exam-video-data accordion-body d-none p-3">
-            <div class="card p-4 pt-2">
-                <h6 class="mb-4">Upload Instruction Video</h6>
-                <div class="col-md-12 mt-2">
-                    <label class="form-label font-weight-bold">Video Url</label>
-                    <div class="input-group input-group-outline mb-3">
-                        <input type="copy" name="url" class="form-control" placeholder="Link">
-                        <span class="input-group-text bg-transparent"
-                              data-bs-toggle="tooltip"
-                              data-bs-placement="top"
-                              title="Referral code expires in 24 hours">
-                            <i class="material-symbols-outlined text-sm me-2"> content_copy </i>
-                        </span>
+            <form id="uploadVideoOrUrl{{ $examAddInfo->id ?? 0 }}Form" enctype="multipart/form-data">
+                @csrf
+                <input type="hidden" name="exam_id" data-value="{{ $examAddInfo->id }}" value="{{ Crypt::encrypt($examAddInfo->id ?? 0) }}">
+                <div class="card p-4 pt-2">
+                    <h6 class="mb-4">Upload Instruction Video</h6>
+                    <div class="col-md-12 mt-2">
+                        <label class="form-label font-weight-bold">Video Url</label>
+                        <div class="input-group input-group-outline mb-3">
+                            <input type="url" name="url" id="videoUrl" class="form-control" placeholder="Link">
+                            <div class="input-group-append toggle-copy" data-video-url-link="videoUrl">
+                                <span class="input-group-text" style="cursor: pointer; padding-right: 8px;">
+                                    <i class="material-symbols-outlined text-sm me-2"> content_copy </i>
+                                </span>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <h6 class="text-center">OR</h6>
-                <div class="col-md-12 mt-2">
-                    <label class="form-label font-weight-bold">Upload Video</label>
-                    <div class="input-group input-group-outline mb-3">
-                        <input type="file" name="email" class="form-control" placeholder="Link">
+                    <h6 class="text-center">OR</h6>
+                    <div class="col-md-12 mt-2">
+                        <label class="form-label font-weight-bold">Upload Video</label>
+                        <a href="javascript:" data-bs-toggle="modal" data-bs-target="#viewExamUploadedVideoModal"
+                           data-action-url="{{ route('admin.setting.exam.upload,instruction.video.preview', Crypt::encrypt($examAddInfo->id ?? 0)) }}"
+                           class="preview-exam-uploaded-video"
+                           style="color: #5534a5;font-weight: bold;font-size: 13px;margin-top: 5px;margin-right: 2px;float: right !important;">View Uploaded Video</a>
+                        <div class="input-group input-group-outline">
+                            <input type="file" name="video" id="uploadVideo" class="form-control" placeholder="Link">
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-12 d-flex justify-content-end">
-                    <button type="button" class="btn btn-primary px-3 nav-link cursor-pointer btn-sm text-white mb-0 mt-3" id="dropdownMenuDocs" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa fa-upload me-2 mx-1" style=" font-size: 10px; !important;" aria-hidden="true"></i>
-                        <span class="text-sm">
+                    <div class="col-md-12 d-flex justify-content-end mt-3">
+                        <button type="button" class="btn btn-primary px-3 nav-link cursor-pointer btn-sm text-white mb-0 mt-3 upload-exam-video-or-url"
+                                data-form-id="uploadVideoOrUrl{{ $examAddInfo->id ?? 0 }}Form"
+                                data-loader-id="uploadVideoOrURL{{ $examAddInfo->id ?? 0 }}-loader"
+                                data-action-url="{{ route('admin.setting.exam.upload,instruction.video.or.url') }}"
+                        >
+                            <i class="fa fa-upload me-2 mx-1" style=" font-size: 10px; !important;" aria-hidden="true"></i>
+                            <span class="text-sm">
                         <span>Upload</span>
-                        <div id="uploadVideoOrURL-loader" class="spinner-border text-green-700 d-none overflow-hidden" role="status"
+                        <div id="uploadVideoOrURL{{ $examAddInfo->id ?? 0 }}-loader" class="spinner-border text-green-700 d-none overflow-hidden" role="status"
                              style="height: 17px !important;width: 17px !important;margin-left: 5px;font-size: 16px;margin-top: 0px;color: #ffffff;">
                             <span class="sr-only">Loading...</span>
                         </div>
                     </span>
-                    </button>
+                        </button>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
         <div class="exam-test-option-data accordion-body p-3">
             <div>

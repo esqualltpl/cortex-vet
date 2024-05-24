@@ -6,6 +6,7 @@ use App\Helpers\FileUpload;
 use App\Helpers\ResponseMessage;
 use App\Http\Controllers\Controller;
 use App\Models\Exam;
+use App\Models\InstructionVideo;
 use App\Models\Testes;
 use App\Models\TestOptions;
 use App\Models\User;
@@ -15,6 +16,7 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class SettingsController extends Controller
 {
@@ -204,6 +206,83 @@ class SettingsController extends Controller
         } catch (Exception $e) {
             $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to add the exam step. Please try again later.');
             Log::info('The system is unable to add the exam step. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
+
+            return response()->json($response);
+        }
+    }
+    public function examUploadInstructionVideoOrUrl(Request $request)
+    {
+        // Validate the request
+        $validator = Validator::make($request->all(), [
+            'url' => 'nullable|url|required_without:video',
+            'video' => 'nullable|file|mimes:mp4,avi,mov|max:20480|required_without:url'
+        ]);
+
+        if ($validator->fails()) {
+            $response = ResponseMessage::ResponseNotifyError('Error!', 'Please provide either a Video URL or Upload a Video.');
+
+            return response()->json($response);
+        }
+
+        try {
+            DB::beginTransaction();
+            $exam_id = Crypt::decrypt($request->exam_id);
+
+            //Upload Video
+            $upload_video = null;
+            if ($video = $request->file('video')) {
+                $upload_video = FileUpload::FileUpload($video, "exam-videos");
+            }
+
+            if($examUpdateInstructionVideo = InstructionVideo::where('exam_id', $exam_id)->first()){
+                $examUpdateInstructionVideo->url = $request->url ?? null;
+                $examUpdateInstructionVideo->video = $upload_video;
+                $examUpdateInstructionVideo->save();
+            }else{
+                $examAddInstructionVideo = new InstructionVideo;
+                $examAddInstructionVideo->exam_id = $exam_id;
+                $examAddInstructionVideo->url = $request->url ?? null;
+                $examAddInstructionVideo->video = $upload_video;
+                $examAddInstructionVideo->added_by = auth()->user()->id;
+                $examAddInstructionVideo->save();
+            }
+
+            $response = ResponseMessage::ResponseNotifySuccess('Success!', 'Exam instruction video/url information save successfully.');
+            Log::info('Successfully save the exam instruction video/url information', ['added' => 'success' ?? '']);
+            DB::commit();
+
+            return response()->json($response);
+        } catch (Exception $e) {
+            $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to save the exam instruction video/url information. Please try again later.');
+            Log::info('The system is unable to save the exam instruction video/url information. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
+
+            return response()->json($response);
+        }
+    }
+    public function examUploadInstructionVideoPreview(Request $request, $examId)
+    {
+        try {
+            DB::beginTransaction();
+            $exam_id = Crypt::decrypt($examId);
+            $instructionVideoInfo = InstructionVideo::where('exam_id', $exam_id)->first();
+            $video = $instructionVideoInfo != null ? $instructionVideoInfo->getExamVideo() : null;
+            if($video != null) {
+                $renderData = '<video controls="" style="width: 100%">
+                            <source src="' . $video . '">
+                        </video>';
+            }else{
+                $renderData = '<h6 class="text-center">No Video found!</h6>';
+            }
+
+            $response = ResponseMessage::ResponseNotifySuccess('Success!', 'Exam instruction video information get successfully.');
+            $response['rendered_info'] = $renderData;
+            Log::info('Successfully save the exam instruction video/url information', ['get' => 'success' ?? '']);
+            DB::commit();
+
+            return response()->json($response);
+        } catch (Exception $e) {
+            $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to get the exam instruction video information. Please try again later.');
+            Log::info('The system is unable to get the exam instruction video information. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
 
             return response()->json($response);
         }

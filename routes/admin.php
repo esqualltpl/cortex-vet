@@ -63,8 +63,15 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
             Route::prefix('exam')->group(function () {
                 Route::get('list', [SettingsController::class, 'SetLocalizationExamList'])->name('admin.setting.exams.list');
                 Route::post('add', [SettingsController::class, 'examInfoAdd'])->name('admin.setting.exam.add');
+
+                Route::prefix('upload/instruction/video')->group(function () {
+                    Route::post('/', [SettingsController::class, 'examUploadInstructionVideoOrUrl'])->name('admin.setting.exam.upload,instruction.video.or.url');
+                    Route::get('preview/{id}', [SettingsController::class, 'examUploadInstructionVideoPreview'])->name('admin.setting.exam.upload,instruction.video.preview');
+                });
+
                 Route::delete('delete/{id}', [SettingsController::class, 'examInfoDelete'])->name('admin.setting.exam.delete');
                 Route::delete('test/delete/{id}', [SettingsController::class, 'examTestInfoDelete'])->name('admin.setting.exam.test.delete');
+
                 Route::prefix('test/options')->group(function () {
                     Route::post('add', [SettingsController::class, 'examTestOptionsInfoAdd'])->name('admin.setting.exam.test.options.add');
                     Route::get('edit/{id}', [SettingsController::class, 'examTestOptionsInfoEdit'])->name('admin.setting.exam.test.options.edit');

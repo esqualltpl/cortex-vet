@@ -101,8 +101,8 @@ function uploadFile(action_url, action_type, process_data, loader_id = null, hid
                 }
             });
 
-            //Show Image
-            $(`.${show_value_class}`).attr('src',responseShowVal)
+            //Show Uploaded File
+            show_value_class !== null ? $(`.${show_value_class}`).attr('src',responseShowVal) : '';
 
             //Redirect to URL
             setTimeout(function () {

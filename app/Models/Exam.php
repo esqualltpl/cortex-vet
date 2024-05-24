@@ -14,6 +14,11 @@ class Exam extends Model
 {
     use HasFactory, SoftDeletes;
 
+    public function instructionVideoInfo(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(InstructionVideo::class, 'id', 'exam_id');
+    }
+
     public function specieInfo(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Specie::class, 'id');

@@ -18,3 +18,4 @@ yarn-error.log
 /.idea
 /.vscode
 /public/portal/assets/upload/profile-images
+/public/portal/assets/upload/exam-videos
