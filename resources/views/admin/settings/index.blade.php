@@ -1730,6 +1730,8 @@
                     $('.accordion-info').removeClass('d-none');
                 }, 1000);
             }else{
+                $('.accordion-info').removeClass('d-none');
+                $('#accordion-loader').addClass('d-none');
                 $.notify({
                     title: 'Notification!',
                     message: '<br>No exams step list found, please add exams step firstly.',
