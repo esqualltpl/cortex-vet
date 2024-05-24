@@ -1681,18 +1681,18 @@
         });
 
         let toggleState = true;
-        let setLocalizationFormCount = {{ $settings['set-localization-form'] ?? 0 }};
+        /*let setLocalizationFormCount = {{ //$settings['set-localization-form'] ?? 0 }};*/
         $(document).on('click', '.upload-instruction-video-toggle', function (e) {
             $('.accordion-info').addClass('d-none');
             $('#accordion-loader').removeClass('d-none');
 
-            if(setLocalizationFormCount > 0) {
+            /*if(setLocalizationFormCount > 0) {*/
                 setTimeout(function () {
                     if (toggleState) {
                         $('.exam-video-data').removeClass('d-none');
                         $('.exam-test-option-data').addClass('d-none');
                         $('.upload-instruction-video-button-text').text('Test');
-                        $.notify({
+                        /*$.notify({
                             title: 'Success!',
                             message: '<br>Upload instruction video information get successfully.',
                             icon: 'fa fa-check',
@@ -1704,12 +1704,12 @@
                                 enter: 'animated bounceInDown',
                                 exit: 'animated bounceOutUp'
                             }
-                        });
+                        });*/
                     } else {
                         $('.exam-test-option-data').removeClass('d-none');
                         $('.exam-video-data').addClass('d-none');
                         $('.upload-instruction-video-button-text').text('Upload Instruction Video');
-                        $.notify({
+                        /*$.notify({
                             title: 'Success!',
                             message: '<br>Exam test information get successfully.',
                             icon: 'fa fa-check',
@@ -1721,7 +1721,7 @@
                                 enter: 'animated bounceInDown',
                                 exit: 'animated bounceOutUp'
                             }
-                        });
+                        });*/
                     }
 
                     toggleState = !toggleState; // Toggle the state
@@ -1729,7 +1729,7 @@
                     $('#accordion-loader').addClass('d-none');
                     $('.accordion-info').removeClass('d-none');
                 }, 1000);
-            }else{
+            /*}else{
                 $('.accordion-info').removeClass('d-none');
                 $('#accordion-loader').addClass('d-none');
                 $.notify({
@@ -1745,7 +1745,7 @@
                         exit: 'animated bounceOutUp'
                     }
                 });
-            }
+            }*/
         });
 
         $(document).on('click', '.toggle-copy', function (e) {
