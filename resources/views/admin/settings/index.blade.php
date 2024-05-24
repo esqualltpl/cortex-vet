@@ -1681,7 +1681,7 @@
         });
 
         let toggleState = true;
-        /*let setLocalizationFormCount = {{ //$settings['set-localization-form'] ?? 0 }};*/
+        /*let setLocalizationFormCount = $settings['set-localization-form'] ?? 0;*/
         $(document).on('click', '.upload-instruction-video-toggle', function (e) {
             $('.accordion-info').addClass('d-none');
             $('#accordion-loader').removeClass('d-none');
