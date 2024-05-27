@@ -58,7 +58,7 @@
                                             </span>
                                         </p>
                                     </button>
-                                    <button class="nav-link h-navlinks py-2 my-0 exams-list-info" id="v-pills-exam-tab"
+                                    <button class="nav-link h-navlinks py-2 my-0 set-localization-form-step-info" id="v-pills-exam-tab"
                                             data-action-url="{{ route('admin.setting.exams.list') }}"
                                             data-bs-toggle="pill" data-bs-target="#v-pills-exam" type="button"
                                             role="tab" aria-controls="v-pills-exam" aria-selected="true" tabindex="-1">
@@ -70,7 +70,8 @@
                                             </span>
                                         </p>
                                     </button>
-                                    <button class="nav-link h-navlinks py-2 my-0" id="v-pills-result-tab"
+                                    <button class="nav-link h-navlinks py-2 my-0 set-results-step-info" id="v-pills-result-tab"
+                                            data-action-url="{{ route('admin.setting.set.result.list') }}"
                                             data-bs-toggle="pill" data-bs-target="#v-pills-result" type="button"
                                             role="tab" aria-controls="v-pills-result" aria-selected="true"
                                             tabindex="-1">
@@ -650,7 +651,7 @@
                                             <div class="col-12" id="divFive">
                                                 <div class="card mt-3 p-3">
                                                     <div class="d-flex justify-content-between flex-wrap">
-                                                        <h5>Set Results</h5>
+                                                        <h6>Set Results</h6>
                                                         <div class="d-flex ">
                                                             <div>
                                                                 <div class="input-group input-group-outline">
@@ -662,314 +663,27 @@
                                                                 <button type="button"
                                                                         onclick="ShowNeurolocalizations()"
                                                                         class="btn  btn-primary mx-2   text-white ">
-                                                                    Neurolocalizations
+                                                                    Neurolocalization
                                                                 </button>
                                                             </div>
                                                         </div>
+                                                    </div>
+                                                    <div id="setResultsStep-loader" class="text-center d-none" style="margin-left: 34px;">
+                                                        <img src="{{ asset('portal/assets/img/loader.gif') }}" width="120px" alt="loader"/>
+                                                    </div>
+                                                    <form id="saveSetResultInfoForm">
+                                                        @csrf
+                                                        <div class="set-result-options-info">
 
-
-                                                    </div>
-                                                    <div class="d-flex align-items-start">
-                                                        <div class="form-check d-flex  justify-content-start">
-                                                            <input type="checkbox" class="checkbox"
-                                                                   name="radioDisabled" class="form-check-input">
-                                                            <h6 for="radio3" class="mx-5 my-2">Test:1</h6>
                                                         </div>
-                                                        <div>
-                                                            <p class="my-2">Lorem ipsum is a dummy text</p>
-                                                            <div class="form-group" id="radioOptions"
-                                                                 style="display: none;">
-                                                                <div class="form-check" style="padding-left: 0;">
-                                                                    <input class="form-check-input" type="radio"
-                                                                           name="exampleRadios" id="normalRadio"
-                                                                           value="option1">
-                                                                    <label class="form-check-label"
-                                                                           for="normalRadio">
-                                                                        Normal
-                                                                    </label>
-                                                                </div>
-                                                                <div class="form-check" style="padding-left: 0;">
-                                                                    <input class="form-check-input" type="radio"
-                                                                           name="exampleRadios" id="obtundedRadio"
-                                                                           value="option2">
-                                                                    <label class="form-check-label"
-                                                                           for="obtundedRadio">
-                                                                        Obtunded
-                                                                    </label>
-                                                                </div>
-                                                                <div class="form-check" style="padding-left: 0;">
-                                                                    <input class="form-check-input" type="radio"
-                                                                           name="exampleRadios" id="stuporousRadio"
-                                                                           value="option3">
-                                                                    <label class="form-check-label"
-                                                                           for="stuporousRadio">
-                                                                        Stuporous
-                                                                    </label>
-                                                                </div>
-                                                                <div class="form-check" style="padding-left: 0;">
-                                                                    <input class="form-check-input" type="radio"
-                                                                           name="exampleRadios" id="stuporousRadio"
-                                                                           value="option3">
-                                                                    <label class="form-check-label"
-                                                                           for="stuporousRadio">
-                                                                        Comatose
-                                                                    </label>
-                                                                </div>
-                                                                <div class="form-check" style="padding-left: 0;">
-                                                                    <input class="form-check-input" type="radio"
-                                                                           name="exampleRadios" id="stuporousRadio"
-                                                                           value="option3">
-                                                                    <label class="form-check-label"
-                                                                           for="stuporousRadio">
-                                                                        Select all
-                                                                    </label>
-                                                                </div>
+                                                        <div class="d-flex justify-content-end mt-3">
+                                                            <div>
+                                                                <button type="button" class="btn btn-primary btn-sm py-2 show-give-result-name-modal text-white mb-2">
+                                                                    Give Result Name
+                                                                </button>
                                                             </div>
                                                         </div>
-                                                    </div>
-
-                                                    <div class="d-flex align-items-start">
-                                                        <div class="form-check d-flex ">
-                                                            <input type="checkbox" class="checkbox"
-                                                                   name="radioDisabled" class="form-check-input">
-                                                            <h6 for="radio3" class="mx-5 my-2">Test:2</h6>
-                                                        </div>
-                                                        <div>
-                                                            <p class="my-2">Lorem ipsum is a dummy text</p>
-                                                            <div class="form-group" id="radioOptions"
-                                                                 style="display: none;">
-                                                                <div class="form-check" style="padding-left: 0;">
-                                                                    <input class="form-check-input" type="radio"
-                                                                           name="exampleRadios" id="normalRadio"
-                                                                           value="option1">
-                                                                    <label class="form-check-label"
-                                                                           for="normalRadio">
-                                                                        Normal
-                                                                    </label>
-                                                                </div>
-                                                                <div class="form-check" style="padding-left: 0;">
-                                                                    <input class="form-check-input" type="radio"
-                                                                           name="exampleRadios" id="obtundedRadio"
-                                                                           value="option2">
-                                                                    <label class="form-check-label"
-                                                                           for="obtundedRadio">
-                                                                        Obtunded
-                                                                    </label>
-                                                                </div>
-                                                                <div class="form-check" style="padding-left: 0;">
-                                                                    <input class="form-check-input" type="radio"
-                                                                           name="exampleRadios" id="stuporousRadio"
-                                                                           value="option3">
-                                                                    <label class="form-check-label"
-                                                                           for="stuporousRadio">
-                                                                        Stuporous
-                                                                    </label>
-                                                                </div>
-                                                                <div class="form-check" style="padding-left: 0;">
-                                                                    <input class="form-check-input" type="radio"
-                                                                           name="exampleRadios" id="stuporousRadio"
-                                                                           value="option3">
-                                                                    <label class="form-check-label"
-                                                                           for="stuporousRadio">
-                                                                        Comatose
-                                                                    </label>
-                                                                </div>
-                                                                <div class="form-check" style="padding-left: 0;">
-                                                                    <input class="form-check-input" type="radio"
-                                                                           name="exampleRadios" id="stuporousRadio"
-                                                                           value="option3">
-                                                                    <label class="form-check-label"
-                                                                           for="stuporousRadio">
-                                                                        Select all
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="d-flex align-items-start">
-                                                        <div class="form-check d-flex ">
-                                                            <input type="checkbox" class="checkbox"
-                                                                   name="radioDisabled" class="form-check-input">
-                                                            <h6 for="radio3" class="mx-5 my-2">Test:3</h6>
-                                                        </div>
-                                                        <div>
-                                                            <p class="my-2">Lorem ipsum is a dummy text</p>
-                                                            <div class="form-group" id="radioOptions"
-                                                                 style="display: none;">
-                                                                <div class="form-check" style="padding-left: 0;">
-                                                                    <input class="form-check-input" type="radio"
-                                                                           name="exampleRadios" id="normalRadio"
-                                                                           value="option1">
-                                                                    <label class="form-check-label"
-                                                                           for="normalRadio">
-                                                                        Normal
-                                                                    </label>
-                                                                </div>
-                                                                <div class="form-check" style="padding-left: 0;">
-                                                                    <input class="form-check-input" type="radio"
-                                                                           name="exampleRadios" id="obtundedRadio"
-                                                                           value="option2">
-                                                                    <label class="form-check-label"
-                                                                           for="obtundedRadio">
-                                                                        Obtunded
-                                                                    </label>
-                                                                </div>
-                                                                <div class="form-check" style="padding-left: 0;">
-                                                                    <input class="form-check-input" type="radio"
-                                                                           name="exampleRadios" id="stuporousRadio"
-                                                                           value="option3">
-                                                                    <label class="form-check-label"
-                                                                           for="stuporousRadio">
-                                                                        Stuporous
-                                                                    </label>
-                                                                </div>
-                                                                <div class="form-check" style="padding-left: 0;">
-                                                                    <input class="form-check-input" type="radio"
-                                                                           name="exampleRadios" id="stuporousRadio"
-                                                                           value="option3">
-                                                                    <label class="form-check-label"
-                                                                           for="stuporousRadio">
-                                                                        Comatose
-                                                                    </label>
-                                                                </div>
-                                                                <div class="form-check" style="padding-left: 0;">
-                                                                    <input class="form-check-input" type="radio"
-                                                                           name="exampleRadios" id="stuporousRadio"
-                                                                           value="option3">
-                                                                    <label class="form-check-label"
-                                                                           for="stuporousRadio">
-                                                                        Select all
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="d-flex align-items-start">
-                                                        <div class="form-check d-flex ">
-                                                            <input type="checkbox" class="checkbox"
-                                                                   name="radioDisabled" class="form-check-input">
-                                                            <h6 for="radio3" class="mx-5 my-2">Test:4</h6>
-                                                        </div>
-                                                        <div>
-                                                            <p class="my-2">Lorem ipsum is a dummy text</p>
-                                                            <div class="form-group" id="radioOptions"
-                                                                 style="display: none;">
-                                                                <div class="form-check" style="padding-left: 0;">
-                                                                    <input class="form-check-input" type="radio"
-                                                                           name="exampleRadios" id="normalRadio"
-                                                                           value="option1">
-                                                                    <label class="form-check-label"
-                                                                           for="normalRadio">
-                                                                        Normal
-                                                                    </label>
-                                                                </div>
-                                                                <div class="form-check" style="padding-left: 0;">
-                                                                    <input class="form-check-input" type="radio"
-                                                                           name="exampleRadios" id="obtundedRadio"
-                                                                           value="option2">
-                                                                    <label class="form-check-label"
-                                                                           for="obtundedRadio">
-                                                                        Obtunded
-                                                                    </label>
-                                                                </div>
-                                                                <div class="form-check" style="padding-left: 0;">
-                                                                    <input class="form-check-input" type="radio"
-                                                                           name="exampleRadios" id="stuporousRadio"
-                                                                           value="option3">
-                                                                    <label class="form-check-label"
-                                                                           for="stuporousRadio">
-                                                                        Stuporous
-                                                                    </label>
-                                                                </div>
-                                                                <div class="form-check" style="padding-left: 0;">
-                                                                    <input class="form-check-input" type="radio"
-                                                                           name="exampleRadios" id="stuporousRadio"
-                                                                           value="option3">
-                                                                    <label class="form-check-label"
-                                                                           for="stuporousRadio">
-                                                                        Comatose
-                                                                    </label>
-                                                                </div>
-                                                                <div class="form-check" style="padding-left: 0;">
-                                                                    <input class="form-check-input" type="radio"
-                                                                           name="exampleRadios" id="stuporousRadio"
-                                                                           value="option3">
-                                                                    <label class="form-check-label"
-                                                                           for="stuporousRadio">
-                                                                        Select all
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="d-flex align-items-start">
-                                                        <div class="form-check d-flex">
-                                                            <input type="checkbox" class="checkbox"
-                                                                   name="radioDisabled" class="form-check-input">
-                                                            <h6 for="radio3" class="mx-5 my-2">Test:5</h6>
-                                                        </div>
-                                                        <div>
-                                                            <p class="my-2">Lorem ipsum is a dummy text</p>
-                                                            <div class="form-group" id="radioOptions"
-                                                                 style="display: none;">
-                                                                <div class="form-check" style="padding-left: 0;">
-                                                                    <input class="form-check-input" type="radio"
-                                                                           name="exampleRadios" id="normalRadio"
-                                                                           value="option1">
-                                                                    <label class="form-check-label"
-                                                                           for="normalRadio">
-                                                                        Normal
-                                                                    </label>
-                                                                </div>
-                                                                <div class="form-check" style="padding-left: 0;">
-                                                                    <input class="form-check-input" type="radio"
-                                                                           name="exampleRadios" id="obtundedRadio"
-                                                                           value="option2">
-                                                                    <label class="form-check-label"
-                                                                           for="obtundedRadio">
-                                                                        Obtunded
-                                                                    </label>
-                                                                </div>
-                                                                <div class="form-check" style="padding-left: 0;">
-                                                                    <input class="form-check-input" type="radio"
-                                                                           name="exampleRadios" id="stuporousRadio"
-                                                                           value="option3">
-                                                                    <label class="form-check-label"
-                                                                           for="stuporousRadio">
-                                                                        Stuporous
-                                                                    </label>
-                                                                </div>
-                                                                <div class="form-check" style="padding-left: 0;">
-                                                                    <input class="form-check-input" type="radio"
-                                                                           name="exampleRadios" id="stuporousRadio"
-                                                                           value="option3">
-                                                                    <label class="form-check-label"
-                                                                           for="stuporousRadio">
-                                                                        Comatose
-                                                                    </label>
-                                                                </div>
-                                                                <div class="form-check" style="padding-left: 0;">
-                                                                    <input class="form-check-input" type="radio"
-                                                                           name="exampleRadios" id="stuporousRadio"
-                                                                           value="option3">
-                                                                    <label class="form-check-label"
-                                                                           for="stuporousRadio">
-                                                                        Select all
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="d-flex justify-content-end mt-3">
-                                                        <div>
-
-                                                            <button type="button" data-bs-toggle="modal"
-                                                                    data-bs-target="#addcomment"
-                                                                    class="btn  btn-primary submitButton hidden  btn-sm py-2 text-white mb-2">
-                                                                Give Result Name
-                                                            </button>
-                                                        </div>
-                                                    </div>
+                                                    </form>
                                                 </div>
                                             </div>
 
@@ -1553,8 +1267,8 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="viewExamUploadedVideoModal" tabindex="-1" role="dialog" data-bs-backdrop="static"
-             data-bs-keyboard="false" aria-labelledby="viewExamUploadedVideoModalLabel" aria-hidden="true">
+        <div class="modal fade" id="viewExamUploadedVideoModal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false"
+             aria-labelledby="viewExamUploadedVideoModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                 <div class="modal-content ">
                     <div class="modal-header">
@@ -1571,31 +1285,33 @@
             </div>
         </div>
 
-        <div class="modal fade" id="addcomment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog  modal-dialog-centered  modal-lg" role="document">
+
+        <div class="modal fade" id="giveResultNameModal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false"
+             aria-labelledby="giveResultNameModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-md" role="document">
                 <div class="modal-content ">
-                    <div class=" modal-header">
-                        <h6><i class="fa fa-file-text-o mx-2" aria-hidden="true"
-                               style="color: #38BEBC !important;"></i>Give Result Name</h6>
-                        <button type="button" class="btn-close text-dark float-end" data-bs-dismiss="modal"
-                                aria-label="Close">
-
-                        </button>
+                    <div class="modal-header">
+                        <h6 class="pt-1 mb-0">Give Result Name</h6>
+                        <button type="button" class="btn-close text-dark float-end" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-
-                    <div class="modal-body mb-5">
+                    <div class="modal-body">
                         <div class="col-md-12">
                             <label class="font-weight-bold">Enter Result Name</label>
-                            <div class="input-group input-group-outline mb-1 ">
-                                <input type="text" class="form-control" value="Lorem ipsum" name="Name"
-                                       placeholder="Spine" aria-label="Name">
+                            <div class="input-group input-group-outline mb-1">
+                                <input type="text" class="form-control" id="resultNameInfo" placeholder="Result Name">
                             </div>
                         </div>
+                        <button type="button" class="btn btn-primary float-end btn-md mt-3 mb-0 text-white save-give-result-name" data-action-url="{{ route('admin.setting.set.result.info.save') }}">
+                            <span>Save</span>
+                            <div id="givResultName-loader" class="spinner-border text-green-700 d-none overflow-hidden" role="status" style="height: 17px !important;width: 17px !important;margin-left: 5px;font-size: 16px;margin-top: 0px;color: #ffffff;">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
+
         <div class="modal fade" id="ViewNeurolocalizations" tabindex="-1" role="dialog"
              aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog  modal-lg modal-dialog-centered " role="document">
@@ -1680,6 +1396,7 @@
             saveInfo(actionURL, actionType, processData, loaderId, formId);
         });
 
+        /*----------- Set Localization Exam Form -----------*/
         let toggleState = true;
         /*let setLocalizationFormCount = //$settings['set-localization-form'] ?? 0;*/
         $(document).on('click', '.upload-instruction-video-toggle', function (e) {
@@ -1687,48 +1404,48 @@
             $('#accordion-loader').removeClass('d-none');
 
             /*if(setLocalizationFormCount > 0) {*/
-                setTimeout(function () {
-                    if (toggleState) {
-                        $('.exam-video-data').removeClass('d-none');
-                        $('.exam-test-option-data').addClass('d-none');
-                        $('.upload-instruction-video-button-text').text('Test');
-                        $.notify({
-                            title: 'Success!',
-                            message: '<br>Upload instruction video information get successfully.',
-                            icon: 'fa fa-check',
-                        }, {
-                            // settings
-                            type: 'success',
-                            z_index: 2000,
-                            animate: {
-                                enter: 'animated bounceInDown',
-                                exit: 'animated bounceOutUp'
-                            }
-                        });
-                    } else {
-                        $('.exam-test-option-data').removeClass('d-none');
-                        $('.exam-video-data').addClass('d-none');
-                        $('.upload-instruction-video-button-text').text('Upload Instruction Video');
-                        $.notify({
-                            title: 'Success!',
-                            message: '<br>Exam test information get successfully.',
-                            icon: 'fa fa-check',
-                        }, {
-                            // settings
-                            type: 'success',
-                            z_index: 2000,
-                            animate: {
-                                enter: 'animated bounceInDown',
-                                exit: 'animated bounceOutUp'
-                            }
-                        });
-                    }
+            setTimeout(function () {
+                if (toggleState) {
+                    $('.exam-video-data').removeClass('d-none');
+                    $('.exam-test-option-data').addClass('d-none');
+                    $('.upload-instruction-video-button-text').text('Test');
+                    $.notify({
+                        title: 'Success!',
+                        message: '<br>Upload instruction video information get successfully.',
+                        icon: 'fa fa-check',
+                    }, {
+                        // settings
+                        type: 'success',
+                        z_index: 2000,
+                        animate: {
+                            enter: 'animated bounceInDown',
+                            exit: 'animated bounceOutUp'
+                        }
+                    });
+                } else {
+                    $('.exam-test-option-data').removeClass('d-none');
+                    $('.exam-video-data').addClass('d-none');
+                    $('.upload-instruction-video-button-text').text('Upload Instruction Video');
+                    $.notify({
+                        title: 'Success!',
+                        message: '<br>Exam test information get successfully.',
+                        icon: 'fa fa-check',
+                    }, {
+                        // settings
+                        type: 'success',
+                        z_index: 2000,
+                        animate: {
+                            enter: 'animated bounceInDown',
+                            exit: 'animated bounceOutUp'
+                        }
+                    });
+                }
 
-                    toggleState = !toggleState; // Toggle the state
+                toggleState = !toggleState; // Toggle the state
 
-                    $('#accordion-loader').addClass('d-none');
-                    $('.accordion-info').removeClass('d-none');
-                }, 1000);
+                $('#accordion-loader').addClass('d-none');
+                $('.accordion-info').removeClass('d-none');
+            }, 1000);
             /*}else{
                 $('.accordion-info').removeClass('d-none');
                 $('#accordion-loader').addClass('d-none');
@@ -1783,8 +1500,7 @@
             getInfo(actionURL, actionType, processData, loaderId, renderClass);
         });
 
-
-        $(document).on('click', '.exams-list-info', function (e) {
+        $(document).on('click', '.set-localization-form-step-info', function (e) {
             let actionType = 'get';
             let loaderId = 'accordion-loader';
             let actionURL = $(this).attr('data-action-url');
@@ -1906,6 +1622,65 @@
             removeInfo(actionURL, actionType, processData, removedClass, closedModalId, loaderId);
         });
 
+        /*----------- Set Results -----------*/
+        $(document).on('click', '.set-results-step-info', function (e) {
+            let actionType = 'get';
+            let loaderId = 'setResultsStep-loader';
+            let actionURL = $(this).attr('data-action-url');
+            let processData = {
+                "_token": "{{ csrf_token() }}",
+            };
+            let renderClass = 'set-result-options-info';
+
+            //Change the toggle state & value
+            toggleState = true;
+            $('.upload-instruction-video-button-text').text('Upload Instruction Video');
+
+            getInfo(actionURL, actionType, processData, loaderId, renderClass);
+        });
+
+        $(document).on('click', '.exam-test-options-info', function (e) {
+            let examStepClass = $(this).attr('data-exam-step-info');
+
+            if ($(this).prop('checked')) {
+                $(`.${examStepClass}`).removeClass('d-none');
+            } else {
+                $(`.${examStepClass}`).addClass('d-none');
+            }
+        });
+        
+        $(document).on('click', '.test-checkbox-info', function (e) {
+            let testOptionsInfo = $(this).attr('data-test-options-info');
+
+            if ($(this).prop('checked')) {
+                $(`.${testOptionsInfo}`).removeClass('d-none');
+            } else {
+                $(`.${testOptionsInfo}`).addClass('d-none');
+            }
+        });
+
+        $(document).on('click', '.show-give-result-name-modal', function (e) {
+            let showModalId = 'giveResultNameModal';
+            $('#resultNameInfo').val('');
+            $(`#${showModalId}`).modal('show')
+        });
+
+        $(document).on('click', '.save-give-result-name', function (e) {
+            let actionType = 'post';
+            let loaderId = 'givResultName-loader';
+            let actionURL = $(this).attr('data-action-url');
+            let clickClass = 'set-results-step-info';
+            let result_name = $('#resultNameInfo').val();
+            let formId = 'saveSetResultInfoForm';
+            let closeModalId = 'giveResultNameModal';
+            let processData = $(`#${formId}`).serialize();
+            processData += `&result_name=${encodeURIComponent(result_name)}`; // Append the result_name to the serialized data
+            let renderClass = null;
+
+            saveInfo(actionURL, actionType, processData, loaderId, formId, renderClass, closeModalId, null, clickClass);
+        });
+
+        /*----------- Set Results -----------*/
         function addOptionField(event, className) {
             event.stopPropagation();
             const optionsContainer = $("#" + className);
@@ -1921,7 +1696,6 @@
     `);
             optionsContainer.append(newInputGroup);
         }
-
         function removeOptionField(event, button) {
             event.stopPropagation();
             $(button).parent().remove();

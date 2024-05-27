@@ -57,27 +57,29 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
         Route::post('/change/password', [SettingsController::class, 'changeProfilePassword'])->name('admin.setting.change.profile.password');
 
         //Set Localization Form
-        Route::prefix('set/localization')->group(function () {
-            Route::get('/', [SettingsController::class, 'localizationExamFormList'])->name('admin.setting.localization.exam.form.list');
+        Route::prefix('set/localization/exam')->group(function () {
+            Route::get('list', [SettingsController::class, 'SetLocalizationExamList'])->name('admin.setting.exams.list');
+            Route::post('add', [SettingsController::class, 'examInfoAdd'])->name('admin.setting.exam.add');
 
-            Route::prefix('exam')->group(function () {
-                Route::get('list', [SettingsController::class, 'SetLocalizationExamList'])->name('admin.setting.exams.list');
-                Route::post('add', [SettingsController::class, 'examInfoAdd'])->name('admin.setting.exam.add');
-
-                Route::prefix('upload/instruction/video')->group(function () {
-                    Route::post('/', [SettingsController::class, 'examUploadInstructionVideoOrUrl'])->name('admin.setting.exam.upload,instruction.video.or.url');
-                    Route::get('preview/{id}', [SettingsController::class, 'examUploadInstructionVideoPreview'])->name('admin.setting.exam.upload,instruction.video.preview');
-                });
-
-                Route::delete('delete/{id}', [SettingsController::class, 'examInfoDelete'])->name('admin.setting.exam.delete');
-                Route::delete('test/delete/{id}', [SettingsController::class, 'examTestInfoDelete'])->name('admin.setting.exam.test.delete');
-
-                Route::prefix('test/options')->group(function () {
-                    Route::post('add', [SettingsController::class, 'examTestOptionsInfoAdd'])->name('admin.setting.exam.test.options.add');
-                    Route::get('edit/{id}', [SettingsController::class, 'examTestOptionsInfoEdit'])->name('admin.setting.exam.test.options.edit');
-                    Route::post('update', [SettingsController::class, 'examTestOptionsInfoUpdate'])->name('admin.setting.exam.test.options.update');
-                });
+            Route::prefix('upload/instruction/video')->group(function () {
+                Route::post('/', [SettingsController::class, 'examUploadInstructionVideoOrUrl'])->name('admin.setting.exam.upload,instruction.video.or.url');
+                Route::get('preview/{id}', [SettingsController::class, 'examUploadInstructionVideoPreview'])->name('admin.setting.exam.upload,instruction.video.preview');
             });
+
+            Route::delete('delete/{id}', [SettingsController::class, 'examInfoDelete'])->name('admin.setting.exam.delete');
+            Route::delete('test/delete/{id}', [SettingsController::class, 'examTestInfoDelete'])->name('admin.setting.exam.test.delete');
+
+            Route::prefix('test/options')->group(function () {
+                Route::post('add', [SettingsController::class, 'examTestOptionsInfoAdd'])->name('admin.setting.exam.test.options.add');
+                Route::get('edit/{id}', [SettingsController::class, 'examTestOptionsInfoEdit'])->name('admin.setting.exam.test.options.edit');
+                Route::post('update', [SettingsController::class, 'examTestOptionsInfoUpdate'])->name('admin.setting.exam.test.options.update');
+            });
+        });
+
+        //Set Localization Form
+        Route::prefix('set/result')->group(function () {
+            Route::get('/', [SettingsController::class, 'setResultList'])->name('admin.setting.set.result.list');
+            Route::post('info/save', [SettingsController::class, 'setResultInfoSave'])->name('admin.setting.set.result.info.save');
         });
 
         //Student

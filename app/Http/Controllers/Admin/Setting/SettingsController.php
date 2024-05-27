@@ -7,6 +7,8 @@ use App\Helpers\ResponseMessage;
 use App\Http\Controllers\Controller;
 use App\Models\Exam;
 use App\Models\InstructionVideo;
+use App\Models\Result;
+use App\Models\ResultDetail;
 use App\Models\Testes;
 use App\Models\TestOptions;
 use App\Models\User;
@@ -165,7 +167,7 @@ class SettingsController extends Controller
                     $renderData .= view('admin.settings.render.localization_exam_form_data', compact('examAddInfo'))->render();
                 }
                 $response = ResponseMessage::ResponseNotifySuccess('Success!', 'Exams step list get successfully.');
-            }else{
+            } else {
                 $response = ResponseMessage::ResponseNotifyWarning('Notification!', 'No exams step list found, please add exams step firstly.');
             }
             $response['rendered_info'] = $renderData;
@@ -235,11 +237,11 @@ class SettingsController extends Controller
                 $upload_video = FileUpload::FileUpload($video, "exam-videos");
             }
 
-            if($examUpdateInstructionVideo = InstructionVideo::where('exam_id', $exam_id)->first()){
+            if ($examUpdateInstructionVideo = InstructionVideo::where('exam_id', $exam_id)->first()) {
                 $examUpdateInstructionVideo->url = $request->url ?? null;
                 $examUpdateInstructionVideo->video = $upload_video;
                 $examUpdateInstructionVideo->save();
-            }else{
+            } else {
                 $examAddInstructionVideo = new InstructionVideo;
                 $examAddInstructionVideo->exam_id = $exam_id;
                 $examAddInstructionVideo->url = $request->url ?? null;
@@ -268,11 +270,11 @@ class SettingsController extends Controller
             $exam_id = Crypt::decrypt($examId);
             $instructionVideoInfo = InstructionVideo::where('exam_id', $exam_id)->first();
             $video = $instructionVideoInfo != null ? $instructionVideoInfo->getExamVideo() : null;
-            if($video != null) {
+            if ($video != null) {
                 $renderData = '<video controls="" style="width: 100%">
                             <source src="' . $video . '">
                         </video>';
-            }else{
+            } else {
                 $renderData = '<h6 class="text-center">No Video found!</h6>';
             }
 
@@ -466,6 +468,78 @@ class SettingsController extends Controller
         } catch (Exception $e) {
             $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to remove the test information. Please try again later.');
             Log::info('The system is unable to remove the test information. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
+
+            return response()->json($response);
+        }
+    }
+
+    public function setResultList()
+    {
+        try {
+            DB::beginTransaction();
+
+            $examsAddInfo = Exam::where('added_by', auth()->user()->id)->with('testInfo')->get();
+
+            $renderData = '';
+            if (count($examsAddInfo) > 0) {
+                foreach ($examsAddInfo as $examAddInfo) {
+                    //Render Data
+                    $renderData .= view('admin.settings.render.set_results_data', compact('examAddInfo'))->render();
+                }
+                $response = ResponseMessage::ResponseNotifySuccess('Success!', 'Exams step list get successfully.');
+            } else {
+                $response = ResponseMessage::ResponseNotifyWarning('Notification!', 'No exams step list found, please add exams step firstly.');
+            }
+            $response['rendered_info'] = $renderData;
+            Log::info('Successfully get the exams step list', ['list' => 'success' ?? '']);
+            DB::commit();
+
+            return response()->json($response);
+        } catch (Exception $e) {
+            $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to get the exams step list. Please try again later.');
+            Log::info('The system is unable to add the exams step list. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
+            return response()->json($response);
+        }
+    }
+
+    public function setResultInfoSave(Request $request)
+    {
+        $request->validate([
+            'result_name' => ['required', 'string', 'max:255'],
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            $resultInfo = new Result;
+            $resultInfo->name = $request->result_name;
+            $resultInfo->added_by = auth()->user()->id;
+            $resultInfo->save();
+
+            $option_info = $request->options;
+            foreach ($option_info as $exam_id => $exam_val) {
+                foreach ($option_info as $test_id => $test_option) {
+                    foreach ($test_option as $option_val) {
+                        $resultDetailInfo = new ResultDetail;
+                        $resultDetailInfo->result_id = $resultInfo->id ?? null;
+                        $resultDetailInfo->exam_id = $exam_id;
+                        $resultDetailInfo->test_id = $test_id;
+                        $resultDetailInfo->option_id = $option_val;
+                        $resultDetailInfo->added_by = auth()->user()->id;
+                        $resultDetailInfo->save();
+                    }
+                }
+            }
+
+            $response = ResponseMessage::ResponseNotifySuccess('Success!', 'Result information saved successfully.');
+            Log::info('Successfully save the result information', ['added' => 'success' ?? '']);
+            DB::commit();
+
+            return response()->json($response);
+        } catch (Exception $e) {
+            dd($e);
+            $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to save the result information. Please try again later.');
+            Log::info('The system is unable to save the result information. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
 
             return response()->json($response);
         }
