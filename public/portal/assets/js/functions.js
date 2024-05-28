@@ -44,7 +44,7 @@ function removeInfo(action_url, action_type, process_data, removed_class = null,
         error: function (response) {
             let responseMessage = response.responseJSON.message;
             $.notify({
-                title: 'Error!',
+                title: '<strong>Error!</strong>',
                 message: `<br>${responseMessage}`,
                 icon: 'fa fa-exclamation-triangle',
             }, {
@@ -114,7 +114,7 @@ function uploadFile(action_url, action_type, process_data, loader_id = null, hid
         error: function (response) {
             let responseMessage = response.responseJSON.message;
             $.notify({
-                title: 'Error!',
+                title: '<strong>Error!</strong>',
                 message: `<br>${responseMessage}`,
                 icon: 'fa fa-exclamation-triangle',
             }, {
@@ -192,7 +192,7 @@ function saveInfo(action_url, action_type, process_data, loader_id = null, reset
         error: function (response) {
             let responseMessage = response.responseJSON.message;
             $.notify({
-                title: 'Error!',
+                title: '<strong>Error!</strong>',
                 message: `<br>${responseMessage}`,
                 icon: 'fa fa-exclamation-triangle',
             }, {
@@ -257,7 +257,7 @@ function getInfo(action_url, action_type, process_data, loader_id = null, show_r
         error: function (response) {
             let responseMessage = response.responseJSON.message;
             $.notify({
-                title: 'Error!',
+                title: '<strong>Error!</strong>',
                 message: `<br>${responseMessage}`,
                 icon: 'fa fa-exclamation-triangle',
             }, {

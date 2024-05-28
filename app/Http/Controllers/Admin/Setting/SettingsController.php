@@ -7,8 +7,10 @@ use App\Helpers\ResponseMessage;
 use App\Http\Controllers\Controller;
 use App\Models\Exam;
 use App\Models\InstructionVideo;
+use App\Models\Payment;
 use App\Models\Result;
 use App\Models\ResultDetail;
+use App\Models\Student;
 use App\Models\Testes;
 use App\Models\TestOptions;
 use App\Models\User;
@@ -25,9 +27,9 @@ class SettingsController extends Controller
     public function index(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $settings['profile-information'] = auth()->user() ?? null;
-        $settings['set-localization-form'] = $examsAddInfo = Exam::where('added_by', auth()->user()->id)->with('testInfo')->count() ?? 0;
-        $settings['set-results'] = null;
-        $settings['payments'] = null;
+        $settings['set-localization-form'] = Exam::where('added_by', auth()->user()->id)->with('testInfo')->count() ?? 0;
+        $settings['set-results'] = Result::where('added_by', auth()->user()->id)->with('detail')->count() ?? 0;
+        $settings['payments'] = Payment::where('added_by', auth()->user()->id)->first()?->amount ?? 0;;
         $settings['students'] = null;
 
         return view('admin.settings.index', compact('settings'));
@@ -519,7 +521,7 @@ class SettingsController extends Controller
 
                 //Remove Previous Result Detail Info
                 $removePreviousResultDetailInfo = ResultDetail::where('result_id', $updateResultInfo->id)->get();
-                foreach ($removePreviousResultDetailInfo as $removeInfo){
+                foreach ($removePreviousResultDetailInfo as $removeInfo) {
                     $removeInfo->forceDelete();
                 }
 
@@ -701,13 +703,181 @@ class SettingsController extends Controller
         }
     }
 
+    public function setPayment(Request $request)
+    {
+        $request->validate([
+            'payment' => ['required', 'numeric'],
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            $amount = $request->payment ?? 0;
+            if ($paymentUpdate = Payment::where('added_by', auth()->user()->id)->first()) {
+                $paymentUpdate->amount = $amount;
+            } else {
+                $paymentUpdate = new Payment;
+                $paymentUpdate->amount = $amount;
+                $paymentUpdate->added_by = auth()->user()->id;
+            }
+            $paymentUpdate->save();
+
+            $response = ResponseMessage::ResponseNotifySuccess('Success!', 'Payment information update successfully.');
+            Log::info('Successfully update the payment information', ['update' => 'success' ?? '']);
+            DB::commit();
+
+            return response()->json($response);
+        } catch (Exception $e) {
+            $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to update the payment information. Please try again later.');
+            Log::info('The system is unable to update the payment information. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
+
+            return response()->json($response);
+        }
+    }
+
+    public function studentsList()
+    {
+        try {
+            DB::beginTransaction();
+
+            $studentInfo = Student::where('added_by', auth()->user()->id)->with('detail')->get();
+
+            $renderData = '';
+            if (count($studentInfo) > 0) {
+                //Render Data
+                $renderData = view('admin.settings.render.student_data', compact('studentInfo'))->render();
+
+                $response = ResponseMessage::ResponseNotifySuccess('Success!', 'Student list get successfully.');
+            } else {
+                $response = ResponseMessage::ResponseNotifyWarning('Notification!', 'No student list found, please add exams step firstly.');
+            }
+            $response['rendered_info'] = $renderData;
+            Log::info('Successfully get the student list', ['list' => 'success' ?? '']);
+            DB::commit();
+
+            return response()->json($response);
+        } catch (Exception $e) {
+            $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to get the student list. Please try again later.');
+            Log::info('The system is unable to get the student list. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
+            return response()->json($response);
+        }
+    }
+
     public function studentAdd(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         return view('admin.settings.student_add');
     }
 
+    public function studentSave(Request $request)
+    {
+        $request->validate([
+            'full_name' => ['required', 'string', 'max:255'],
+            'user_name' => ['required', 'string', 'max:255'],
+            'years_of_graduation' => ['required', 'string', 'max:255'],
+            'password' => ['nullable', 'min:6'],
+            //'module.*' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'],
+        ]);
+        try {
+            DB::beginTransaction();
+
+            $userInfoSave = new User;
+            $userInfoSave->name = $request->full_name;
+            $userInfoSave->email = $request->email;
+            if ($request->password) //If password add
+                $userInfoSave->password = Hash::make($request->password);
+            $userInfoSave->save();
+
+            $studentInfoSave = new Student;
+            $studentInfoSave->user_id = $userInfoSave->id;
+            $studentInfoSave->user_name = $request->user_name;
+            $studentInfoSave->school_name = $request->school_name;
+            $studentInfoSave->years_of_graduation = $request->years_of_graduation;
+            $studentInfoSave->module = $request->module ? implode(',', $request->module) : null;
+            $studentInfoSave->added_by = auth()->user()->id;
+            $studentInfoSave->save();
+
+            $response = ResponseMessage::ResponseNotifySuccess('Success!', 'Student information save successfully.');
+            Log::info('Successfully save the student information', ['update' => 'success' ?? '']);
+            DB::commit();
+
+            return redirect()->back()->with($response);
+        } catch (Exception $e) {
+            $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to save the student information. Please try again later.');
+            Log::info('The system is unable to save the student information. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
+            return redirect()->back()->with($response);
+        }
+    }
+
     public function studentEdit($id): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
-        return view('admin.settings.student_edit');
+        $student_id = Crypt::decrypt($id);
+        $student_info = Student::with('detail')->find($student_id);
+        return view('admin.settings.student_edit', compact('student_info'));
+    }
+
+    public function studentUpdate(Request $request)
+    {
+        $request->validate([
+            'full_name' => ['required', 'string', 'max:255'],
+            'user_name' => ['required', 'string', 'max:255'],
+            'years_of_graduation' => ['required', 'string', 'max:255'],
+            'password' => ['nullable', 'min:6'],
+            //'module.*' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . Crypt::decrypt($request->user_id)],
+        ]);
+        try {
+            DB::beginTransaction();
+
+            $user_id = Crypt::decrypt($request->user_id);
+            $student_id = Crypt::decrypt($request->student_id);
+
+            $userInfoUpdate = User::find($user_id);
+            $userInfoUpdate->name = $request->full_name;
+            $userInfoUpdate->email = $request->email;
+            if ($request->password) //If password add
+                $userInfoUpdate->password = Hash::make($request->password);
+            $userInfoUpdate->save();
+
+            $studentInfoUpdate = Student::find($student_id);
+            $studentInfoUpdate->user_name = $request->user_name;
+            $studentInfoUpdate->school_name = $request->school_name;
+            $studentInfoUpdate->years_of_graduation = $request->years_of_graduation;
+            $studentInfoUpdate->module = $request->module ? implode(',', $request->module) : null;
+            $studentInfoUpdate->save();
+
+            $response = ResponseMessage::ResponseNotifySuccess('Success!', 'Student information updated successfully.');
+            Log::info('Successfully update the student information', ['update' => 'success' ?? '']);
+            DB::commit();
+
+            return redirect()->back()->with($response);
+        } catch (Exception $e) {
+            $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to update the student information. Please try again later.');
+            Log::info('The system is unable to update the student information. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
+            return redirect()->back()->with($response);
+        }
+    }
+
+    public function studentDelete($id)
+    {
+        try {
+            DB::beginTransaction();
+
+            $student_id = Crypt::decrypt($id);
+            $student_info = Student::find($student_id);
+            User::find($student_info->user_id)->delete();
+            $student_info->delete();
+
+            $response = ResponseMessage::ResponseNotifySuccess('Success!', 'Student information removed successfully.');
+            Log::info('Successfully removed the student info', ['removed' => 'success' ?? '']);
+
+            DB::commit();
+            return response()->json($response);
+        } catch (Exception $e) {
+            $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to remove the student information. Please try again later.');
+            Log::info('The system is unable to remove the student information. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
+
+            return response()->json($response);
+        }
     }
 }

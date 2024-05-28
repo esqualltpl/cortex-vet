@@ -8,14 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * @method static where(string $string, $id)
- * @method static find(mixed $student_id)
  */
-class Student extends Model
+class Payment extends Model
 {
     use HasFactory, SoftDeletes;
-
-    public function detail(): \Illuminate\Database\Eloquent\Relations\BelongsTo
-    {
-        return $this->belongsTo(User::class, 'user_id');
-    }
 }

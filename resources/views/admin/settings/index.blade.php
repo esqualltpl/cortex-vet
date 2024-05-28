@@ -47,7 +47,7 @@
                                             </span>
                                         </p>
                                     </button>
-                                    <button class="nav-link h-navlinks py-2 my-0" id="v-pills-profile-tab"
+                                    <button class="nav-link h-navlinks py-2 my-0 update-password-info" id="v-pills-profile-tab"
                                             data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button"
                                             role="tab" aria-controls="v-pills-profile" aria-selected="true" tabindex="-1">
                                         <p class="nav-link1 text-dark mb-0  text-start px-0 mx-0">
@@ -83,7 +83,8 @@
                                             </span>
                                         </p>
                                     </button>
-                                    <button class="nav-link h-navlinks py-2 my-0" id="v-pills-payment-tab"
+                                    <button class="nav-link h-navlinks py-2 my-0 payment-info" id="v-pills-payment-tab"
+                                            data-payment-value="{{ $settings['payments'] ?? 0 }}"
                                             data-bs-toggle="pill" data-bs-target="#v-pills-payment" type="button"
                                             role="tab" aria-controls="v-pills-payment" aria-selected="true" tabindex="-1">
                                         <p class="nav-link1 text-dark mb-0  text-start px-0 mx-0">
@@ -94,7 +95,8 @@
                                             </span>
                                         </p>
                                     </button>
-                                    <button class="nav-link h-navlinks py-2 my-0" id="v-pills-result-tab"
+                                    <button class="nav-link h-navlinks py-2 my-0 students-info" id="v-pills-result-tab"
+                                            data-action-url="{{ route('admin.setting.students.list') }}"
                                             data-bs-toggle="pill" data-bs-target="#v-pills-student" type="button"
                                             role="tab" aria-controls="v-pills-profile" aria-selected="true" tabindex="-1">
                                         <p class="nav-link1 text-dark mb-0  text-start px-0 mx-0">
@@ -110,13 +112,13 @@
                             <div class="col-md-9">
                                 <div class="tab-content">
                                     <div class="tab-pane fade active show" id="v-pills-home" role="tabpanel">
-                                        <div class="card p-4" id="Divone">
+                                        <div class="card p-4 personal-information-data">
                                             <div class="col-md-12 d-flex justify-content-between">
                                                 <div class="col-md-6 d-flex">
                                                     <h5 style=" font-size: 17px; !important;">Personal Information</h5>
                                                 </div>
-                                                <div class="col-md-6 text-end">
-                                                    <span class="fa fa-edit text-success" onclick="switchDocument()"></span>
+                                                <div class="col-md-6 text-end cursor-pointer personal-information">
+                                                    <span class="fa fa-edit text-success"></span>
                                                 </div>
                                             </div>
                                             <div class="row" id="showedit">
@@ -218,13 +220,12 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card p-3 mt-3" id="Divtwo" style="display: none;">
+                                        <div class="card p-3 mt-3 d-none personal-information-update-data">
                                             <form id="save-profile-info-form">
                                                 @csrf
                                                 <div class="row justify-content-start">
                                                     <div class="d-flex">
-                                                        <i class="fa fa-arrow-left mt-1" aria-hidden="true"
-                                                           onclick="switchVisibleBasicInfo()"></i>
+                                                        <i class="fa fa-arrow-left mt-1 cursor-pointer back-personal-information" aria-hidden="true"></i>
                                                         <h6 class="mx-2">Personal Information</h6>
                                                     </div>
                                                 </div>
@@ -334,8 +335,7 @@
                                                 <div class="d-flex mt-4"
                                                      style="justify-content:end; align-items: center;">
                                                     <div>
-                                                        <button type="button" class="btn btn-outline-primary py-2  mb-2"
-                                                                onclick="switchVisibleBasicInfo()"> Cancel
+                                                        <button type="button" class="btn btn-outline-primary py-2 back-personal-information mb-2" > Cancel
                                                         </button>
                                                         <button type="button"
                                                                 data-action-url="{{ route('admin.setting.update.profile') }}"
@@ -370,7 +370,7 @@
                                                         <div class="col-lg-3"><label class="form-label">Current
                                                                 Password</label></div>
                                                         <div class="input-group input-group-outline">
-                                                            <input type="password" class="form-control" name="current_password" aria-label="Password">
+                                                            <input type="password" class="form-control" name="current_password" placeholder="********" id="current_password" aria-label="Password">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text toggle-password" style="cursor: pointer; padding-right: 8px;">
                                                                     <i class="fas fa-eye"></i>
@@ -383,7 +383,7 @@
                                                         <div class="col-lg-3"><label class="form-label">New
                                                                 Password</label></div>
                                                         <div class="input-group input-group-outline my-1">
-                                                            <input type="password" class="form-control" name="password" aria-label="Password">
+                                                            <input type="password" class="form-control" name="password" placeholder="********" id="password" aria-label="Password">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text toggle-password" style="cursor: pointer; padding-right: 8px;">
                                                                     <i class="fas fa-eye"></i>
@@ -396,7 +396,7 @@
                                                         <div class="col-lg-3"><label class="form-label">Confirm New
                                                                 Password</label></div>
                                                         <div class="input-group input-group-outline">
-                                                            <input type="password" class="form-control" name="password_confirmation" aria-label="Password">
+                                                            <input type="password" class="form-control" name="password_confirmation" placeholder="********" id="password_confirmation" aria-label="Password">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text toggle-password" style="cursor: pointer; padding-right: 8px;">
                                                                     <i class="fas fa-eye"></i>
@@ -660,7 +660,8 @@
                                                                 </div>
                                                             </div>
                                                             <div>
-                                                                <button type="button" class="btn btn-primary mx-2 text-white get-neurolocalization-info" data-action-url="{{ route('admin.setting.get.neurolocalization.list') }}">
+                                                                <button type="button" class="btn btn-primary mx-2 text-white get-neurolocalization-info"
+                                                                        data-action-url="{{ route('admin.setting.get.neurolocalization.list') }}">
                                                                     Neurolocalization
                                                                 </button>
                                                             </div>
@@ -716,21 +717,29 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="tab-pane fade" id="v-pills-payment" role="tabpanel" aria-labelledby="v-pills-payment-tab">
+                                    <div class="tab-pane fade" id="v-pills-payment" role="tabpanel"
+                                         aria-labelledby="v-pills-payment-tab">
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="card p-3">
                                                     <h6>Payments</h6>
-                                                    <div class="card p-3">
+                                                    <div id="setPaymentAmount-loader" class="text-center d-none" style="margin-left: 34px;">
+                                                        <img src="{{ asset('portal/assets/img/loader.gif') }}" width="120px" alt="loader"/>
+                                                    </div>
+                                                    <div class="card p-3 set-payment-amount">
                                                         <p class="mb-3"><b>Set Payment Amount for Neurologists</b></p>
                                                         <div class="input-group input-group-outline mb-3">
-                                                            <input type="text" class="form-control" placeholder="$0.00">
+                                                            <input type="text" class="form-control payment-amount-neurologists-info" placeholder="$0.00">
                                                         </div>
                                                     </div>
-                                                    <div class="d-flex mt-3" style="justify-content:end; align-items: center;">
+                                                    <div class="d-flex mt-3 set-payment-amount" style="justify-content:end; align-items: center;">
                                                         <div>
-                                                            <button type="button" class="btn  btn-primary  btn-sm py-2 text-white mb-2">
-                                                                Set
+                                                            <button type="button" class="btn btn-primary btn-sm py-2 text-white mb-2 set-payment-info" data-action-url="{{ route('admin.setting.set.payment') }}">
+                                                                <span>Set</span>
+                                                                <div id="setPayment-loader" class="spinner-border text-green-700 d-none overflow-hidden" role="status"
+                                                                     style="height: 17px !important;width: 17px !important;margin-left: 5px;font-size: 16px;margin-top: 0px;color: #ffffff;">
+                                                                    <span class="sr-only">Loading...</span>
+                                                                </div>
                                                             </button>
                                                         </div>
                                                     </div>
@@ -743,61 +752,32 @@
                                         <div class="row" id="Divthree">
                                             <div class="col-12">
                                                 <div class="card p-3">
-
                                                     <div class="d-flex justify-content-between">
-                                                        <h5>
-                                                            Students</h5>
+                                                        <h6>Students</h6>
                                                         <a href="{{ route('admin.settings.student.add') }}">
-                                                            <button type="button" class="btn  btn-primary  btn-sm py-2 text-white mb-2">
+                                                            <button type="button" class="btn btn-primary btn-sm py-2 text-white mb-2">
                                                                 Add Student
                                                             </button>
                                                         </a>
                                                     </div>
                                                     <div class="table-responsive">
-
-                                                        <table class="table table-flush" id="sdatatable-basic">
+                                                        <table class="table table-flush" id="studentDatatable-basic">
                                                             <thead class="thead-light">
                                                             <tr>
                                                                 <th>Name</th>
                                                                 <th>Role</th>
                                                                 <th>Email</th>
                                                                 <th>Access</th>
-
                                                                 <th>Actions</th>
                                                             </tr>
                                                             </thead>
-                                                            <tbody>
-                                                            <tr>
-                                                                <td class="text-sm ">
-                                                                    Ryan Holland
-                                                                </td>
-                                                                <td class="text-sm ">
-                                                                    Student
-                                                                </td>
-                                                                <td class="text-sm ">
-                                                                    ryan@gmail.com
-                                                                </td>
-                                                                <td class="text-sm ">
-                                                                    Dashboard, Neuro Assessment, Patients,
-                                                                    Settings
-                                                                </td>
-                                                                <td class="text-sm">
-                                                                    <a href="{{ route('admin.settings.student.edit', 1) }}">
-                                                                        <img src="{{ asset('portal/assets/img/edit png.png') }}" alt="icon">
-                                                                    </a>
-                                                                    <a href="#" class="mx-1"
-                                                                       data-bs-toggle="modal"
-                                                                       data-bs-target="#deleteUser">
-                                                                        <img src="{{ asset('portal/assets/img/Delete.png') }}" alt="icon">
-                                                                    </a>
-
-                                                                </td>
-                                                            </tr>
-
+                                                            <tbody class="show-student-table-info">
 
                                                             </tbody>
-
                                                         </table>
+                                                        <div id="studentInfo-loader" class="text-center d-none" style="margin-left: 34px;">
+                                                            <img src="{{ asset('portal/assets/img/loader.gif') }}" width="120px" alt="loader"/>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -946,7 +926,8 @@
                         </div>
                         <button type="button" class="btn btn-primary float-end btn-md mt-3 mb-0 text-white save-give-result-name" data-action-url="{{ route('admin.setting.set.result.info.save') }}">
                             <span>Save</span>
-                            <div id="givResultName-loader" class="spinner-border text-green-700 d-none overflow-hidden" role="status" style="height: 17px !important;width: 17px !important;margin-left: 5px;font-size: 16px;margin-top: 0px;color: #ffffff;">
+                            <div id="givResultName-loader" class="spinner-border text-green-700 d-none overflow-hidden" role="status"
+                                 style="height: 17px !important;width: 17px !important;margin-left: 5px;font-size: 16px;margin-top: 0px;color: #ffffff;">
                                 <span class="sr-only">Loading...</span>
                             </div>
                         </button>
@@ -954,7 +935,6 @@
                 </div>
             </div>
         </div>
-
         <div class="modal fade" id="viewNeurolocalizationInfoModal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false"
              aria-labelledby="viewNeurolocalizationInfoModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -985,8 +965,25 @@
                 perPage: 10
             });
         }
+        if (document.getElementById('studentDatatable-basic')) {
+            const dataTableSearch = new simpleDatatables.DataTable("#studentDatatable-basic", {
+                searchable: true,
+                fixedHeight: false,
+                perPage: 10
+            });
+        }
     </script>
     <script>
+        $(document).on('click', '.personal-information', function (e) {
+            $('.personal-information-data').addClass('d-none');
+            $('.personal-information-update-data').removeClass('d-none');
+        });
+
+        $(document).on('click', '.back-personal-information', function (e) {
+            $('.personal-information-update-data').addClass('d-none');
+            $('.personal-information-data').removeClass('d-none');
+        });
+
         $(document).on('change', '#fileInput', function (e) {
             let actionType = 'post';
             let file_data = new FormData();
@@ -1010,6 +1007,25 @@
             let processData = $('#save-profile-info-form').serialize();
 
             saveInfo(actionURL, actionType, processData, loaderId);
+        });
+
+        document.querySelectorAll('.toggle-password').forEach(function (element) {
+            element.addEventListener('click', function () {
+                const passwordInput = this.parentElement.previousElementSibling;
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    this.innerHTML = '<i class="fas fa-eye-slash"></i>';
+                } else {
+                    passwordInput.type = 'password';
+                    this.innerHTML = '<i class="fas fa-eye"></i>';
+                }
+            });
+        });
+
+        $(document).on('click', '.update-password-info', function (e) {
+            $('#current_password').val('');
+            $('#password').val('');
+            $('#password_confirmation').val('');
         });
 
         $(document).on('click', '.change-password-info', function (e) {
@@ -1277,7 +1293,7 @@
                 $(`.${examStepClass}`).addClass('d-none');
             }
         });
-        
+
         $(document).on('click', '.test-checkbox-info', function (e) {
             let testOptionsInfo = $(this).attr('data-test-options-info');
 
@@ -1342,8 +1358,8 @@
             $('.set-result-header').text('Edit Results');
 
             $('.set-result-info').removeClass('d-none');
-            $('.show-give-result-name-modal').attr('data-result-id',resultId)
-            $('.show-give-result-name-modal').attr('data-result-value',resultInfo)
+            $('.show-give-result-name-modal').attr('data-result-id', resultId)
+            $('.show-give-result-name-modal').attr('data-result-value', resultInfo)
             $('.show-neurolocalization-info').addClass('d-none');
             getInfo(actionURL, actionType, processData, loaderId, renderClass);
         });
@@ -1376,8 +1392,69 @@
             $('.show-neurolocalization-info').addClass('d-none');
             $('.set-result-info').removeClass('d-none');
         });
+        /*----------- Set Results End -----------*/
 
-        /*----------- Set Results -----------*/
+        /*----------- Payments -----------*/
+        $(document).on('click', '.payment-info', function (e) {
+            let loaderId = 'setPaymentAmount-loader';
+            let paymentInfo = $(this).attr('data-payment-value') ?? '0';
+            let hideShowClass = 'set-payment-amount';
+            let renderClass = 'payment-amount-neurologists-info';
+
+            $(`.${hideShowClass}`).addClass('d-none');
+            $(`#${loaderId}`).removeClass('d-none');
+
+            setTimeout(function () {
+                $.notify({
+                    title: 'Success!',
+                    message: '<br>Payment information get successfully.',
+                    icon: 'fa fa-check',
+                }, {
+                    // settings
+                    type: 'success',
+                    z_index: 2000,
+                    animate: {
+                        enter: 'animated bounceInDown',
+                        exit: 'animated bounceOutUp'
+                    }
+                });
+
+                $(`.${renderClass}`).val(paymentInfo);
+                $(`.${hideShowClass}`).removeClass('d-none');
+                $(`#${loaderId}`).addClass('d-none');
+            }, 500);
+        });
+
+        $(document).on('click', '.set-payment-info', function (e) {
+            let actionType = 'post';
+            let loaderId = 'setPayment-loader';
+            let actionURL = $(this).attr('data-action-url');
+
+            let payment = $('.payment-amount-neurologists-info').val();
+            $('.payment-info').attr('data-payment-value', payment ?? '0');
+            let processData = {
+                "_token": "{{ csrf_token() }}",
+                "payment": payment,
+            };
+
+            saveInfo(actionURL, actionType, processData, loaderId);
+        });
+        /*----------- Payments End -----------*/
+
+        /*----------- Student -----------*/
+        $(document).on('click', '.students-info', function (e) {
+            let actionType = 'get';
+            let loaderId = 'studentInfo-loader';
+            let actionURL = $(this).attr('data-action-url');
+            let processData = {
+                "_token": "{{ csrf_token() }}",
+            };
+            let renderClass = 'show-student-table-info';
+
+            getInfo(actionURL, actionType, processData, loaderId, renderClass);
+        });
+        /*----------- Student End -----------*/
+
         function addOptionField(event, className) {
             event.stopPropagation();
             const optionsContainer = $("#" + className);
@@ -1399,430 +1476,4 @@
         }
     </script>
     {{-- *****----------------End JS Code----------------***** --}}
-
-
-    <script>
-
-        document.addEventListener("DOMContentLoaded", function () {
-            var editIcon = document.getElementById("editIcon");
-            var fileInput = document.getElementById("fileInput");
-
-            editIcon.addEventListener("click", function () {
-                fileInput.value = "";
-                fileInput.click();
-            });
-        });
-
-        document.querySelectorAll('.toggle-password').forEach(function (element) {
-            element.addEventListener('click', function () {
-                const passwordInput = this.parentElement.previousElementSibling;
-                if (passwordInput.type === 'password') {
-                    passwordInput.type = 'text';
-                    this.innerHTML = '<i class="fas fa-eye-slash" style="cursor: pointer; padding-right: 8px;"></i>';
-                } else {
-                    passwordInput.type = 'password';
-                    this.innerHTML = '<i class="fas fa-eye" style="cursor: pointer; padding-right: 8px;"></i>';
-                }
-            });
-        });
-
-        if (document.getElementById('datatable-basic')) {
-            const dataTableSearch = new simpleDatatables.DataTable("#datatable-basic", {
-                searchable: true,
-                fixedHeight: false,
-                perPage: 10
-            });
-        }
-
-
-
-        function switchDocument() {
-            if (document.getElementById('Divone')) {
-
-                if (document.getElementById('Divone').style.display == 'none') {
-                    document.getElementById('Divone').style.display = 'block';
-                    document.getElementById('Divtwo').style.display = 'none';
-                } else {
-                    document.getElementById('Divone').style.display = 'none';
-                    document.getElementById('Divtwo').style.display = 'block';
-                }
-            }
-        }
-
-        function switchVisibleBasicInfo() {
-            if (document.getElementById('Divone')) {
-
-                if (document.getElementById('Divone').style.display == 'none') {
-                    document.getElementById('Divone').style.display = 'block';
-                    document.getElementById('Divtwo').style.display = 'none';
-                } else {
-                    document.getElementById('Divone').style.display = 'none';
-                    document.getElementById('Divtwo').style.display = 'block';
-                }
-            }
-        }
-
-        function switchStudent() {
-            if (document.getElementById('Divthree')) {
-
-                if (document.getElementById('Divthree').style.display == 'none') {
-                    document.getElementById('Divthree').style.display = 'block';
-                    document.getElementById('Divfour').style.display = 'none';
-                } else {
-                    document.getElementById('Divthree').style.display = 'none';
-                    document.getElementById('Divfour').style.display = 'block';
-                }
-            }
-        }
-
-        function ShowNeurolocalizations() {
-            if (document.getElementById('divFive')) {
-
-                if (document.getElementById('divFive').style.display == 'none') {
-                    document.getElementById('divFive').style.display = 'block';
-                    document.getElementById('divSix').style.display = 'none';
-                } else {
-                    document.getElementById('divFive').style.display = 'none';
-                    document.getElementById('divSix').style.display = 'block';
-                }
-            }
-        }
-
-        function ShowEdit() {
-            if (document.getElementById('divSeven')) {
-
-                if (document.getElementById('divSeven').style.display == 'none') {
-                    document.getElementById('divSeven').style.display = 'block';
-                    document.getElementById('divEight').style.display = 'none';
-                } else {
-                    document.getElementById('divSeven').style.display = 'none';
-                    document.getElementById('divEight').style.display = 'block';
-                }
-            }
-        }
-
-        function ShowUpload() {
-            var divTen = document.getElementById('divTen');
-            var divEleven = document.getElementById('divEleven');
-            var uploadButton = document.getElementById('uploadButton');
-
-            if (divTen.style.display === 'block') {
-                divTen.style.display = 'none';
-                divEleven.style.display = 'block';
-                uploadButton.innerHTML = 'Upload Instruction Video'
-            } else {
-                divTen.style.display = 'block';
-                divEleven.style.display = 'none';
-                uploadButton.innerHTML = 'Tests'
-            }
-        }
-
-        document.querySelectorAll('.toggle-password').forEach(function (element) {
-            element.addEventListener('click', function () {
-                const passwordInput = this.parentElement.previousElementSibling;
-                if (passwordInput.type === 'password') {
-                    passwordInput.type = 'text';
-                    this.innerHTML = '<i class="fas fa-eye-slash"></i>';
-                } else {
-                    passwordInput.type = 'password';
-                    this.innerHTML = '<i class="fas fa-eye"></i>';
-                }
-            });
-        });
-    </script>
-    <script>
-
-        function handleCloneQuestion(contentId) {
-            var container = document.getElementById(contentId);
-            var clone = container.cloneNode(true);
-            container.parentNode.appendChild(clone);
-
-        }
-
-        function handleDeleteQuestion(containerId) {
-            var container = document.getElementById(containerId);
-            container.style.display = 'none'
-
-        }
-
-
-        const radioCheckboxes = document.querySelectorAll('.checkbox');
-
-        radioCheckboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', function () {
-                const radioOptions = this.parentElement.nextElementSibling.querySelector('#radioOptions');
-
-                if (this.checked) {
-                    radioOptions.style.display = 'block';
-                } else {
-                    radioOptions.style.display = 'none';
-                }
-            });
-        });
-
-        document.addEventListener('DOMContentLoaded', function () {
-            var defaultImage = document.getElementById('defaultImage');
-            var imageUpload = document.getElementById('imageUpload');
-
-            // Trigger image upload when default image is clicked
-            defaultImage.addEventListener('click', function () {
-                imageUpload.click();
-            });
-
-            // Update preview when a new image is selected
-            imageUpload.addEventListener('change', function () {
-                var file = this.files[0];
-                if (file) {
-                    var reader = new FileReader();
-                    reader.onload = function (event) {
-                        var imageUrl = event.target.result;
-                        defaultImage.src = imageUrl;
-                    };
-                    reader.readAsDataURL(file);
-                }
-            });
-        });
-    </script>
-    <script>
-        function addExamStep() {
-            var examStepName = document.getElementById("examStepInput").value;
-            if (examStepName.trim() === "") {
-                alert("Please enter a name for the exam step.");
-                return;
-            }
-
-            var accordionRental = document.getElementById("accordionRental");
-
-            // Create accordion item div
-            var accordionItemDiv = document.createElement("div");
-            accordionItemDiv.className = "accordion-item";
-
-            // Create accordion header
-            var accordionHeader = document.createElement("p");
-            accordionHeader.className = "accordion-header";
-            accordionHeader.innerHTML = `
-        <button class="accordion-button my-2 py-3 px-2 border-bottom font-weight-bold" type="button"
-            data-bs-toggle="collapse" data-bs-target="#collapse${examStepName.replace(/\s+/g, '')}"
-            aria-expanded="false" aria-controls="collapse${examStepName.replace(/\s+/g, '')}"
-            style="background-color: #E1DAF1; border-radius: 10px; color: #6647B1;">
-            ${examStepName}
-            <i class="collapse-close fa fa-sort-desc text-xs pt-1 position-absolute end-0 me-3"
-                aria-hidden="true"></i>
-            <i class="collapse-open fa fa-caret-up text-xs pt-1 position-absolute end-0 me-3"
-                aria-hidden="true"></i>
-        </button>
-    `;
-
-            // Create accordion collapse div
-            var accordionCollapseDiv = document.createElement("div");
-            accordionCollapseDiv.id = `collapse${examStepName.replace(/\s+/g, '')}`;
-            accordionCollapseDiv.className = "accordion-collapse collapse";
-            accordionCollapseDiv.setAttribute("aria-labelledby", `heading${examStepName.replace(/\s+/g, '')}`);
-            accordionCollapseDiv.setAttribute("data-bs-parent", "#accordionRental");
-
-            // Create accordion body
-            var accordionBodyDiv = document.createElement("div");
-            accordionBodyDiv.className = "accordion-body  p-3";
-
-            // Append dropdown content
-            accordionBodyDiv.innerHTML = `
-        <div class="nav-item dropdown mx-2 ">
-            <button type="button"
-                                                                                    class="btn btn-primary ms-auto text-sm nav-link cursor-pointer btn-sm text-white"
-                                                                                    style="border-radius: 50px; opacity: 0.6; width: 30px; height: 30px; display: flex; justify-content: center; align-items: center;"
-                                                                                    id="dropdownMenuDocs"
-                                                                                    data-bs-toggle="dropdown"
-                                                                                    aria-expanded="false">
-                                                                                    <i class="fa fa-plus"
-                                                                                        aria-hidden="true"
-                                                                                        style="font-size: 0.6rem !important;"></i>
-                                                                                </button>
-            <div class="dropdown-menu dropdown-menu-animation dropdown-lg mt-0 mt-lg-3 p-3 border-radius-lg"
-            style="width: 300px; height: auto;"
-                aria-labelledby="dropdownMenuDocs">
-                <div class="d-none d-lg-block">
-                    <h6>Add Test</h6>
-                    <label class="form-label font-weight-bold">Test</label>
-                    <div class="input-group input-group-outline mb-3">
-                        <input type="text" id="testInput" class="form-control" placeholder="Enter Test">
-                    </div>
-                    <label
-                                                                                            class="form-label font-weight-bold">Options</label>
-                                                                                        <div class="input-group input-group-outline mb-3 d-flex gap-2 align-items-center"
-                                                                                            id="optionsContainer1">
-                                                                                            <input type="text"
-                                                                                                id="examStepInput"
-                                                                                                class="form-control"
-                                                                                                placeholder="Option">
-                                                                                            <button type="button"
-                                                                                                class="btn btn-primary btn-sm ms-auto text-sm mb-0 cursor-pointer btn-sm text-white"
-                                                                                                style="border-radius: 50px; opacity: 0.6; width: 20px; height: 30px; display: flex; justify-content: center; align-items: center"
-                                                                                                onclick="addOptionField(event, 'optionsContainer1')">
-                                                                                                <i class="fa fa-plus"
-                                                                                                    aria-hidden="true"
-                                                                                                    style="font-size: 0.6rem !important"></i>
-                                                                                            </button>
-                                                                                        </div>
-                    <button type="button" class="btn btn-primary float-end btn-sm py-2 text-white mb-2"
-                        onclick="addTestData('collapse${examStepName.replace(/\s+/g, '')}')">
-                        Add
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div class="container mt-3" id="testDataContainer${examStepName.replace(/\s+/g, '')}"></div>
-    `;
-
-            // Append accordion body to accordion collapse div
-            accordionCollapseDiv.appendChild(accordionBodyDiv);
-
-            // Append accordion header and collapse div to accordion item div
-            accordionItemDiv.appendChild(accordionHeader);
-            accordionItemDiv.appendChild(accordionCollapseDiv);
-
-            // Append accordion item div to accordion container
-            accordionRental.appendChild(accordionItemDiv);
-
-            document.getElementById("examStepInput").value = ""; // Clear input field after adding
-        }
-
-        function addTestData(collapseId) {
-            var testInput = document.getElementById("testInput").value;
-            if (testInput.trim() === "") {
-                alert("Please enter some text for the test.");
-                return;
-            }
-
-            var testDataContainerId = `testDataContainer${collapseId.slice(8)}`;
-            var testDataContainer = document.getElementById(testDataContainerId);
-
-            var testDataDiv = document.createElement("div");
-            testDataDiv.className = "test-data";
-            testDataDiv.innerHTML = `<div class="mt-2">
-                                                                            <div class="border-radius-lg"
-                                                                                style="border:1px solid #e8e8e8;">
-                                                                                <div
-                                                                                    class="d-flex justify-content-end gap-2 p-2 ">
-                                                                                    <a href="" data-bs-toggle="modal"
-                                                                                        data-bs-target="#editTestModal">
-                                                                                        <i class="fa fa-pencil-square-o"
-                                                                                            aria-hidden="true"
-                                                                                            style="cursor: pointer; color: #5534A5"></i>
-                                                                                    </a>
-                                                                                    <a href="">
-                                                                                        <i class="fa fa-times"
-                                                                                            aria-hidden="true"
-                                                                                            style="color: #E66D6D; cursor: pointer"></i>
-                                                                                    </a>
-                                                                                </div>
-                                                                                <div class="cloningTestContainer">
-                                                                                    <div class="col-md-12 p-2 d-flex flex-wrap justify-content-between"
-                                                                                        id="cloningTest">
-                                                                                        <div class="col-md-12">
-                                                                                            <div class="container">
-                                                                                                <div class="row">
-                                                                                                    <div
-                                                                                                        class="col-md-2 col-sm-12">
-                                                                                                        <p
-                                                                                                            class="font-weight-bold text-dark mb-0">
-                                                                                                            Test: 1</p>
-                                                                                                    </div>
-                                                                                                    <div
-                                                                                                        class="col-md-10 col-sm-12">
-                                                                                                        <p
-                                                                                                            class="font-weight-normal text-dark opacity-8">
-                                                                                                            Lorem ipsum
-                                                                                                            is a
-                                                                                                            dummy text
-                                                                                                        </p>
-                                                                                                        <div class="">
-                                                                                                            <div
-                                                                                                                class="form-check ps-0">
-                                                                                                                <input
-                                                                                                                    class="form-check-input"
-                                                                                                                    type="radio"
-                                                                                                                    name="flexRadioDefault"
-                                                                                                                    id="customRadio1">
-                                                                                                                <label
-                                                                                                                    class="custom-control-label"
-                                                                                                                    for="customRadio1">Normal</label>
-                                                                                                            </div>
-                                                                                                            <div
-                                                                                                                class="form-check ps-0">
-                                                                                                                <input
-                                                                                                                    class="form-check-input"
-                                                                                                                    type="radio"
-                                                                                                                    name="flexRadioDefault"
-                                                                                                                    id="customRadio2">
-                                                                                                                <label
-                                                                                                                    class="custom-control-label"
-                                                                                                                    for="customRadio2">Obtunded</label>
-                                                                                                            </div>
-                                                                                                            <div
-                                                                                                                class="form-check ps-0">
-                                                                                                                <input
-                                                                                                                    class="form-check-input"
-                                                                                                                    type="radio"
-                                                                                                                    name="flexRadioDefault"
-                                                                                                                    id="customRadio3">
-                                                                                                                <label
-                                                                                                                    class="custom-control-label"
-                                                                                                                    for="customRadio3">Stuporous</label>
-                                                                                                            </div>
-                                                                                                            <div
-                                                                                                                class="form-check ps-0">
-                                                                                                                <input
-                                                                                                                    class="form-check-input"
-                                                                                                                    type="radio"
-                                                                                                                    name="flexRadioDefault"
-                                                                                                                    id="customRadio3">
-                                                                                                                <label
-                                                                                                                    class="custom-control-label"
-                                                                                                                    for="customRadio3">Comatose</label>
-                                                                                                            </div>
-                                                                                                            <div
-                                                                                                                class="form-check ps-0">
-                                                                                                                <input
-                                                                                                                    class="form-check-input"
-                                                                                                                    type="radio"
-                                                                                                                    name="flexRadioDefault"
-                                                                                                                    id="customRadio3">
-                                                                                                                <label
-                                                                                                                    class="custom-control-label"
-                                                                                                                    for="customRadio3">Select
-                                                                                                                    all</label>
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>`;
-
-            testDataContainer.appendChild(testDataDiv);
-
-            document.getElementById("testInput").value = ""; // Clear input field after adding
-        }
-
-        function deleteTestData(button) {
-            var testDataDiv = button.parentNode;
-            testDataDiv.remove();
-        }
-
-        const checkboxes = document.querySelectorAll('.checkbox');
-        const submitButtons = document.querySelectorAll('.submitButton');
-
-        checkboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', function () {
-                const isChecked = this.checked;
-                submitButtons.forEach(button => {
-                    button.classList.toggle('hidden', !isChecked);
-                });
-            });
-        });
-    </script>
-
 @endsection

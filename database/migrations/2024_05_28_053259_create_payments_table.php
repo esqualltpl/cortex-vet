@@ -11,13 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('students', function (Blueprint $table) {
+        Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->string('user_name')->nullable();
-            $table->string('school_name')->nullable();
-            $table->string('years_of_graduation')->nullable();
-            $table->string('module')->comment('Dashboard, Neuro Assessment, Patients, Settings')->nullable();
+            $table->string('amount')->nullable();
             $table->unsignedBigInteger('added_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
@@ -29,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('students');
+        Schema::dropIfExists('payments');
     }
 };

@@ -89,11 +89,17 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
             });
         });
 
+        //Payments
+        Route::post('/set/payment', [SettingsController::class, 'setPayment'])->name('admin.setting.set.payment');
+
         //Student
         Route::prefix('student')->group(function () {
+            Route::get('list', [SettingsController::class, 'studentsList'])->name('admin.setting.students.list');
             Route::get('add', [SettingsController::class, 'studentAdd'])->name('admin.settings.student.add');
-            Route::get('edit/{id}', [SettingsController::class, 'studentEdit'])->name('admin.settings.student.edit');
-
+            Route::post('save', [SettingsController::class, 'studentSave'])->name('admin.setting.student.info.save');
+            Route::get('edit/{id}', [SettingsController::class, 'studentEdit'])->name('admin.setting.get.student.info.edit');
+            Route::post('update', [SettingsController::class, 'studentUpdate'])->name('admin.setting.student.info.update');
+            Route::delete('/delete/{id}', [SettingsController::class, 'studentDelete'])->name('admin.setting.student.info.delete');
         });
     });
 });

@@ -28,219 +28,150 @@
                 <div class="card p-3 mt-3">
                     <div class="col-md-12 d-flex justify-content-between">
                         <div class="col-md-6 d-flex">
-                            <h5>Add Student</h5>
+                            <h6>Add Student</h6>
                         </div>
-
                     </div>
-                    <div class="row">
-                        <h6>Profile</h6>
-                        <div class="col-md-12 mt-3 d-flex flex-wrap justify-content-between">
-
-                            <div class="col-md-4 px-1">
-                                <label class="form-label">Full Name<sup class="text-danger">*</sup></label>
-                                <div class="input-group input-group-outline mb-3">
-                                    <input type="text" class="form-control w-100"
-                                           aria-describedby="emailHelp" onfocus="focused(this)"
-                                           onfocusout="defocused(this)"
-                                           placeholder="First Name">
+                    <form action="{{ route('admin.setting.student.info.save') }}" method="post">
+                        @csrf
+                        <div class="row">
+                            <p class="mt-2 mb-2"><b>Profile</b></p>
+                            <div class="col-md-12 mt-1 d-flex flex-wrap justify-content-between">
+                                <div class="col-md-4 px-1">
+                                    <label class="form-label">Full Name<sup class="text-danger">*</sup></label>
+                                    <div class="input-group input-group-outline mb-3">
+                                        <input type="text" class="form-control w-100 @error('full_name') is-invalid @enderror"
+                                               name="full_name"
+                                               aria-describedby="emailHelp" onfocus="focused(this)"
+                                               onfocusout="defocused(this)"
+                                               value="{{ old('full_name') }}"
+                                               placeholder="Full Name">
+                                        @error('full_name')
+                                        <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-4 px-1">
+                                    <label class="form-label">User Name<sup class="text-danger">*</sup></label>
+                                    <div class="input-group input-group-outline mb-3">
+                                        <input type="text" class="form-control w-100 @error('user_name') is-invalid @enderror"
+                                               name="user_name"
+                                               aria-describedby="emailHelp" onfocus="focused(this)"
+                                               onfocusout="defocused(this)"
+                                               value="{{ old('user_name') }}"
+                                               placeholder="User Name">
+                                        @error('user_name')
+                                        <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-4 px-1">
+                                    <label class="form-label">Email<sup class="text-danger">*</sup></label>
+                                    <div class="input-group input-group-outline mb-3">
+                                        <input type="email" class="form-control w-100 @error('email') is-invalid @enderror"
+                                               name="email"
+                                               aria-describedby="emailHelp" onfocus="focused(this)"
+                                               onfocusout="defocused(this)"
+                                               value="{{ old('email') }}"
+                                               placeholder="your@email.com">
+                                        @error('email')
+                                        <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                        @enderror
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-4 px-1">
-                                <label class="form-label">User Name<sup class="text-danger">*</sup></label>
-                                <div class="input-group input-group-outline mb-3">
-                                    <input type="text" class="form-control w-100"
-                                           aria-describedby="emailHelp" onfocus="focused(this)"
-                                           onfocusout="defocused(this)"
-                                           placeholder="User Name">
+                            <div class="col-md-12 mt-3 d-flex flex-wrap justify-content-between">
+                                <div class="col-md-4 px-1">
+                                    <label class="form-label">Password{{--<sup class="text-danger">*</sup>--}}</label>
+                                    <div class="input-group input-group-outline mb-3">
+                                        <input type="password" class="form-control w-100 @error('password') is-invalid @enderror"
+                                               name="password"
+                                               aria-describedby="emailHelp" onfocus="focused(this)"
+                                               onfocusout="defocused(this)"
+                                               placeholder="********">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text toggle-password" style="cursor: pointer; padding-right: 8px;">
+                                                <i class="fas fa-eye" aria-hidden="true"></i>
+                                            </span>
+                                        </div>
+                                        @error('password')
+                                        <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                    <p class="text-sm">Password must be minimum 6+</p>
+                                </div>
+                                <div class="col-md-4 px-1 ">
+                                    <label class="form-label">School Name<sup class="text-danger">*</sup></label>
+                                    <div class="input-group input-group-outline mb-3">
+                                        <input type="text" class="form-control w-100 @error('school_name') is-invalid @enderror"
+                                               name="school_name"
+                                               aria-describedby="emailHelp" onfocus="focused(this)"
+                                               onfocusout="defocused(this)"
+                                               value="{{ old('school_name') }}"
+                                               placeholder="School Name">
+                                        @error('school_name')
+                                        <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-4 px-1 ">
+                                    <label class="form-label">Year of Graduation<sup class="text-danger">*</sup></label>
+                                    <div class="input-group input-group-outline mb-3">
+                                        <input type="text" class="form-control w-100 @error('years_of_graduation') is-invalid @enderror"
+                                               name="years_of_graduation"
+                                               aria-describedby="emailHelp" onfocus="focused(this)"
+                                               onfocusout="defocused(this)"
+                                               value="{{ old('years_of_graduation') }}"
+                                               placeholder="Year of Graduation">
+                                        @error('years_of_graduation')
+                                        <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                        @enderror
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-4 px-1">
-                                <label class="form-label">Email<sup class="text-danger">*</sup></label>
-                                <div class="input-group input-group-outline mb-3">
-                                    <input type="email" class="form-control w-100"
-                                           aria-describedby="emailHelp" onfocus="focused(this)"
-                                           onfocusout="defocused(this)"
-                                           placeholder="Johan@gail.com">
+                            <p class="mt-2 mb-2"><b>Select Modules</b></p>
+                            <div class="col-md-12 mt-1 d-flex flex-wrap justify-content-between">
+                                <div class="col-md-6 w-50 ">
+                                    <div class="form-check text-start ps-0">
+                                        <input class="form-check-input bg-dark border-dark" type="checkbox" name="module[]" value="Dashboard" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            Dashboard
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 w-50">
+                                    <div class="form-check text-start ps-0">
+                                        <input class="form-check-input bg-dark border-dark" type="checkbox" name="module[]" value="Neuro Assessment" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            Neuro Assessment
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-12 mt-3 d-flex flex-wrap justify-content-between">
-
-                            <div class="col-md-4 px-1 ">
-                                <label class="form-label">Password<sup class="text-danger">*</sup></label>
-                                <div class="input-group input-group-outline mb-3">
-                                    <input type="password" class="form-control w-100"
-                                           aria-describedby="emailHelp" onfocus="focused(this)"
-                                           onfocusout="defocused(this)"
-                                           placeholder="........">
+                            <div class="col-md-12 mt-3 d-flex flex-wrap justify-content-between">
+                                <div class="col-md-6 w-50 ">
+                                    <div class="form-check text-start ps-0">
+                                        <input class="form-check-input bg-dark border-dark" type="checkbox" name="module[]" value="Patients" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            Patients
+                                        </label>
+                                    </div>
                                 </div>
-                                <p>Password must be minimum 6+</p>
-                            </div>
-                            <div class="col-md-4 px-1">
-                                <label class="form-label">School Name<sup class="text-danger">*</sup></label>
-                                <div class="input-group input-group-outline mb-3">
-                                    <input type="text" class="form-control w-100"
-                                           aria-describedby="emailHelp" onfocus="focused(this)"
-                                           onfocusout="defocused(this)"
-                                           placeholder="Lorem ipsum">
+                                <div class="col-md-6 w-50">
+                                    <div class="form-check text-start ps-0">
+                                        <input class="form-check-input bg-dark border-dark" type="checkbox" name="module[]" value="Settings" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            Settings
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-4 px-1">
-                                <label class="form-label">Year of Graduation<sup class="text-danger">*</sup></label>
-
-                                <div class="input-group input-group-outline mb-3">
-                                    <input type="text" class="form-control w-100"
-                                           aria-describedby="emailHelp" onfocus="focused(this)"
-                                           onfocusout="defocused(this)"
-                                           placeholder="2020">
-                                </div>
+                            <div>
+                                <button type="submit" class="btn btn-primary float-end btn-sm py-2 text-white mb-2">
+                                    Add Student
+                                </button>
                             </div>
-
                         </div>
-                        <h5>Select Modules</h5>
-                        <div class="col-md-12 mt-3 d-flex flex-wrap justify-content-between">
-
-                            <div class="col-md-6 w-50  ">
-                                <div class="form-check text-start ps-0">
-                                    <input class="form-check-input bg-dark border-dark" type="checkbox" value="" id="flexCheckDefault" >
-                                    <label class="form-check-label" for="flexCheckDefault">
-                                        Dashboard
-                                    </label>
-                                </div>
-
-                            </div>
-                            <div class="col-md-6 w-50 ">
-                                <div class="form-check text-start ps-0">
-                                    <input class="form-check-input bg-dark border-dark" type="checkbox" value="" id="flexCheckDefault" >
-                                    <label class="form-check-label" for="flexCheckDefault">
-                                        Neuro Assessment
-                                    </label>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="col-md-12 mt-3 d-flex flex-wrap justify-content-between">
-                            <div class="col-md-6 w-50  ">
-                                <div class="form-check text-start ps-0">
-                                    <input class="form-check-input bg-dark border-dark" type="checkbox" value="" id="flexCheckDefault" >
-                                    <label class="form-check-label" for="flexCheckDefault">
-                                        Patients
-                                    </label>
-                                </div>
-
-                            </div>
-                            <div class="col-md-6 w-50 ">
-                                <div class="form-check text-start ps-0">
-                                    <input class="form-check-input bg-dark border-dark" type="checkbox" value="" id="flexCheckDefault" >
-                                    <label class="form-check-label" for="flexCheckDefault">
-                                        Settings
-                                    </label>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div> <button type="button"
-                                      class="btn  btn-primary float-end btn-sm py-2 text-white mb-2">
-                                Add Student
-                            </button></div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="modal fade" id="addcomment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog modal- modal-dialog-centered modal-lg " role="document">
-                <div class="modal-content p-3">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Rate this coach</h5>
-                        <button type="button" class="btn-close text-dark" data-bs-dismiss="modal"
-                                aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-
-                    <div class="modal-body">
-                        <div class="d-flex justify-content-center p-3"
-                             style="border: 1px solid #b3afaf; border-radius: 5px;">
-                            <img src="../assets/Training Portal/Client Portal/rated.png" class="img-fluid"
-                                 width="100px" />
-                            <img src="../assets/Training Portal/Client Portal/rated.png" width="100px" />
-                            <img src="../assets/Training Portal/Client Portal/rated.png" width="100px" />
-                            <img src="../assets/Training Portal/Client Portal/rated.png" width="100px" />
-                            <img src="../assets/Training Portal/Client Portal/rated.png" width="100px" />
-                        </div>
-
-                    </div>
-                    <div class="modal-footer">
-                        <div class="d-flex justify-content-end">
-                            <button type="button" class="btn btn-primary   btn-sm py-2 text-white mb-2">
-                                Rate
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="modal fade" id="refund" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog modal- modal-dialog-centered modal-lg " role="document">
-                <div class="modal-content p-3">
-                    <div class="modal-header">
-
-                        <button type="button" class="btn-close text-dark" data-bs-dismiss="modal"
-                                aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-
-                    <div class="modal-body">
-                        <div class="d-flex justify-content-center p-3">
-                            <h6>Are you sure you want to get refunded for this session?</h6>
-                        </div>
-
-                    </div>
-
-                    <div class="d-flex justify-content-center">
-                        <button type="button" class="btn  mx-2 btn-secondary  btn-lg w-20  py-2 text-white mb-2">
-                            Ok
-                        </button>
-                        <button type="button" class="btn btn-primary mx-3 btn-lg  w-20 py-2 text-white mb-2">
-                            Cancel
-                        </button>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        <div class="modal fade" id="deleteUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog  modal-dialog-centered " role="document" style="">
-                <div class="modal-content ">
-                    <div class=" modal-header" style="background-color: #FD4F4E;border-bottom: none;">
-
-                        <button type="button" class="btn-close text-dark float-end" data-bs-dismiss="modal"
-                                aria-label="Close">
-
-                        </button>
-                    </div>
-                    <div class="modal-body" style="background-color: #FD4F4E;">
-                        <div class="d-flex justify-content-center">
-                            <img src="../assets/img/Sad Emoji.png" />
-                        </div>
-                        <div class="text-center  m-3 p-3">
-
-                            <p class="text-white">Are you sure to want to delete "Rayan Holland"</p>
-                        </div>
-
-                    </div>
-                    <div class="">
-                        <div class="my-3">
-                            <a href="">
-                                <p class="text-center font-weight-bold text-info ">Continue</p>
-                            </a>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -248,5 +179,18 @@
 @endsection
 
 @section('script')
-
+    <script>
+        document.querySelectorAll('.toggle-password').forEach(function (element) {
+            element.addEventListener('click', function () {
+                const passwordInput = this.parentElement.previousElementSibling;
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    this.innerHTML = '<i class="fas fa-eye-slash" style="cursor: pointer; padding-right: 8px;"></i>';
+                } else {
+                    passwordInput.type = 'password';
+                    this.innerHTML = '<i class="fas fa-eye" style="cursor: pointer; padding-right: 8px;"></i>';
+                }
+            });
+        });
+    </script>
 @endsection

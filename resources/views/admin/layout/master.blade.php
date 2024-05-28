@@ -9,5 +9,6 @@
         @include('admin.layout.footer')
     </main>
     @include('admin.layout.script')
+    @include('admin.layout.toasterMessage')
 </body>
 </html>
