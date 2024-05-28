@@ -511,6 +511,11 @@ class SettingsController extends Controller
         ]);
 
         try {
+            if(count($request->options ?? []) == 0){
+                $response = ResponseMessage::ResponseNotifyWarning('Warning!', 'Please select the exam option, test and its option first to set result.');
+                return response()->json($response);
+            }
+
             DB::beginTransaction();
             $result_id = $request->result_id ?? null;
             if ($result_id) {
