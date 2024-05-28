@@ -984,6 +984,16 @@
             $('.personal-information-data').removeClass('d-none');
         });
 
+        document.addEventListener("DOMContentLoaded", function () {
+            var editIcon = document.getElementById("editIcon");
+            var fileInput = document.getElementById("fileInput");
+
+            editIcon.addEventListener("click", function () {
+                fileInput.value = "";
+                fileInput.click();
+            });
+        });
+
         $(document).on('change', '#fileInput', function (e) {
             let actionType = 'post';
             let file_data = new FormData();
