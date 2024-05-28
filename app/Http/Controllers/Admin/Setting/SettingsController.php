@@ -280,7 +280,7 @@ class SettingsController extends Controller
 
             $response = ResponseMessage::ResponseNotifySuccess('Success!', 'Exam instruction video information get successfully.');
             $response['rendered_info'] = $renderData;
-            Log::info('Successfully save the exam instruction video/url information', ['get' => 'success' ?? '']);
+            Log::info('Successfully get the exam instruction video information', ['get' => 'success' ?? '']);
             DB::commit();
 
             return response()->json($response);
@@ -510,16 +510,43 @@ class SettingsController extends Controller
 
         try {
             DB::beginTransaction();
+            $result_id = $request->result_id ?? null;
+            if ($result_id) {
+                $decResultId = Crypt::decrypt($result_id);
+                $updateResultInfo = Result::find($decResultId);
+                $updateResultInfo->name = $request->result_name;
+                $updateResultInfo->save();
 
-            $resultInfo = new Result;
-            $resultInfo->name = $request->result_name;
-            $resultInfo->added_by = auth()->user()->id;
-            $resultInfo->save();
+                //Remove Previous Result Detail Info
+                $removePreviousResultDetailInfo = ResultDetail::where('result_id', $updateResultInfo->id)->get();
+                foreach ($removePreviousResultDetailInfo as $removeInfo){
+                    $removeInfo->forceDelete();
+                }
 
-            $option_info = $request->options;
-            foreach ($option_info as $exam_id => $exam_val) {
-                foreach ($option_info as $test_id => $test_option) {
-                    foreach ($test_option as $option_val) {
+                $option_info = $request->options;
+                foreach ($option_info as $exam_id => $test_options) {
+                    foreach ($test_options as $test_id => $option_val) {
+                        $resultDetailInfo = new ResultDetail;
+                        $resultDetailInfo->result_id = $decResultId ?? null;
+                        $resultDetailInfo->exam_id = $exam_id;
+                        $resultDetailInfo->test_id = $test_id;
+                        $resultDetailInfo->option_id = $option_val;
+                        $resultDetailInfo->added_by = auth()->user()->id;
+                        $resultDetailInfo->save();
+                    }
+                }
+
+                $response = ResponseMessage::ResponseNotifySuccess('Success!', 'Result information updated successfully.');
+                Log::info('Successfully update the result information', ['updated' => 'success' ?? '']);
+            } else {
+                $resultInfo = new Result;
+                $resultInfo->name = $request->result_name;
+                $resultInfo->added_by = auth()->user()->id;
+                $resultInfo->save();
+
+                $option_info = $request->options;
+                foreach ($option_info as $exam_id => $test_options) {
+                    foreach ($test_options as $test_id => $option_val) {
                         $resultDetailInfo = new ResultDetail;
                         $resultDetailInfo->result_id = $resultInfo->id ?? null;
                         $resultDetailInfo->exam_id = $exam_id;
@@ -529,17 +556,146 @@ class SettingsController extends Controller
                         $resultDetailInfo->save();
                     }
                 }
-            }
 
-            $response = ResponseMessage::ResponseNotifySuccess('Success!', 'Result information saved successfully.');
-            Log::info('Successfully save the result information', ['added' => 'success' ?? '']);
+                $response = ResponseMessage::ResponseNotifySuccess('Success!', 'Result information saved successfully.');
+                Log::info('Successfully save the result information', ['added' => 'success' ?? '']);
+            }
+            DB::commit();
+            return response()->json($response);
+        } catch (Exception $e) {
+            $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to save the result information. Please try again later.');
+            Log::info('The system is unable to save the result information. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
+
+            return response()->json($response);
+        }
+    }
+
+    public function getNeurolocalizationList()
+    {
+        try {
+            DB::beginTransaction();
+
+            $resultInfo = Result::where('added_by', auth()->user()->id)->with('detail')->get();
+
+            $renderData = '';
+            if (count($resultInfo) > 0) {
+                //Render Data
+                $renderData = view('admin.settings.render.neurolocalization_data', compact('resultInfo'))->render();
+
+                $response = ResponseMessage::ResponseNotifySuccess('Success!', 'Neurolocalization list get successfully.');
+            } else {
+                $response = ResponseMessage::ResponseNotifyWarning('Notification!', 'No neurolocalization list found, please add exams step firstly.');
+            }
+            $response['rendered_info'] = $renderData;
+            Log::info('Successfully get the neurolocalization list', ['list' => 'success' ?? '']);
             DB::commit();
 
             return response()->json($response);
         } catch (Exception $e) {
-            dd($e);
-            $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to save the result information. Please try again later.');
-            Log::info('The system is unable to save the result information. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
+            $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to get the neurolocalization list. Please try again later.');
+            Log::info('The system is unable to add the neurolocalization list. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
+            return response()->json($response);
+        }
+    }
+
+    public function neurolocalizationDetailPreview(Request $request, $neurolocalizationId)
+    {
+        try {
+            DB::beginTransaction();
+            $neurolocalization_id = Crypt::decrypt($neurolocalizationId);
+            $neurolocalizationInfo = ResultDetail::where('result_id', $neurolocalization_id)
+                ->with('examInfo', 'testInfo', 'optionInfo')->get();
+            if (count($neurolocalizationInfo) > 0) {
+                $renderData = '';
+                $info_sn = 0;
+                foreach ($neurolocalizationInfo as $info) {
+                    $info_sn = $info_sn + 1;
+                    $exam_info = $info->examInfo?->step_name ?? '-';
+                    $test_info = $info->testInfo?->name ?? '-';
+                    $option_info = $info->optionInfo?->name ?? '-';
+
+                    $renderData .= '<div class="col-md-12 row">
+                                        <div class="col-md-3"><h6 class="mx-3">' . $exam_info . '</h6></div>
+                                        <div class="col-md-3"><p class="mx-3"><b>Test:' . $info_sn . '</b></p></div>
+                                        <div class="col-md-3"><p class="mt-0">' . $test_info . '</p></div>
+                                        <div class="col-md-3"><p class="ml-2 mt-0" style="color: #83C1CC">' . $option_info . '</p></div>
+                                    </div>';
+                }
+            } else {
+                $renderData = '<h6 class="text-center">No Information found!</h6>';
+            }
+
+            $response = ResponseMessage::ResponseNotifySuccess('Success!', 'Neurolocalization information get successfully.');
+            $response['rendered_info'] = $renderData;
+            Log::info('Successfully get the neurolocalization information', ['get' => 'success' ?? '']);
+            DB::commit();
+
+            return response()->json($response);
+        } catch (Exception $e) {
+            $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to get the neurolocalization information. Please try again later.');
+            Log::info('The system is unable to get the neurolocalization information. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
+
+            return response()->json($response);
+        }
+    }
+
+    public function neurolocalizationInfoEdit(Request $request, $neurolocalizationId)
+    {
+        try {
+            DB::beginTransaction();
+            $neurolocalization_id = Crypt::decrypt($neurolocalizationId);
+            $resultDetailInfo = ResultDetail::where('result_id', $neurolocalization_id)
+                ->with('examInfo', 'testInfo', 'optionInfo')->get();
+
+            $examsAddInfo = Exam::where('added_by', auth()->user()->id)
+                ->with('testInfo')->get();
+
+            $renderData = '';
+            $examEditInfo = [];
+            $testEditInfo = [];
+            $optionEditInfo = [];
+            if (count($examsAddInfo) > 0) {
+                foreach ($resultDetailInfo as $resultInfo) {
+                    $examEditInfo[] = $resultInfo->examInfo?->id ?? null;
+                    $testEditInfo[] = $resultInfo->testInfo?->id ?? null;
+                    $optionEditInfo[] = $resultInfo->optionInfo?->id ?? null;
+                }
+                foreach ($examsAddInfo as $key => $examAddInfo) {
+                    //Render Data
+                    $renderData .= view('admin.settings.render.edit_results_data', compact('examAddInfo', 'examEditInfo', 'testEditInfo', 'optionEditInfo'))->render();
+                }
+                $response = ResponseMessage::ResponseNotifySuccess('Success!', 'Exams step list get successfully.');
+            } else {
+                $response = ResponseMessage::ResponseNotifyWarning('Notification!', 'No exams step list found, please add exams step firstly.');
+            }
+            $response['rendered_info'] = $renderData;
+            Log::info('Successfully get the exams step list', ['list' => 'success' ?? '']);
+            DB::commit();
+
+            return response()->json($response);
+        } catch (Exception $e) {
+            $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to get the exams step list. Please try again later.');
+            Log::info('The system is unable to add the exams step list. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
+            return response()->json($response);
+        }
+    }
+
+    public function neurolocalizationInfoDelete($id)
+    {
+        try {
+            DB::beginTransaction();
+
+            $neurolocalization_id = Crypt::decrypt($id);
+            Result::find($neurolocalization_id)->delete();
+
+            $response = ResponseMessage::ResponseNotifySuccess('Success!', 'Neurolocalization information removed successfully.');
+            Log::info('Successfully removed the neurolocalization info', ['removed' => 'success' ?? '']);
+
+            DB::commit();
+            return response()->json($response);
+        } catch (Exception $e) {
+            $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to remove the neurolocalization information. Please try again later.');
+            Log::info('The system is unable to remove the neurolocalization information. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
 
             return response()->json($response);
         }

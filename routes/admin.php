@@ -76,10 +76,17 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
             });
         });
 
-        //Set Localization Form
+        //Set Result
         Route::prefix('set/result')->group(function () {
             Route::get('/', [SettingsController::class, 'setResultList'])->name('admin.setting.set.result.list');
             Route::post('info/save', [SettingsController::class, 'setResultInfoSave'])->name('admin.setting.set.result.info.save');
+
+            Route::prefix('neurolocalization')->group(function () {
+                Route::get('info/get', [SettingsController::class, 'getNeurolocalizationList'])->name('admin.setting.get.neurolocalization.list');
+                Route::get('preview/{id}', [SettingsController::class, 'neurolocalizationDetailPreview'])->name('admin.setting.get.neurolocalization.preview');
+                Route::get('edit/{id}', [SettingsController::class, 'neurolocalizationInfoEdit'])->name('admin.setting.get.neurolocalization.info.edit');
+                Route::delete('delete/{id}', [SettingsController::class, 'neurolocalizationInfoDelete'])->name('admin.setting.neurolocalization.info.delete');
+            });
         });
 
         //Student

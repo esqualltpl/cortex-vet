@@ -647,11 +647,11 @@
                                     </div>
                                     <div class="tab-pane fade" id="v-pills-result" role="tabpanel"
                                          aria-labelledby="v-pills-result-tab">
-                                        <div class="row" id="divSeven">
-                                            <div class="col-12" id="divFive">
+                                        <div class="row">
+                                            <div class="col-12 set-result-info">
                                                 <div class="card mt-3 p-3">
                                                     <div class="d-flex justify-content-between flex-wrap">
-                                                        <h6>Set Results</h6>
+                                                        <h6 class="set-result-header">Set Results</h6>
                                                         <div class="d-flex ">
                                                             <div>
                                                                 <div class="input-group input-group-outline">
@@ -660,9 +660,7 @@
                                                                 </div>
                                                             </div>
                                                             <div>
-                                                                <button type="button"
-                                                                        onclick="ShowNeurolocalizations()"
-                                                                        class="btn  btn-primary mx-2   text-white ">
+                                                                <button type="button" class="btn btn-primary mx-2 text-white get-neurolocalization-info" data-action-url="{{ route('admin.setting.get.neurolocalization.list') }}">
                                                                     Neurolocalization
                                                                 </button>
                                                             </div>
@@ -686,21 +684,17 @@
                                                     </form>
                                                 </div>
                                             </div>
-
-                                            <div class="row" id="divSix" style="display: none;">
+                                            <div class="row show-neurolocalization-info d-none">
                                                 <div class="col-12">
                                                     <div class="card mt-3 p-3">
                                                         <div class="d-flex justify-content-between">
-                                                            <h5>Neurolocalizations</h5>
-                                                            <button type="button"
-                                                                    class="btn  btn-primary submitButton  btn-sm py-2 text-white mb-2"
-                                                                    onclick="ShowNeurolocalizations()">
+                                                            <h6>Neurolocalizations</h6>
+                                                            <button type="button" class="btn btn-primary show-set-result-info btn-sm py-2 text-white mb-2">
                                                                 Form a result
                                                             </button>
                                                         </div>
                                                         <div class="table-responsive">
-                                                            <table class="table table-flush"
-                                                                   id="datatable-Neurolocalizations">
+                                                            <table class="table table-flush" id="datatable-basic">
                                                                 <thead class="thead-light">
                                                                 <tr>
                                                                     <th>Result ID</th>
@@ -709,381 +703,33 @@
                                                                     <th>Actions</th>
                                                                 </tr>
                                                                 </thead>
-                                                                <tbody>
-                                                                <tr>
-                                                                    <td class="text-sm ">
-                                                                        Result 1
-                                                                    </td>
-                                                                    <td class="text-sm ">
-                                                                        Spine
-                                                                    </td>
-                                                                    <td class="text-sm ">
-                                                                        2
-                                                                    </td>
-
-                                                                    <td class="text-sm">
-                                                                        <a href="" data-bs-toggle="modal"
-                                                                           data-bs-target="#ViewNeurolocalizations">
-                                                                            <img src="{{ asset('portal/assets/img/view.png') }}" alt="icon">
-                                                                        </a>
-
-                                                                        <img src="{{ asset('portal/assets/img/edit png.png') }}" alt="icon"
-                                                                             onclick="ShowEdit()">
-
-                                                                        <a href="#" class="mx-1"
-                                                                           data-bs-toggle="modal"
-                                                                           data-bs-target="#deleteUser">
-                                                                            <img src="{{ asset('portal/assets/img/Delete.png') }}" alt="icon">
-                                                                        </a>
-
-                                                                    </td>
-                                                                </tr>
-
+                                                                <tbody class="show-neurolocalization-table-info">
 
                                                                 </tbody>
-
                                                             </table>
+                                                            <div id="showNeurolocalization-loader" class="text-center d-none" style="margin-left: 34px;">
+                                                                <img src="{{ asset('portal/assets/img/loader.gif') }}" width="120px" alt="loader"/>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div id="divEight" style="display: none;">
-                                            <div class="card mt-3 p-3">
-                                                <div class="d-flex justify-content-between flex-wrap">
-                                                    <h5>Edit Results</h5>
-                                                    <div class="d-flex ">
-                                                        <div>
-                                                            <div class="input-group input-group-outline">
-                                                                <label class="form-label">Search here</label>
-                                                                <input type="text" class="form-control">
-                                                            </div>
-                                                        </div>
-                                                        <div>
-                                                            <button type="button" onclick="ShowEdit()"
-                                                                    class="btn  btn-primary mx-2   text-white ">
-                                                                Neurolocalizations
-                                                            </button>
-                                                        </div>
-                                                    </div>
-
-
-                                                </div>
-                                                <div class="d-flex align-items-start">
-                                                    <div class="form-check d-flex  justify-content-start">
-                                                        <input type="checkbox" class="checkbox" name="radioDisabled"
-                                                               class="form-check-input">
-                                                        <h6 for="radio3" class="mx-5 my-2">Test:1</h6>
-                                                    </div>
-                                                    <div>
-                                                        <p class="my-2">Lorem ipsum is a dummy text</p>
-                                                        <div class="form-group" id="radioOptions"
-                                                             style="display: none;">
-                                                            <div class="form-check" style="padding-left: 0;">
-                                                                <input class="form-check-input" type="radio"
-                                                                       name="exampleRadios" id="normalRadio"
-                                                                       value="option1">
-                                                                <label class="form-check-label" for="normalRadio">
-                                                                    Normal
-                                                                </label>
-                                                            </div>
-                                                            <div class="form-check" style="padding-left: 0;">
-                                                                <input class="form-check-input" type="radio"
-                                                                       name="exampleRadios" id="obtundedRadio"
-                                                                       value="option2">
-                                                                <label class="form-check-label" for="obtundedRadio">
-                                                                    Obtunded
-                                                                </label>
-                                                            </div>
-                                                            <div class="form-check" style="padding-left: 0;">
-                                                                <input class="form-check-input" type="radio"
-                                                                       name="exampleRadios" id="stuporousRadio"
-                                                                       value="option3">
-                                                                <label class="form-check-label"
-                                                                       for="stuporousRadio">
-                                                                    Stuporous
-                                                                </label>
-                                                            </div>
-                                                            <div class="form-check" style="padding-left: 0;">
-                                                                <input class="form-check-input" type="radio"
-                                                                       name="exampleRadios" id="stuporousRadio"
-                                                                       value="option3">
-                                                                <label class="form-check-label"
-                                                                       for="stuporousRadio">
-                                                                    Comatose
-                                                                </label>
-                                                            </div>
-                                                            <div class="form-check" style="padding-left: 0;">
-                                                                <input class="form-check-input" type="radio"
-                                                                       name="exampleRadios" id="stuporousRadio"
-                                                                       value="option3">
-                                                                <label class="form-check-label"
-                                                                       for="stuporousRadio">
-                                                                    Select all
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex align-items-start">
-                                                    <div class="form-check d-flex ">
-                                                        <input type="checkbox" class="checkbox" name="radioDisabled"
-                                                               class="form-check-input">
-                                                        <h6 for="radio3" class="mx-5 my-2">Test:2</h6>
-                                                    </div>
-                                                    <div>
-                                                        <p class="my-2">Lorem ipsum is a dummy text</p>
-                                                        <div class="form-group" id="radioOptions"
-                                                             style="display: none;">
-                                                            <div class="form-check" style="padding-left: 0;">
-                                                                <input class="form-check-input" type="radio"
-                                                                       name="exampleRadios" id="normalRadio"
-                                                                       value="option1">
-                                                                <label class="form-check-label" for="normalRadio">
-                                                                    Normal
-                                                                </label>
-                                                            </div>
-                                                            <div class="form-check" style="padding-left: 0;">
-                                                                <input class="form-check-input" type="radio"
-                                                                       name="exampleRadios" id="obtundedRadio"
-                                                                       value="option2">
-                                                                <label class="form-check-label" for="obtundedRadio">
-                                                                    Obtunded
-                                                                </label>
-                                                            </div>
-                                                            <div class="form-check" style="padding-left: 0;">
-                                                                <input class="form-check-input" type="radio"
-                                                                       name="exampleRadios" id="stuporousRadio"
-                                                                       value="option3">
-                                                                <label class="form-check-label"
-                                                                       for="stuporousRadio">
-                                                                    Stuporous
-                                                                </label>
-                                                            </div>
-                                                            <div class="form-check" style="padding-left: 0;">
-                                                                <input class="form-check-input" type="radio"
-                                                                       name="exampleRadios" id="stuporousRadio"
-                                                                       value="option3">
-                                                                <label class="form-check-label"
-                                                                       for="stuporousRadio">
-                                                                    Comatose
-                                                                </label>
-                                                            </div>
-                                                            <div class="form-check" style="padding-left: 0;">
-                                                                <input class="form-check-input" type="radio"
-                                                                       name="exampleRadios" id="stuporousRadio"
-                                                                       value="option3">
-                                                                <label class="form-check-label"
-                                                                       for="stuporousRadio">
-                                                                    Select all
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex align-items-start">
-                                                    <div class="form-check d-flex ">
-                                                        <input type="checkbox" class="checkbox" name="radioDisabled"
-                                                               class="form-check-input">
-                                                        <h6 for="radio3" class="mx-5 my-2">Test:3</h6>
-                                                    </div>
-                                                    <div>
-                                                        <p class="my-2">Lorem ipsum is a dummy text</p>
-                                                        <div class="form-group" id="radioOptions"
-                                                             style="display: none;">
-                                                            <div class="form-check" style="padding-left: 0;">
-                                                                <input class="form-check-input" type="radio"
-                                                                       name="exampleRadios" id="normalRadio"
-                                                                       value="option1">
-                                                                <label class="form-check-label" for="normalRadio">
-                                                                    Normal
-                                                                </label>
-                                                            </div>
-                                                            <div class="form-check" style="padding-left: 0;">
-                                                                <input class="form-check-input" type="radio"
-                                                                       name="exampleRadios" id="obtundedRadio"
-                                                                       value="option2">
-                                                                <label class="form-check-label" for="obtundedRadio">
-                                                                    Obtunded
-                                                                </label>
-                                                            </div>
-                                                            <div class="form-check" style="padding-left: 0;">
-                                                                <input class="form-check-input" type="radio"
-                                                                       name="exampleRadios" id="stuporousRadio"
-                                                                       value="option3">
-                                                                <label class="form-check-label"
-                                                                       for="stuporousRadio">
-                                                                    Stuporous
-                                                                </label>
-                                                            </div>
-                                                            <div class="form-check" style="padding-left: 0;">
-                                                                <input class="form-check-input" type="radio"
-                                                                       name="exampleRadios" id="stuporousRadio"
-                                                                       value="option3">
-                                                                <label class="form-check-label"
-                                                                       for="stuporousRadio">
-                                                                    Comatose
-                                                                </label>
-                                                            </div>
-                                                            <div class="form-check" style="padding-left: 0;">
-                                                                <input class="form-check-input" type="radio"
-                                                                       name="exampleRadios" id="stuporousRadio"
-                                                                       value="option3">
-                                                                <label class="form-check-label"
-                                                                       for="stuporousRadio">
-                                                                    Select all
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex align-items-start">
-                                                    <div class="form-check d-flex ">
-                                                        <input type="checkbox" class="checkbox" name="radioDisabled"
-                                                               class="form-check-input">
-                                                        <h6 for="radio3" class="mx-5 my-2">Test:4</h6>
-                                                    </div>
-                                                    <div>
-                                                        <p class="my-2">Lorem ipsum is a dummy text</p>
-                                                        <div class="form-group" id="radioOptions"
-                                                             style="display: none;">
-                                                            <div class="form-check" style="padding-left: 0;">
-                                                                <input class="form-check-input" type="radio"
-                                                                       name="exampleRadios" id="normalRadio"
-                                                                       value="option1">
-                                                                <label class="form-check-label" for="normalRadio">
-                                                                    Normal
-                                                                </label>
-                                                            </div>
-                                                            <div class="form-check" style="padding-left: 0;">
-                                                                <input class="form-check-input" type="radio"
-                                                                       name="exampleRadios" id="obtundedRadio"
-                                                                       value="option2">
-                                                                <label class="form-check-label" for="obtundedRadio">
-                                                                    Obtunded
-                                                                </label>
-                                                            </div>
-                                                            <div class="form-check" style="padding-left: 0;">
-                                                                <input class="form-check-input" type="radio"
-                                                                       name="exampleRadios" id="stuporousRadio"
-                                                                       value="option3">
-                                                                <label class="form-check-label"
-                                                                       for="stuporousRadio">
-                                                                    Stuporous
-                                                                </label>
-                                                            </div>
-                                                            <div class="form-check" style="padding-left: 0;">
-                                                                <input class="form-check-input" type="radio"
-                                                                       name="exampleRadios" id="stuporousRadio"
-                                                                       value="option3">
-                                                                <label class="form-check-label"
-                                                                       for="stuporousRadio">
-                                                                    Comatose
-                                                                </label>
-                                                            </div>
-                                                            <div class="form-check" style="padding-left: 0;">
-                                                                <input class="form-check-input" type="radio"
-                                                                       name="exampleRadios" id="stuporousRadio"
-                                                                       value="option3">
-                                                                <label class="form-check-label"
-                                                                       for="stuporousRadio">
-                                                                    Select all
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex align-items-start">
-                                                    <div class="form-check d-flex">
-                                                        <input type="checkbox" class="checkbox" name="radioDisabled"
-                                                               class="form-check-input">
-                                                        <h6 for="radio3" class="mx-5 my-2">Test:5</h6>
-                                                    </div>
-                                                    <div>
-                                                        <p class="my-2">Lorem ipsum is a dummy text</p>
-                                                        <div class="form-group" id="radioOptions"
-                                                             style="display: none;">
-                                                            <div class="form-check" style="padding-left: 0;">
-                                                                <input class="form-check-input" type="radio"
-                                                                       name="exampleRadios" id="normalRadio"
-                                                                       value="option1">
-                                                                <label class="form-check-label" for="normalRadio">
-                                                                    Normal
-                                                                </label>
-                                                            </div>
-                                                            <div class="form-check" style="padding-left: 0;">
-                                                                <input class="form-check-input" type="radio"
-                                                                       name="exampleRadios" id="obtundedRadio"
-                                                                       value="option2">
-                                                                <label class="form-check-label" for="obtundedRadio">
-                                                                    Obtunded
-                                                                </label>
-                                                            </div>
-                                                            <div class="form-check" style="padding-left: 0;">
-                                                                <input class="form-check-input" type="radio"
-                                                                       name="exampleRadios" id="stuporousRadio"
-                                                                       value="option3">
-                                                                <label class="form-check-label"
-                                                                       for="stuporousRadio">
-                                                                    Stuporous
-                                                                </label>
-                                                            </div>
-                                                            <div class="form-check" style="padding-left: 0;">
-                                                                <input class="form-check-input" type="radio"
-                                                                       name="exampleRadios" id="stuporousRadio"
-                                                                       value="option3">
-                                                                <label class="form-check-label"
-                                                                       for="stuporousRadio">
-                                                                    Comatose
-                                                                </label>
-                                                            </div>
-                                                            <div class="form-check" style="padding-left: 0;">
-                                                                <input class="form-check-input" type="radio"
-                                                                       name="exampleRadios" id="stuporousRadio"
-                                                                       value="option3">
-                                                                <label class="form-check-label"
-                                                                       for="stuporousRadio">
-                                                                    Select all
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="d-flex justify-content-end mt-3">
-                                                    <div>
-
-                                                        <button type="button" data-bs-toggle="modal"
-                                                                data-bs-target="#addcomment"
-                                                                class="btn  btn-primary   btn-sm py-2 text-white mb-2">
-                                                            Give Result Name
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-
                                         </div>
                                     </div>
-                                    <div class="tab-pane fade" id="v-pills-payment" role="tabpanel"
-                                         aria-labelledby="v-pills-payment-tab">
+                                    <div class="tab-pane fade" id="v-pills-payment" role="tabpanel" aria-labelledby="v-pills-payment-tab">
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="card p-3">
-                                                    <h5>
-                                                        Payments</h5>
+                                                    <h6>Payments</h6>
                                                     <div class="card p-3">
-                                                        <h5 class="mb-5">Set Payment Amount for Neurologists</h5>
+                                                        <p class="mb-3"><b>Set Payment Amount for Neurologists</b></p>
                                                         <div class="input-group input-group-outline mb-3">
-                                                            <input type="text" class="form-control"
-                                                                   placeholder="$123.00">
+                                                            <input type="text" class="form-control" placeholder="$0.00">
                                                         </div>
                                                     </div>
-                                                    <div class="d-flex mt-3"
-                                                         style="justify-content:end; align-items: center;">
+                                                    <div class="d-flex mt-3" style="justify-content:end; align-items: center;">
                                                         <div>
-
-                                                            <button type="button"
-                                                                    class="btn  btn-primary  btn-sm py-2 text-white mb-2">
+                                                            <button type="button" class="btn  btn-primary  btn-sm py-2 text-white mb-2">
                                                                 Set
                                                             </button>
                                                         </div>
@@ -1091,8 +737,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
-
                                     </div>
                                     <div class="tab-pane fade" id="v-pills-student" role="tabpanel"
                                          aria-labelledby="v-pills-result-tab">
@@ -1111,7 +755,7 @@
                                                     </div>
                                                     <div class="table-responsive">
 
-                                                        <table class="table table-flush" id="datatable-basic">
+                                                        <table class="table table-flush" id="sdatatable-basic">
                                                             <thead class="thead-light">
                                                             <tr>
                                                                 <th>Name</th>
@@ -1233,8 +877,8 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="deleteLocalizationExamInfoModal" data-bs-backdrop="static" data-bs-keyboard="false"
-             tabindex="-1" role="dialog" aria-labelledby="deleteLocalizationExamInfoModalLabel" aria-hidden="true">
+        <div class="modal fade" id="deleteInfoModal" data-bs-backdrop="static" data-bs-keyboard="false"
+             tabindex="-1" role="dialog" aria-labelledby="deleteInfoModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered " role="document" style="">
                 <div class="modal-content ">
                     <div class=" modal-header" style="background-color: #FD4F4E;border-bottom: none;">
@@ -1284,8 +928,6 @@
                 </div>
             </div>
         </div>
-
-
         <div class="modal fade" id="giveResultNameModal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false"
              aria-labelledby="giveResultNameModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-md" role="document">
@@ -1298,6 +940,7 @@
                         <div class="col-md-12">
                             <label class="font-weight-bold">Enter Result Name</label>
                             <div class="input-group input-group-outline mb-1">
+                                <input type="hidden" class="form-control" id="resultEditId" placeholder="Result Id">
                                 <input type="text" class="form-control" id="resultNameInfo" placeholder="Result Name">
                             </div>
                         </div>
@@ -1312,45 +955,19 @@
             </div>
         </div>
 
-        <div class="modal fade" id="ViewNeurolocalizations" tabindex="-1" role="dialog"
-             aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog  modal-lg modal-dialog-centered " role="document">
+        <div class="modal fade" id="viewNeurolocalizationInfoModal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false"
+             aria-labelledby="viewNeurolocalizationInfoModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                 <div class="modal-content ">
-                    <div class=" modal-header pb-1" style="border-bottom: none !important;">
-                        <h6><i class="fa fa-file-text-o mx-2" aria-hidden="true"
-                               style="color: #38BEBC !important;"></i>Spine</h6>
-                        <button type="button" class="btn-close text-dark float-end" data-bs-dismiss="modal"
-                                aria-label="Close">
-
-                        </button>
+                    <div class="modal-header">
+                        <h6 class="pt-1 mb-0">Neurolocalization Info</h6>
+                        <button type="button" class="btn-close text-dark float-end" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
+                    <div id="viewNeurolocalizationInfo-loader" class="text-center d-none" style="margin-left: 34px;">
+                        <img src="{{ asset('portal/assets/img/loader.gif') }}" width="120px" alt="loader"/>
+                    </div>
+                    <div class="modal-body pt-3 show-neurolocalization-detail-info">
 
-                    <div class="modal-body pt-0">
-                        <div class="d-flex gap-3">
-                            <h6 for="radio3" class="mx-3">Test:1</h6>
-                            <p class="mt-0">Lorem ipsum is a dummy text</p>
-                            <p class="ml-2 mt-0" style="color: #83C1CC">Option 1</p>
-                        </div>
-                        <div class="d-flex gap-3 ">
-                            <h6 for="radio3" class="mx-3">Test:2</h6>
-                            <p class="my-2 mt-0">Lorem ipsum is a dummy text</p>
-                            <p class="ml-2 mt-0" style="color: #83C1CC">Option 1</p>
-                        </div>
-                        <div class="d-flex gap-3 ">
-                            <h6 for="radio3" class="mx-3">Test:3</h6>
-                            <p class="my-2 mt-0">Lorem ipsum is a dummy text</p>
-                            <p class="ml-2 mt-0" style="color: #83C1CC">Option 2</p>
-                        </div>
-                        <div class="d-flex gap-3 ">
-                            <h6 for="radio3" class="mx-3">Test:4</h6>
-                            <p class="my-2 mt-0">Lorem ipsum is a dummy text</p>
-                            <p class="ml-2 mt-0" style="color: #83C1CC">Option 3</p>
-                        </div>
-                        <div class="d-flex gap-3 ">
-                            <h6 for="radio3" class="mx-3">Test:5</h6>
-                            <p class="my-2 mt-0">Lorem ipsum is a dummy text</p>
-                            <p class="ml-2 mt-0" style="color: #83C1CC">Option 1</p>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -1359,7 +976,16 @@
 @endsection
 
 @section('script')
-    <script src="{{ assert('portal/assets/js/plugins/datatables.js') }}"></script>
+    <script src="{{ asset('portal/assets/js/plugins/datatables.js') }}"></script>
+    <script>
+        if (document.getElementById('datatable-basic')) {
+            const dataTableSearch = new simpleDatatables.DataTable("#datatable-basic", {
+                searchable: true,
+                fixedHeight: false,
+                perPage: 10
+            });
+        }
+    </script>
     <script>
         $(document).on('change', '#fileInput', function (e) {
             let actionType = 'post';
@@ -1595,7 +1221,7 @@
             $('.removed-data').attr('data-removed-class', removedClass);
             $('.removed-data').attr('data-action-url', actionURL);
             $('.removed-item-name').html(removedName);
-            $('#deleteLocalizationExamInfoModal').modal('show');
+            $('#deleteInfoModal').modal('show');
         });
 
         $(document).on('click', '.remove-exam-test-info', function (e) {
@@ -1606,13 +1232,14 @@
             $('.removed-data').attr('data-removed-class', removedClass);
             $('.removed-data').attr('data-action-url', actionURL);
             $('.removed-item-name').html(removedName);
-            $('#deleteLocalizationExamInfoModal').modal('show');
+            $('#deleteInfoModal').modal('show');
         });
 
+        /*----------- Removed Data Start -----------*/
         $(document).on('click', '.removed-data', function (e) {
             let actionType = 'delete';
             let loaderId = 'removed-data-loader';
-            let closedModalId = 'deleteLocalizationExamInfoModal';
+            let closedModalId = 'deleteInfoModal';
             let removedClass = $(this).attr('data-removed-class');
             let actionURL = $(this).attr('data-action-url');
             let processData = {
@@ -1621,6 +1248,7 @@
 
             removeInfo(actionURL, actionType, processData, removedClass, closedModalId, loaderId);
         });
+        /*----------- Removed Data End -----------*/
 
         /*----------- Set Results -----------*/
         $(document).on('click', '.set-results-step-info', function (e) {
@@ -1632,10 +1260,11 @@
             };
             let renderClass = 'set-result-options-info';
 
-            //Change the toggle state & value
-            toggleState = true;
-            $('.upload-instruction-video-button-text').text('Upload Instruction Video');
-
+            $('.set-result-header').text('Set Results');
+            $('.show-give-result-name-modal').removeAttr('data-result-id');
+            $('.show-give-result-name-modal').removeAttr('data-result-value');
+            $('.set-result-info').removeClass('d-none');
+            $('.show-neurolocalization-info').addClass('d-none');
             getInfo(actionURL, actionType, processData, loaderId, renderClass);
         });
 
@@ -1661,7 +1290,10 @@
 
         $(document).on('click', '.show-give-result-name-modal', function (e) {
             let showModalId = 'giveResultNameModal';
-            $('#resultNameInfo').val('');
+            let resultId = $(this).attr('data-result-id') ?? '';
+            let resultValue = $(this).attr('data-result-value') ?? '';
+            $('#resultEditId').val(resultId);
+            $('#resultNameInfo').val(resultValue);
             $(`#${showModalId}`).modal('show')
         });
 
@@ -1670,14 +1302,79 @@
             let loaderId = 'givResultName-loader';
             let actionURL = $(this).attr('data-action-url');
             let clickClass = 'set-results-step-info';
+            let result_id = $('#resultEditId').val();
             let result_name = $('#resultNameInfo').val();
             let formId = 'saveSetResultInfoForm';
             let closeModalId = 'giveResultNameModal';
             let processData = $(`#${formId}`).serialize();
+            processData += `&result_id=${encodeURIComponent(result_id)}`; // Append the result_name to the serialized data
             processData += `&result_name=${encodeURIComponent(result_name)}`; // Append the result_name to the serialized data
             let renderClass = null;
 
             saveInfo(actionURL, actionType, processData, loaderId, formId, renderClass, closeModalId, null, clickClass);
+        });
+
+        $(document).on('click', '.get-neurolocalization-info', function (e) {
+            let actionType = 'get';
+            let loaderId = 'showNeurolocalization-loader';
+            let actionURL = $(this).attr('data-action-url');
+            let processData = {
+                "_token": "{{ csrf_token() }}",
+            };
+            let renderClass = 'show-neurolocalization-table-info';
+
+            $('.set-result-info').addClass('d-none');
+            $('.show-neurolocalization-info').removeClass('d-none');
+            getInfo(actionURL, actionType, processData, loaderId, renderClass);
+        });
+
+        $(document).on('click', '.edit-neurolocalization-info', function (e) {
+            let actionType = 'get';
+            let loaderId = 'setResultsStep-loader';
+            let actionURL = $(this).attr('data-action-url');
+            let resultId = $(this).attr('data-result-id');
+            let resultInfo = $(this).attr('data-result-info');
+            let processData = {
+                "_token": "{{ csrf_token() }}",
+            };
+            let renderClass = 'set-result-options-info';
+
+            $('.set-result-header').text('Edit Results');
+
+            $('.set-result-info').removeClass('d-none');
+            $('.show-give-result-name-modal').attr('data-result-id',resultId)
+            $('.show-give-result-name-modal').attr('data-result-value',resultInfo)
+            $('.show-neurolocalization-info').addClass('d-none');
+            getInfo(actionURL, actionType, processData, loaderId, renderClass);
+        });
+
+        $(document).on('click', '.view-neurolocalization-info', function (e) {
+            e.preventDefault();
+            let actionType = 'get';
+            let loaderId = 'viewNeurolocalizationInfo-loader';
+            let actionURL = $(this).attr('data-action-url');
+            let processData = {
+                "_token": "{{ csrf_token() }}",
+            };
+            let renderClass = 'show-neurolocalization-detail-info';
+
+            getInfo(actionURL, actionType, processData, loaderId, renderClass);
+        });
+
+        $(document).on('click', '.remove-result-info', function (e) {
+            let removedClass = $(this).attr('data-removed-class');
+            let actionURL = $(this).attr('data-action-url');
+            let removedName = $(this).attr('data-removed-name');
+
+            $('.removed-data').attr('data-removed-class', removedClass);
+            $('.removed-data').attr('data-action-url', actionURL);
+            $('.removed-item-name').html(removedName);
+            $('#deleteInfoModal').modal('show');
+        });
+
+        $(document).on('click', '.show-set-result-info', function (e) {
+            $('.show-neurolocalization-info').addClass('d-none');
+            $('.set-result-info').removeClass('d-none');
         });
 
         /*----------- Set Results -----------*/
@@ -1737,13 +1434,7 @@
             });
         }
 
-        if (document.getElementById('datatable-Neurolocalizations')) {
-            const dataTableSearch = new simpleDatatables.DataTable("#datatable-Neurolocalizations", {
-                searchable: true,
-                fixedHeight: false,
-                perPage: 10
-            });
-        }
+
 
         function switchDocument() {
             if (document.getElementById('Divone')) {

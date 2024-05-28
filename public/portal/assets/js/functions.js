@@ -155,6 +155,7 @@ function saveInfo(action_url, action_type, process_data, loader_id = null, reset
             let responseIcon = response.icon;
             let responseStatus = response.status;
             let responseRenderData = response.rendered_info;
+
             $.notify({
                 title: responseTitle,
                 message: responseMessage,
