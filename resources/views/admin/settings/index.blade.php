@@ -653,12 +653,12 @@
                                                     <div class="d-flex justify-content-between flex-wrap">
                                                         <h6 class="set-result-header">Set Results</h6>
                                                         <div class="d-flex ">
-                                                            <div>
+                                                            {{--<div>
                                                                 <div class="input-group input-group-outline">
                                                                     <label class="form-label">Search here</label>
                                                                     <input type="text" class="form-control">
                                                                 </div>
-                                                            </div>
+                                                            </div>--}}
                                                             <div>
                                                                 <button type="button" class="btn btn-primary mx-2 text-white get-neurolocalization-info"
                                                                         data-action-url="{{ route('admin.setting.get.neurolocalization.list') }}">
