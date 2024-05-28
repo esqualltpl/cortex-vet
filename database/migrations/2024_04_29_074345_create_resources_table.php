@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('resources', function (Blueprint $table) {
             $table->id();
-            $table->text('instructions')->nullable();
             $table->string('video_url')->nullable();
             $table->string('upload_video')->nullable();
             $table->unsignedBigInteger('added_by')->nullable();

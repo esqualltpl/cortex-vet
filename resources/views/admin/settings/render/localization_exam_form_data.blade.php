@@ -31,7 +31,7 @@
                     <div class="col-md-12 mt-2">
                         <label class="form-label font-weight-bold">Upload Video</label>
                         <a href="javascript:" data-bs-toggle="modal" data-bs-target="#viewExamUploadedVideoModal"
-                           data-action-url="{{ route('admin.setting.exam.upload,instruction.video.preview', Crypt::encrypt($examAddInfo->id ?? 0)) }}"
+                           data-action-url="{{ route('admin.setting.exam.upload.instruction.video.preview', Crypt::encrypt($examAddInfo->id ?? 0)) }}"
                            class="preview-exam-uploaded-video"
                            style="color: #5534a5;font-weight: bold;font-size: 13px;margin-top: 5px;margin-right: 2px;float: right !important;">View Uploaded Video</a>
                         <div class="input-group input-group-outline">

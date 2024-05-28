@@ -33,6 +33,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
     //Resources
     Route::prefix('resources')->group(function () {
         Route::get('/', [ResourcesController::class, 'index'])->name('admin.resources');
+        Route::post('upload', [ResourcesController::class, 'upload'])->name('admin.setting.resources.upload.video');
+        Route::get('preview', [ResourcesController::class, 'preview'])->name('admin.setting.resources.upload.video.preview');
     });
 
     //Patients
@@ -63,7 +65,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
 
             Route::prefix('upload/instruction/video')->group(function () {
                 Route::post('/', [SettingsController::class, 'examUploadInstructionVideoOrUrl'])->name('admin.setting.exam.upload,instruction.video.or.url');
-                Route::get('preview/{id}', [SettingsController::class, 'examUploadInstructionVideoPreview'])->name('admin.setting.exam.upload,instruction.video.preview');
+                Route::get('preview/{id}', [SettingsController::class, 'examUploadInstructionVideoPreview'])->name('admin.setting.exam.upload.instruction.video.preview');
             });
 
             Route::delete('delete/{id}', [SettingsController::class, 'examInfoDelete'])->name('admin.setting.exam.delete');
