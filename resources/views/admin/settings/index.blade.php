@@ -36,74 +36,68 @@
                             <div class="col-md-3 mx-0 px-0">
                                 <div class="nav card flex-column nav-pills bg-white py-3 px-3 my-0" id="v-pills-tab"
                                      role="tablist" aria-orientation="vertical">
-                                    <button class="nav-link h-navlinks py-2 my-0 active" id="v-pills-home-tab"
+                                    <button class="nav-link h-navlinks px-2 py-2 my-0 mb-1 active" id="v-pills-home-tab"
                                             data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button"
                                             role="tab" aria-controls="v-pills-profile" aria-selected="true" tabindex="-1">
-                                        <p class="nav-link1 mb-0 text-dark  text-start px-0 mx-0 ">
-                                            {{--<i class="fa fa-chevron-right float-end mt-1"></i>--}}
+                                        <p class="nav-link1 text-dark mb-0 text-start px-0 mx-0 d-flex">
                                             <span class="text-sm">
-                                                <i class="fa fa-user me-2 opacity-7" aria-hidden="true"></i>
-                                                Profile Information
+                                                <i class="material-symbols-outlined float-start me-2 opacity-7" style="font-size: 22px">person</i>
+                                                <span>Profile Information</span>
                                             </span>
                                         </p>
                                     </button>
-                                    <button class="nav-link h-navlinks py-2 my-0 update-password-info" id="v-pills-profile-tab"
+                                    <button class="nav-link h-navlinks px-2 py-2 my-0 mb-1 update-password-info" id="v-pills-profile-tab"
                                             data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button"
                                             role="tab" aria-controls="v-pills-profile" aria-selected="true" tabindex="-1">
-                                        <p class="nav-link1 text-dark mb-0  text-start px-0 mx-0">
-                                            {{--<i class="fa fa-chevron-right float-end mt-1"></i>--}}
-                                            <span class="text-sm font-weight-normal text-dark ">
-                                                <i class="fa fa-lock me-2 opacity-7" aria-hidden="true"></i>
-                                                Update Password
+                                        <p class="nav-link1 text-dark mb-0 text-start px-0 mx-0 d-flex">
+                                            <span class="text-sm">
+                                                <i class="material-symbols-outlined float-start me-2 opacity-7" style="font-size: 22px">lock</i>
+                                                <span>Update Password</span>
                                             </span>
                                         </p>
                                     </button>
-                                    <button class="nav-link h-navlinks py-2 my-0 set-localization-form-step-info" id="v-pills-exam-tab"
+                                    <button class="nav-link h-navlinks px-2 py-2 my-0 mb-1 set-localization-form-step-info" id="v-pills-exam-tab"
                                             data-action-url="{{ route('admin.setting.exams.list') }}"
                                             data-bs-toggle="pill" data-bs-target="#v-pills-exam" type="button"
                                             role="tab" aria-controls="v-pills-exam" aria-selected="true" tabindex="-1">
-                                        <p class="nav-link1 text-dark mb-0  text-start px-0 mx-0">
-                                            {{--<i class="fa fa-chevron-right float-end mt-1"></i>--}}
+                                        <p class="nav-link1 text-dark mb-0 text-start px-0 mx-0 d-flex">
                                             <span class="text-sm">
-                                                <i class="fa fa-credit-card-alt me-2 opacity-7" aria-hidden="true"></i>
-                                                Set Localization Form
+                                                <i class="material-symbols-outlined float-start me-2 opacity-7" style="font-size: 22px">lab_profile</i>
+                                                <span>Set Localization Form</span>
                                             </span>
                                         </p>
                                     </button>
-                                    <button class="nav-link h-navlinks py-2 my-0 set-results-step-info" id="v-pills-result-tab"
+                                    <button class="nav-link h-navlinks px-2 py-2 my-0 mb-1 set-results-step-info" id="v-pills-result-tab"
                                             data-action-url="{{ route('admin.setting.set.result.list') }}"
                                             data-bs-toggle="pill" data-bs-target="#v-pills-result" type="button"
                                             role="tab" aria-controls="v-pills-result" aria-selected="true"
                                             tabindex="-1">
-                                        <p class="nav-link1 text-dark mb-0  text-start px-0 mx-0">
-                                            {{--<i class="fa fa-chevron-right float-end mt-1"></i>--}}
+                                        <p class="nav-link1 text-dark mb-0 text-start px-0 mx-0 d-flex">
                                             <span class="text-sm">
-                                                <i class="fa fa-wpforms  me-2 opacity-7" aria-hidden="true"></i>
-                                                Set Results
+                                                <i class="material-symbols-outlined float-start me-2 opacity-7" style="font-size: 22px">list_alt</i>
+                                                <span>Set Results</span>
                                             </span>
                                         </p>
                                     </button>
-                                    <button class="nav-link h-navlinks py-2 my-0 payment-info" id="v-pills-payment-tab"
+                                    <button class="nav-link h-navlinks px-2 py-2 my-0 mb-1 payment-info" id="v-pills-payment-tab"
                                             data-payment-value="{{ $settings['payments'] ?? 0 }}"
                                             data-bs-toggle="pill" data-bs-target="#v-pills-payment" type="button"
                                             role="tab" aria-controls="v-pills-payment" aria-selected="true" tabindex="-1">
-                                        <p class="nav-link1 text-dark mb-0  text-start px-0 mx-0">
-                                            {{--<i class="fa fa-chevron-right float-end mt-1"></i>--}}
+                                        <p class="nav-link1 text-dark mb-0 text-start px-0 mx-0 d-flex">
                                             <span class="text-sm">
-                                                <i class="fa fa-credit-card  me-2 text-sm opacity-7" aria-hidden="true"></i>
-                                                Payments
+                                                <i class="material-symbols-outlined float-start me-2 opacity-7" style="font-size: 22px">credit_card</i>
+                                                <span>Payments</span>
                                             </span>
                                         </p>
                                     </button>
-                                    <button class="nav-link h-navlinks py-2 my-0 students-info" id="v-pills-result-tab"
+                                    <button class="nav-link h-navlinks px-2 py-2 my-0 mb-1 students-info" id="v-pills-result-tab"
                                             data-action-url="{{ route('admin.setting.students.list') }}"
                                             data-bs-toggle="pill" data-bs-target="#v-pills-student" type="button"
                                             role="tab" aria-controls="v-pills-profile" aria-selected="true" tabindex="-1">
-                                        <p class="nav-link1 text-dark mb-0  text-start px-0 mx-0">
-                                            {{--<i class="fa fa-chevron-right float-end mt-1"></i>--}}
+                                        <p class="nav-link1 text-dark mb-0 text-start px-0 mx-0 d-flex">
                                             <span class="text-sm">
-                                                <i class="fa fa-credit-card-alt me-2 opacity-7" aria-hidden="true"></i>
-                                                Students
+                                                <i class="material-symbols-outlined float-start me-2 opacity-7" style="font-size: 22px">school</i>
+                                                <span>Students</span>
                                             </span>
                                         </p>
                                     </button>
