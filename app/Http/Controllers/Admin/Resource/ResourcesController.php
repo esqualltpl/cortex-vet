@@ -29,7 +29,7 @@ class ResourcesController extends Controller
 
         if ($validator->fails()) {
             $response = ResponseMessage::ResponseNotifyError('Error!', 'Please provide either a Video URL or Upload a Video.');
-            return response()->json($response);
+            return redirect()->back()->with($response);
         }
 
         try {

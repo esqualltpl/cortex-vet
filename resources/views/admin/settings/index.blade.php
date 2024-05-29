@@ -131,11 +131,8 @@
                                                         <div class="col-md-12  ">
                                                             <h6>Super Admin Information</h6>
                                                         </div>
-                                                        <div class="col-md-6  ">
-                                                            <p class="font-weight-bold text-dark mb-0"
-                                                               style=" font-family: 'Poppins', sans-serif !important">
-                                                                Super Admin Name
-                                                            </p>
+                                                        <div class="col-md-6">
+                                                            <h6 class="mb-0">Super Admin Name</h6>
                                                             <p class="font-weight-normal text-dark opacity-8"
                                                                style=" font-family: 'Poppins', sans-serif !important">
                                                                 {{ $settings['profile-information'] != null ? $settings['profile-information']->name ?? '' : '' }}
@@ -143,20 +140,14 @@
 
                                                         </div>
                                                         <div class="col-md-6 ">
-                                                            <p class="font-weight-bold text-dark mb-0"
-                                                               style=" font-family: 'Poppins', sans-serif !important">
-                                                                Email
-                                                            </p>
+                                                            <h6 class="mb-0">Email</h6>
                                                             <p class="font-weight-normal text-dark opacity-8"
                                                                style=" font-family: 'Poppins', sans-serif !important">
                                                                 {{ $settings['profile-information'] != null ? $settings['profile-information']->email ?? '' : '' }}</p>
                                                         </div>
 
-                                                        <div class="col-md-6  ">
-                                                            <p class="font-weight-bold text-dark mb-0"
-                                                               style=" font-family: 'Poppins', sans-serif !important">
-                                                                Contact Number
-                                                            </p>
+                                                        <div class="col-md-6">
+                                                            <h6 class="mb-0">Contact Number</h6>
                                                             <p class="font-weight-normal text-dark opacity-8"
                                                                style=" font-family: 'Poppins', sans-serif !important">
                                                                 {{ $settings['profile-information'] != null ? $settings['profile-information']->userInfo?->contact_no ?? '' : '' }}
@@ -164,10 +155,7 @@
 
                                                         </div>
                                                         <div class="col-md-6 ">
-                                                            <p class="font-weight-bold text-dark mb-0"
-                                                               style=" font-family: 'Poppins', sans-serif !important">
-                                                                Vet License Number
-                                                            </p>
+                                                            <h6 class="mb-0">Vet License Number</h6>
                                                             <p class="font-weight-normal text-dark opacity-8"
                                                                style=" font-family: 'Poppins', sans-serif !important">
                                                                 {{ $settings['profile-information'] != null ? $settings['profile-information']->userInfo?->vet_license ?? '' : '' }}
@@ -176,41 +164,29 @@
                                                         <div class="col-md-12 mt-3">
                                                             <h6>Address Detail</h6>
                                                         </div>
-                                                        <div class="col-md-6  ">
-                                                            <p class="font-weight-bold text-dark mb-0"
-                                                               style=" font-family: 'Poppins', sans-serif !important">
-                                                                Main street
-                                                            </p>
+                                                        <div class="col-md-6">
+                                                            <h6 class="mb-0">Main street</h6>
                                                             <p class="font-weight-normal text-dark opacity-8"
                                                                style=" font-family: 'Poppins', sans-serif !important">
                                                                 {{ $settings['profile-information'] != null ? $settings['profile-information']->userInfo?->main_street ?? '' : '' }}
                                                             </p>
                                                         </div>
-                                                        <div class="col-md-6 ">
-                                                            <p class="font-weight-bold text-dark mb-0"
-                                                               style=" font-family: 'Poppins', sans-serif !important">
-                                                                City
-                                                            </p>
+                                                        <div class="col-md-6">
+                                                            <h6 class="mb-0">City</h6>
                                                             <p class="font-weight-normal text-dark opacity-8"
                                                                style=" font-family: 'Poppins', sans-serif !important">
                                                                 {{ $settings['profile-information'] != null ? $settings['profile-information']->userInfo?->city ?? '' : '' }}
                                                             </p>
                                                         </div>
-                                                        <div class="col-md-6  ">
-                                                            <p class="font-weight-bold text-dark mb-0"
-                                                               style=" font-family: 'Poppins', sans-serif !important">
-                                                                State/Country
-                                                            </p>
+                                                        <div class="col-md-6">
+                                                            <h6 class="mb-0">State/Country</h6>
                                                             <p class="font-weight-normal text-dark opacity-8"
                                                                style=" font-family: 'Poppins', sans-serif !important">
                                                                 {{ $settings['profile-information'] != null ? $settings['profile-information']->userInfo?->state ?? '' : '' }}
                                                             </p>
                                                         </div>
-                                                        <div class="col-md-6 ">
-                                                            <p class="font-weight-bold text-dark mb-0"
-                                                               style=" font-family: 'Poppins', sans-serif !important">
-                                                                Zip Code
-                                                            </p>
+                                                        <div class="col-md-6">
+                                                            <h6 class="mb-0">Zip Code</h6>
                                                             <p class="font-weight-normal text-dark opacity-8"
                                                                style=" font-family: 'Poppins', sans-serif !important">
                                                                 {{ $settings['profile-information'] != null ? $settings['profile-information']->userInfo?->zip_code ?? '' : '' }}
@@ -245,13 +221,13 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-md-9 d-flex flex-wrap justify-content-between  ">
-                                                        <div class="col-md-12  ">
+                                                    <div class="col-md-9 d-flex flex-wrap justify-content-between">
+                                                        <div class="col-md-12">
                                                             <h6>Super Admin Information</h6>
                                                         </div>
                                                         <div class="col-12 col-sm-5 mx-0">
-                                                            <label class="form-label font-weight-bold mx-0"
-                                                                   style=" font-family: 'Poppins', sans-serif !important">Super Admin Name</label>
+                                                            <p class="form-label font-weight-bold mx-0"
+                                                                   style=" font-family: 'Poppins', sans-serif !important">Super Admin Name</p>
                                                             <div class="input-group input-group-outline">
                                                                 <input type="text" class="form-control w-100" name="name"
                                                                        aria-describedby="emailHelp" onfocus="focused(this)"
