@@ -16,7 +16,7 @@
                     @if($key == 0)
                         <input type="text" name="test_options_old[{{$optionsInfo->id ?? 0}}]" class="form-control" value="{{ $optionsInfo->name ?? '' }}" placeholder="Option">
                         <button type="button" class="btn btn-primary btn-sm ms-auto text-sm mb-0 cursor-pointer btn-sm text-white"
-                                style="border-radius: 50px; opacity: 0.6; width: 20px; height: 30px; display: flex; justify-content: center; align-items: center"
+                                style="border-radius: 50px !important; opacity: 0.6; width: 20px; height: 30px; display: flex; justify-content: center; align-items: center"
                                 onclick="addOptionField(event, 'editModal')">
                             <i class="fa fa-plus" aria-hidden="true" style="font-size: 0.6rem !important"></i>
                         </button>

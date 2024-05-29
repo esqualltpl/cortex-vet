@@ -3,7 +3,6 @@
 <script src="{{ asset('portal/assets/js/core/bootstrap.min.js') }}"></script>
 <script src="{{ asset('portal/assets/js/plugins/perfect-scrollbar.min.js') }}"></script>
 <script src="{{ asset('portal/assets/js/plugins/smooth-scrollbar.min.js') }}"></script>
-<script src="{{ asset('portal/assets/js/plugins/datatables.js">') }}"></script>
 <script src="{{ asset('portal/assets/js/plugins/sweetalert.min.js') }}"></script>
 
 <!-- Kanban scripts -->

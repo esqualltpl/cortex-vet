@@ -694,23 +694,10 @@
                                                                 Form a result
                                                             </button>
                                                         </div>
-                                                        <div class="table-responsive">
-                                                            <table class="table table-flush" id="datatable-basic">
-                                                                <thead class="thead-light">
-                                                                <tr>
-                                                                    <th>Result ID</th>
-                                                                    <th>Result Name</th>
-                                                                    <th>Test Count</th>
-                                                                    <th>Actions</th>
-                                                                </tr>
-                                                                </thead>
-                                                                <tbody class="show-neurolocalization-table-info">
-
-                                                                </tbody>
-                                                            </table>
-                                                            <div id="showNeurolocalization-loader" class="text-center d-none" style="margin-left: 34px;">
-                                                                <img src="{{ asset('portal/assets/img/loader.gif') }}" width="120px" alt="loader"/>
-                                                            </div>
+                                                        <div class="table-responsive show-neurolocalization-table-info">
+                                                        </div>
+                                                        <div id="showNeurolocalization-loader" class="text-center d-none" style="margin-left: 34px;">
+                                                            <img src="{{ asset('portal/assets/img/loader.gif') }}" width="120px" alt="loader"/>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -760,24 +747,10 @@
                                                             </button>
                                                         </a>
                                                     </div>
-                                                    <div class="table-responsive">
-                                                        <table class="table table-flush" id="studentDatatable-basic">
-                                                            <thead class="thead-light">
-                                                            <tr>
-                                                                <th>Name</th>
-                                                                <th>Role</th>
-                                                                <th>Email</th>
-                                                                <th>Access</th>
-                                                                <th>Actions</th>
-                                                            </tr>
-                                                            </thead>
-                                                            <tbody class="show-student-table-info">
-
-                                                            </tbody>
-                                                        </table>
-                                                        <div id="studentInfo-loader" class="text-center d-none" style="margin-left: 34px;">
-                                                            <img src="{{ asset('portal/assets/img/loader.gif') }}" width="120px" alt="loader"/>
-                                                        </div>
+                                                    <div class="table-responsive show-student-table-info">
+                                                    </div>
+                                                    <div id="studentInfo-loader" class="text-center d-none" style="margin-left: 34px;">
+                                                        <img src="{{ asset('portal/assets/img/loader.gif') }}" width="120px" alt="loader"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -820,7 +793,7 @@
                                         <input type="text" name="test_options[]" class="form-control" placeholder="Option">
                                         <button type="button"
                                                 class="btn btn-primary btn-sm ms-auto text-sm mb-0 cursor-pointer btn-sm text-white"
-                                                style="border-radius: 50px; opacity: 0.6; width: 20px; height: 30px; display: flex; justify-content: center; align-items: center"
+                                                style="border-radius: 50px !important; opacity: 0.6; width: 20px; height: 30px; display: flex; justify-content: center; align-items: center"
                                                 onclick="addOptionField(event, 'addModal')">
                                             <i class="fa fa-plus" aria-hidden="true"
                                                style="font-size: 0.6rem !important"></i>
@@ -957,22 +930,6 @@
 
 @section('script')
     <script src="{{ asset('portal/assets/js/plugins/datatables.js') }}"></script>
-    <script>
-        if (document.getElementById('datatable-basic')) {
-            const dataTableSearch = new simpleDatatables.DataTable("#datatable-basic", {
-                searchable: true,
-                fixedHeight: false,
-                perPage: 10
-            });
-        }
-        if (document.getElementById('studentDatatable-basic')) {
-            const dataTableSearch = new simpleDatatables.DataTable("#studentDatatable-basic", {
-                searchable: true,
-                fixedHeight: false,
-                perPage: 10
-            });
-        }
-    </script>
     <script>
         $(document).on('click', '.personal-information', function (e) {
             $('.personal-information-data').addClass('d-none');
@@ -1306,11 +1263,13 @@
 
         $(document).on('click', '.test-checkbox-info', function (e) {
             let testOptionsInfo = $(this).attr('data-test-options-info');
+            let testRadioInfo = $(this).attr('data-test-radio-info');
 
             if ($(this).prop('checked')) {
                 $(`.${testOptionsInfo}`).removeClass('d-none');
             } else {
                 $(`.${testOptionsInfo}`).addClass('d-none');
+                $(`.${testRadioInfo}`).prop('checked', false);
             }
         });
 

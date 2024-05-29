@@ -97,6 +97,19 @@ class UsersTableSeeder extends Seeder
                     'updated_at' => NULL,
                     'deleted_at' => NULL,
                 ),
+            6 =>
+                array(
+                    'id' => 7,
+                    'name' => 'Test Student',
+                    'email' => 'student@cortexvet.com',
+                    'email_verified_at' => NULL,
+                    'password' => Hash::make('123456789'),
+                    'status' => 'Student',
+                    'remember_token' => NULL,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => NULL,
+                    'deleted_at' => NULL,
+                ),
         ));
     }
 }
