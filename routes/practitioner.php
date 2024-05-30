@@ -21,7 +21,7 @@ Route::group(['prefix' => 'practitioner', 'middleware' => ['practitioner']], fun
     });
 
     //Get Breed Options
-    Route::get('breed/options/{id}', [DashboardController::class, 'breedOptions'])->name('practitioner.bread.options');
+    Route::get('breed/options/{id}', [DashboardController::class, 'breedOptions'])->name('practitioner.breed.options');
 
     //Consultation Request
     Route::prefix('neuro/assessment')->group(function () {

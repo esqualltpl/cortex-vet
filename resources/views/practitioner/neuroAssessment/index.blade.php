@@ -24,24 +24,24 @@
     <div class="container-fluid py-4 ">
         <div class="row">
             <div class="col-md-12">
-                <div class="card  mb-2">
-                    <div class=" mb-0 d-flex justify-content-between p-2  bg-transparent">
-                        <div class="pt-1">
-                            <h5 class=" mb-0 text-capitalize font-weight-800">Neuro Assessment</h5>
+                <div class="card mb-2">
+                    <div class=" mb-0 d-flex justify-content-between p-2 bg-transparent">
+                        <div class="pt-2">
+                            <h6 class="mx-2 mb-0 text-capitalize font-weight-800">Neuro Assessment</h6>
                         </div>
                     </div>
                     <div class="p-2 d-flex justify-content-center flex-column align-items-center gap-4">
                         <img src="{{ asset('portal/assets/img/Neuro Assessment Illustration.png') }}" alt="icon" width="300">
-                        <div class="p-3 w-md-50" style="background: #EAF4F6;">
+                        <div class="p-3 w-md-50" style="background: #EAF4F6; border-radius: 13px;">
                             <h6>Select Patient ID</h6>
                             <div class="input-group input-group-outline mb-3">
-                                <input type="text" class="form-control">
+                                <input type="text" class="form-control" placeholder="Enter patient ID">
                             </div>
                         </div>
                     </div>
                     <div class="pe-7 pt-3 pb-4">
                         <button type="button"
-                                class="btn  btn-primary float-end btn-lg text-white "
+                                class="btn btn-primary float-end btn-lg text-white "
                                 onclick="location.href = '{{ route('practitioner.neuro.assessment.exam', 1) }}'">
                             Next
                         </button>
