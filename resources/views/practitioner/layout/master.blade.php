@@ -9,5 +9,6 @@
         @include('practitioner.layout.footer')
     </main>
     @include('practitioner.layout.script')
+    @include('practitioner.layout.toasterMessage')
 </body>
 </html>

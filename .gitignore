@@ -19,3 +19,4 @@ yarn-error.log
 /.vscode
 /public/portal/assets/upload/profile-images
 /public/portal/assets/upload/exam-videos
+/public/portal/assets/upload/resources-video

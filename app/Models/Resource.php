@@ -21,4 +21,16 @@ class Resource extends Model
             return 'null';
         }
     }
+
+    public function getResourceInfo()
+    {
+        if($this->video_url !== null) {
+            return ['type' => 'url', 'video' => $this->video_url];
+        }
+        else if($this->upload_video !== null) {
+            return ['type' => 'video', 'video' => asset('portal/assets/upload/resources-video/'.$this->upload_video)];
+        }else{
+            return 'null';
+        }
+    }
 }

@@ -13,7 +13,11 @@ use Illuminate\Support\Facades\Route;
 */
 Route::group(['prefix' => 'practitioner', 'middleware' => ['practitioner']], function () {
     Route::get('/', [DashboardController::class, 'dashboard'])->name('practitioner.dashboard');
-    Route::get('/add/new/patient', [DashboardController::class, 'addNewPatient'])->name('practitioner.add.new.patient');
+
+    Route::prefix('patient')->group(function () {
+        Route::get('add', [DashboardController::class, 'patient'])->name('practitioner.patient');
+        Route::get('bread/options/{id}', [DashboardController::class, 'breadOptions'])->name('practitioner.bread.options');
+    });
 
     //Consultation Request
     Route::prefix('neuro/assessment')->group(function () {
@@ -31,5 +35,60 @@ Route::group(['prefix' => 'practitioner', 'middleware' => ['practitioner']], fun
     //Settings
     Route::prefix('settings')->group(function () {
         Route::get('/', [SettingsController::class, 'index'])->name('practitioner.settings');
+
+        //Profile Information
+        Route::prefix('profile')->group(function () {
+            Route::post('update', [SettingsController::class, 'updateProfile'])->name('practitioner.setting.update.profile');
+            Route::post('image/update', [SettingsController::class, 'updateProfileImage'])->name('practitioner.setting.update.profile.image');
+        });
+
+        //Update Password
+        Route::post('/change/password', [SettingsController::class, 'changeProfilePassword'])->name('practitioner.setting.change.profile.password');
+
+        //Set Localization Form
+        Route::prefix('set/localization/exam')->group(function () {
+            Route::get('list', [SettingsController::class, 'SetLocalizationExamList'])->name('practitioner.setting.exams.list');
+            Route::post('add', [SettingsController::class, 'examInfoAdd'])->name('practitioner.setting.exam.add');
+
+            Route::prefix('upload/instruction/video')->group(function () {
+                Route::post('/', [SettingsController::class, 'examUploadInstructionVideoOrUrl'])->name('practitioner.setting.exam.upload,instruction.video.or.url');
+                Route::get('preview/{id}', [SettingsController::class, 'examUploadInstructionVideoPreview'])->name('practitioner.setting.exam.upload.instruction.video.preview');
+            });
+
+            Route::delete('delete/{id}', [SettingsController::class, 'examInfoDelete'])->name('practitioner.setting.exam.delete');
+            Route::delete('test/delete/{id}', [SettingsController::class, 'examTestInfoDelete'])->name('practitioner.setting.exam.test.delete');
+
+            Route::prefix('test/options')->group(function () {
+                Route::post('add', [SettingsController::class, 'examTestOptionsInfoAdd'])->name('practitioner.setting.exam.test.options.add');
+                Route::get('edit/{id}', [SettingsController::class, 'examTestOptionsInfoEdit'])->name('practitioner.setting.exam.test.options.edit');
+                Route::post('update', [SettingsController::class, 'examTestOptionsInfoUpdate'])->name('practitioner.setting.exam.test.options.update');
+            });
+        });
+
+        //Set Result
+        Route::prefix('set/result')->group(function () {
+            Route::get('/', [SettingsController::class, 'setResultList'])->name('practitioner.setting.set.result.list');
+            Route::post('info/save', [SettingsController::class, 'setResultInfoSave'])->name('practitioner.setting.set.result.info.save');
+
+            Route::prefix('neurolocalization')->group(function () {
+                Route::get('info/get', [SettingsController::class, 'getNeurolocalizationList'])->name('practitioner.setting.get.neurolocalization.list');
+                Route::get('preview/{id}', [SettingsController::class, 'neurolocalizationDetailPreview'])->name('practitioner.setting.get.neurolocalization.preview');
+                Route::get('edit/{id}', [SettingsController::class, 'neurolocalizationInfoEdit'])->name('practitioner.setting.get.neurolocalization.info.edit');
+                Route::delete('delete/{id}', [SettingsController::class, 'neurolocalizationInfoDelete'])->name('practitioner.setting.neurolocalization.info.delete');
+            });
+        });
+
+        //Payments
+        Route::post('/set/payment', [SettingsController::class, 'setPayment'])->name('practitioner.setting.set.payment');
+
+        //Student
+        Route::prefix('student')->group(function () {
+            Route::get('list', [SettingsController::class, 'studentsList'])->name('practitioner.setting.students.list');
+            Route::get('add', [SettingsController::class, 'studentAdd'])->name('practitioner.settings.student.add');
+            Route::post('save', [SettingsController::class, 'studentSave'])->name('practitioner.setting.student.info.save');
+            Route::get('edit/{id}', [SettingsController::class, 'studentEdit'])->name('practitioner.setting.get.student.info.edit');
+            Route::post('update', [SettingsController::class, 'studentUpdate'])->name('practitioner.setting.student.info.update');
+            Route::delete('/delete/{id}', [SettingsController::class, 'studentDelete'])->name('practitioner.setting.student.info.delete');
+        });
     });
 });

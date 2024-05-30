@@ -36,7 +36,7 @@
                     <div class="col-md-12 mt-2">
                         <label class="form-label font-weight-bold">Video Url</label>
                         <div class="input-group input-group-outline mb-3">
-                            <input type="url" name="url" id="videoUrl" class="form-control" placeholder="Link">
+                            <input type="url" name="url" id="videoUrl" class="form-control" placeholder="Link" value="{{ !empty($resourceLinkInfo) ? $resourceLinkInfo : '' }}">
                             <div class="input-group-append toggle-copy" data-video-url-link="videoUrl">
                                 <span class="input-group-text" style="cursor: pointer; padding-right: 8px;">
                                     <i class="material-symbols-outlined text-sm me-2"> content_copy </i>
