@@ -14,10 +14,14 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'practitioner', 'middleware' => ['practitioner']], function () {
     Route::get('/', [DashboardController::class, 'dashboard'])->name('practitioner.dashboard');
 
-    Route::prefix('patient')->group(function () {
-        Route::get('add', [DashboardController::class, 'patient'])->name('practitioner.patient');
-        Route::get('bread/options/{id}', [DashboardController::class, 'breadOptions'])->name('practitioner.bread.options');
+    //Add New Patient
+    Route::prefix('add/new/patient')->group(function () {
+        Route::get('/', [DashboardController::class, 'patient'])->name('practitioner.patient');
+        Route::post('info/save', [DashboardController::class, 'patientInfoSave'])->name('practitioner.patient.info.save');
     });
+
+    //Get Breed Options
+    Route::get('breed/options/{id}', [DashboardController::class, 'breedOptions'])->name('practitioner.bread.options');
 
     //Consultation Request
     Route::prefix('neuro/assessment')->group(function () {

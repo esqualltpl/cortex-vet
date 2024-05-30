@@ -24,9 +24,9 @@ class Exam extends Model
         return $this->belongsTo(Specie::class, 'id');
     }
 
-    public function breadInfo(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function breedInfo(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Bread::class, 'id');
+        return $this->belongsTo(Breed::class, 'id');
     }
 
     public function testInfo(): \Illuminate\Database\Eloquent\Relations\HasMany
