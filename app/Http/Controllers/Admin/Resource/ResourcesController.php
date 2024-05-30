@@ -60,6 +60,7 @@ class ResourcesController extends Controller
 
             return redirect()->back()->with($response);
         } catch (Exception $e) {
+            DB::rollBack();
             $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to save the resource video/url information. Please try again later.');
             Log::info('The system is unable to save the resource video/url information. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
 
@@ -88,6 +89,7 @@ class ResourcesController extends Controller
 
             return response()->json($response);
         } catch (Exception $e) {
+            DB::rollBack();
             $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to get the resource video information. Please try again later.');
             Log::info('The system is unable to get the resource video information. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
 

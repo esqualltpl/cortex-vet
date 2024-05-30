@@ -40,6 +40,7 @@ class NeurologistsController extends Controller
             DB::commit();
             return response()->json($response);
         } catch (Exception $e) {
+            DB::rollBack();
             $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to remove the user information. Please try again later.');
             Log::info('The system is unable to remove the user information. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
 

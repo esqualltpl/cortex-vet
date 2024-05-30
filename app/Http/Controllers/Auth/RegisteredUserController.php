@@ -112,6 +112,7 @@ class RegisteredUserController extends Controller
             Log::info('Successfully complete the signup for new user', ['message' => 'success']);
             return redirect()->route($user_route)->with('success', 'Your account has been registered successfully, Please complete your profile.');
         } catch (\Exception $e) {
+            DB::rollBack();
             Log::info('The system is unable to signup the new user now. Please try again later.', ['message' => $e->getMessage(), 'error' => $e]);
             return redirect()->back()->with('error', 'The system is unable to signup the new user now. Please try again later.');
         }

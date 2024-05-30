@@ -109,6 +109,7 @@ class DashboardController extends Controller
             DB::commit();
            return redirect()->back()->with($response);
         } catch (Exception $e) {
+            DB::rollBack();
             $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to add the new patient. Please try again later.');
             Log::info('The system is unable to add the new patient. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
 

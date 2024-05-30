@@ -26,6 +26,7 @@ Route::group(['prefix' => 'practitioner', 'middleware' => ['practitioner']], fun
     //Consultation Request
     Route::prefix('neuro/assessment')->group(function () {
         Route::get('/', [NeuroAssessmentController::class, 'index'])->name('practitioner.neuro.assessment');
+        Route::post('patient/id/info', [NeuroAssessmentController::class, 'patientIdInfo'])->name('practitioner.neuro.assessment.patient.id.info');
         Route::get('exam/{id}', [NeuroAssessmentController::class, 'neuroExam'])->name('practitioner.neuro.assessment.exam');
     });
 
@@ -33,7 +34,6 @@ Route::group(['prefix' => 'practitioner', 'middleware' => ['practitioner']], fun
     Route::prefix('patient')->group(function () {
         Route::get('/list', [PatientsController::class, 'index'])->name('practitioner.patients');
         Route::get('/detail/{id}', [PatientsController::class, 'detail'])->name('practitioner.patient.detail');
-        Route::get('/neuro/exam/{id}', [PatientsController::class, 'neuroExam'])->name('practitioner.patient.neuro.exam');
     });
 
     //Settings

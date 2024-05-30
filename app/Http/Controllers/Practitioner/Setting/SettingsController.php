@@ -88,6 +88,7 @@ class SettingsController extends Controller
 
             return response()->json($response);
         } catch (Exception $e) {
+            DB::rollBack();
             $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to update the user profile information. Please try again later.');
             Log::info('The system is unable to update the user profile information. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
 
@@ -117,6 +118,7 @@ class SettingsController extends Controller
 
             return response()->json($response);
         } catch (Exception $e) {
+            DB::rollBack();
             $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to update the user profile image. Please try again later.');
             Log::info('The system is unable to update the user profile image. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
 
@@ -150,6 +152,7 @@ class SettingsController extends Controller
 
             return response()->json($response);
         } catch (Exception $e) {
+            DB::rollBack();
             $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to update your password. Please try again later.');
             Log::info('The system is unable to update your password. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
 

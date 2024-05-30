@@ -86,6 +86,7 @@ class SettingsController extends Controller
 
             return response()->json($response);
         } catch (Exception $e) {
+            DB::rollBack();
             $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to update the user profile information. Please try again later.');
             Log::info('The system is unable to update the user profile information. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
 
@@ -115,6 +116,7 @@ class SettingsController extends Controller
 
             return response()->json($response);
         } catch (Exception $e) {
+            DB::rollBack();
             $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to update the user profile image. Please try again later.');
             Log::info('The system is unable to update the user profile image. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
 
@@ -148,6 +150,7 @@ class SettingsController extends Controller
 
             return response()->json($response);
         } catch (Exception $e) {
+            DB::rollBack();
             $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to update your password. Please try again later.');
             Log::info('The system is unable to update your password. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
 
@@ -178,6 +181,7 @@ class SettingsController extends Controller
 
             return response()->json($response);
         } catch (Exception $e) {
+            DB::rollBack();
             $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to get the exams step list. Please try again later.');
             Log::info('The system is unable to add the exams step list. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
             return response()->json($response);
@@ -208,6 +212,7 @@ class SettingsController extends Controller
 
             return response()->json($response);
         } catch (Exception $e) {
+            DB::rollBack();
             $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to add the exam step. Please try again later.');
             Log::info('The system is unable to add the exam step. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
 
@@ -258,6 +263,7 @@ class SettingsController extends Controller
 
             return response()->json($response);
         } catch (Exception $e) {
+            DB::rollBack();
             $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to save the exam instruction video/url information. Please try again later.');
             Log::info('The system is unable to save the exam instruction video/url information. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
 
@@ -287,6 +293,7 @@ class SettingsController extends Controller
 
             return response()->json($response);
         } catch (Exception $e) {
+            DB::rollBack();
             $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to get the exam instruction video information. Please try again later.');
             Log::info('The system is unable to get the exam instruction video information. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
 
@@ -337,6 +344,7 @@ class SettingsController extends Controller
 
             return response()->json($response);
         } catch (Exception $e) {
+            DB::rollBack();
             $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to add the exam step. Please try again later.');
             Log::info('The system is unable to add the exam step. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
 
@@ -361,6 +369,7 @@ class SettingsController extends Controller
 
             return response()->json($response);
         } catch (Exception $e) {
+            DB::rollBack();
             $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to get the test information. Please try again later.');
             Log::info('The system is unable to get the test information. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
 
@@ -426,6 +435,7 @@ class SettingsController extends Controller
 
             return response()->json($response);
         } catch (Exception $e) {
+            DB::rollBack();
             $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to update the test information. Please try again later.');
             Log::info('The system is unable to update the test information. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
 
@@ -447,6 +457,7 @@ class SettingsController extends Controller
             DB::commit();
             return response()->json($response);
         } catch (Exception $e) {
+            DB::rollBack();
             $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to remove the exam information. Please try again later.');
             Log::info('The system is unable to remove the exam information. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
 
@@ -468,6 +479,7 @@ class SettingsController extends Controller
             DB::commit();
             return response()->json($response);
         } catch (Exception $e) {
+            DB::rollBack();
             $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to remove the test information. Please try again later.');
             Log::info('The system is unable to remove the test information. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
 
@@ -498,6 +510,7 @@ class SettingsController extends Controller
 
             return response()->json($response);
         } catch (Exception $e) {
+            DB::rollBack();
             $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to get the exams step list. Please try again later.');
             Log::info('The system is unable to add the exams step list. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
             return response()->json($response);
@@ -570,6 +583,7 @@ class SettingsController extends Controller
             DB::commit();
             return response()->json($response);
         } catch (Exception $e) {
+            DB::rollBack();
             $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to save the result information. Please try again later.');
             Log::info('The system is unable to save the result information. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
 
@@ -599,6 +613,7 @@ class SettingsController extends Controller
 
             return response()->json($response);
         } catch (Exception $e) {
+            DB::rollBack();
             $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to get the neurolocalization list. Please try again later.');
             Log::info('The system is unable to add the neurolocalization list. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
             return response()->json($response);
@@ -639,6 +654,7 @@ class SettingsController extends Controller
 
             return response()->json($response);
         } catch (Exception $e) {
+            DB::rollBack();
             $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to get the neurolocalization information. Please try again later.');
             Log::info('The system is unable to get the neurolocalization information. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
 
@@ -681,6 +697,7 @@ class SettingsController extends Controller
 
             return response()->json($response);
         } catch (Exception $e) {
+            DB::rollBack();
             $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to get the exams step list. Please try again later.');
             Log::info('The system is unable to add the exams step list. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
             return response()->json($response);
@@ -701,6 +718,7 @@ class SettingsController extends Controller
             DB::commit();
             return response()->json($response);
         } catch (Exception $e) {
+            DB::rollBack();
             $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to remove the neurolocalization information. Please try again later.');
             Log::info('The system is unable to remove the neurolocalization information. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
 
@@ -733,6 +751,7 @@ class SettingsController extends Controller
 
             return response()->json($response);
         } catch (Exception $e) {
+            DB::rollBack();
             $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to update the payment information. Please try again later.');
             Log::info('The system is unable to update the payment information. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
 
@@ -762,6 +781,7 @@ class SettingsController extends Controller
 
             return response()->json($response);
         } catch (Exception $e) {
+            DB::rollBack();
             $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to get the student list. Please try again later.');
             Log::info('The system is unable to get the student list. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
             return response()->json($response);
@@ -808,6 +828,7 @@ class SettingsController extends Controller
 
             return redirect()->back()->with($response);
         } catch (Exception $e) {
+            DB::rollBack();
             $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to save the student information. Please try again later.');
             Log::info('The system is unable to save the student information. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
             return redirect()->back()->with($response);
@@ -857,6 +878,7 @@ class SettingsController extends Controller
 
             return redirect()->back()->with($response);
         } catch (Exception $e) {
+            DB::rollBack();
             $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to update the student information. Please try again later.');
             Log::info('The system is unable to update the student information. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
             return redirect()->back()->with($response);
@@ -879,6 +901,7 @@ class SettingsController extends Controller
             DB::commit();
             return response()->json($response);
         } catch (Exception $e) {
+            DB::rollBack();
             $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to remove the student information. Please try again later.');
             Log::info('The system is unable to remove the student information. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
 

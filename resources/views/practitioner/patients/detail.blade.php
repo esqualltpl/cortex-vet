@@ -14,7 +14,7 @@
                     Patients
                 </a>
             </li>
-            <li class="breadcrumb-item text-sm mx-2 text-dark active" aria-current="page">{{ $patient_info->patient_name ?? '' }}</li>
+            <li class="breadcrumb-item text-sm mx-2 text-dark active" aria-current="page">{{ $patientInfo->patient_name ?? '' }}</li>
         </ol>
     </nav>
 @endsection
@@ -25,8 +25,8 @@
     <div class="container-fluid py-2">
         <div class="card p-3 mt-3">
             <div class="col-md-12 d-flex justify-content-between flex-wrap">
-                <h5>{{ $patient_info->patient_name ?? '' }} Detail</h5>
-                <p>Patient created on: <span style="color: #5534A5;">{{ $patient_info->created_at ?? '0000-00-00 00:00' }}</span></p>
+                <h5>{{ $patientInfo->patient_name ?? '' }} Detail</h5>
+                <p>Patient created on: <span style="color: #5534A5;">{{ $patientInfo->created_at ?? '0000-00-00 00:00' }}</span></p>
             </div>
             <div class="row">
                 <h6>Patient Detail</h6>
@@ -40,7 +40,7 @@
                                             <p class="font-weight-bold text-dark mb-0">Patient ID</p>
                                         </div>
                                         <div class="col-md-6">
-                                            <p class="font-weight-normal text-dark opacity-8">{{ $patient_info->patient_id ?? '' }}</p>
+                                            <p class="font-weight-normal text-dark opacity-8">{{ $patientInfo->patient_id ?? '' }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -52,7 +52,7 @@
                                             <p class="font-weight-bold text-dark mb-0">Owner Name</p>
                                         </div>
                                         <div class="col-md-6">
-                                            <p class="font-weight-normal text-dark opacity-8">{{ $patient_info->owner_name ?? '' }}</p>
+                                            <p class="font-weight-normal text-dark opacity-8">{{ $patientInfo->owner_name ?? '' }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -66,7 +66,7 @@
                                             <p class="font-weight-bold text-dark mb-0">Patient Name</p>
                                         </div>
                                         <div class="col-md-6 col-sm-6">
-                                            <p class="font-weight-normal text-dark opacity-8">{{ $patient_info->patient_name ?? '' }}</p>
+                                            <p class="font-weight-normal text-dark opacity-8">{{ $patientInfo->patient_name ?? '' }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -78,7 +78,7 @@
                                             <p class="font-weight-bold text-dark mb-0">Age/DOB</p>
                                         </div>
                                         <div class="col-md-6">
-                                            <p class="font-weight-normal text-dark opacity-8">{{ $patient_info->dob ?? '' }}</p>
+                                            <p class="font-weight-normal text-dark opacity-8">{{ $patientInfo->dob ?? '' }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -92,7 +92,7 @@
                                             <p class="font-weight-bold text-dark mb-0">Sex</p>
                                         </div>
                                         <div class="col-md-6 col-sm-6">
-                                            <p class="font-weight-normal text-dark opacity-8">{{ $patient_info->sex ?? '' }}</p>
+                                            <p class="font-weight-normal text-dark opacity-8">{{ $patientInfo->sex ?? '' }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -104,7 +104,7 @@
                                             <p class="font-weight-bold text-dark mb-0">Breed</p>
                                         </div>
                                         <div class="col-md-6">
-                                            <p class="font-weight-normal text-dark opacity-8">{{ $patient_info->breedInfo?->name ?? '' }}</p>
+                                            <p class="font-weight-normal text-dark opacity-8">{{ $patientInfo->breedInfo?->name ?? '' }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -123,7 +123,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-sm-6">
-                                            <p class="font-weight-normal text-dark opacity-8" id="profileVisibility">{{ $patient_info->weight ?? '' }} <span class="text-sm">{{ $patient_info->weight_type ?? '' }}</span></p>
+                                            <p class="font-weight-normal text-dark opacity-8" id="profileVisibility">{{ $patientInfo->weight ?? '' }} <span class="text-sm">{{ $patientInfo->weight_type ?? '' }}</span></p>
                                         </div>
                                     </div>
                                 </div>
@@ -135,7 +135,7 @@
                                             <p class="font-weight-bold text-dark mb-0">Species Type</p>
                                         </div>
                                         <div class="col-md-6">
-                                            <p class="font-weight-normal text-dark opacity-8">{{ $patient_info->specieTypeInfo?->name ?? '' }}</p>
+                                            <p class="font-weight-normal text-dark opacity-8">{{ $patientInfo->specieTypeInfo?->name ?? '' }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -145,7 +145,7 @@
                 </div>
                 <div class="col-md-1">
                     <div style="width: 90px; max-height: 90px">
-                        <img src="{{ $patient_info->getPatientImage($patient_info->specieTypeInfo?->name ?? null,$patient_info->breedInfo?->image ?? null) }}" alt="icon" style="width: 130px;height: 130px;border-radius:300px;"/>
+                        <img src="{{ $patientInfo->getPatientImage($patientInfo->specieTypeInfo?->name ?? null,$patientInfo->breedInfo?->image ?? null) }}" alt="icon" style="width: 130px;height: 130px;border-radius:300px;"/>
                     </div>
                 </div>
             </div>
