@@ -27,4 +27,8 @@ class ResultDetail extends Model
     {
         return $this->belongsTo(TestOptions::class,'option_id');
     }
+
+    public function result() {
+        return $this->belongsTo(Result::class);
+    }
 }

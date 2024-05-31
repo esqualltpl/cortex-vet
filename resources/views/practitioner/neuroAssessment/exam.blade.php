@@ -126,14 +126,21 @@
                                                 <div class="col-md-6 col-sm-6">
                                                     <div class="d-flex">
                                                         <p class="font-weight-bold text-dark mb-0">Weight</p>
-                                                        <div class="form-check form-switch ms-2 ">
-                                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault23" checked onchange="visible()">
+                                                        <div class="form-check form-switch ms-2 mt-1 mx-1">
+                                                            <input class="form-check-input toggle-weight-switch" data-weight="{{ $patientInfo->weight ?? '' }}" data-weight-type="{{ $patientInfo->weight_type ?? '' }}" type="checkbox" id="weightSwitch" {{ $patientInfo->weight_type ?? '' == 'kgs' ? 'checked' : '' }}>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6">
-                                                    <p class="font-weight-normal text-dark opacity-8" id="profileVisibility">{{ $patientInfo->weight ?? '' }} <span
-                                                                class="text-sm">{{ $patientInfo->weight_type ?? '' }}</span></p>
+                                                    <div id="toggleWeight-loader"
+                                                         class="spinner-border text-green-700 d-none overflow-hidden" role="status"
+                                                         style="height: 21px !important;width: 21px !important;margin-left: 25px;font-size: 15px;margin-top: 8px;color: #a2a6b8;">
+                                                        <span class="sr-only">Loading...</span>
+                                                    </div>
+                                                    <p class="font-weight-normal text-dark opacity-8 toggle-weight-switch-info" id="profileVisibility">
+                                                        <span class="toggle-weight">{{ $patientInfo->weight ?? '' }}</span>
+                                                        <span class="text-sm toggle-weight-label">{{ $patientInfo->weight_type ?? '' }}</span>
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
@@ -182,7 +189,8 @@
                             </div>
                         </div>
                     </div>
-                    <form class="multisteps-form__form ">
+                    <form class="multisteps-form__form neuro-exam-form" action="{{ route('practitioner.neuro.assessment.treated', request()->id) }}" method="post">
+                        @csrf
                         <div class="neuro-exam-info">
                             <!--History-->
                             <div class="multisteps-form__panel pt-3 border-radius-xl bg-white js-active"
@@ -198,7 +206,8 @@
                                             </label>
                                             <div class="input-group input-group-outline mb-3">
                                                 <textarea rows="4" class="form-control w-100"
-                                                          aria-describedby="emailHelp" onfocus="focused(this)"
+                                                          name="medical_history"
+                                                          aria-describedby="Medical History" onfocus="focused(this)"
                                                           onfocusout="defocused(this)"
                                                           style="resize: none;"
                                                           placeholder="Please describe the presenting complaint and associated history. Please also note any historical medical information. Please include the results of any diagnostics already performed. Please note any previous therapies and response."
@@ -206,24 +215,26 @@
                                             </div>
                                         </div>
                                         <div class="col-md-12">
-                                            <label class="form-label font-weight-bold" style=" font-family: 'Poppins', sans-serif !important">Vaccination
-                                                History
+                                            <label class="form-label font-weight-bold" style=" font-family: 'Poppins', sans-serif !important">
+                                                Vaccination History
                                             </label>
                                             <div class="input-group input-group-outline mb-3">
                                                 <textarea rows="4" class="form-control w-100"
-                                                          aria-describedby="emailHelp" onfocus="focused(this)"
+                                                          name="vaccination_history"
+                                                          aria-describedby="Vaccination History" onfocus="focused(this)"
                                                           onfocusout="defocused(this)" style="resize: none;"
                                                           placeholder="Please comment if this patient is up to date on vaccines (rabies and distemper)."
                                                 ></textarea>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
-                                            <label class="form-label font-weight-bold" style=" font-family: 'Poppins', sans-serif !important">Diet/Feeding
-                                                Routine
+                                            <label class="form-label font-weight-bold" style=" font-family: 'Poppins', sans-serif !important">
+                                                Diet/Feeding Routine
                                             </label>
                                             <div class="input-group input-group-outline mb-3">
                                                 <textarea rows="4" class="form-control w-100"
-                                                          aria-describedby="emailHelp" onfocus="focused(this)"
+                                                          name="diet_feeding_routine"
+                                                          aria-describedby="Diet/Feeding Routine" onfocus="focused(this)"
                                                           onfocusout="defocused(this)" style="resize: none;"
                                                           placeholder="Please note the type of diet and feeding frequency."
                                                 ></textarea>
@@ -235,7 +246,8 @@
                                             </label>
                                             <div class="input-group input-group-outline mb-3">
                                                 <textarea rows="4" class="form-control w-100"
-                                                          aria-describedby="emailHelp" onfocus="focused(this)"
+                                                          name="current_therapy_response"
+                                                          aria-describedby="Current Therapy/Response" onfocus="focused(this)"
                                                           onfocusout="defocused(this)"
                                                           style="resize: none;"
                                                           placeholder="Please note any current or previous therapies and include clinical response to each therapy"
@@ -248,7 +260,8 @@
                                             </label>
                                             <div class="input-group input-group-outline mb-3">
                                                 <textarea rows="4" class="form-control w-100"
-                                                          aria-describedby="emailHelp" onfocus="focused(this)"
+                                                          name="patients_environment"
+                                                          aria-describedby="Patient's Environment" onfocus="focused(this)"
                                                           onfocusout="defocused(this)" style="resize: none;"
                                                           placeholder="Please note if the patient is indoor/outdoor, has recent travel, other pets in the home, and any environmental history such as tick or potential toxin exposure."
                                                 ></textarea>
@@ -256,9 +269,9 @@
                                         </div>
                                     </div>
                                     <div class="button-row d-flex mt-4">
-                                        <button
-                                                class="btn btn-primary btn-sm py-2 text-white mb-2 ms-auto js-btn-next"
-                                                type="button" title="Next">Conduct Exam
+                                        <button class="btn btn-primary text-white ms-auto js-btn-next" type="button"
+                                                title="Conduct Exam">
+                                            Conduct Exam
                                         </button>
                                     </div>
                                 </div>
@@ -373,7 +386,7 @@
                                                                                                                         <div class="col-md-2 col-sm-6">
                                                                                                                             <div class="form-check ps-0">
                                                                                                                                 <input class="form-check-input" type="radio"
-                                                                                                                                       name="test_option[{{$testInfo->id}}][]"
+                                                                                                                                       name="options[{{$examInfo->id ?? 0}}][{{$testInfo->id ?? 0}}]" value="{{ $options->id }}"
                                                                                                                                        id="customRadio{{ $options->id }}">
                                                                                                                                 <label class="custom-control-label"
                                                                                                                                        for="customRadio{{ $options->id }}">{{ $options->name ?? '' }}</label>
@@ -402,8 +415,10 @@
                                         <div class="button-row d-flex justify-content-end gap-3 mt-4">
                                             <!-- <button class="btn bg-gradient-primary mb-0 js-btn-next" type="button"
                                                 title="Back">Back</button> -->
-                                            <button class="btn btn-primary btn-sm py-2 text-white mb-2 ms-auto js-btn-next" type="button"
-                                                    title="Next">Localize
+                                            <button class="btn btn-primary text-white mb-2 js-btn-next get-neuro-exam-result"
+                                                    data-action-url="{{ route('practitioner.neuro.assessment.exam.result', request()->id) }}"
+                                                    type="button"
+                                                    title="Localize">Localize
                                             </button>
                                         </div>
                                     </div>
@@ -415,16 +430,28 @@
                                  data-animation="FadeIn">
                                 <div class="multisteps-form__content  p-3">
                                     <div class="col-md-12">
-                                        <label class="form-label font-weight-bold" style=" font-family: 'Poppins', sans-serif !important">Result
+                                        <label class="form-label font-weight-bold" style=" font-family: 'Poppins', sans-serif !important">
+                                            Result
                                         </label>
                                         <div class="input-group input-group-outline mb-3">
-                                            <textarea rows="4" class="form-control w-100" aria-describedby="emailHelp" onfocus="focused(this)" onfocusout="defocused(this)"
-                                                      style="resize: none;"></textarea>
+                                            <textarea rows="4" class="form-control w-100 neuro-exam-result"
+                                                      name="result"
+                                                      aria-describedby="Result"
+                                                      onfocus="focused(this)"
+                                                      onfocusout="defocused(this)"
+                                                      style="resize: none;"
+                                            ></textarea>
+                                        </div>
+                                        <div id="neuroExamResult-loader" class="text-center d-none" style="margin-left: 34px;">
+                                            <img src="{{ asset('portal/assets/img/loader.gif') }}" width="120px" alt="loader"/>
                                         </div>
                                     </div>
-                                    <div class="button-row d-flex justify-content-end gap-3 mt-4">
-                                        <button class="btn btn-primary  text-white js-btn-next" type="button" onclick="window.location.href = 'index.html'">Consult Neurologist</button>
-                                        <button class="btn btn-primary  text-white js-btn-next" type="button" title="Next">Finish</button>
+                                    <div class="button-row d-flex justify-content-end gap-2 mt-4">
+                                        <button class="btn btn-primary text-white px-3" type="button" title="Consult Neurologist">
+                                            <i class="fas fa-user-md me-2 mx-1" style=" font-size: 14px; !important;" aria-hidden="true"></i>
+                                            Consult Neurologist
+                                        </button>
+                                        <button class="btn btn-primary text-white" type="submit" title="Treated">Treated</button>
                                     </div>
                                 </div>
                             </div>
@@ -439,6 +466,43 @@
 @section('script')
     <script src="{{ asset('portal/assets/js/plugins/multistep-form.js') }}"></script>
     <script>
+        $(document).on('change','.toggle-weight-switch', function (){
+            let weight = $(this).attr('data-weight');
+            let weightType = $(this).attr('data-weight-type');
+            let currentValue = parseFloat(weight);
+
+            $(`#toggleWeight-loader`).removeClass('d-none');
+            $(`.toggle-weight-switch-info`).addClass('d-none');
+
+            if (weightType === 'kgs') {
+                let newValue = (currentValue / 2.20462).toFixed(2);
+                $('.toggle-weight').text(newValue);
+                $(this).attr('data-weight', newValue);
+                $(this).attr('data-weight-type', 'lbs');
+                $('.toggle-weight-label').text('kgs');
+            } else {
+                let newValue = (currentValue * 2.20462).toFixed(2);
+                $('.toggle-weight').text(newValue);
+                $(this).attr('data-weight', newValue);
+                $(this).attr('data-weight-type', 'kgs');
+                $('.toggle-weight-label').text('lbs');
+            }
+
+            setTimeout(function () {
+                $(`#toggleWeight-loader`).addClass('d-none');
+                $(`.toggle-weight-switch-info`).removeClass('d-none');
+            }, 500);
+        });
+
+        $(document).on('click', '.get-neuro-exam-result', function (e) {
+            let actionType = 'get';
+            let loaderId = 'neuroExamResult-loader';
+            let actionURL = $(this).attr('data-action-url');
+            let processData = $('.neuro-exam-form').serialize();
+            let renderClass = 'neuro-exam-result';
+
+            getInfo(actionURL, actionType, processData, loaderId, renderClass);
+        });
 
         function addDifferential() {
             // Clone the differential section
@@ -496,23 +560,10 @@
 
         });
 
-        function visible() {
-            var elem = document.getElementById('profileVisibility');
-            if (elem) {
-                if (elem.innerHTML == "6Lbs") {
-                    elem.innerHTML = "6kgs"
-                } else {
-                    elem.innerHTML = "6Lbs"
-                }
-            }
-        }
-
         if (document.getElementById('edit-deschiption')) {
             var quill = new Quill('#edit-deschiption', {
                 theme: 'snow' // Specify theme in configuration
             });
         }
-        ;
-
     </script>
 @endsection

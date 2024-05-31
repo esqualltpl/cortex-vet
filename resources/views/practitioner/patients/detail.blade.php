@@ -117,13 +117,21 @@
                                         <div class="col-md-6 col-sm-6">
                                             <div class="d-flex">
                                                 <p class="font-weight-bold text-dark mb-0">Weight</p>
-                                                <div class="form-check form-switch ms-2 ">
-                                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault23" checked onchange="visible()">
+                                                <div class="form-check form-switch ms-2 mt-1 mx-1">
+                                                    <input class="form-check-input toggle-weight-switch" data-weight="{{ $patientInfo->weight ?? '' }}" data-weight-type="{{ $patientInfo->weight_type ?? '' }}" type="checkbox" id="weightSwitch" {{ $patientInfo->weight_type ?? '' == 'kgs' ? 'checked' : '' }}>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-sm-6">
-                                            <p class="font-weight-normal text-dark opacity-8" id="profileVisibility">{{ $patientInfo->weight ?? '' }} <span class="text-sm">{{ $patientInfo->weight_type ?? '' }}</span></p>
+                                            <div id="toggleWeight-loader"
+                                                 class="spinner-border text-green-700 d-none overflow-hidden" role="status"
+                                                 style="height: 21px !important;width: 21px !important;margin-left: 25px;font-size: 15px;margin-top: 8px;color: #a2a6b8;">
+                                                <span class="sr-only">Loading...</span>
+                                            </div>
+                                            <p class="font-weight-normal text-dark opacity-8 toggle-weight-switch-info" id="profileVisibility">
+                                                <span class="toggle-weight">{{ $patientInfo->weight ?? '' }}</span>
+                                                <span class="text-sm toggle-weight-label">{{ $patientInfo->weight_type ?? '' }}</span>
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -253,5 +261,33 @@
                 perPage: 10
             });
         }
+
+        $(document).on('change','.toggle-weight-switch', function (){
+            let weight = $(this).attr('data-weight');
+            let weightType = $(this).attr('data-weight-type');
+            let currentValue = parseFloat(weight);
+
+            $(`#toggleWeight-loader`).removeClass('d-none');
+            $(`.toggle-weight-switch-info`).addClass('d-none');
+
+            if (weightType === 'kgs') {
+                let newValue = (currentValue / 2.20462).toFixed(2);
+                $('.toggle-weight').text(newValue);
+                $(this).attr('data-weight', newValue);
+                $(this).attr('data-weight-type', 'lbs');
+                $('.toggle-weight-label').text('kgs');
+            } else {
+                let newValue = (currentValue * 2.20462).toFixed(2);
+                $('.toggle-weight').text(newValue);
+                $(this).attr('data-weight', newValue);
+                $(this).attr('data-weight-type', 'kgs');
+                $('.toggle-weight-label').text('lbs');
+            }
+
+            setTimeout(function () {
+                $(`#toggleWeight-loader`).addClass('d-none');
+                $(`.toggle-weight-switch-info`).removeClass('d-none');
+            }, 500);
+        });
     </script>
 @endsection
