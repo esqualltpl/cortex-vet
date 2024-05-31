@@ -40,7 +40,7 @@
                                         <img src="{{ asset('portal/assets/img/loader.gif') }}" width="120px" alt="loader"/>
                                     </div>
                                     <img class="breed-type-image" src="{{ asset('portal/assets/img/breeds/no-breed-type-selected.jpg') }}" alt="icon"
-                                         style="margin-top: 3px;width: 341px;border-radius: 16px;">
+                                         style="margin-top: 10px;width: 330px;border-radius: 16px;">
                                 </div>
                                 <div class="col-md-9">
                                     <div class="d-flex flex-wrap justify-content-between">
