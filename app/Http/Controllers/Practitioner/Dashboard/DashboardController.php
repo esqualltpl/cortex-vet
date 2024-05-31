@@ -117,7 +117,7 @@ class DashboardController extends Controller
         }
     }
 
-    public function generateUniquePatientId($prefix = 'PD-', $startingPoint = 1): string
+    public function generateUniquePatientId($prefix = 'PID-', $startingPoint = 1): string
     {
         do {
             $currentCount = Patient::count();
