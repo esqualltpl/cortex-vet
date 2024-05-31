@@ -10,7 +10,7 @@
         <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 ">
             <li class="breadcrumb-item text-sm">
                 <a class="opacity-7 text-dark" href="{{ route('practitioner.patients') }}">
-                    <img src="{{ asset('portal/assets/img/Patients gray.png') }}" alt="icon" class="me-1" />
+                    <img src="{{ asset('portal/assets/img/Patients gray.png') }}" alt="icon" class="me-1"/>
                     Patients
                 </a>
             </li>
@@ -118,7 +118,8 @@
                                             <div class="d-flex">
                                                 <p class="font-weight-bold text-dark mb-0">Weight</p>
                                                 <div class="form-check form-switch ms-2 mt-1 mx-1">
-                                                    <input class="form-check-input toggle-weight-switch" data-weight="{{ $patientInfo->weight ?? '' }}" data-weight-type="{{ $patientInfo->weight_type ?? '' }}" type="checkbox" id="weightSwitch" {{ $patientInfo->weight_type ?? '' == 'kgs' ? 'checked' : '' }}>
+                                                    <input class="form-check-input toggle-weight-switch" data-weight="{{ $patientInfo->weight ?? '' }}" type="checkbox"
+                                                           id="weightSwitch" {{ $patientInfo->weight_type == 'Kgs' ? 'checked' : '' }}>
                                                 </div>
                                             </div>
                                         </div>
@@ -153,7 +154,8 @@
                 </div>
                 <div class="col-md-1">
                     <div style="width: 90px; max-height: 90px">
-                        <img src="{{ $patientInfo->getPatientImage($patientInfo->specieTypeInfo?->name ?? null,$patientInfo->breedInfo?->image ?? null) }}" alt="icon" style="width: 130px;height: 130px;border-radius:300px;"/>
+                        <img src="{{ $patientInfo->getPatientImage($patientInfo->specieTypeInfo?->name ?? null,$patientInfo->breedInfo?->image ?? null) }}" alt="icon"
+                             style="width: 130px;height: 130px;border-radius:300px;"/>
                     </div>
                 </div>
             </div>
@@ -262,25 +264,23 @@
             });
         }
 
-        $(document).on('change','.toggle-weight-switch', function (){
+        $(document).on('change', '.toggle-weight-switch', function () {
             let weight = $(this).attr('data-weight');
-            let weightType = $(this).attr('data-weight-type');
             let currentValue = parseFloat(weight);
 
             $(`#toggleWeight-loader`).removeClass('d-none');
             $(`.toggle-weight-switch-info`).addClass('d-none');
 
-            if (weightType === 'kgs') {
+
+            if ($(this).is(':checked')) {
                 let newValue = (currentValue / 2.20462).toFixed(2);
                 $('.toggle-weight').text(newValue);
                 $(this).attr('data-weight', newValue);
-                $(this).attr('data-weight-type', 'lbs');
                 $('.toggle-weight-label').text('kgs');
             } else {
                 let newValue = (currentValue * 2.20462).toFixed(2);
                 $('.toggle-weight').text(newValue);
                 $(this).attr('data-weight', newValue);
-                $(this).attr('data-weight-type', 'kgs');
                 $('.toggle-weight-label').text('lbs');
             }
 

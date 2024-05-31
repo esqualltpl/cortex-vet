@@ -127,7 +127,7 @@
                                                     <div class="d-flex">
                                                         <p class="font-weight-bold text-dark mb-0">Weight</p>
                                                         <div class="form-check form-switch ms-2 mt-1 mx-1">
-                                                            <input class="form-check-input toggle-weight-switch" data-weight="{{ $patientInfo->weight ?? '' }}" data-weight-type="{{ $patientInfo->weight_type ?? '' }}" type="checkbox" id="weightSwitch" {{ $patientInfo->weight_type ?? '' == 'kgs' ? 'checked' : '' }}>
+                                                            <input class="form-check-input toggle-weight-switch" data-weight="{{ $patientInfo->weight ?? '' }}" type="checkbox" id="weightSwitch" {{ $patientInfo->weight_type == 'Kgs' ? 'checked' : '' }}>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -466,25 +466,23 @@
 @section('script')
     <script src="{{ asset('portal/assets/js/plugins/multistep-form.js') }}"></script>
     <script>
-        $(document).on('change','.toggle-weight-switch', function (){
+        $(document).on('change', '.toggle-weight-switch', function () {
             let weight = $(this).attr('data-weight');
-            let weightType = $(this).attr('data-weight-type');
             let currentValue = parseFloat(weight);
 
             $(`#toggleWeight-loader`).removeClass('d-none');
             $(`.toggle-weight-switch-info`).addClass('d-none');
 
-            if (weightType === 'kgs') {
+
+            if ($(this).is(':checked')) {
                 let newValue = (currentValue / 2.20462).toFixed(2);
                 $('.toggle-weight').text(newValue);
                 $(this).attr('data-weight', newValue);
-                $(this).attr('data-weight-type', 'lbs');
                 $('.toggle-weight-label').text('kgs');
             } else {
                 let newValue = (currentValue * 2.20462).toFixed(2);
                 $('.toggle-weight').text(newValue);
                 $(this).attr('data-weight', newValue);
-                $(this).attr('data-weight-type', 'kgs');
                 $('.toggle-weight-label').text('lbs');
             }
 
