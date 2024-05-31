@@ -273,12 +273,12 @@
 
 
             if ($(this).is(':checked')) {
-                let newValue = (currentValue / 2.20462).toFixed(2);
+                let newValue = Math.round(currentValue / 2.20462);
                 $('.toggle-weight').text(newValue);
                 $(this).attr('data-weight', newValue);
                 $('.toggle-weight-label').text('kgs');
             } else {
-                let newValue = (currentValue * 2.20462).toFixed(2);
+                let newValue = Math.round(currentValue * 2.20462);
                 $('.toggle-weight').text(newValue);
                 $(this).attr('data-weight', newValue);
                 $('.toggle-weight-label').text('lbs');
