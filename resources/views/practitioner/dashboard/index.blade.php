@@ -77,12 +77,13 @@
                     </div>
                     <div class="p-3">
                         @if($resourceInfo != null)
-                            @if($resourceInfo['type'] ?? '' == 'video')
+                            @if($resourceInfo['type'] == 'video')
+                                @dd('tests')
                                 <video controls="" style="width: 100%">
                                     <source src="{{ $resourceInfo['video'] ?? '' }}">
                                     Your browser does not support the video tag.
                                 </video>
-                            @elseif($resourceInfo['type'] ?? '' == 'url')
+                            @elseif($resourceInfo['type'] == 'url')
                                 <iframe width="100%" height="415" src="{{ $resourceInfo['video'] ?? '' }}" frameborder="0"
                                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                         allowfullscreen></iframe>

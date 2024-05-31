@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->string('patient_name')->nullable();
             $table->string('owner_name')->nullable();
             $table->string('dob')->nullable();
-            $table->enum('sex', ['Male Castrated', 'Female Intact', 'Female Spayed', 'Unknown'])->nullable();
+            $table->enum('sex', ['Male Intact', 'Male Neutered', 'Female Intact', 'Female Spayed', 'Unknown'])->nullable();
             $table->unsignedBigInteger('specie_type')->nullable();
             $table->enum('weight_type', ['Lbs', 'Kgs'])->nullable();
             $table->string('weight')->nullable();

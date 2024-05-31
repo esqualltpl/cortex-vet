@@ -29,8 +29,7 @@ class Resource extends Model
     {
         if($this->video_url !== null) {
             return ['type' => 'url', 'video' => $this->video_url];
-        }
-        else if($this->upload_video !== null) {
+        }else if($this->upload_video !== null) {
             $videoPath = public_path('portal/assets/upload/resources-video/'.$this->upload_video);
 
             if ($this->upload_video !== null && File::exists($videoPath)) {
