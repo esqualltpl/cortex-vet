@@ -78,7 +78,6 @@
                     <div class="p-3">
                         @if($resourceInfo != null)
                             @if($resourceInfo['type'] == 'video')
-                                @dd('tests')
                                 <video controls="" style="width: 100%">
                                     <source src="{{ $resourceInfo['video'] ?? '' }}">
                                     Your browser does not support the video tag.
