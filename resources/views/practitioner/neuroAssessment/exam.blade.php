@@ -475,12 +475,12 @@
 
 
             if ($(this).is(':checked')) {
-                let newValue = Math.round(currentValue / 2.20462);
+                let newValue = Math.round((currentValue / 2.20462) * 100) / 100;
                 $('.toggle-weight').text(newValue);
                 $(this).attr('data-weight', newValue);
                 $('.toggle-weight-label').text('kgs');
             } else {
-                let newValue = Math.round(currentValue * 2.20462);
+                let newValue = Math.round((currentValue * 2.20462) * 100) / 100;
                 $('.toggle-weight').text(newValue);
                 $(this).attr('data-weight', newValue);
                 $('.toggle-weight-label').text('lbs');

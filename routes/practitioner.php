@@ -18,6 +18,7 @@ Route::group(['prefix' => 'practitioner', 'middleware' => ['practitioner']], fun
     Route::prefix('add/new/patient')->group(function () {
         Route::get('/', [DashboardController::class, 'patient'])->name('practitioner.patient');
         Route::post('info/save', [DashboardController::class, 'patientInfoSave'])->name('practitioner.patient.info.save');
+        Route::post('info/update', [DashboardController::class, 'patientInfoUpdate'])->name('practitioner.patient.info.update');
     });
 
     //Get Breed Options

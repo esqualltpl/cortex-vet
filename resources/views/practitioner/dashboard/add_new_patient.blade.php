@@ -177,7 +177,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="d-flex mt-4" style="justify-content:end; align-items: center;">
-                                                    <button type="submit" class="btn btn-primary change-password-info btn-sm py-2 text-white mb-2"
+                                                    <button type="submit" class="btn btn-primary btn-sm py-2 text-white mb-2"
                                                             style=" font-family: 'Poppins', sans-serif !important">
                                                         <i class="fa fa-plus me-2 mx-1" style=" font-size: 10px; !important;" aria-hidden="true"></i>
                                                         <span>Create</span>

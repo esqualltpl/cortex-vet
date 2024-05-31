@@ -29,7 +29,10 @@
                 <p>Patient created on: <span style="color: #5534A5;">{{ $patientInfo->created_at ?? '0000-00-00 00:00' }}</span></p>
             </div>
             <div class="row">
-                <h6>Patient Detail</h6>
+                <div class="d-flex">
+                    <h6>Patient Detail</h6>
+                    <span class="cursor-pointer fa fa-edit text-success px-2 pt-1" data-bs-toggle="modal" data-bs-target="#editPatientModal"></span>
+                </div>
                 <div class="col-md-9 mt-3 d-flex flex-wrap justify-content-between">
                     <div class="container p-0">
                         <div class="row">
@@ -224,6 +227,176 @@
                 </table>
             </div>
         </div>
+
+        <div class="modal fade" id="editPatientModal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="editPatientModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content ">
+                    <div class="modal-header">
+                        <h6 class="pt-1 mb-0">Patient's Details</h6>
+                        <button type="button" class="btn-close text-dark float-end" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-3 mb-3 p-0 mt-1">
+                                    <div id="breedImage-loader" class="text-center d-none" style="margin-top: 135px !important;">
+                                        <img src="{{ asset('portal/assets/img/loader.gif') }}" width="120px" alt="loader"/>
+                                    </div>
+                                    <img class="breed-type-image" src="{{ $patientInfo->breedInfo?->getBreedImage($patientInfo->specieTypeInfo?->name ?? null) ?? asset('portal/assets/img/breeds/no-breed-type-selected.jpg') }}" alt="icon"
+                                         style="margin-top: 78px;width: 175px;border-radius: 16px;">
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="d-flex flex-wrap justify-content-between">
+                                        <form method="post" id="patientInfoUpdateForm">
+                                            @csrf
+                                            <input type="hidden" name="patient_id" value="{{ request()->id ?? '' }}">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Patient Name</label>
+                                                    <div class="input-group input-group-outline mb-3">
+                                                        <input type="text" class="form-control w-100 @error('patient_name') is-invalid @enderror"
+                                                               name="patient_name"
+                                                               value="{{ $patientInfo->patient_name ?? '' }}"
+                                                               placeholder="Enter patient name"
+                                                               aria-describedby="patient name" onfocus="focused(this)"
+                                                               onfocusout="defocused(this)">
+                                                        @error('patient_name')
+                                                        <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Owner Name</label>
+                                                    <div class="input-group input-group-outline mb-3">
+                                                        <input type="text" class="form-control w-100 @error('owner_name') is-invalid @enderror"
+                                                               name="owner_name"
+                                                               value="{{ $patientInfo->owner_name ?? '' }}"
+                                                               placeholder="Enter owner name"
+                                                               aria-describedby="owner name" onfocus="focused(this)"
+                                                               onfocusout="defocused(this)">
+                                                        @error('owner_name')
+                                                        <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="form-label">DOB</label>
+                                                    <div class="input-group input-group-outline mb-3">
+                                                        <input type="date" class="form-control w-100 @error('dob') is-invalid @enderror"
+                                                               name="dob"
+                                                               value="{{ $patientInfo->dob ?? '' }}"
+                                                               placeholder="Enter DOB"
+                                                               aria-describedby="DOB" onfocus="focused(this)"
+                                                               onfocusout="defocused(this)">
+                                                        @error('dob')
+                                                        <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Sex</label>
+                                                    <select class="form-select p-2 @error('sex') is-invalid @enderror" name="sex" aria-label="Sex Types">
+                                                        <option selected disabled>Select</option>
+                                                        <option {{ $patientInfo->sex === 'Male Intact' ? 'selected' : '' }} value="{{ Crypt::encrypt('Male Intact') }}">Male
+                                                            Intact
+                                                        </option>
+                                                        <option {{ $patientInfo->sex === 'Female Intact' ? 'selected' : '' }} value="{{ Crypt::encrypt('Female Intact') }}">
+                                                            Female Intact
+                                                        </option>
+                                                        <option {{ $patientInfo->sex === 'Male Neutered' ? 'selected' : '' }} value="{{ Crypt::encrypt('Male Neutered') }}">Male
+                                                            Neutered
+                                                        </option>
+                                                        <option {{ $patientInfo->sex === 'Female Spayed' ? 'selected' : '' }} value="{{ Crypt::encrypt('Female Spayed') }}">
+                                                            Female Spayed
+                                                        </option>
+                                                        <option {{ $patientInfo->sex === "Unknown" ? 'selected' : '' }} value="{{ Crypt::encrypt('Unknown') }}">Unknown</option>
+                                                    </select>
+                                                    @error('sex')
+                                                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Specie Type</label>
+                                                    <select class="form-select p-2 specie-type @error('specie_type') is-invalid @enderror"
+                                                            name="specie_type" aria-label="Specie Type">
+                                                        <option selected disabled>Select</option>
+                                                        @foreach($species as $specie)
+                                                            <option data-specie-image="{{ asset('portal/assets/img/breeds/no-breed-type-selected.jpg') }}"
+                                                                    {{ $specie->id == $patientInfo->specie_type ? 'selected' : '' }}
+                                                                    value="{{ Crypt::encrypt($specie->id ?? 0) }}">{{ $specie->name ?? '' }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    @error('specie_type')
+                                                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Weight Type</label>
+                                                    <select class="form-select p-2 @error('weight_type') is-invalid @enderror" name="weight_type" aria-label="Weight Type">
+                                                        <option selected disabled>Select</option>
+                                                        <option {{ $patientInfo->weight_type === "Lbs" ? 'selected' : '' }} value="{{ Crypt::encrypt('Lbs') }}">Lbs
+                                                        </option>
+                                                        <option {{ $patientInfo->weight_type === "Kgs" ? 'selected' : '' }} value="{{ Crypt::encrypt('Kgs') }}">Kgs
+                                                        </option>
+                                                    </select>
+                                                    @error('weight_type')
+                                                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Breed</label>
+                                                    <select class="form-select p-2 breed-options @error('breed') is-invalid @enderror" name="breed" aria-label="Breed">
+                                                        <option selected disabled>Select</option>
+                                                        @foreach($breedsSelectedSpecie as $breed)
+                                                            <option {{ $breed->id == $patientInfo->breed ? 'selected' : '' }}
+                                                                    data-breed-image="{{ $breed->getBreedImage($patientInfo->specieTypeInfo?->name ?? null) }}"
+                                                                    value="{{ Crypt::encrypt($breed->id ?? 0) }}">{{ $breed->name ?? '' }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <div id="breedOption-loader"
+                                                         class="spinner-border text-green-700 d-none overflow-hidden" role="status"
+                                                         style="height: 21px !important;width: 22px !important;margin-left: 5px;font-size: 15px;margin-top: 8px;color: #a2a6b8;">
+                                                        <span class="sr-only">Loading...</span>
+                                                    </div>
+                                                    @error('breed')
+                                                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Weight</label>
+                                                    <div class="input-group input-group-outline mb-3">
+                                                        <input type="number" class="form-control w-100 @error('weight') is-invalid @enderror" name="weight"
+                                                               value="{{ $patientInfo->weight ?? 0 }}"
+                                                               placeholder="Enter weight"
+                                                               aria-describedby="weight" onfocus="focused(this)"
+                                                               onfocusout="defocused(this)">
+                                                        @error('weight')
+                                                        <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex mt-4" style="justify-content:end; align-items: center;">
+                                                <button type="button" class="btn btn-primary btn-sm py-2 text-white mb-2 patient-info-save"
+                                                        style=" font-family: 'Poppins', sans-serif !important" data-action-url="{{ route('practitioner.patient.info.update') }}">
+                                                    <i class="fa fa-plus me-2 mx-1" style=" font-size: 10px; !important;" aria-hidden="true"></i>
+                                                    <span>Update</span>
+                                                    <div id="updatePatientInfo-loader" class="spinner-border text-green-700 d-none overflow-hidden" role="status"
+                                                         style="height: 17px !important;width: 17px !important;margin-left: 5px;font-size: 16px;margin-top: 0px;color: #ffffff;">
+                                                        <span class="sr-only">Loading...</span>
+                                                    </div>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="modal fade" id="Notes" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
              aria-hidden="true">
             <div class="modal-dialog modal- modal-dialog-centered modal-lg " role="document">
@@ -264,6 +437,95 @@
             });
         }
 
+        $(document).on('change', '.specie-type', function (e) {
+            e.preventDefault();
+
+            let actionType = 'get';
+            let loaderId = 'breedOption-loader';
+            let selectedOption = $(this).find("option:selected");
+            let specieOptionId = selectedOption.val();
+            let specieImage = selectedOption.attr('data-specie-image');
+            let actionURL = "{{ route('practitioner.breed.options', ':id') }}";
+            actionURL = actionURL.replace(':id', specieOptionId);
+            let processData = {
+                "_token": "{{ csrf_token() }}",
+            };
+            let renderClass = 'breed-options';
+
+            getInfo(actionURL, actionType, processData, loaderId, renderClass); //Ajax Call
+
+            if (specieImage) {
+                /*$(`#breedImage-loader`).removeClass('d-none');
+                $(`.breed-type-image`).addClass('d-none');*/
+
+                setTimeout(function () {
+                    /*$(`#breedImage-loader`).addClass('d-none');
+                    $(`.breed-type-image`).removeClass('d-none');*/
+                    $(`.breed-type-image`).attr('src', specieImage);
+                }, 500);
+            }
+        });
+
+        $(document).on('change', '.breed-options', function (e) {
+            e.preventDefault();
+
+            let selectedOption = $(this).find('option:selected');
+            let breedImage = selectedOption.attr('data-breed-image');
+
+            let loaderId = 'breedImage-loader';
+            let breedTypeImageClass = 'breed-type-image';
+
+            if (breedImage) {
+                $(`#${loaderId}`).removeClass('d-none');
+                $(`.${breedTypeImageClass}`).addClass('d-none');
+
+                setTimeout(function () {
+                    $.notify({
+                        title: 'Success!',
+                        message: '<br>Breed type image loaded successfully.',
+                        icon: 'fa fa-check',
+                    }, {
+                        // settings
+                        type: 'success',
+                        z_index: 2000,
+                        animate: {
+                            enter: 'animated bounceInDown',
+                            exit: 'animated bounceOutUp'
+                        }
+                    });
+
+                    $(`#${loaderId}`).addClass('d-none');
+                    $(`.${breedTypeImageClass}`).removeClass('d-none');
+                    $(`.${breedTypeImageClass}`).attr('src', breedImage);
+                }, 500);
+            } else {
+                $.notify({
+                    title: 'Error!',
+                    message: '<br>Breed type image not found.',
+                    icon: 'fa fa-exclamation-triangle',
+                }, {
+                    type: 'danger',
+                    z_index: 2000,
+                    animate: {
+                        enter: 'animated bounceInDown',
+                        exit: 'animated bounceOutUp'
+                    }
+                });
+            }
+        });
+
+        $(document).on('click', '.patient-info-save', function (e) {
+            let actionType = 'post';
+            let loaderId = 'updatePatientInfo-loader';
+            let actionURL = $(this).attr('data-action-url');
+            let formId = 'patientInfoUpdateForm';
+            let processData = $(`#${formId}`).serialize();
+            let renderClass = null;
+            let closeModalId = 'editPatientModal';
+
+            saveInfo(actionURL, actionType, processData, loaderId, formId, renderClass, closeModalId);
+        });
+
         $(document).on('change', '.toggle-weight-switch', function () {
             let weight = $(this).attr('data-weight');
             let currentValue = parseFloat(weight);
@@ -273,12 +535,12 @@
 
 
             if ($(this).is(':checked')) {
-                let newValue = Math.round(currentValue / 2.20462);
+                let newValue = Math.round((currentValue / 2.20462) * 100) / 100;
                 $('.toggle-weight').text(newValue);
                 $(this).attr('data-weight', newValue);
                 $('.toggle-weight-label').text('kgs');
             } else {
-                let newValue = Math.round(currentValue * 2.20462);
+                let newValue = Math.round((currentValue * 2.20462) * 100) / 100;
                 $('.toggle-weight').text(newValue);
                 $(this).attr('data-weight', newValue);
                 $('.toggle-weight-label').text('lbs');

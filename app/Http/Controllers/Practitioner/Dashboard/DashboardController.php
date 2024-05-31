@@ -55,7 +55,6 @@ class DashboardController extends Controller
         }
     }
 
-
     public function patientInfoSave(Request $request)
     {
         $request->validate([
@@ -114,6 +113,57 @@ class DashboardController extends Controller
             Log::info('The system is unable to add the new patient. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
 
             return redirect()->back()->with($response);
+        }
+    }
+
+    public function patientInfoUpdate(Request $request)
+    {
+        $request->validate([
+            'patient_name' => ['required', 'string', 'max:255'],
+            'owner_name' => ['required', 'string', 'max:255'],
+            'dob' => ['required', 'string', 'max:255'],
+            'sex' => ['required', 'string', 'max:255'],
+            'specie_type' => ['required'],
+            'weight_type' => ['required'],
+            'breed' => ['required'],
+            'weight' => ['required', 'string', 'max:255'],
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            $patient_id = Crypt::decrypt($request->patient_id);
+            $patient_name = $request->patient_name;
+            $owner_name = $request->owner_name;
+            $dob = $request->dob;
+            $sex = Crypt::decrypt($request->sex);
+            $specie_type = Crypt::decrypt($request->specie_type);
+            $breed = Crypt::decrypt($request->breed);
+            $weight_type = Crypt::decrypt($request->weight_type);
+            $weight = $request->weight;
+
+            $patientInfo = Patient::find($patient_id);
+            $patientInfo->patient_name = $patient_name;
+            $patientInfo->owner_name = $owner_name;
+            $patientInfo->dob = $dob;
+            $patientInfo->sex = $sex;
+            $patientInfo->specie_type = $specie_type;
+            $patientInfo->weight_type = $weight_type;
+            $patientInfo->breed = $breed;
+            $patientInfo->weight = $weight;
+            $patientInfo->save();
+
+            $response = ResponseMessage::ResponseNotifySuccess('Success!', 'Patient information updated successfully.');
+            $response['redirect_url'] = route('practitioner.patient.detail', $request->patient_id);
+            Log::info('Successfully update the patient information', ['updated' => 'success' ?? '']);
+            DB::commit();
+           return response()->json($response);
+        } catch (Exception $e) {
+            DB::rollBack();
+            $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to update the patient information. Please try again later.');
+            Log::info('The system is unable to update the patient informationD. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
+
+            return response()->json($response);
         }
     }
 
