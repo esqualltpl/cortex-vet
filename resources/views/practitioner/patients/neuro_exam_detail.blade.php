@@ -123,7 +123,8 @@
 
                 @php($neurologicalExamSteps = json_decode($neuroExamInfo->neurological_exam_steps, true) ?? [])
                 @foreach($examsInfo as $examInfo)
-                    <div class="accordion mt-2">
+                    @if(isset($neurologicalExamSteps[$examInfo->id ?? 0]))
+                        <div class="accordion mt-2">
                         <div class="accordion-item">
                             <p class="accordion-header" id="localizationExamFormData{{ $examInfo->id ?? 0 }}">
                                 <button class="accordion-button py-3 px-2 border-bottom font-weight-bold" type="button" data-bs-toggle="collapse"
@@ -230,6 +231,7 @@
                                 </div>
                             </div>
                         </div>
+                        @endif
                 @endforeach
                 <hr class="horizontal dark my-4"/>
                 <div class="row">
