@@ -46,7 +46,7 @@
                                     <p class="mb-0 text-start  font-weight-400 mt-3">237</p>
                                 </div>
                                 <div class="mb-0">
-                                    <img src="{{ asset('portal/assets/img/Consultation Request.png') }}" style="width: 90px;" />
+                                    <img src="{{ asset('portal/assets/img/Consultation Request.png') }}" style="width: 90px;"/>
                                 </div>
                             </div>
 
@@ -60,7 +60,7 @@
                                     <p class="mb-0 text-start  font-weight-400 mt-3">237</p>
                                 </div>
                                 <div class="mb-0">
-                                    <img src="{{ asset('portal/assets/img/Total Payment.png') }}" style="width: 90px;" />
+                                    <img src="{{ asset('portal/assets/img/Total Payment.png') }}" style="width: 90px;"/>
                                 </div>
                             </div>
 
@@ -74,7 +74,7 @@
                                     <p class="mb-0 text-start  font-weight-400 mt-3">237</p>
                                 </div>
                                 <div class="mb-0">
-                                    <img src="{{ asset('portal/assets/img/Patients Count.png') }}" style="width: 90px;" />
+                                    <img src="{{ asset('portal/assets/img/Patients Count.png') }}" style="width: 90px;"/>
                                 </div>
                             </div>
                         </div>
@@ -82,20 +82,39 @@
                 </div>
             </div>
         </div>
+
         <div class="row">
             <div class="col-md-12">
-                <div class="card  mb-2">
-                    <div class=" mb-0 d-flex justify-content-between p-2  bg-transparent">
+                <div class="card mb-2">
+                    <div class=" mb-0 d-flex justify-content-between p-2 bg-transparent">
                         <div class="pt-1">
-                            <h5 class="mb-0 text-capitalize font-weight-800 mx-2">Resources</h5>
-                            <p class="mb-0 text-start font-weight-400 mt-1 mx-2">Lorem Ipsum Dolor - Sit Amet (consecrate)</p>
+                            <h6 class="mb-0 text-capitalize font-weight-800 px-2">Resources</h6>
+                            <p class="mb-0 text-start font-weight-400 mt-1 px-2">Lorem Ipsum Dolor - Sit Amet (consecrate)</p>
                         </div>
                     </div>
-                    <div class="p-2 mb-4 d-flex justify-content-center">
-                        <video controls style="width: 60%" class="w-100 w-md-55">
-                            <source src="{{ asset('portal/assets/img/vet sample video.mp4') }}" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
+                    <div class="row">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8">
+                            <div class="p-3">
+                                @if($resourceInfo != null)
+                                    @if($resourceInfo['type'] == 'video')
+                                        <video controls="" style="width: 100%">
+                                            <source src="{{ $resourceInfo['video'] ?? '' }}">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    @elseif($resourceInfo['type'] == 'url')
+                                        <iframe width="100%" height="415" src="{{ $resourceInfo['video'] ?? '' }}" frameborder="0"
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                allowfullscreen></iframe>
+                                    @else
+                                        <p class="text-center mt-3 font-weight-bold">No Resource Found.</p>
+                                    @endif
+                                @else
+                                    <p class="text-center mt-3 font-weight-bold">No Resource Found.</p>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="col-md-2"></div>
                     </div>
                 </div>
             </div>
