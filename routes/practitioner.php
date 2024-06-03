@@ -30,6 +30,7 @@ Route::group(['prefix' => 'practitioner', 'middleware' => ['practitioner']], fun
         Route::post('patient/id/info', [NeuroAssessmentController::class, 'patientIdInfo'])->name('practitioner.neuro.assessment.patient.id.info');
         Route::get('exam/{id}', [NeuroAssessmentController::class, 'neuroExam'])->name('practitioner.neuro.assessment.exam');
         Route::get('exam/{id}/result', [NeuroAssessmentController::class, 'neuroExamResult'])->name('practitioner.neuro.assessment.exam.result');
+        Route::post('consult/neurologist/{id}', [NeuroAssessmentController::class, 'consultNeurologistRequest'])->name('practitioner.neuro.assessment.consult.neurologist.request');
         Route::post('treated/{id}', [NeuroAssessmentController::class, 'treatedInfoSave'])->name('practitioner.neuro.assessment.treated');
     });
 

@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Practitioner\NeuroAssessment;
 
 use App\Helpers\ResponseMessage;
 use App\Http\Controllers\Controller;
+use App\Models\ConsultationRequest;
 use App\Models\Exam;
 use App\Models\NeuroAssessment;
 use App\Models\Patient;
 use App\Models\ResultDetail;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
@@ -108,6 +110,51 @@ class NeuroAssessmentController extends Controller
         } catch (Exception $e) {
             $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to retrieve the results. Please try again later.');
             Log::info('The system is unable to retrieve the results. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
+            return response()->json($response);
+        }
+    }
+
+    public function consultNeurologistRequest(Request $request, $id)
+    {
+        try {
+            DB::beginTransaction();
+            $patient_id = Crypt::decrypt($id);
+            $medical_history = $request->medical_history ?? null;
+            $vaccination_history = $request->vaccination_history ?? null;
+            $diet_feeding_routine = $request->diet_feeding_routine ?? null;
+            $current_therapy_response = $request->current_therapy_response ?? null;
+            $patients_environment = $request->patients_environment ?? null;
+            $options = $request->options ?? [];
+            $result = $request->result ?? null;
+
+            $treatedInfo = new NeuroAssessment;
+            $treatedInfo->patient_id = $patient_id;
+            $treatedInfo->medical_history = $medical_history;
+            $treatedInfo->vaccination_history = $vaccination_history;
+            $treatedInfo->diet_feeding_routine = $diet_feeding_routine;
+            $treatedInfo->current_therapy_response = $current_therapy_response;
+            $treatedInfo->patients_environment = $patients_environment;
+            $treatedInfo->neurological_exam_steps = json_encode($options);
+            $treatedInfo->result = $result;
+            $treatedInfo->status = 'Consult Neurologist';
+            $treatedInfo->save();
+
+            $consultationRequest = new ConsultationRequest;
+            $consultationRequest->neuro_assessment_id = $treatedInfo->id ?? null;
+            $consultationRequest->request_date_time = Carbon::now();
+            $consultationRequest->save();
+
+            $response = ResponseMessage::ResponseNotifySuccess('Success!', 'Successfully send the consult neurologist request.');
+            $response['redirect_url'] = route('practitioner.neuro.assessment.exam', $id);
+            Log::info('Successfully send the consult neurologist request', ['result' => 'success' ?? '']);
+            DB::commit();
+
+            return response()->json($response);
+        } catch (Exception $e) {
+            DB::rollBack();
+            $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to send the consult neurologist request. Please try again later.');
+            Log::info('The system is unable to send the consult neurologist request. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
+
             return response()->json($response);
         }
     }

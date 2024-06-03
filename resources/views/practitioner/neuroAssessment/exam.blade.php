@@ -447,7 +447,9 @@
                                         </div>
                                     </div>
                                     <div class="button-row d-flex justify-content-end gap-2 mt-4">
-                                        <button class="btn btn-primary text-white px-3" type="button" title="Consult Neurologist">
+                                        <button class="btn btn-primary text-white px-3 request-consult-neurologist-data"
+                                                data-action-url="{{ route('practitioner.neuro.assessment.consult.neurologist.request', request()->id) }}"
+                                                type="button" title="Consult Neurologist">
                                             <i class="fas fa-user-md me-2 mx-1" style=" font-size: 14px; !important;" aria-hidden="true"></i>
                                             Consult Neurologist
                                         </button>
@@ -457,6 +459,40 @@
                             </div>
                         </div>
                     </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="consultNeurologistRequestModal" data-bs-backdrop="static" data-bs-keyboard="false"
+             tabindex="-1" role="dialog" aria-labelledby="consultNeurologistRequestModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered " role="document" style="">
+                <div class="modal-content ">
+                    <div class=" modal-header" style="background-color: #FD4F4E;border-bottom: none;">
+                        <button type="button" class="btn-close text-dark float-end" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" style="background-color: #FD4F4E;">
+                        <div class="d-flex justify-content-center">
+                            <img src="{{ asset('portal/assets/img/Sad Emoji.png') }}" alt="icon"/>
+                        </div>
+                        <div class="text-center  m-3 p-3">
+                            <p class="text-white">Are you sure to want to send <span class="text-bold">Consult Neurologist</span> request</p>
+                        </div>
+                    </div>
+                    <div class="conformation">
+                        <div class="my-3">
+                            <a href="javascript:">
+                                <p class="justify-content-center font-weight-bold text-info consult-neurologist-request d-flex">
+                                    <span>
+                                        Continue
+                                    </span>
+                                    <span id="consultNeurologistRequest-loader" class="spinner-border overflow-hidden d-none" role="status"
+                                          style="height: 15px !important;width: 15px !important;margin: 5px !important;">
+                                        <span class="sr-only">Loading...</span>
+                                    </span>
+                                </p>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -500,6 +536,23 @@
             let renderClass = 'neuro-exam-result';
 
             getInfo(actionURL, actionType, processData, loaderId, renderClass);
+        });
+
+        $(document).on('click', '.request-consult-neurologist-data', function (e) {
+            let actionURL = $(this).attr('data-action-url');
+
+            $('.consult-neurologist-request').attr('data-action-url', actionURL);
+            $('#consultNeurologistRequestModal').modal('show');
+        });
+
+        $(document).on('click', '.consult-neurologist-request', function (e) {
+            let actionType = 'post';
+            let loaderId = 'consultNeurologistRequest-loader';
+            let closedModalId = 'consultNeurologistRequestModal';
+            let actionURL = $(this).attr('data-action-url');
+            let processData = $('.neuro-exam-form').serialize();
+
+            saveInfo(actionURL, actionType, processData, loaderId, null, null, closedModalId);
         });
 
         function addDifferential() {
