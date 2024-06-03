@@ -30,6 +30,15 @@ Route::group(['prefix' => 'neurologist', 'middleware' => ['neurologist']], funct
     //Settings
     Route::prefix('settings')->group(function () {
         Route::get('/', [SettingsController::class, 'index'])->name('neurologist.settings');
+
+        //Profile Information
+        Route::prefix('profile')->group(function () {
+            Route::post('update', [SettingsController::class, 'updateProfile'])->name('neurologist.setting.update.profile');
+            Route::post('image/update', [SettingsController::class, 'updateProfileImage'])->name('neurologist.setting.update.profile.image');
+        });
+
+        //Update Password
+        Route::post('/change/password', [SettingsController::class, 'changeProfilePassword'])->name('neurologist.setting.change.profile.password');
     });
 });
 

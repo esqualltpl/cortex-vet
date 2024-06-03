@@ -24,4 +24,5 @@
     }
 </script>
 <script src="{{ asset('portal/assets/js/material-dashboard.min.js?v=3.0.5') }}"></script>
+<script src="{{ asset('portal/assets/js/functions.js') }}"></script>
 @yield('script')

@@ -9,5 +9,6 @@
         @include('neurologist.layout.footer')
     </main>
     @include('neurologist.layout.script')
+    @include('practitioner.layout.toasterMessage')
 </body>
 </html>

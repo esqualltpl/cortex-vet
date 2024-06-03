@@ -1,4 +1,4 @@
-<nav class="navbar navbar-main navbar-expand-lg position-sticky mt-4 top-1 px-0 mx-1 shadow-none border-radius-xl z-index-sticky"
+<nav class="navbar navbar-main navbar-expand-lg mt-4 top-1 px-0 mx-1 shadow-none border-radius-xl z-index-sticky"
      data-scroll="true">
     <div class="container-fluid py-1 px-3">
         @yield('breadcrumb')
@@ -100,8 +100,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="javascript:" class="nav-link text-body p-0 position-relative" target="_blank">
-                        <img alt="profile image" src="{{ auth()->user()?->getUserPic() ?? '' }}" class="avatar" width="40px">
+                    <a href="{{ route('neurologist.settings') }}" class="nav-link text-body p-0 position-relative" {{--target="_blank"--}}>
+                        <img alt="profile image" src="{{ auth()->user()?->getUserPic() ?? '' }}" class="avatar profile-image-show" width="40px">
                     </a>
                 </li>
             </ul>
