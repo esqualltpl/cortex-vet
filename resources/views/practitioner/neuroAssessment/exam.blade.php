@@ -22,7 +22,7 @@
     <style>
         .accordion-item {
             border: 1px solid #e8e8e8 !important;
-            border-radius: 10px;
+            border-radius: 10px !important;
             opacity: 1;
         }
     </style>
@@ -196,7 +196,7 @@
                             <div class="multisteps-form__panel pt-3 border-radius-xl bg-white js-active"
                                  data-animation="FadeIn">
                                 <div class="multisteps-form__content p-3">
-                                    <div class="row mt-3">
+                                    <div class="row mt-0">
                                         <div class="col-md-12">
                                             <p>Completing the history section is not required to utilize the localization tool but is recommended if you intend to submit a consultation.</p>
                                         </div>
@@ -410,8 +410,8 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                            @endforeach
                                         </div>
-                                        @endforeach
                                         <div class="button-row d-flex justify-content-end gap-3 mt-4">
                                             <!-- <button class="btn bg-gradient-primary mb-0 js-btn-next" type="button"
                                                 title="Back">Back</button> -->

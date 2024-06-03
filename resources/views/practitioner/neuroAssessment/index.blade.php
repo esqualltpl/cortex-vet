@@ -45,7 +45,7 @@
                             </div>
                         </div>
                         <div class="pe-7 pt-3 pb-4">
-                            <button type="submit" class="btn btn-primary float-end btn-lg text-white ">
+                            <button type="submit" class="btn btn-primary float-end btn-md text-white ">
                                 Next
                             </button>
                         </div>

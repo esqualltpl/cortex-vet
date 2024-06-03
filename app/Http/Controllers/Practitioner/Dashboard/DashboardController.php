@@ -24,7 +24,11 @@ class DashboardController extends Controller
         $videoInfo = Resource::where('added_by', $superAdmin->id ?? null)->first();
         $resourceInfo = $videoInfo != null ? $videoInfo->getResourceInfo() : null;
 
-        return view('practitioner.dashboard.index', compact('resourceInfo'));
+        $caninePatients = Patient::where('specie_type', '1')->count() ?? 0;
+        $felinePatients = Patient::where('specie_type', '2')->count() ?? 0;
+        $exoticPatients = Patient::where('specie_type', '3')->orWhere('specie_type', '3')->count() ?? 0;
+
+        return view('practitioner.dashboard.index', compact('resourceInfo', 'caninePatients', 'felinePatients', 'exoticPatients'));
     }
 
     public function patient(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application

@@ -177,53 +177,47 @@
                         <th>Actions</th>
                     </tr>
                     </thead>
-                    {{--<tbody>
-                    <tr>
-                        <td class="text-sm ">
-                            1-01-2024, 11:10 Am
-                        </td>
-                        <td class="text-sm "><img src="{{ asset('portal/assets/img/Image 1.png') }}" alt="icon" class="avatar" /> Ryan Holland
-                        </td>
-                        <td class="text-sm "><img src="{{ asset('portal/assets/img/Image 2.png') }}" alt="icon" class="avatar" /> Ryan Holland
-                        </td>
-
-                        <td class="text-sm ">
-                            <a href="{{ route('practitioner.patient.neuro.exam', 1) }}" class="text-info text-decoration-underline">   Neuro Exam 1</a>
-                        </td>
-                        <td class="">
-                            <div class="input-group input-group-outline w-50" data-bs-toggle="modal"
-                                 data-bs-target="#Notes">
-                                <input type="text" class="form-control" placeholder="lorem Ipsum">
-                            </div>
-                        </td>
-                        <td class="">
-                            <a href="{{ route('practitioner.patient.neuro.exam', 1) }}"><i class="material-symbols-outlined">
-                                    note_alt
-                                </i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="text-sm ">
-                            1-01-2024, 11:10 Am
-                        </td>
-                        <td class="text-sm "><img src="{{ asset('portal/assets/img/Image 1.png') }}" alt="icon" class="avatar" /> Ryan Holland
-                        </td>
-                        <td class="text-sm "><img src="{{ asset('portal/assets/img/Image 2.png') }}" alt="icon" class="avatar" /> Ryan Holland
-                        </td>
-
-                        <td class="text-sm ">
-                            <a href="{{ route('practitioner.patient.neuro.exam', 1) }}" class="text-info text-decoration-underline">   Neuro Exam 1</a>
-                        </td>
-                        <td class="">
-                            <i class="fa fa-sticky-note-o" aria-hidden="true"></i>
-                        </td>
-                        <td class="">
-                            <a href="{{ route('practitioner.patient.neuro.exam', 1) }}"><i class="material-symbols-outlined">
-                                    note_alt
-                                </i></a>
-                        </td>
-                    </tr>
-                    </tbody>--}}
+                    <tbody>
+                    @php($sn = 0)
+                    @foreach($appointmentsHistory as $appointmentHistory)
+                        @php($sn = $sn+1)
+                        <tr>
+                            <td class="text-sm ">
+                                {{ $appointmentHistory->created_at }}
+                            </td>
+                            <td class="text-sm">
+                                @if($appointmentHistory->treatedByInfo != null)
+                                    <img src="{{ $appointmentHistory->treatedByInfo->getUserPic() ?? '-' }}" alt="icon" class="avatar"/>
+                                    {{ $appointmentHistory->treatedByInfo?->name ?? '' }}
+                                @else
+                                    <p class="text-center">-</p>
+                                @endif
+                            </td>
+                            <td class="text-sm">
+                                @if($appointmentHistory->consultByInfo != null)
+                                    <img src="{{ $appointmentHistory->consultByInfo->getUserPic() ?? '-' }}" alt="icon" class="avatar"/>
+                                    {{ $appointmentHistory->consultByInfo?->name ?? '' }}
+                                @else
+                                    <p class="text-center">-</p>
+                                @endif
+                            </td>
+                            <td class="text-sm ">
+                                <a href="{{ route('practitioner.patient.neuro.exam.detail', ['id' => Crypt::encrypt($appointmentHistory->id), 'no'=> Crypt::encrypt($sn)]) }}" class="text-info text-decoration-underline"> Neuro Exam {{ $sn }}</a>
+                            </td>
+                            <td class="">
+                                <div class="input-group input-group-outline w-50" data-bs-toggle="modal"
+                                     data-bs-target="#Notes">
+                                    <input type="text" class="form-control" placeholder="lorem Ipsum">
+                                </div>
+                            </td>
+                            <td class="">
+                                <a href="#"><i class="material-symbols-outlined">
+                                        note_alt
+                                    </i></a>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -243,7 +237,9 @@
                                     <div id="breedImage-loader" class="text-center d-none" style="margin-top: 135px !important;">
                                         <img src="{{ asset('portal/assets/img/loader.gif') }}" width="120px" alt="loader"/>
                                     </div>
-                                    <img class="breed-type-image" src="{{ $patientInfo->breedInfo?->getBreedImage($patientInfo->specieTypeInfo?->name ?? null) ?? asset('portal/assets/img/breeds/no-breed-type-selected.jpg') }}" alt="icon"
+                                    <img class="breed-type-image"
+                                         src="{{ $patientInfo->breedInfo?->getBreedImage($patientInfo->specieTypeInfo?->name ?? null) ?? asset('portal/assets/img/breeds/no-breed-type-selected.jpg') }}"
+                                         alt="icon"
                                          style="margin-top: 78px;width: 175px;border-radius: 16px;">
                                 </div>
                                 <div class="col-md-9">

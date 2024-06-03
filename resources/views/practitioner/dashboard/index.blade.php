@@ -32,7 +32,7 @@
                             <div class=" mb-0 d-flex justify-content-between p-2 bg-transparent">
                                 <div class="text-end pt-1">
                                     <h6 class="mb-0 text-capitalize font-weight-800">Canine Patients</h6>
-                                    <p class="mb-0 text-start font-weight-400 mt-3">237</p>
+                                    <p class="mb-0 text-start font-weight-400 mt-3">{{ $caninePatients ?? 0 }}</p>
                                 </div>
                                 <div class="mb-0"><img alt="icon" src="{{ asset('portal/assets/img/Canine Patients.png') }}" style="width: 90px;"/></div>
                             </div>
@@ -44,7 +44,7 @@
                             <div class=" mb-0 d-flex justify-content-between p-2 bg-transparent">
                                 <div class="text-end pt-1">
                                     <h6 class="mb-0 text-capitalize font-weight-800">Feline Patients</h6>
-                                    <p class="mb-0 text-start font-weight-400 mt-3">237</p>
+                                    <p class="mb-0 text-start font-weight-400 mt-3">{{ $felinePatients ?? 0 }}</p>
                                 </div>
                                 <div class="mb-0"><img alt="icon" src="{{ asset('portal/assets/img/Feline Patients.png') }}" style="width: 90px;"/></div>
                             </div>
@@ -56,7 +56,7 @@
                             <div class=" mb-0 d-flex justify-content-between p-2 bg-transparent">
                                 <div class="text-end pt-1">
                                     <h6 class="mb-0 text-capitalize font-weight-800">Exotic Patients</h6>
-                                    <p class="mb-0 text-start font-weight-400 mt-3">237</p>
+                                    <p class="mb-0 text-start font-weight-400 mt-3">{{ $exoticPatients ?? 0 }}</p>
                                 </div>
                                 <div class="mb-0"><img alt="icon" src="{{ asset('portal/assets/img/Exotic Patients.png') }}" style="width: 90px;"/></div>
                             </div>

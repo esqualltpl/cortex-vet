@@ -101,7 +101,7 @@ class NeuroAssessmentController extends Controller
             }
 
             $response = ResponseMessage::ResponseNotifySuccess('Success!', 'Successfully get the neuro exam result info.');
-            $response['rendered_info'] = implode('; ', $output);
+            $response['rendered_info'] = implode(', ', $output);
             Log::info('Successfully get the neuro exam result info', ['result' => 'success' ?? '']);
             return response()->json($response);
 
@@ -135,6 +135,7 @@ class NeuroAssessmentController extends Controller
             $treatedInfo->patients_environment = $patients_environment;
             $treatedInfo->neurological_exam_steps = json_encode($options);
             $treatedInfo->result = $result;
+            $treatedInfo->treated_by = auth()->user()->id;
             $treatedInfo->status = 'Treated';
             $treatedInfo->save();
 

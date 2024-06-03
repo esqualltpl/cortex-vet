@@ -23,6 +23,8 @@ return new class extends Migration
             $table->text('notes')->nullable();
             $table->unsignedBigInteger('note_added_by')->nullable();
             $table->text('result')->nullable();
+            $table->unsignedBigInteger('consult_by')->nullable();
+            $table->unsignedBigInteger('treated_by')->nullable();
             $table->enum('status', ['Consult Neurologist', 'Treated'])->nullable();
             $table->timestamps();
             $table->softDeletes();

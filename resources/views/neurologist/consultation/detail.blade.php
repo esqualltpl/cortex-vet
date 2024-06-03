@@ -22,7 +22,7 @@
     <style>
         .accordion-item {
             border: 1px solid #e8e8e8 !important;
-            border-radius: 10px;
+            border-radius: 10px !important;
             opacity: 1;
         }
     </style>
