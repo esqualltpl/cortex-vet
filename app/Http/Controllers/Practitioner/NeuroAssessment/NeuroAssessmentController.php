@@ -137,6 +137,7 @@ class NeuroAssessmentController extends Controller
             $treatedInfo->neurological_exam_steps = json_encode($options);
             $treatedInfo->result = $result;
             $treatedInfo->status = 'Consult Neurologist';
+            $treatedInfo->added_by = auth()->user()->id;
             $treatedInfo->save();
 
             $consultationRequest = new ConsultationRequest;
@@ -184,6 +185,7 @@ class NeuroAssessmentController extends Controller
             $treatedInfo->result = $result;
             $treatedInfo->treated_by = auth()->user()->id;
             $treatedInfo->status = 'Treated';
+            $treatedInfo->added_by = auth()->user()->id;
             $treatedInfo->save();
 
             $response = ResponseMessage::ResponseNotifySuccess('Success!', 'Successfully save the neuro assessment treated information.');

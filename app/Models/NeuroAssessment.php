@@ -13,6 +13,11 @@ class NeuroAssessment extends Model
 {
     use HasFactory, SoftDeletes;
 
+    public function addedByInfo(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(User::class, 'added_by');
+    }
+
     public function patientInfo(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Patient::class, 'patient_id');

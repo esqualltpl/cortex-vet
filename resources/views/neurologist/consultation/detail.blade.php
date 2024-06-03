@@ -29,28 +29,28 @@
 @endsection
 
 @section('content')
-    <div class="container-fluid py-4 ">
+    <div class="container-fluid py-2">
         <div class="row">
             <div class="col-md-12">
                 <div class="card p-4 mt-3">
                     <div class="row p-2" style="border: 1px solid #00000040; border-radius: 10px;">
                         <div class="col-md-1 mt-3">
                             <img src="{{ asset('portal/assets/img/Consultation Request img.png') }}" alt="icon"
-                                 class="w-100 pt-1" style="border-radius: 100px;" />
+                                 class="w-100 pt-2" style="border-radius: 100px;" />
                         </div>
                         <div class="col-lg-8 col-sm-5 mt-3 d-fle flex-wrap ">
 
                             <div class="d-block d-md-flex gap-5">
                                 <p class="font-weight-bold text-dark w-lg-20">Requested By:</p>
-                                <p class="font-weight-normal text-dark opacity-8">Dr Henry</p>
+                                <p class="font-weight-normal text-dark opacity-8">{{ $consultationRequest->neuroAssessmentInfo?->addedByInfo?->name ?? '' }}</p>
                             </div>
                             <div class="d-block d-md-flex gap-5">
                                 <p class="font-weight-bold text-dark w-lg-20">Requested Time:</p>
-                                <p class="font-weight-normal text-dark opacity-8">11:23 am</p>
+                                <p class="font-weight-normal text-dark opacity-8">{{ $consultationRequest->request_date_time ?? '' }}</p>
                             </div>
                         </div>
                         <div class="col-md-2 ms-auto my-4">
-                            <button class="btn btn-primary btn-md text-white mb-2" type="button" title="Accept">Accept</button>
+                            <button class="btn btn-primary btn-md text-white mt-2" type="button" title="Accept">Accept</button>
                         </div>
                     </div>
                 </div>
@@ -60,24 +60,24 @@
             <div class="col-md-12">
                 <div class="card p-3 mt-3">
                     <div class="col-md-12 d-flex justify-content-between">
-                        <h5>Neuro Exam</h5>
-                        <p>Patient created on: <span style="color: #5534A5;">12-01-2023</span></p>
+                        <h6>Neuro Exam</h6>
+                        <p>Patient created on: <span style="color: #5534A5;">{{ $consultationRequest->neuroAssessmentInfo?->patientInfo?->created_at ?? '0000-00-00 00:00' }}</span></p>
                     </div>
                     <div class="row">
-                        <h5>Patient Detail</h5>
-                        <div class="col-md-10 mt-3 d-flex flex-wrap justify-content-between">
+                        <div class="d-flex">
+                            <h6>Patient Detail</h6>
+                        </div>
+                        <div class="col-md-9 mt-3 d-flex flex-wrap justify-content-between">
                             <div class="container p-0">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="container p-0">
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                    <p class="font-weight-bold text-dark mb-0">Patient ID
-                                                    </p>
+                                                    <p class="font-weight-bold text-dark mb-0">Patient ID</p>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <p class="font-weight-normal text-dark opacity-8">PID-001
-                                                    </p>
+                                                    <p class="font-weight-normal text-dark opacity-8">{{ $consultationRequest->neuroAssessmentInfo?->patientInfo?->patient_id ?? '' }}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -86,12 +86,10 @@
                                         <div class="container p-0">
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                    <p class="font-weight-bold text-dark mb-0">Owner Name
-                                                    </p>
+                                                    <p class="font-weight-bold text-dark mb-0">Owner Name</p>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <p class="font-weight-normal text-dark opacity-8">
-                                                        Johan Thomos</p>
+                                                    <p class="font-weight-normal text-dark opacity-8">{{ $consultationRequest->neuroAssessmentInfo?->patientInfo?->owner_name ?? '' }}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -102,12 +100,10 @@
                                         <div class="container p-0">
                                             <div class="row">
                                                 <div class="col-md-6 col-sm-6">
-                                                    <p class="font-weight-bold text-dark mb-0">Patient Name
-                                                    </p>
+                                                    <p class="font-weight-bold text-dark mb-0">Patient Name</p>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6">
-                                                    <p class="font-weight-normal text-dark opacity-8">Orea
-                                                    </p>
+                                                    <p class="font-weight-normal text-dark opacity-8">{{ $consultationRequest->neuroAssessmentInfo?->patientInfo?->patient_name ?? '' }}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -116,12 +112,10 @@
                                         <div class="container p-0">
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                    <p class="font-weight-bold text-dark mb-0">Age/DOB
-                                                    </p>
+                                                    <p class="font-weight-bold text-dark mb-0">Age/DOB</p>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <p class="font-weight-normal text-dark opacity-8">
-                                                        12-01-2023</p>
+                                                    <p class="font-weight-normal text-dark opacity-8">{{ $consultationRequest->neuroAssessmentInfo?->patientInfo?->dob ?? '' }}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -132,12 +126,10 @@
                                         <div class="container p-0">
                                             <div class="row">
                                                 <div class="col-md-6 col-sm-6">
-                                                    <p class="font-weight-bold text-dark mb-0">Sex
-                                                    </p>
+                                                    <p class="font-weight-bold text-dark mb-0">Sex</p>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6">
-                                                    <p class="font-weight-normal text-dark opacity-8">Female Intact
-                                                    </p>
+                                                    <p class="font-weight-normal text-dark opacity-8">{{ $consultationRequest->neuroAssessmentInfo?->patientInfo?->sex ?? '' }}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -146,12 +138,10 @@
                                         <div class="container p-0">
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                    <p class="font-weight-bold text-dark mb-0">Breed
-                                                    </p>
+                                                    <p class="font-weight-bold text-dark mb-0">Breed</p>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <p class="font-weight-normal text-dark opacity-8">
-                                                        German Shepherd</p>
+                                                    <p class="font-weight-normal text-dark opacity-8">{{ $consultationRequest->neuroAssessmentInfo?->patientInfo?->breedInfo?->name ?? '' }}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -163,15 +153,22 @@
                                             <div class="row">
                                                 <div class="col-md-6 col-sm-6">
                                                     <div class="d-flex">
-                                                        <p class="font-weight-bold   text-dark mb-0">Weight </p>
-                                                        <div class="form-check form-switch ms-2 ">
-                                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault23"
-                                                                   checked onchange="visible()">
+                                                        <p class="font-weight-bold text-dark mb-0">Weight</p>
+                                                        <div class="form-check form-switch ms-2 mt-1 mx-1">
+                                                            <input class="form-check-input toggle-weight-switch" data-weight="{{ $consultationRequest->neuroAssessmentInfo?->patientInfo?->weight ?? '' }}" type="checkbox"
+                                                                   id="weightSwitch" {{ $consultationRequest->neuroAssessmentInfo?->patientInfo?->weight_type == 'Kgs' ? 'checked' : '' }}>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6">
-                                                    <p class="font-weight-normal text-dark opacity-8" id="profileVisibility">6.5Lbs
+                                                    <div id="toggleWeight-loader"
+                                                         class="spinner-border text-green-700 d-none overflow-hidden" role="status"
+                                                         style="height: 21px !important;width: 21px !important;margin-left: 25px;font-size: 15px;margin-top: 8px;color: #a2a6b8;">
+                                                        <span class="sr-only">Loading...</span>
+                                                    </div>
+                                                    <p class="font-weight-normal text-dark opacity-8 toggle-weight-switch-info" id="profileVisibility">
+                                                        <span class="toggle-weight">{{ $consultationRequest->neuroAssessmentInfo?->patientInfo?->weight ?? '' }}</span>
+                                                        <span class="text-sm toggle-weight-label">{{ $consultationRequest->neuroAssessmentInfo?->patientInfo?->weight_type ?? '' }}</span>
                                                     </p>
                                                 </div>
                                             </div>
@@ -181,12 +178,10 @@
                                         <div class="container p-0">
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                    <p class="font-weight-bold text-dark mb-0">Species Type
-                                                    </p>
+                                                    <p class="font-weight-bold text-dark mb-0">Species Type</p>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <p class="font-weight-normal text-dark opacity-8">
-                                                        Canine</p>
+                                                    <p class="font-weight-normal text-dark opacity-8">{{ $consultationRequest->neuroAssessmentInfo?->patientInfo?->specieTypeInfo?->name ?? '' }}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -194,9 +189,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-2">
-                            <div>
-                                <img src="{{ asset('portal/assets/img/team-3.jpg') }}" alt="icon" class="w-40 w-md-60" style="border-radius:300px;"/>
+                        <div class="col-md-1">
+                            <div style="width: 90px; max-height: 90px">
+                                <img src="{{ $consultationRequest->neuroAssessmentInfo?->patientInfo?->getPatientImage($consultationRequest->neuroAssessmentInfo?->patientInfo?->specieTypeInfo?->name ?? null,$consultationRequest->neuroAssessmentInfo?->patientInfo?->breedInfo?->image ?? null) }}" alt="icon"
+                                     style="width: 130px;height: 130px;border-radius:300px;"/>
                             </div>
                         </div>
                     </div>
@@ -210,15 +206,13 @@
                         <div class="bg-gradient-primary  border-radius-lg pt-4 pb-3">
                             <div class="multisteps-form__progress">
                                 <button class="multisteps-form__progress-btn js-active" type="button"
-                                        title="Product Info">
-                                    <span>History</span>
-                                </button>
+                                        title="History">History</button>
                                 <button class="multisteps-form__progress-btn" type="button"
-                                        title="Media">Neurological Exam Steps</button>
+                                        title="Neurological Exam Steps">Neurological Exam Steps</button>
                                 <button class="multisteps-form__progress-btn" type="button"
-                                        title="Socials">Neurolocalizations</button>
+                                        title="Neurolocalizations">Neurolocalizations</button>
                                 <button class="multisteps-form__progress-btn" type="button"
-                                        title="Pricing">Comments</button>
+                                        title="Comments">Comments</button>
                             </div>
                         </div>
                     </div>
@@ -1227,6 +1221,32 @@
     <script src="{{ asset('portal/assets/js/plugins/datatables.js') }}"></script>
     <script src="{{ asset('portal/assets/js/plugins/multistep-form.js') }}"></script>
     <script>
+
+        $(document).on('change', '.toggle-weight-switch', function () {
+            let weight = $(this).attr('data-weight');
+            let currentValue = parseFloat(weight);
+
+            $(`#toggleWeight-loader`).removeClass('d-none');
+            $(`.toggle-weight-switch-info`).addClass('d-none');
+
+
+            if ($(this).is(':checked')) {
+                let newValue = Math.round((currentValue / 2.20462) * 100) / 100;
+                $('.toggle-weight').text(newValue);
+                $(this).attr('data-weight', newValue);
+                $('.toggle-weight-label').text('kgs');
+            } else {
+                let newValue = Math.round((currentValue * 2.20462) * 100) / 100;
+                $('.toggle-weight').text(newValue);
+                $(this).attr('data-weight', newValue);
+                $('.toggle-weight-label').text('lbs');
+            }
+
+            setTimeout(function () {
+                $(`#toggleWeight-loader`).addClass('d-none');
+                $(`.toggle-weight-switch-info`).removeClass('d-none');
+            }, 500);
+        });
 
         function addDifferential() {
             // Clone the differential section

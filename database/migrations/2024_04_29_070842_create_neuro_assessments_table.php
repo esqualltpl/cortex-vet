@@ -26,6 +26,7 @@ return new class extends Migration
             $table->unsignedBigInteger('consult_by')->nullable();
             $table->unsignedBigInteger('treated_by')->nullable();
             $table->enum('status', ['Consult Neurologist', 'Treated'])->nullable();
+            $table->unsignedBigInteger('added_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -185,9 +185,9 @@
                                 {{ $appointmentHistory->created_at }}
                             </td>
                             <td class="text-sm">
-                                @if($appointmentHistory->treatedByInfo != null)
-                                    <img src="{{ $appointmentHistory->treatedByInfo->getUserPic() ?? '-' }}" alt="icon" class="avatar"/>
-                                    {{ $appointmentHistory->treatedByInfo?->name ?? '' }}
+                                @if($appointmentHistory->addedByInfo != null)
+                                    <img src="{{ $appointmentHistory->addedByInfo->getUserPic() ?? '-' }}" alt="icon" class="avatar"/>
+                                    {{ $appointmentHistory->addedByInfo?->name ?? '' }}
                                 @else
                                     <p class="text-center">-</p>
                                 @endif

@@ -30,6 +30,26 @@ function humanReadableAge($dateOfBirth): string
     return $age.' years';
 }
 
+function calculateAge($dob) {
+    // Parse the date of birth
+    $dob = Carbon::parse($dob);
+    // Get the current date
+    $now = Carbon::now();
+
+    // Calculate the difference in years, months, and days
+    $years = $dob->diffInYears($now);
+    $months = $dob->diffInMonths($now);
+    $days = $dob->diffInDays($now);
+
+    if ($years >= 1) {
+        return round($years) . ' years';
+    } elseif ($months >= 1) {
+        return round($months) . ' months';
+    } else {
+        return round($days) . ' days';
+    }
+}
+
 function getWeekDay($dateString): string
 {
     $date = Carbon::parse($dateString);
