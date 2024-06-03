@@ -10,7 +10,7 @@
         <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 ">
             <li class="breadcrumb-item text-sm">
                 <a class="opacity-7 text-dark" href="{{ route('neurologist.consultation.request') }}">
-                    <img src="{{ asset('portal/assets/img/Consultation Request gray.png') }}" alt="icon" class="me-1" />
+                    <img src="{{ asset('portal/assets/img/Consultation Request purple.png') }}" alt="icon" class="me-1" />
                     Consultation Request
                 </a>
             </li>
@@ -33,37 +33,26 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card p-4 mt-3">
-
                     <div class="row p-2" style="border: 1px solid #00000040; border-radius: 10px;">
-
-                        <div class="col-md-1 mt-3"> <img src="{{ asset('portal/assets/img/Consultation Request img.png') }}" alt="icon"
-                                                         class="w-100" style="border-radius: 100px;" /></div>
+                        <div class="col-md-1 mt-3">
+                            <img src="{{ asset('portal/assets/img/Consultation Request img.png') }}" alt="icon"
+                                 class="w-100 pt-1" style="border-radius: 100px;" />
+                        </div>
                         <div class="col-lg-8 col-sm-5 mt-3 d-fle flex-wrap ">
 
                             <div class="d-block d-md-flex gap-5">
-                                <p class="font-weight-bold text-dark w-lg-20">Requested By:
-                                </p>
-                                <p class="font-weight-normal text-dark opacity-8">Dr Henry
-                                </p>
+                                <p class="font-weight-bold text-dark w-lg-20">Requested By:</p>
+                                <p class="font-weight-normal text-dark opacity-8">Dr Henry</p>
                             </div>
                             <div class="d-block d-md-flex gap-5">
-                                <p class="font-weight-bold text-dark w-lg-20">Requested Time:
-                                </p>
-                                <p class="font-weight-normal text-dark opacity-8">
-                                    11:23 am</p>
+                                <p class="font-weight-bold text-dark w-lg-20">Requested Time:</p>
+                                <p class="font-weight-normal text-dark opacity-8">11:23 am</p>
                             </div>
-
-
                         </div>
-
                         <div class="col-md-2 ms-auto my-4">
-                            <button class="btn btn-primary btn-lg  text-white mb-2  " type="button"
-                                    title="Accept">Accept</button>
+                            <button class="btn btn-primary btn-md text-white mb-2" type="button" title="Accept">Accept</button>
                         </div>
-
-
                     </div>
-
                 </div>
             </div>
         </div>
