@@ -36,4 +36,9 @@ class Patient extends Model
     {
         return $this->belongsTo(Breed::class, 'breed');
     }
+
+    public function practitionerInfo(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(User::class, 'added_by');
+    }
 }
