@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * @method static where(string $string, mixed $patient_id)
+ * @method static find($param)
  */
 class NeuroAssessment extends Model
 {

@@ -2,10 +2,19 @@
 
 namespace App\Http\Controllers\Neurologist\ConsultationRequest;
 
-use App\Http\Controllers\Controller;
-use App\Models\ConsultationRequest;
+use Carbon\Carbon;
+use App\Models\Exam;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\NeuroAssessment;
+use App\Helpers\ResponseMessage;
+use Illuminate\Support\Facades\DB;
+use App\Models\ConsultationRequest;
+use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Validator;
+
 
 class ConsultationRequestsController extends Controller
 {
@@ -18,7 +27,97 @@ class ConsultationRequestsController extends Controller
     public function detail($id): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $requestId = Crypt::decrypt($id);
+        $admin_id = User::where('status', 'Super Admin')->first()?->id ?? null;
         $consultationRequest = ConsultationRequest::with('neuroAssessmentInfo')->find($requestId);
-        return view('neurologist.consultation.detail', compact('consultationRequest'));
+        $neuroExamInfo = NeuroAssessment::with('patientInfo','treatedByInfo','consultByInfo')->find($consultationRequest->neuro_assessment_id ?? null);
+        $examsInfo = Exam::where('added_by', $admin_id)->with('testInfo', 'instructionVideoInfo')->get();
+        return view('neurologist.consultation.detail', compact('consultationRequest', 'examsInfo', 'neuroExamInfo'));
+    }
+
+    public function acceptRequest(Request $request, $id): \Illuminate\Http\JsonResponse
+    {
+        try {
+            DB::beginTransaction();
+            $requestId = Crypt::decrypt($id);
+            $consultationRequest = ConsultationRequest::find($requestId);
+            $consultationRequest->accept_by = auth()->user()->id ?? null;
+            $consultationRequest->accept_date_time = Carbon::now();
+            $consultationRequest->save();
+
+            $neuroAssessment = NeuroAssessment::find($consultationRequest->neuro_assessment_id ?? null);
+            $neuroAssessment->consult_by = auth()->user()->id ?? null;
+            $neuroAssessment->save();
+
+            $response = ResponseMessage::ResponseNotifySuccess('Success!', 'Successfully accept the consult neurologist request.');
+            $response['redirect_url'] = route('neurologist.consultation.detail', $id);
+
+            Log::info('Successfully accept the consult neurologist request', ['result' => 'success' ?? '']);
+            DB::commit();
+
+            return response()->json($response);
+        } catch (Exception $e) {
+            DB::rollBack();
+            $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to accept the consult neurologist request. Please try again later.');
+            Log::info('The system is unable to accept the consult neurologist request. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
+
+            return response()->json($response);
+        }
+    }
+
+    public function communicateDirectly(Request $request, $id): \Illuminate\Http\JsonResponse
+    {
+        try {
+            DB::beginTransaction();
+            $requestId = Crypt::decrypt($id);
+            $consultationRequest = ConsultationRequest::find($requestId);
+            $consultationRequest->communicate_directly = 'Yes';
+            $consultationRequest->save();
+
+            $response = ResponseMessage::ResponseNotifySuccess('Success!', 'Successfully generate the communicate directly mail link.');
+
+            Log::info('Successfully generate the communicate directly mail link', ['result' => 'success' ?? '']);
+            DB::commit();
+
+            return response()->json($response);
+        } catch (Exception $e) {
+            DB::rollBack();
+            $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to generate the communicate directly mail link. Please try again later.');
+            Log::info('The system is unable to generate the communicate directly mail link. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
+
+            return response()->json($response);
+        }
+    }
+
+    public function performShareThroughEmail(Request $request, $id): \Illuminate\Http\JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'comments.*' => 'required_without_all:comments.*',
+        ]);
+        if ($validator->fails()) {
+            $response = ResponseMessage::ResponseNotifyError('Error!', 'Please add at least one comment regarding this consultation.');
+
+            return response()->json($response);
+        }
+        try {
+            DB::beginTransaction();
+            $requestId = Crypt::decrypt($id);
+            $consultationRequest = ConsultationRequest::find($requestId);
+            $consultationRequest->comments = json_encode($request->comments ?? []);
+            $consultationRequest->share_through_email = 'Yes';
+            $consultationRequest->save();
+
+            $response = ResponseMessage::ResponseNotifySuccess('Success!', 'Successfully send the patient complete report along with your comments.');
+
+            Log::info('Successfully send the patient complete report along with your comments', ['result' => 'success' ?? '']);
+            DB::commit();
+
+            return response()->json($response);
+        } catch (Exception $e) {
+            DB::rollBack();
+            $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to send the patient complete report along with your comments. Please try again later.');
+            Log::info('The system is unable to send the patient complete report along with your comments. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
+
+            return response()->json($response);
+        }
     }
 }

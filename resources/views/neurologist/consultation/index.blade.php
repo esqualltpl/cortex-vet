@@ -62,7 +62,7 @@
                                     </div>
                                 </div>
                             </div>
-                        @else
+                        @elseif($consultationRequest->accept_by == auth()->user()->id)
                             <div class="card p-2 mt-3" style="background-color: #D4FFD8;">
                                 <div class="row ">
                                     <div class="col-md-1 mt-3">
@@ -89,10 +89,14 @@
                                         </div>
                                     </div>
                                     <div class="col-md-2 ms-auto my-4">
-                                        <button class="btn text-success " style="background-color: #4CAF5033;text-transform: none    " type="button" disabled title="Accept">Consulted</button>
+                                        <a href="{{ route('neurologist.consultation.detail', Crypt::encrypt($consultationRequest->id)) }}">
+                                            <button class="btn text-success pt-2" style="background-color: #4CAF5033;text-transform: none" type="button" title="Consulted">Consulted</button>
+                                        </a>
+                                        {{--<button class="btn text-success" style="background-color: #4CAF5033;text-transform: none" type="button" disabled title="Consulted">Consulted</button>--}}
                                     </div>
                                 </div>
                             </div>
+                        @else
                         @endif
                     @endforeach
                 </div>

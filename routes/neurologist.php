@@ -18,6 +18,9 @@ Route::group(['prefix' => 'neurologist', 'middleware' => ['neurologist']], funct
     Route::prefix('consultation/request')->group(function () {
         Route::get('/list', [ConsultationRequestsController::class, 'index'])->name('neurologist.consultation.request');
         Route::get('/detail/{id}', [ConsultationRequestsController::class, 'detail'])->name('neurologist.consultation.detail');
+        Route::post('/accept/{id}', [ConsultationRequestsController::class, 'acceptRequest'])->name('neurologist.consultation.detail.accept.request');
+        Route::post('/communicate/directly/{id}', [ConsultationRequestsController::class, 'communicateDirectly'])->name('neurologist.consultation.request.communicate.directly');
+        Route::post('/perform/{id}/share/through/email', [ConsultationRequestsController::class, 'performShareThroughEmail'])->name('neurologist.consultation.request.perform.share.through.email');
     });
 
     Route::prefix('patient')->group(function () {

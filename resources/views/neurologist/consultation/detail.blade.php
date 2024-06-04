@@ -10,7 +10,7 @@
         <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 ">
             <li class="breadcrumb-item text-sm">
                 <a class="opacity-7 text-dark" href="{{ route('neurologist.consultation.request') }}">
-                    <img src="{{ asset('portal/assets/img/Consultation Request purple.png') }}" alt="icon" class="me-1" />
+                    <img src="{{ asset('portal/assets/img/Consultation Request purple.png') }}" alt="icon" class="me-1"/>
                     Consultation Request
                 </a>
             </li>
@@ -36,7 +36,7 @@
                     <div class="row p-2" style="border: 1px solid #00000040; border-radius: 10px;">
                         <div class="col-md-1 mt-3">
                             <img src="{{ asset('portal/assets/img/Consultation Request img.png') }}" alt="icon"
-                                 class="w-100 pt-2" style="border-radius: 100px;" />
+                                 class="w-100 pt-2" style="border-radius: 100px;"/>
                         </div>
                         <div class="col-lg-8 col-sm-5 mt-3 d-fle flex-wrap ">
 
@@ -50,7 +50,15 @@
                             </div>
                         </div>
                         <div class="col-md-2 ms-auto my-4">
-                            <button class="btn btn-primary btn-md text-white mt-2" type="button" title="Accept">Accept</button>
+                            <button class="btn btn-primary btn-md text-white mt-2 accept-request {{ $consultationRequest->accept_by == null ? '' : 'disabled' }}"
+                                    data-action-url="{{ route('neurologist.consultation.detail.accept.request', request()->id) }}"
+                                    type="button" title="{{ $consultationRequest->accept_by == null ? 'Accept' : 'Accepted' }}">
+                                <span>{{ $consultationRequest->accept_by == null ? 'Accept' : 'Accepted' }}</span>
+                                <span id="acceptRequest-loader" class="spinner-border overflow-hidden d-none" role="status"
+                                      style="height: 15px !important;width: 15px !important;margin-left: 5px !important;">
+                                    <span class="sr-only">Loading...</span>
+                                </span>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -155,7 +163,8 @@
                                                     <div class="d-flex">
                                                         <p class="font-weight-bold text-dark mb-0">Weight</p>
                                                         <div class="form-check form-switch ms-2 mt-1 mx-1">
-                                                            <input class="form-check-input toggle-weight-switch" data-weight="{{ $consultationRequest->neuroAssessmentInfo?->patientInfo?->weight ?? '' }}" type="checkbox"
+                                                            <input class="form-check-input toggle-weight-switch"
+                                                                   data-weight="{{ $consultationRequest->neuroAssessmentInfo?->patientInfo?->weight ?? '' }}" type="checkbox"
                                                                    id="weightSwitch" {{ $consultationRequest->neuroAssessmentInfo?->patientInfo?->weight_type == 'Kgs' ? 'checked' : '' }}>
                                                         </div>
                                                     </div>
@@ -191,7 +200,8 @@
                         </div>
                         <div class="col-md-1">
                             <div style="width: 90px; max-height: 90px">
-                                <img src="{{ $consultationRequest->neuroAssessmentInfo?->patientInfo?->getPatientImage($consultationRequest->neuroAssessmentInfo?->patientInfo?->specieTypeInfo?->name ?? null,$consultationRequest->neuroAssessmentInfo?->patientInfo?->breedInfo?->image ?? null) }}" alt="icon"
+                                <img src="{{ $consultationRequest->neuroAssessmentInfo?->patientInfo?->getPatientImage($consultationRequest->neuroAssessmentInfo?->patientInfo?->specieTypeInfo?->name ?? null,$consultationRequest->neuroAssessmentInfo?->patientInfo?->breedInfo?->image ?? null) }}"
+                                     alt="icon"
                                      style="width: 130px;height: 130px;border-radius:300px;"/>
                             </div>
                         </div>
@@ -203,95 +213,120 @@
             <div class="col-md-12">
                 <div>
                     <div class="card-header p-0 position-relative mt-4  z-index-2">
-                        <div class="bg-gradient-primary  border-radius-lg pt-4 pb-3">
+                        <div class="bg-gradient-primary border-radius-lg pt-4 pb-3">
                             <div class="multisteps-form__progress">
                                 <button class="multisteps-form__progress-btn js-active" type="button"
-                                        title="History">History</button>
+                                        title="History">History
+                                </button>
                                 <button class="multisteps-form__progress-btn" type="button"
-                                        title="Neurological Exam Steps">Neurological Exam Steps</button>
+                                        title="Neurological Exam Steps">Neurological Exam Steps
+                                </button>
                                 <button class="multisteps-form__progress-btn" type="button"
-                                        title="Neurolocalizations">Neurolocalizations</button>
+                                        title="Neurolocalizations">Neurolocalizations
+                                </button>
                                 <button class="multisteps-form__progress-btn" type="button"
-                                        title="Comments">Comments</button>
+                                        title="Comments">Comments
+                                </button>
                             </div>
                         </div>
                     </div>
-                    <div class="">
-                        <form class="multisteps-form__form ">
-                            <!--single form panel-->
+                    <div class="neuro-exam-info">
+                        <form class="multisteps-form__form perform-consultation-form">
+                            @csrf
+                            <!--History-->
                             <div class="multisteps-form__panel pt-3 border-radius-xl bg-white js-active"
                                  data-animation="FadeIn">
                                 <div class="multisteps-form__content p-3">
-                                    <div class="row mt-3">
+                                    <div class="row mt-0">
                                         <div class="col-md-12">
-                                            <p>Completing the history section is not required to utilize the
-                                                localization tool but is recommended if you intend to submit a
-                                                consultation.</p>
+                                            <p>Completing the history section is not required to utilize the localization tool but is recommended if you intend to submit a consultation.</p>
                                         </div>
                                         <div class="col-md-12">
-                                            <label class="form-label font-weight-bold"
-                                                   style=" font-family: 'Poppins', sans-serif !important">Medical
-                                                History</label>
+                                            <label class="form-label font-weight-bold" style="font-family: 'Poppins', sans-serif !important">
+                                                Medical History <span class="text-danger">*</span>
+                                            </label>
                                             <div class="input-group input-group-outline mb-3">
-                                                    <textarea rows="4" class="form-control w-100"
-                                                              aria-describedby="emailHelp" onfocus="focused(this)"
-                                                              onfocusout="defocused(this)" style="resize: none;" placeholder="Please describe the presenting complaint and associated history. Please also note any historical medical information. Please include the results of any diagnostics already performed. Please note any previous therapies and response."></textarea>
+                                                <textarea rows="4" class="form-control w-100"
+                                                          readonly="true"
+                                                          name="medical_history"
+                                                          aria-describedby="Medical History" onfocus="focused(this)"
+                                                          onfocusout="defocused(this)"
+                                                          style="resize: none;"
+                                                          placeholder="Please describe the presenting complaint and associated history. Please also note any historical medical information. Please include the results of any diagnostics already performed. Please note any previous therapies and response."
+                                                >{{ $neuroExamInfo->medical_history ?? '' }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
-                                            <label class="form-label font-weight-bold"
-                                                   style=" font-family: 'Poppins', sans-serif !important">Vaccination
-                                                History</label>
+                                            <label class="form-label font-weight-bold" style=" font-family: 'Poppins', sans-serif !important">
+                                                Vaccination History
+                                            </label>
                                             <div class="input-group input-group-outline mb-3">
-                                                    <textarea rows="4" class="form-control w-100"
-                                                              aria-describedby="emailHelp" onfocus="focused(this)"
-                                                              onfocusout="defocused(this)" style="resize: none;" placeholder="Please comment if this patient is up to date on vaccines (rabies and distemper)."></textarea>
+                                                <textarea rows="4" class="form-control w-100"
+                                                          readonly="true"
+                                                          name="vaccination_history"
+                                                          aria-describedby="Vaccination History" onfocus="focused(this)"
+                                                          onfocusout="defocused(this)" style="resize: none;"
+                                                          placeholder="Please comment if this patient is up to date on vaccines (rabies and distemper)."
+                                                >{{ $neuroExamInfo->vaccination_history ?? '' }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
-                                            <label class="form-label font-weight-bold"
-                                                   style=" font-family: 'Poppins', sans-serif !important">Diet/Feeding
-                                                Routine</label>
+                                            <label class="form-label font-weight-bold" style=" font-family: 'Poppins', sans-serif !important">
+                                                Diet/Feeding Routine
+                                            </label>
                                             <div class="input-group input-group-outline mb-3">
-                                                    <textarea rows="4" class="form-control w-100"
-                                                              aria-describedby="emailHelp" onfocus="focused(this)"
-                                                              onfocusout="defocused(this)" style="resize: none;" placeholder="Please note the type of diet and feeding frequency."></textarea>
+                                                <textarea rows="4" class="form-control w-100"
+                                                          readonly="true"
+                                                          name="diet_feeding_routine"
+                                                          aria-describedby="Diet/Feeding Routine" onfocus="focused(this)"
+                                                          onfocusout="defocused(this)" style="resize: none;"
+                                                          placeholder="Please note the type of diet and feeding frequency."
+                                                >{{ $neuroExamInfo->diet_feeding_routine ?? '' }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
-                                            <label class="form-label font-weight-bold"
-                                                   style=" font-family: 'Poppins', sans-serif !important">Current
-                                                Therapy/Response</label>
+                                            <label class="form-label font-weight-bold" style=" font-family: 'Poppins', sans-serif !important">
+                                                Current Therapy/Response
+                                            </label>
                                             <div class="input-group input-group-outline mb-3">
-                                                    <textarea rows="4" class="form-control w-100"
-                                                              aria-describedby="emailHelp" onfocus="focused(this)"
-                                                              onfocusout="defocused(this)"
-                                                              placeholder="Please note any current or previous therapies and include clinical response to each therapy"
-                                                              style="resize: none;"></textarea>
+                                                <textarea rows="4" class="form-control w-100"
+                                                          readonly="true"
+                                                          name="current_therapy_response"
+                                                          aria-describedby="Current Therapy/Response" onfocus="focused(this)"
+                                                          onfocusout="defocused(this)"
+                                                          style="resize: none;"
+                                                          placeholder="Please note any current or previous therapies and include clinical response to each therapy"
+                                                >{{ $neuroExamInfo->current_therapy_response ?? '' }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
-                                            <label class="form-label font-weight-bold"
-                                                   style=" font-family: 'Poppins', sans-serif !important">Patient's
-                                                Environment</label>
+                                            <label class="form-label font-weight-bold" style=" font-family: 'Poppins', sans-serif !important">
+                                                Patient's Environment
+                                            </label>
                                             <div class="input-group input-group-outline mb-3">
-                                                    <textarea rows="4" class="form-control w-100"
-                                                              aria-describedby="emailHelp" onfocus="focused(this)"
-                                                              onfocusout="defocused(this)" style="resize: none;" placeholder="Please note if the patient is indoor/outdoor, has recent travel, other pets in the home, and any environmental history such as tick or potential toxin exposure."></textarea>
+                                                <textarea rows="4" class="form-control w-100"
+                                                          readonly="true"
+                                                          name="patients_environment"
+                                                          aria-describedby="Patient's Environment" onfocus="focused(this)"
+                                                          onfocusout="defocused(this)" style="resize: none;"
+                                                          placeholder="Please note if the patient is indoor/outdoor, has recent travel, other pets in the home, and any environmental history such as tick or potential toxin exposure."
+                                                >{{ $neuroExamInfo->patients_environment ?? '' }}</textarea>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="button-row d-flex mt-4">
-                                        <button
-                                                class="btn btn-primary btn-sm py-2 text-white mb-2 ms-auto js-btn-next"
-                                                type="button" title="Next">Next</button>
+                                        <button class="btn btn-primary text-white ms-auto js-btn-next {{ $consultationRequest->accept_by == null ? 'disabled' : '' }}" type="button"
+                                                title="Next">
+                                            Next
+                                        </button>
                                     </div>
                                 </div>
                             </div>
-                            <!--single form panel-->
-                            <div class="multisteps-form__panel pt-3 border-radius-xl bg-white "
+
+                            <!--Neurological Exam Steps-->
+                            <div class="multisteps-form__panel pt-3 border-radius-xl bg-white"
                                  data-animation="FadeIn">
-                                <div class="multisteps-form__content  p-3">
+                                <div class="multisteps-form__content p-3">
                                     <div class="row mt-3">
                                         <div class=" d-flex justify-content-end">
                                             <div class="form-check form-switch ms-2">
@@ -303,7 +338,7 @@
                                         <div id="sampleVideo" style="display: none;">
                                             <div class=" p-5 border-radius-lg" style="border: 1px solid #e8e8e8;">
                                                 <div class="p-2 d-flex justify-content-center">
-                                                    <video controls class="w-md-70 w-100">
+                                                    <video controls style="width: 70%;">
                                                         <source src="{{ asset('portal/assets/img/vet sample video.mp4') }}"
                                                                 type="video/mp4">
                                                         Your browser does not support the video tag.
@@ -311,839 +346,205 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div>
-                                            <div class="accordion mt-2" id="accordionRental">
-                                                <div class="accordion-item">
-                                                    <p class="accordion-header" id="headingSeven">
-                                                        <button
-                                                                class="accordion-button py-3 px-2 border-bottom font-weight-bold"
-                                                                type="button" data-bs-toggle="collapse"
-                                                                data-bs-target="#collapseSeven" aria-expanded="false"
-                                                                aria-controls="collapseSeven"
-                                                                style="background-color: #E1DAF1; border-radius: 10px; color: #6647B1;">
-                                                            Mentation
-                                                            <i class="collapse-close fa fa-sort-desc text-xs pt-1 position-absolute end-0 me-3"
-                                                               aria-hidden="true"></i>
-                                                            <i class="collapse-open fa fa-caret-up text-xs pt-1 position-absolute end-0 me-3"
-                                                               aria-hidden="true"></i>
-                                                        </button>
-                                                    </p>
-                                                    <div id="collapseSeven" class="accordion-collapse collapse"
-                                                         aria-labelledby="headingSeven"
-                                                         data-bs-parent="#accordionRental">
-                                                        <div class="accordion-body p-3">
-                                                            <div class="d-flex justify-content-end mb-2">
-                                                                <div class="form-check form-switch ms-2">
-                                                                    <input class="form-check-input" type="checkbox"
-                                                                           id="flexSwitchCheckDefaultQuestion"
-                                                                           onchange="toggleVideo('sampleVideoQuestion' , this.checked ? 'show' : 'hide')">
-                                                                </div>
-                                                            </div>
-                                                            <div id="sampleVideoQuestion" style="display: none;">
-                                                                <div class=" p-5 border-radius-lg">
-                                                                    <div class="p-2 d-flex justify-content-center">
-                                                                        <video controls class="w-md-70 w-100">
-                                                                            <source
-                                                                                    src="{{ asset('portal/assets/img/vet sample video.mp4') }}"
-                                                                                    type="video/mp4">
-                                                                            Your browser does not support the
-                                                                            video tag.
-                                                                        </video>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="border-radius-lg"
-                                                                 style="border:1px solid #e8e8e8;">
-                                                                <div
-                                                                        class="col-md-12 p-2 mt-3 d-flex flex-wrap justify-content-between">
-                                                                    <div class="col-md-12">
-                                                                        <div class="container">
-                                                                            <div class="row">
-                                                                                <div class="col-md-2 col-sm-12">
-                                                                                    <p
-                                                                                            class="font-weight-bold text-dark">
-                                                                                        Test: 1</p>
-                                                                                </div>
-                                                                                <div class="col-md-10 col-sm-12">
-                                                                                    <p
-                                                                                            class="font-weight-normal text-dark opacity-8">
-                                                                                        Lorem ipsum is a dummy
-                                                                                        text
-                                                                                    </p>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-md-12">
-                                                                        <div class="container">
-                                                                            <div class="row">
-                                                                                <div class="col-md-2 col-sm-12">
-                                                                                    <p
-                                                                                            class="font-weight-bold text-dark">
-                                                                                        Answer:</p>
-                                                                                </div>
-                                                                                <div class="col-md-10 col-sm-12">
-                                                                                    <p
-                                                                                            class="font-weight-bold text-dark">
-                                                                                        Normal</p>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="border-radius-lg mt-2"
-                                                                 style="border:1px solid #e8e8e8;">
-                                                                <div
-                                                                        class="col-md-12 p-2 mt-3 d-flex flex-wrap justify-content-between">
-                                                                    <div class="col-md-12">
-                                                                        <div class="container">
-                                                                            <div class="row">
-                                                                                <div class="col-md-2 col-sm-12">
-                                                                                    <p
-                                                                                            class="font-weight-bold text-dark">
-                                                                                        Test: 2</p>
-                                                                                </div>
-                                                                                <div class="col-md-10 col-sm-12">
-                                                                                    <p
-                                                                                            class="font-weight-normal text-dark opacity-8">
-                                                                                        Lorem ipsum is a dummy
-                                                                                        text
-                                                                                    </p>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-md-12">
-                                                                        <div class="container">
-                                                                            <div class="row">
-                                                                                <div class="col-md-2 col-sm-12">
-                                                                                    <p
-                                                                                            class="font-weight-bold text-dark">
-                                                                                        Answer:</p>
-                                                                                </div>
-                                                                                <div class="col-md-10 col-sm-12">
-                                                                                    <p
-                                                                                            class="font-weight-bold text-dark">
-                                                                                        Normal</p>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="accordion-item mt-2 ">
-                                                <p class="accordion-header " id="headingTwo"
-                                                   style="font-size: 17px;font-weight: bold;">
-                                                    <button
-                                                            class="accordion-button py-3 px-2 border-bottom font-weight-bold"
-                                                            type="button" data-bs-toggle="collapse"
-                                                            data-bs-target="#collapseTwo" aria-expanded="false"
-                                                            aria-controls="collapseTwo"
-                                                            style="background-color: #E1DAF1; border-radius: 10px; color: #6647B1;">
-                                                        Gait & Posture
-                                                        <i class="collapse-close fa fa-sort-desc text-xs pt-1 position-absolute end-0 me-3"
-                                                           aria-hidden="true"></i>
-                                                        <i class="collapse-open fa fa-caret-up text-xs pt-1 position-absolute end-0 me-3"
-                                                           aria-hidden="true"></i>
-                                                    </button>
-                                                </p>
-                                                <div id="collapseTwo" class="accordion-collapse collapse"
-                                                     aria-labelledby="headingTwo" data-bs-parent="#accordionRental">
-                                                    <div class="accordion-body p-3">
-                                                        <div class="d-flex justify-content-end mb-2">
-                                                            <div class="form-check form-switch ms-2">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                       id="flexSwitchCheckDefaultQuestion"
-                                                                       onchange="toggleVideo('sampleVideoQuestion2' , this.checked ? 'show' : 'hide')">
-                                                            </div>
-                                                        </div>
-                                                        <div id="sampleVideoQuestion2" style="display: none;">
-                                                            <div class=" p-5 border-radius-lg">
-                                                                <div class="p-2 d-flex justify-content-center">
-                                                                    <video controls class="w-md-70 w-100">
-                                                                        <source
-                                                                                src="{{ asset('portal/assets/img/vet sample video.mp4') }}"
-                                                                                type="video/mp4">
-                                                                        Your browser does not support the video
-                                                                        tag.
-                                                                    </video>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="border-radius-lg"
-                                                             style="border:1px solid #e8e8e8;">
-                                                            <div
-                                                                    class="col-md-12 p-2 mt-3 d-flex flex-wrap justify-content-between">
-                                                                <div class="col-md-12">
-                                                                    <div class="container">
-                                                                        <div class="row">
-                                                                            <div class="col-md-2 col-sm-12">
-                                                                                <p
-                                                                                        class="font-weight-bold text-dark">
-                                                                                    Test: 1</p>
-                                                                            </div>
-                                                                            <div class="col-md-10 col-sm-12">
-                                                                                <p
-                                                                                        class="font-weight-normal text-dark opacity-8">
-                                                                                    Lorem ipsum is a dummy text
-                                                                                </p>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-12">
-                                                                    <div class="container">
-                                                                        <div class="row">
-                                                                            <div class="col-md-2 col-sm-12">
-                                                                                <p
-                                                                                        class="font-weight-bold text-dark">
-                                                                                    Answer:</p>
-                                                                            </div>
-                                                                            <div class="col-md-10 col-sm-12">
-                                                                                <p
-                                                                                        class="font-weight-bold text-dark">
-                                                                                    Normal</p>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="border-radius-lg mt-2"
-                                                             style="border:1px solid #e8e8e8;">
-                                                            <div
-                                                                    class="col-md-12 p-2 mt-3 d-flex flex-wrap justify-content-between">
-                                                                <div class="col-md-12">
-                                                                    <div class="container">
-                                                                        <div class="row">
-                                                                            <div class="col-md-2 col-sm-12">
-                                                                                <p
-                                                                                        class="font-weight-bold text-dark">
-                                                                                    Test: 2</p>
-                                                                            </div>
-                                                                            <div class="col-md-10 col-sm-12">
-                                                                                <p
-                                                                                        class="font-weight-normal text-dark opacity-8">
-                                                                                    Lorem ipsum is a dummy text
-                                                                                </p>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-12">
-                                                                    <div class="container">
-                                                                        <div class="row">
-                                                                            <div class="col-md-2 col-sm-12">
-                                                                                <p
-                                                                                        class="font-weight-bold text-dark">
-                                                                                    Answer:</p>
-                                                                            </div>
-                                                                            <div class="col-md-10 col-sm-12">
-                                                                                <p
-                                                                                        class="font-weight-bold text-dark">
-                                                                                    Normal</p>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
 
-                                            </div>
-                                            <div class="accordion-item mt-2 ">
-                                                <p class="accordion-header " id="headingThree"
-                                                   style="font-size: 17px;font-weight: bold;">
-                                                    <button
-                                                            class="accordion-button py-3 px-2 border-bottom font-weight-bold"
-                                                            type="button" data-bs-toggle="collapse"
-                                                            data-bs-target="#collapseThree" aria-expanded="false"
-                                                            aria-controls="collapseThree"
-                                                            style="background-color: #E1DAF1; border-radius: 10px; color: #6647B1;">
-                                                        Cranial Nerves
-                                                        <i class="collapse-close fa fa-sort-desc text-xs pt-1 position-absolute end-0 me-3"
-                                                           aria-hidden="true"></i>
-                                                        <i class="collapse-open fa fa-caret-up text-xs pt-1 position-absolute end-0 me-3"
-                                                           aria-hidden="true"></i>
-                                                    </button>
-                                                </p>
-                                                <div id="collapseThree" class="accordion-collapse collapse"
-                                                     aria-labelledby="headingThree"
-                                                     data-bs-parent="#accordionRental">
-                                                    <div class="accordion-body p-3">
-                                                        <div class="d-flex justify-content-end mb-2">
-                                                            <div class="form-check form-switch ms-2">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                       id="flexSwitchCheckDefaultQuestion"
-                                                                       onchange="toggleVideo('sampleVideoQuestion3' , this.checked ? 'show' : 'hide')">
-                                                            </div>
-                                                        </div>
-                                                        <div id="sampleVideoQuestion3" style="display: none;">
-                                                            <div class=" p-5 border-radius-lg">
-                                                                <div class="p-2 d-flex justify-content-center">
-                                                                    <video controls class="w-md-70 w-100">
-                                                                        <source
-                                                                                src="{{ asset('portal/assets/img/vet sample video.mp4') }}"
-                                                                                type="video/mp4">
-                                                                        Your browser does not support the video
-                                                                        tag.
-                                                                    </video>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="border-radius-lg"
-                                                             style="border:1px solid #e8e8e8;">
-                                                            <div
-                                                                    class="col-md-12 p-2 mt-3 d-flex flex-wrap justify-content-between">
-                                                                <div class="col-md-12">
-                                                                    <div class="container">
-                                                                        <div class="row">
-                                                                            <div class="col-md-2 col-sm-12">
-                                                                                <p
-                                                                                        class="font-weight-bold text-dark">
-                                                                                    Test: 1</p>
-                                                                            </div>
-                                                                            <div class="col-md-10 col-sm-12">
-                                                                                <p
-                                                                                        class="font-weight-normal text-dark opacity-8">
-                                                                                    Lorem ipsum is a dummy text
-                                                                                </p>
+                                        <div class="neurological-exam-steps-info">
+                                            @php($neurologicalExamSteps = json_decode($neuroExamInfo->neurological_exam_steps, true) ?? [])
+                                            @foreach($examsInfo as $examInfo)
+                                                @if(isset($neurologicalExamSteps[$examInfo->id ?? 0]))
+                                                    <div class="accordion mt-2">
+                                                        <div class="accordion-item">
+                                                            <p class="accordion-header" id="localizationExamFormData{{ $examInfo->id ?? 0 }}">
+                                                                <button class="accordion-button py-3 px-2 border-bottom font-weight-bold" type="button" data-bs-toggle="collapse"
+                                                                        data-bs-target="#collapseLocalizationExamFormData{{ $examInfo->id ?? 0 }}"
+                                                                        aria-expanded="false"
+                                                                        aria-controls="collapseLocalizationExamFormData{{ $examInfo->id ?? 0 }}"
+                                                                        style="background-color: #E1DAF1; border-radius: 10px; color: #6647B1;">
+                                                                    {{ $examInfo->step_name ?? '' }}
+                                                                    <i class="collapse-close fa fa-sort-desc text-xs pt-1 position-absolute end-0 me-3" aria-hidden="true"></i>
+                                                                    <i class="collapse-open fa fa-caret-up text-xs pt-1 position-absolute end-0 me-3" aria-hidden="true"></i>
+                                                                </button>
+                                                            </p>
+                                                            <div id="collapseLocalizationExamFormData{{ $examInfo->id ?? 0 }}" class="accordion-collapse collapse"
+                                                                 aria-labelledby="localizationExamFormData{{ $examInfo->id ?? 0 }}"
+                                                                 data-bs-parent="#accordionRental">
+                                                                <div class="exam-test-option-data accordion-body p-3">
+                                                                    <div class="d-flex justify-content-end mb-2">
+                                                                        <div class="form-check form-switch ms-2">
+                                                                            <input class="form-check-input"
+                                                                                   type="checkbox"
+                                                                                   id="flexSwitchCheckDefaultQuestion"
+                                                                                   onchange="toggleVideo('examVideoData{{ $examInfo->id ?? 0 }}' , this.checked ? 'show' : 'hide')"
+                                                                            >
+                                                                        </div>
+                                                                    </div>
+                                                                    <div id="examVideoData{{ $examInfo->id ?? 0 }}" style="display: none;">
+                                                                        <div class="p-5 border-radius-lg">
+                                                                            <div class="p-2 d-flex justify-content-center">
+                                                                                @if($examInfo->instructionVideoInfo != null)
+                                                                                    @if($examInfo->instructionVideoInfo->video ?? '' !== null)
+                                                                                        <video controls="" style="width: 70%">
+                                                                                            <source src="{{ $examInfo->instructionVideoInfo->getExamVideo() ?? '' }}">
+                                                                                            Your browser does not support the video tag.
+                                                                                        </video>
+                                                                                    @elseif($examInfo->instructionVideoInfo->url ?? '' !== null)
+                                                                                        <iframe width="70%" height="415" src="{{ $examInfo->instructionVideoInfo->url ?? '' }}" frameborder="0"
+                                                                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                                                                allowfullscreen></iframe>
+                                                                                    @else
+                                                                                        <p class="text-center mt-3 font-weight-bold">No Instruction Video/URL Found.</p>
+                                                                                    @endif
+                                                                                @else
+                                                                                    <p class="text-center mt-3 font-weight-bold">No Instruction Video/URL Found.</p>
+                                                                                @endif
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="col-md-12">
-                                                                    <div class="container">
-                                                                        <div class="row">
-                                                                            <div class="col-md-2 col-sm-12">
-                                                                                <p
-                                                                                        class="font-weight-bold text-dark">
-                                                                                    Answer:</p>
-                                                                            </div>
-                                                                            <div class="col-md-10 col-sm-12">
-                                                                                <p
-                                                                                        class="font-weight-bold text-dark">
-                                                                                    Normal</p>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="border-radius-lg mt-2"
-                                                             style="border:1px solid #e8e8e8;">
-                                                            <div
-                                                                    class="col-md-12 p-2 mt-3 d-flex flex-wrap justify-content-between">
-                                                                <div class="col-md-12">
-                                                                    <div class="container">
-                                                                        <div class="row">
-                                                                            <div class="col-md-2 col-sm-12">
-                                                                                <p
-                                                                                        class="font-weight-bold text-dark">
-                                                                                    Test: 2</p>
-                                                                            </div>
-                                                                            <div class="col-md-10 col-sm-12">
-                                                                                <p
-                                                                                        class="font-weight-normal text-dark opacity-8">
-                                                                                    Lorem ipsum is a dummy text
-                                                                                </p>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-12">
-                                                                    <div class="container">
-                                                                        <div class="row">
-                                                                            <div class="col-md-2 col-sm-12">
-                                                                                <p
-                                                                                        class="font-weight-bold text-dark">
-                                                                                    Answer:</p>
-                                                                            </div>
-                                                                            <div class="col-md-10 col-sm-12">
-                                                                                <p
-                                                                                        class="font-weight-bold text-dark">
-                                                                                    Normal</p>
-                                                                            </div>
-                                                                        </div>
+
+                                                                    <div class="exam-test-option-data{{ $examInfo->id ?? 0 }}">
+                                                                        @if(count($examInfo->testInfo) > 0)
+                                                                            @foreach($examInfo->testInfo as $testKey=>$testInfo)
+                                                                                @php($test_sn = $testKey+1)
+                                                                                <div id="cloningTestContainer{{ $test_sn }}">
+                                                                                    <div class="mt-2" id="cloningTest{{ $test_sn }}">
+                                                                                        <div class="border-radius-lg"
+                                                                                             style="border:1px solid #e8e8e8;">
+                                                                                            <div class="col-md-12 p-2 d-flex flex-wrap justify-content-between">
+                                                                                                <div class="col-md-12">
+                                                                                                    <div class="container">
+                                                                                                        <div class="pt-3 row">
+                                                                                                            <div class="col-md-2 col-sm-12">
+                                                                                                                <p class="font-weight-bold text-dark mb-0">
+                                                                                                                    Test: {{ $test_sn ?? 0 }}</p>
+                                                                                                            </div>
+                                                                                                            <div class="col-md-10 col-sm-12 show-updated-test-info{{ $testInfo->id }}">
+                                                                                                                <p class="font-weight-normal text-dark opacity-8">
+                                                                                                                    {{ $testInfo->name ?? '' }}
+                                                                                                                </p>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                        <div class="pb-3 row">
+                                                                                                            <div class="col-md-2 col-sm-12">
+                                                                                                                <p class="font-weight-bold text-dark mb-0">Answer</p>
+                                                                                                            </div>
+                                                                                                            <div class="col-md-10 col-sm-12">
+                                                                                                                <div class="test-options">
+                                                                                                                    <div class="row">
+                                                                                                                        @foreach($testInfo->optionsInfo ?? [] as $optionKey=>$options)
+                                                                                                                            @php($option_sn = $optionKey +1)
+                                                                                                                            <b>{{ isset($neurologicalExamSteps[$examInfo->id ?? 0][$testInfo->id ?? 0]) && $neurologicalExamSteps[$examInfo->id ?? 0][$testInfo->id ?? 0] == $options->id ? $options->name ?? '' : '' }}</b>
+                                                                                                                        @endforeach
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            @endforeach
+                                                                        @endif
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-
+                                                @endif
+                                            @endforeach
+                                            <div class="button-row d-flex mt-4">
+                                                <button class="btn btn-primary text-white ms-auto js-btn-next {{ $consultationRequest->accept_by == null ? 'disabled' : '' }}" type="button"
+                                                        title="Next">
+                                                    Next
+                                                </button>
                                             </div>
-                                            <div class="accordion-item mt-2 ">
-                                                <p class="accordion-header " id="headingFour"
-                                                   style="font-size: 17px;font-weight: bold;">
-                                                    <button
-                                                            class="accordion-button py-3 px-2 border-bottom font-weight-bold"
-                                                            type="button" data-bs-toggle="collapse"
-                                                            data-bs-target="#collapseFour" aria-expanded="false"
-                                                            aria-controls="collapseFour"
-                                                            style="background-color: #E1DAF1; border-radius: 10px; color: #6647B1;">
-                                                        Postural Reactions
-                                                        <i class="collapse-close fa fa-sort-desc text-xs pt-1 position-absolute end-0 me-3"
-                                                           aria-hidden="true"></i>
-                                                        <i class="collapse-open fa fa-caret-up text-xs pt-1 position-absolute end-0 me-3"
-                                                           aria-hidden="true"></i>
-                                                    </button>
-                                                </p>
-                                                <div id="collapseFour" class="accordion-collapse collapse"
-                                                     aria-labelledby="headingFour" data-bs-parent="#accordionRental">
-                                                    <div class="accordion-body p-3">
-                                                        <div class="d-flex justify-content-end mb-2">
-                                                            <div class="form-check form-switch ms-2">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                       id="flexSwitchCheckDefaultQuestion"
-                                                                       onchange="toggleVideo('sampleVideoQuestion4' , this.checked ? 'show' : 'hide')">
-                                                            </div>
-                                                        </div>
-                                                        <div id="sampleVideoQuestion4" style="display: none;">
-                                                            <div class=" p-5 border-radius-lg">
-                                                                <div class="p-2 d-flex justify-content-center">
-                                                                    <video controls class="w-md-70 w-100">
-                                                                        <source
-                                                                                src="{{ asset('portal/assets/img/vet sample video.mp4') }}"
-                                                                                type="video/mp4">
-                                                                        Your browser does not support the video
-                                                                        tag.
-                                                                    </video>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="border-radius-lg"
-                                                             style="border:1px solid #e8e8e8;">
-                                                            <div
-                                                                    class="col-md-12 p-2 mt-3 d-flex flex-wrap justify-content-between">
-                                                                <div class="col-md-12">
-                                                                    <div class="container">
-                                                                        <div class="row">
-                                                                            <div class="col-md-2 col-sm-12">
-                                                                                <p
-                                                                                        class="font-weight-bold text-dark">
-                                                                                    Test: 1</p>
-                                                                            </div>
-                                                                            <div class="col-md-10 col-sm-12">
-                                                                                <p
-                                                                                        class="font-weight-normal text-dark opacity-8">
-                                                                                    Lorem ipsum is a dummy text
-                                                                                </p>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-12">
-                                                                    <div class="container">
-                                                                        <div class="row">
-                                                                            <div class="col-md-2 col-sm-12">
-                                                                                <p
-                                                                                        class="font-weight-bold text-dark">
-                                                                                    Answer:</p>
-                                                                            </div>
-                                                                            <div class="col-md-10 col-sm-12">
-                                                                                <p
-                                                                                        class="font-weight-bold text-dark">
-                                                                                    Normal</p>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="border-radius-lg mt-2"
-                                                             style="border:1px solid #e8e8e8;">
-                                                            <div
-                                                                    class="col-md-12 p-2 mt-3 d-flex flex-wrap justify-content-between">
-                                                                <div class="col-md-12">
-                                                                    <div class="container">
-                                                                        <div class="row">
-                                                                            <div class="col-md-2 col-sm-12">
-                                                                                <p
-                                                                                        class="font-weight-bold text-dark">
-                                                                                    Test: 2</p>
-                                                                            </div>
-                                                                            <div class="col-md-10 col-sm-12">
-                                                                                <p
-                                                                                        class="font-weight-normal text-dark opacity-8">
-                                                                                    Lorem ipsum is a dummy text
-                                                                                </p>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-12">
-                                                                    <div class="container">
-                                                                        <div class="row">
-                                                                            <div class="col-md-2 col-sm-12">
-                                                                                <p
-                                                                                        class="font-weight-bold text-dark">
-                                                                                    Answer:</p>
-                                                                            </div>
-                                                                            <div class="col-md-10 col-sm-12">
-                                                                                <p
-                                                                                        class="font-weight-bold text-dark">
-                                                                                    Normal</p>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                            <div class="accordion-item mt-2 ">
-                                                <p class="accordion-header " id="headingFive"
-                                                   style="font-size: 17px;font-weight: bold;">
-                                                    <button
-                                                            class="accordion-button py-3 px-2 border-bottom font-weight-bold"
-                                                            type="button" data-bs-toggle="collapse"
-                                                            data-bs-target="#collapseFive" aria-expanded="false"
-                                                            aria-controls="collapseFive"
-                                                            style="background-color: #E1DAF1; border-radius: 10px; color: #6647B1;">
-                                                        Spinal Cord Reflexes
-                                                        <i class="collapse-close fa fa-sort-desc text-xs pt-1 position-absolute end-0 me-3"
-                                                           aria-hidden="true"></i>
-                                                        <i class="collapse-open fa fa-caret-up text-xs pt-1 position-absolute end-0 me-3"
-                                                           aria-hidden="true"></i>
-                                                    </button>
-                                                </p>
-                                                <div id="collapseFive" class="accordion-collapse collapse"
-                                                     aria-labelledby="headingFive" data-bs-parent="#accordionRental">
-                                                    <div class="accordion-body p-3">
-                                                        <div class="d-flex justify-content-end mb-2">
-                                                            <div class="form-check form-switch ms-2">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                       id="flexSwitchCheckDefaultQuestion"
-                                                                       onchange="toggleVideo('sampleVideoQuestion5' , this.checked ? 'show' : 'hide')">
-                                                            </div>
-                                                        </div>
-                                                        <div id="sampleVideoQuestion5" style="display: none;">
-                                                            <div class=" p-5 border-radius-lg">
-                                                                <div class="p-2 d-flex justify-content-center">
-                                                                    <video controls class="w-md-70 w-100">
-                                                                        <source
-                                                                                src="{{ asset('portal/assets/img/vet sample video.mp4') }}"
-                                                                                type="video/mp4">
-                                                                        Your browser does not support the video
-                                                                        tag.
-                                                                    </video>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="border-radius-lg"
-                                                             style="border:1px solid #e8e8e8;">
-                                                            <div
-                                                                    class="col-md-12 p-2 mt-3 d-flex flex-wrap justify-content-between">
-                                                                <div class="col-md-12">
-                                                                    <div class="container">
-                                                                        <div class="row">
-                                                                            <div class="col-md-2 col-sm-12">
-                                                                                <p
-                                                                                        class="font-weight-bold text-dark">
-                                                                                    Test: 1</p>
-                                                                            </div>
-                                                                            <div class="col-md-10 col-sm-12">
-                                                                                <p
-                                                                                        class="font-weight-normal text-dark opacity-8">
-                                                                                    Lorem ipsum is a dummy text
-                                                                                </p>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-12">
-                                                                    <div class="container">
-                                                                        <div class="row">
-                                                                            <div class="col-md-2 col-sm-12">
-                                                                                <p
-                                                                                        class="font-weight-bold text-dark">
-                                                                                    Answer:</p>
-                                                                            </div>
-                                                                            <div class="col-md-10 col-sm-12">
-                                                                                <p
-                                                                                        class="font-weight-bold text-dark">
-                                                                                    Normal</p>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="border-radius-lg mt-2"
-                                                             style="border:1px solid #e8e8e8;">
-                                                            <div
-                                                                    class="col-md-12 p-2 mt-3 d-flex flex-wrap justify-content-between">
-                                                                <div class="col-md-12">
-                                                                    <div class="container">
-                                                                        <div class="row">
-                                                                            <div class="col-md-2 col-sm-12">
-                                                                                <p
-                                                                                        class="font-weight-bold text-dark">
-                                                                                    Test: 2</p>
-                                                                            </div>
-                                                                            <div class="col-md-10 col-sm-12">
-                                                                                <p
-                                                                                        class="font-weight-normal text-dark opacity-8">
-                                                                                    Lorem ipsum is a dummy text
-                                                                                </p>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-12">
-                                                                    <div class="container">
-                                                                        <div class="row">
-                                                                            <div class="col-md-2 col-sm-12">
-                                                                                <p
-                                                                                        class="font-weight-bold text-dark">
-                                                                                    Answer:</p>
-                                                                            </div>
-                                                                            <div class="col-md-10 col-sm-12">
-                                                                                <p
-                                                                                        class="font-weight-bold text-dark">
-                                                                                    Normal</p>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                            <div class="accordion-item mt-2 ">
-                                                <p class="accordion-header " id="headingSix"
-                                                   style="font-size: 17px;font-weight: bold;">
-                                                    <button
-                                                            class="accordion-button py-3 px-2 border-bottom font-weight-bold"
-                                                            type="button" data-bs-toggle="collapse"
-                                                            data-bs-target="#collapseSix" aria-expanded="false"
-                                                            aria-controls="collapseSix"
-                                                            style="background-color: #E1DAF1; border-radius: 10px; color: #6647B1;">
-                                                        Nociception
-                                                        <i class="collapse-close fa fa-sort-desc text-xs pt-1 position-absolute end-0 me-3"
-                                                           aria-hidden="true"></i>
-                                                        <i class="collapse-open fa fa-caret-up text-xs pt-1 position-absolute end-0 me-3"
-                                                           aria-hidden="true"></i>
-                                                    </button>
-                                                </p>
-                                                <div id="collapseSix" class="accordion-collapse collapse"
-                                                     aria-labelledby="headingSix" data-bs-parent="#accordionRental">
-                                                    <div class="accordion-body p-3">
-                                                        <div class="d-flex justify-content-end mb-2">
-                                                            <div class="form-check form-switch ms-2">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                       id="flexSwitchCheckDefaultQuestion"
-                                                                       onchange="toggleVideo('sampleVideoQuestion6' , this.checked ? 'show' : 'hide')">
-                                                            </div>
-                                                        </div>
-                                                        <div id="sampleVideoQuestion6" style="display: none;">
-                                                            <div class=" p-5 border-radius-lg">
-                                                                <div class="p-2 d-flex justify-content-center">
-                                                                    <video controls class="w-md-70 w-100">
-                                                                        <source
-                                                                                src="{{ asset('portal/assets/img/vet sample video.mp4') }}"
-                                                                                type="video/mp4">
-                                                                        Your browser does not support the video
-                                                                        tag.
-                                                                    </video>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="border-radius-lg"
-                                                             style="border:1px solid #e8e8e8;">
-                                                            <div
-                                                                    class="col-md-12 p-2 mt-3 d-flex flex-wrap justify-content-between">
-                                                                <div class="col-md-12">
-                                                                    <div class="container">
-                                                                        <div class="row">
-                                                                            <div class="col-md-2 col-sm-12">
-                                                                                <p
-                                                                                        class="font-weight-bold text-dark">
-                                                                                    Test: 1</p>
-                                                                            </div>
-                                                                            <div class="col-md-10 col-sm-12">
-                                                                                <p
-                                                                                        class="font-weight-normal text-dark opacity-8">
-                                                                                    Lorem ipsum is a dummy text
-                                                                                </p>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-12">
-                                                                    <div class="container">
-                                                                        <div class="row">
-                                                                            <div class="col-md-2 col-sm-12">
-                                                                                <p
-                                                                                        class="font-weight-bold text-dark">
-                                                                                    Answer:</p>
-                                                                            </div>
-                                                                            <div class="col-md-10 col-sm-12">
-                                                                                <p
-                                                                                        class="font-weight-bold text-dark">
-                                                                                    Obtunded</p>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="border-radius-lg mt-2"
-                                                             style="border:1px solid #e8e8e8;">
-                                                            <div
-                                                                    class="col-md-12 p-2 mt-3 d-flex flex-wrap justify-content-between">
-                                                                <div class="col-md-12">
-                                                                    <div class="container">
-                                                                        <div class="row">
-                                                                            <div class="col-md-2 col-sm-12">
-                                                                                <p
-                                                                                        class="font-weight-bold text-dark">
-                                                                                    Test: 2</p>
-                                                                            </div>
-                                                                            <div class="col-md-10 col-sm-12">
-                                                                                <p
-                                                                                        class="font-weight-normal text-dark opacity-8">
-                                                                                    Lorem ipsum is a dummy text
-                                                                                </p>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-12">
-                                                                    <div class="container">
-                                                                        <div class="row">
-                                                                            <div class="col-md-2 col-sm-12">
-                                                                                <p
-                                                                                        class="font-weight-bold text-dark">
-                                                                                    Answer:</p>
-                                                                            </div>
-                                                                            <div class="col-md-10 col-sm-12">
-                                                                                <p
-                                                                                        class="font-weight-bold text-dark">
-                                                                                    Normal</p>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                        <div class="button-row d-flex justify-content-end gap-3 mt-4">
-                                            <button class="btn btn-primary btn-sm py-2 text-white mb-2 js-btn-next" type="button"
-                                                    title="Back">Back</button>
-                                            <button class="btn btn-primary btn-sm py-2 text-white mb-2 js-btn-next" type="button"
-                                                    title="Next">Next</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <!--single form panel-->
+
+                            <!--Neurolocalizations-->
                             <div class="multisteps-form__panel pt-3 border-radius-xl bg-white"
                                  data-animation="FadeIn">
                                 <div class="multisteps-form__content  p-3">
                                     <div class="col-md-12">
-                                        <label class="form-label font-weight-bold"
-                                               style=" font-family: 'Poppins', sans-serif !important">Result
+                                        <label class="form-label font-weight-bold" style=" font-family: 'Poppins', sans-serif !important">
+                                            Result
                                         </label>
                                         <div class="input-group input-group-outline mb-3">
-                                                <textarea rows="4" class="form-control w-100"
-                                                          aria-describedby="emailHelp" onfocus="focused(this)"
-                                                          onfocusout="defocused(this)" style="resize: none;"></textarea>
+                                            <textarea rows="4" class="form-control w-100 neuro-exam-result"
+                                                      name="result"
+                                                      readonly="true"
+                                                      aria-describedby="Result"
+                                                      onfocus="focused(this)"
+                                                      onfocusout="defocused(this)"
+                                                      style="resize: none;"
+                                            >{{ $neuroExamInfo->result ?? '' }}</textarea>
                                         </div>
                                     </div>
-                                    <div class="button-row d-flex justify-content-end gap-3 mt-4">
-                                        <button class="btn btn-primary  text-white js-btn-next" type="button"
-                                                title="Next">Back</button>
-                                        <button class="btn btn-primary  text-white js-btn-next" type="button"
-                                                title="Next">Next</button>
+                                    <div class="button-row d-flex mt-4">
+                                        <button class="btn btn-primary text-white ms-auto js-btn-next {{ $consultationRequest->accept_by == null ? 'disabled' : '' }}" type="button"
+                                                title="Next">
+                                            Next
+                                        </button>
                                     </div>
-
                                 </div>
                             </div>
-                            <!--single form panel-->
+
+                            <!--Comments-->
                             <div class="multisteps-form__panel pt-3 border-radius-xl bg-white "
                                  data-animation="FadeIn">
 
                                 <div class="multisteps-form__content  p-3">
                                     <div class="d-flex justify-content-end mt-3">
                                         <div>
-                                            <button type="button" class="btn btn-outline-primary py-2 mb-2"
-                                                    style="font-family: 'Poppins', sans-serif !important"
-                                                    onclick="addDifferential()">
+                                            <button type="button" class="btn btn-outline-primary py-2 mb-2 add-comments {{ $consultationRequest->accept_by == null ? 'disabled' : '' }}"
+                                                    style="font-family: 'Poppins', sans-serif !important">
                                                 <i class="fa fa-plus-circle text-lg mx-1" aria-hidden="true"></i>
                                                 Add Comments
                                             </button>
                                         </div>
                                     </div>
 
-                                    <div class="col-md-12">
-                                        <label class="form-label font-weight-bold"
-                                               style=" font-family: 'Poppins', sans-serif !important">Comment
-                                            1
-                                        </label>
-                                        <div class="input-group input-group-outline mb-3">
-                                                <textarea rows="4" class="form-control w-100"
-                                                          aria-describedby="emailHelp" onfocus="focused(this)"
-                                                          onfocusout="defocused(this)" style="resize: none;"
-                                                          placeholder="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <label class="form-label font-weight-bold"
-                                               style=" font-family: 'Poppins', sans-serif !important">Comment 2
-                                        </label>
-                                        <div class="input-group input-group-outline mb-3">
-                                                <textarea rows="4" class="form-control w-100"
-                                                          aria-describedby="emailHelp" onfocus="focused(this)"
-                                                          onfocusout="defocused(this)" style="resize: none;"
-                                                          placeholder="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,"></textarea>
-                                        </div>
-                                    </div>
-                                    <div id="differentialsContainer" class="col-md-12">
-                                        <!-- The first differential input field section -->
-                                        <div class="differential-section" style="display: none;">
-                                            <label class="form-label font-weight-bold"
-                                                   style="font-family: 'Poppins', sans-serif !important">Comment
-                                                3</label>
+                                    <div class="previous-comments">
+                                        <div class="col-md-12">
+                                            <label class="form-label font-weight-bold" style=" font-family: 'Poppins', sans-serif !important">Comment 1</label>
                                             <div class="input-group input-group-outline mb-3">
-                                                    <textarea rows="4" class="form-control w-100"
-                                                              aria-describedby="emailHelp" onfocus="focused(this)"
-                                                              onfocusout="defocused(this)" style="resize: none;"
-                                                              placeholder="Enter your comment"></textarea>
+                                                <textarea rows="4" class="form-control neurologist-comment w-100"
+                                                          name="comments[]"
+                                                          aria-describedby="comments" onfocus="focused(this)"
+                                                          onfocusout="defocused(this)" style="resize: none;"
+                                                          placeholder="Please enter your comments"
+                                                ></textarea>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="button-row d-flex justify-content-start justify-content-sm-end flex-wrap gap-3 mt-4">
-                                        <button
-                                                class="btn btn-primary btn-sm py-2 text-white mb-2 js-btn-submit"
-                                                type="button" title="Next">Back</button>
-                                        <button
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#sendEmail"
-                                                class="btn btn-primary btn-sm py-2 text-white mb-2 js-btn-submit"
-                                                type="button" title="Next"><i class="fa fa-user text-lg mx-1" aria-hidden="true"></i>Communicate Directly</button>
-                                        <button
-                                                class="btn btn-primary btn-sm py-2 text-white mb-2 js-btn-submit"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#successMessage"
-                                                type="button" title="Next"><i class="fa fa-envelope-o text-lg mx-1" aria-hidden="true"></i>Share through Email</button>
+                                    <div class="new-comments">
                                     </div>
-
+                                    <div class="button-row d-flex justify-content-start justify-content-sm-end flex-wrap gap-3 mt-4">
+                                        {{--<button
+                                                class="btn btn-primary btn-sm py-2 text-white mb-2 js-btn-submit"
+                                                type="button" title="Next">Back
+                                        </button>--}}
+                                        <button
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#communicateDirectlyModal"
+                                                class="btn btn-primary py-2 mb-2 {{ $consultationRequest->accept_by == null ? 'disabled' : '' }}"
+                                                type="button" title="Communicate Directly">
+                                            <i class="fa fa-user text-md mx-1" aria-hidden="true"></i>
+                                            <span>Communicate Directly</span>
+                                        </button>
+                                        <button type="button" class="btn btn-primary py-2 mb-2 share-through-email {{ $consultationRequest->accept_by == null ? 'disabled' : '' }}"
+                                                data-action-url="{{ route('neurologist.consultation.request.perform.share.through.email', request()->id) }}"
+                                                style="font-family: 'Poppins', sans-serif !important">
+                                            <i class="fa fa-envelope-o text-md mx-1" aria-hidden="true"></i>
+                                            <span>Share through Email</span>
+                                            <span id="shareThroughEmail-loader" class="spinner-border overflow-hidden d-none" role="status"
+                                                  style="height: 15px !important;width: 15px !important;margin-left: 5px !important;">
+                                                <span class="sr-only">Loading...</span>
+                                            </span>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </form>
@@ -1151,35 +552,30 @@
                 </div>
             </div>
         </div>
-
     </div>
-    <div class="modal fade" id="sendEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="communicateDirectlyModal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="communicateDirectlyModalLabel"
          aria-hidden="true">
-        <div class="modal-dialog  modal-dialog-centered modal-md " role="document">
+        <div class="modal-dialog modal-dialog-centered modal-md" role="document">
             <div class="modal-content ">
-                <div class=" modal-header">
-                    <h6><i class="fa fa-user me-2 text-info" aria-hidden="true"></i>Communicate Directly</h6>
-                    <button type="button" class="btn-close text-dark float-end" data-bs-dismiss="modal"
-                            aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                <div class="modal-header">
+                    <h6 class="pt-1 mb-0">Communicate Directly</h6>
+                    <button type="button" class="btn-close text-dark float-end" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-
                 <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <label class="font-weight-bold">Enter Email to share call link</label>
-                            <div class="input-group input-group-outline mb-1 ">
-                                <input type="text" class="form-control" value="Lorem ipsum" name="Name"
-                                       placeholder="henry@gmail.com" aria-label="Name">
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-end">
-                            <button type="button" class="btn mt-3  btn-primary  btn-sm py-2 text-white mb-2">
-                                Communicate Directly
-                            </button>
+                    <div class="col-md-12">
+                        <label class="form-label font-weight-bold">Enter Email to share call link</label>
+                        <div class="input-group input-group-outline mb-3">
+                            <input type="email" name="test" class="form-control communicate_directly_email" placeholder="Enter the email">
                         </div>
                     </div>
+                    <button type="button" class="btn btn-primary float-end btn-md mt-3 mb-0 text-white communicate-directly"
+                        data-action-url="{{ route('neurologist.consultation.request.communicate.directly', request()->id) }}">
+                        <span>Communicate Directly</span>
+                        <div id="communicateDirectly-loader" class="spinner-border text-green-700 d-none overflow-hidden" role="status"
+                             style="height: 16px !important;width: 16px !important;margin-left: 5px;font-size: 16px;margin-top: 0px;color: #ffffff;">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </button>
                 </div>
             </div>
         </div>
@@ -1197,7 +593,7 @@
                 </div>
                 <div class="modal-body" style="background-color: #34C89C;">
                     <div class="d-flex justify-content-center">
-                        <img src="{{ asset('portal/assets/img/happy emoji.png') }}" alt="icon" />
+                        <img src="{{ asset('portal/assets/img/happy emoji.png') }}" alt="icon"/>
                     </div>
                     <div class="text-center  m-3 p-3">
 
@@ -1218,9 +614,18 @@
 @endsection
 
 @section('script')
-    <script src="{{ asset('portal/assets/js/plugins/datatables.js') }}"></script>
     <script src="{{ asset('portal/assets/js/plugins/multistep-form.js') }}"></script>
     <script>
+        $(document).on('click', '.accept-request', function (e) {
+            let actionType = 'post';
+            let loaderId = 'acceptRequest-loader';
+            let actionURL = $(this).attr('data-action-url');
+            let processData = {
+                "_token": "{{ csrf_token() }}",
+            };
+
+            saveInfo(actionURL, actionType, processData, loaderId);
+        });
 
         $(document).on('change', '.toggle-weight-switch', function () {
             let weight = $(this).attr('data-weight');
@@ -1248,18 +653,88 @@
             }, 500);
         });
 
-        function addDifferential() {
-            // Clone the differential section
-            var differentialSection = document.querySelector('.differential-section');
-            var clone = differentialSection.cloneNode(true);
+        $(document).on('click', '.add-comments', function (e) {
+            e.preventDefault();
+            let appendClass = 'new-comments';
+            let commentNo = $('.neurologist-comment').length  + 1;
+            let appendValue = `<div class="col-md-12" id='remove-neurologist-comment-${commentNo}'>
+                                    <div class="d-flex">
+                                        <label class="form-label font-weight-bold" style=" font-family: 'Poppins', sans-serif !important"
+                                            >Comment ${commentNo}</label>
+                                        <span class="material-symbols-outlined text-danger coursor-pointer text-bold remove-comment"
+                                            data-remove-id='remove-neurologist-comment-${commentNo}'
+                                            style="padding-left: 5px;font-size: 20px;cursor: pointer;"> delete </span>
+                                    </div>
+                                    <div class="input-group input-group-outline mb-3">
+                                        <textarea rows="4" class="form-control neurologist-comment w-100"
+                                                  name="comments[]"
+                                                  aria-describedby="emailHelp" onfocus="focused(this)"
+                                                  onfocusout="defocused(this)" style="resize: none;"
+                                                  placeholder="Please enter your comments"
+                                        ></textarea>
+                                    </div>
+                                </div>`;
+            $(`.${appendClass}`).append(appendValue);
+        });
 
-            // Show the cloned section
-            clone.style.display = 'block';
+        $(document).on('click', '.remove-comment', function (e) {
+            e.preventDefault();
+            let removedId = $(this).attr('data-remove-id');
+            $(`#${removedId}`).remove();
+        });
 
-            // Append the cloned section to the container
-            var differentialsContainer = document.getElementById('differentialsContainer');
-            differentialsContainer.appendChild(clone);
-        }
+        $(document).on('click', '.communicate-directly', function (e) {
+            e.preventDefault();
+            let actionType = 'post';
+            let modal = 'communicateDirectlyModal';
+            let loaderId = 'communicateDirectly-loader';
+            let actionURL = $(this).attr('data-action-url');
+            let email = $('.communicate_directly_email').val();
+            let processData  = {
+                "_token": "{{ csrf_token() }}",
+                "email": email,
+            };
+
+            // Email validation regex
+            let emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+
+            if (!emailPattern.test(email)) {
+                $.notify({
+                    title: '<strong>Error!</strong>',
+                    message: `<br>Please enter a valid email address.`,
+                    icon: 'fa fa-exclamation-triangle',
+                }, {
+                    // settings
+                    type: 'danger',
+                    z_index: 2000,
+                    animate: {
+                        enter: 'animated bounceInDown',
+                        exit: 'animated bounceOutUp'
+                    }
+                });
+                return;
+            }
+
+            let mailToUrl = `mailto:${email}`;
+
+            saveInfo(actionURL, actionType, processData, loaderId);
+
+            setTimeout(function () {
+                window.open(mailToUrl, '_blank');
+                $(`#${loaderId}`).addClass('d-none');
+                $(`#${modal}`).modal('hide');
+            }, 1000);
+        });
+
+        $(document).on('click', '.share-through-email', function (e) {
+            let actionType = 'post';
+            let loaderId = 'shareThroughEmail-loader';
+            let actionURL = $(this).attr('data-action-url');
+            let processData = $('.perform-consultation-form').serialize();
+
+            saveInfo(actionURL, actionType, processData, loaderId);
+        });
+
         const sampleVideo = document.getElementById('sampleVideo');
         const sampleVideoQuestion = document.getElementById('sampleVideoQuestion');
         const flexSwitchCheckDefault23 = document.getElementById('flexSwitchCheckDefault23');
@@ -1286,21 +761,13 @@
             }
 
         });
-        function visible() {
-            var elem = document.getElementById('profileVisibility');
-            if (elem) {
-                if (elem.innerHTML == "6Lbs") {
-                    elem.innerHTML = "6kgs"
-                } else {
-                    elem.innerHTML = "6Lbs"
-                }
-            }
-        }
+
         if (document.getElementById('edit-deschiption')) {
             var quill = new Quill('#edit-deschiption', {
                 theme: 'snow' // Specify theme in configuration
             });
-        };
+        }
+        ;
 
     </script>
 @endsection
