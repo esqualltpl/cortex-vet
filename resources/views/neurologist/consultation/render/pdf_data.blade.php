@@ -56,7 +56,7 @@
 
 <table style="width: 100%;padding: 0 50px 0 50px !important;">
     @php
-        $imagePath = public_path('portal/assets/img/breeds/Exotic Canine (Dogs)/Coton de Tulear.png');
+        $imagePath = $consultationInfo->neuroAssessmentInfo?->patientInfo?->getPatientImagePDF($consultationInfo->neuroAssessmentInfo?->patientInfo?->specieTypeInfo?->name ?? null,$consultationInfo->neuroAssessmentInfo?->patientInfo?->breedInfo?->image ?? null);
         $imageData = base64_encode(file_get_contents($imagePath));
     @endphp
     <tbody style="border:none;">
@@ -66,7 +66,7 @@
         </td>
         <td>
             <p style="font-family: 'Roboto', Helvetica, Arial, sans-serif;font-weight: 400 !important;margin: 2px 0 0 0 !important;">
-                <strong style="margin-left: 5px;color: #2e97a9; !important;">Test Patient 03</strong>
+                <strong style="margin-left: 5px;color: #2e97a9; !important;">{{ $consultationInfo->neuroAssessmentInfo?->patientInfo?->patient_name ?? '' }}</strong>
             </p>
         </td>
     </tr>
@@ -79,15 +79,15 @@
         <td>
             <p style="font-family: 'Roboto', Helvetica, Arial, sans-serif;font-weight: 400 !important;margin: 2px 0 0 0 !important;">
                 <span style="opacity: 0.9;font-family: Roboto, Helvetica, Arial, sans-serif;font-weight: 545">Patient ID:</span>
-                <strong style="margin-left: 70px;color: #344767 !important;">PID-001</strong>
+                <strong style="margin-left: 30px;color: #344767 !important;">{{ $consultationInfo->neuroAssessmentInfo?->patientInfo?->patient_id ?? 'pid-' }}</strong>
             </p>
         </td>
         <td style="text-align:right;">
-            <p style="font-family: 'Roboto', Helvetica, Arial, sans-serif;font-weight: 400 !important;margin: 2px 100px 0 0 !important;">
+            <p style="font-family: 'Roboto', Helvetica, Arial, sans-serif;font-weight: 400 !important;margin: 0 !important;">
                 <span><img style=" width: 13px; "
                            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAWCAYAAADAQbwGAAAAAXNSR0IArs4c6QAAAARzQklUCAgICHwIZIgAAAFnSURBVDhP7VVBToNQEJ0B0xghKSaWbvEGBC5gb8ANigv3egLrDeoJxBPYG6gHsOUIbq0uWICJVv50wNLQ3x8txi5MnA3JzPzHvHnz5yMozLT9RACEr9OHkRzetVxnp6VNiEQve45jOY5KwK5PQHSRTscDOW4euEeg67eQ5730Jb5bB7Rcy2zpV4AQrASJAFDxv8pfjxMxIzwuGKFh+xEfCwgpQoKkBEU8ByHu+btWAVN1UNP7JPJrRO2xSCeEkM+203dxiCbTY36X2dP4tKpw4Ttj31CmZHRclwEndcp7th9oCDeFrwSU+2V0vDCbiREk8WfFksnxel+VgCqQr3zbBWRRSCVm0yqLfJHPTtC0vaKHSkU3BSUihyeij0KoRdkUaDkVtWH/A6Ko5vCf8rcd2O5N+XVRjK5X7DQCgQMkUe63pkaaNuTr66Zv+T6Wuwwg4o3dbgq0kr94MpY7vmzsDy39gLjanXMkqQ9WABxJOwAAAABJRU5ErkJggg=="
                            alt="icon"></span>
-                <span>23/01/2023 09:00 AM</span>
+                <span>{{ $consultationInfo->neuroAssessmentInfo?->patientInfo?->created_at ?? '0000-00-00 00:00' }}</span>
             </p>
         </td>
     </tr>
@@ -95,13 +95,13 @@
         <td>
             <p style="font-family: 'Roboto', Helvetica, Arial, sans-serif;font-weight: 400 !important;margin: 2px 0 0 0 !important;">
                 <span style="opacity: 0.9;font-family: Roboto, Helvetica, Arial, sans-serif;font-weight: 545">Breed:</span>
-                <strong style="margin-left: 96px;color: #344767 !important;">Persian</strong>
+                <strong style="margin-left: 55px;color: #344767 !important;">{{ $consultationInfo->neuroAssessmentInfo?->patientInfo?->breedInfo?->name ?? '-' }}</strong>
             </p>
         </td>
         <td style="text-align:right;">
             <p style="font-family: 'Roboto', Helvetica, Arial, sans-serif;font-weight: 400 !important;margin: 2px 0 0 0 !important;">
                 <span style="opacity: 0.9;font-family: Roboto, Helvetica, Arial, sans-serif;font-weight: 545">Practitioner Name:</span>
-                <strong style="margin-left: 70px;color: #344767 !important;">Dr. John</strong>
+                <strong style="margin-left: 30px;color: #344767 !important;">{{ $consultationInfo->neuroAssessmentInfo?->addedByInfo?->name ?? '-' }}</strong>
             </p>
         </td>
     </tr>
@@ -109,13 +109,13 @@
         <td>
             <p style="font-family: 'Roboto', Helvetica, Arial, sans-serif;font-weight: 400 !important;margin: 2px 0 0 0 !important;">
                 <span style="opacity: 0.9;font-family: Roboto, Helvetica, Arial, sans-serif;font-weight: 545">Age/DOB:</span>
-                <strong style="margin-left: 70px;color: #344767 !important;">12-01-2023</strong>
+                <strong style="margin-left: 30px;color: #344767 !important;">{{ $consultationInfo->neuroAssessmentInfo?->patientInfo?->dob ?? '-' }}</strong>
             </p>
         </td>
         <td style="text-align:right;">
             <p style="font-family: 'Roboto', Helvetica, Arial, sans-serif;font-weight: 400 !important;margin: 2px 0 0 0 !important;">
                 <span style="opacity: 0.9;font-family: Roboto, Helvetica, Arial, sans-serif;font-weight: 545">Neurologist Name:</span>
-                <strong style="margin-left: 70px;color: #344767 !important;">Dr. John</strong>
+                <strong style="margin-left: 30px;color: #344767 !important;">{{ $consultationInfo->neuroAssessmentInfo?->consultByInfo?->name ?? '-' }}</strong>
             </p>
         </td>
     </tr>
@@ -128,19 +128,15 @@
 </div>
 <div style="padding-left: 32px !important">
     <h4 style="color: #344767">Medical History:</h4>
-    <p>Please describe the presenting complaint and associated history. Please also note any historical medical
-        information. Please include the results of any diagnostics already performed. Please note any previous therapies
-        and response.</p>
+    <p>{{ $neuroExamInfo->medical_history ?? 'No information found.' }}</p>
     <h4 style="color: #344767 !important;">Vaccination History:</h4>
-    <p>Please comment if this patient is up to date on vaccines (rabies and distemper).</p>
+    <p>{{ $neuroExamInfo->vaccination_history ?? 'No information found.' }}</p>
     <h4 style="color: #344767 !important;">Diet/Feeding Routine:</h4>
-    <p>Please note the type of diet and feeding frequency.</p>
+    <p>{{ $neuroExamInfo->diet_feeding_routine ?? 'No information found.' }}</p>
     <h4 style="color: #344767 !important;">Current/Therapy Response:</h4>
-    <p>Please note any current or previous therapies and include clinical response to each therapy.</p>
+    <p>{{ $neuroExamInfo->current_therapy_response ?? 'No information found.' }}</p>
     <h4 style="color: #344767 !important;">Patient's Environment:</h4>
-    <p>Please note if the patient is indoor/outdoor, has recent travel, other pets in the home, and any environmental
-        history such as tick or potential toxin exposure.</p>
-
+    <p>{{ $neuroExamInfo->patients_environment ?? 'No information found.' }}</p>
 </div>
 
 <p style="border-bottom: 4px solid #866FBF;margin: 50px 200px 13px 200px;"></p>
@@ -149,14 +145,29 @@
     <h3 style="color: #344767;background-color:#E3DCF3;padding: 10px 20px 18px 35px;border-radius: 0.125rem;font-size: 18px;width: 43%;">Neurological Exam Findings</h3>
 </div>
 <div style="padding-left: 32px !important">
-    <h4 style="color: #344767 !important;">Mentation:</h4>
-    <p>Lorem ipsum is a dummy text:<strong style="color: #866FBF;">Normal</strong></p>
-    <h4 style="color: #344767 !important;">Cranial Nerves:</h4>
-    <p>Lorem ipsum is a dummy text:<strong style="color: #866FBF;">Obtunded</strong></p>
-    <h4 style="color: #344767 !important;">Postural Reactions:</h4>
-    <p>Lorem ipsum is a dummy text:<strong style="color: #866FBF;">Normal</strong></p>
-    <h4 style="color: #344767 !important;">Nociception:</h4>
-    <p>Lorem ipsum is a dummy text:<strong style="color: #866FBF;">Normal</strong></p>
+    @php($neurologicalExamSteps = json_decode($neuroExamInfo->neurological_exam_steps, true) ?? [])
+    @if(count($neurologicalExamSteps) > 0)
+        @foreach($examsInfo as $examInfo)
+        @if(isset($neurologicalExamSteps[$examInfo->id ?? 0]))
+            <h4 style="color: #344767 !important;">{{ $examInfo->step_name ?? '' }}</h4>
+            @if(count($examInfo->testInfo) > 0)
+                @foreach($examInfo->testInfo as $testKey=>$testInfo)
+                    @php($test_sn = $testKey+1)
+                        <p>{{ $testInfo->name ?? '' }}:
+                            @foreach($testInfo->optionsInfo ?? [] as $optionKey=>$options)
+                                @php($option_sn = $optionKey +1)
+                                <strong style="color: #866FBF;">{{ isset($neurologicalExamSteps[$examInfo->id ?? 0][$testInfo->id ?? 0]) && $neurologicalExamSteps[$examInfo->id ?? 0][$testInfo->id ?? 0] == $options->id ? $options->name ?? '' : '' }}</strong>
+                            @endforeach
+                        </p>
+                @endforeach
+            @endif
+        @endif
+    @endforeach
+    @else
+        <p> No :
+            <strong style="color: #866FBF;">No Information found</strong>
+        </p>
+    @endif
 </div>
 
 <p style="border-bottom: 4px solid #866FBF;margin: 50px 200px 13px 200px;"></p>
@@ -166,7 +177,7 @@
 </div>
 <div style="padding-left: 32px !important">
     <h4 style="color: #344767 !important;">Result</h4>
-    <p>Lorem ipsum.</p>
+    <p>{{ $neuroExamInfo->result ?? 'No result found.' }}</p>
 </div>
 
 <p style="border-bottom: 4px solid #866FBF;margin: 50px 200px 13px 200px;"></p>
@@ -175,10 +186,10 @@
     <h3 style="color: #344767;background-color:#E3DCF3;padding: 10px 20px 18px 35px;border-radius: 0.125rem;font-size: 18px;width: 43%;">Neurologist's Comments</h3>
 </div>
 <div style="padding-left: 32px !important">
-    <p><strong>1.</strong> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-        been the industry's standard dummy text ever since the 1500s,</p>
-    <p><strong>2.</strong> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-        been the industry's standard dummy text ever since the 1500s,</p>
+    @php($neurologicalComments = json_decode($consultationInfo->comments, true) ?? [])
+    @foreach($neurologicalComments as $neurologicalCommentKey =>$neurologicalComment)
+        <p><strong>{{ $neurologicalCommentKey+1 }}.</strong> {{$neurologicalComment ?? ''}}</p>
+    @endforeach
 </div>
 <h4 style="font-size: 17px;margin-top: 40px;margin-bottom: 20px !important;color: #7b809a;text-align: center;">Thank You!!</h4>
 

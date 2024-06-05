@@ -27,6 +27,17 @@ class Patient extends Model
         }
     }
 
+    public function getPatientImagePDF($specie_type,$breed_image): string
+    {
+        $imagePath = public_path('portal/assets/img/breeds/' . $specie_type . '/' . $breed_image);
+
+        if ($breed_image !== null && File::exists($imagePath)) {
+            return public_path('portal/assets/img/breeds/' . $specie_type . '/' . $breed_image);
+        } else {
+            return public_path('portal/assets/img/breeds/no-breed-type-selected.jpg');
+        }
+    }
+
     public function specieTypeInfo(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Specie::class, 'specie_type');

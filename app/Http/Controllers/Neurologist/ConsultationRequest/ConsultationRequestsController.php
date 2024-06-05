@@ -15,6 +15,7 @@ use App\Models\ConsultationRequest;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -67,6 +68,37 @@ class ConsultationRequestsController extends Controller
         }
     }
 
+    public function deleteComment($request_id, $comment_id)
+    {
+        try {
+            DB::beginTransaction();
+
+            $requestId = Crypt::decrypt($request_id);
+            $commentId = Crypt::decrypt($comment_id);
+            $consultationInfo = ConsultationRequest::find($requestId);
+
+            $comments = json_decode($consultationInfo->comments, true) ?? [];
+            if(isset($comments[$commentId])){
+                unset($comments[$commentId]);
+            }
+
+            $consultationInfo->comments = json_encode($comments);
+            $consultationInfo->save();
+
+            $response = ResponseMessage::ResponseNotifySuccess('Success!', 'Comment information removed successfully.');
+            Log::info('Successfully removed the comment info', ['removed' => 'success' ?? '']);
+
+            DB::commit();
+            return response()->json($response);
+        } catch (Exception $e) {
+            DB::rollBack();
+            $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to remove the comment information. Please try again later.');
+            Log::info('The system is unable to remove the comment information. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
+
+            return response()->json($response);
+        }
+    }
+
     public function communicateDirectly(Request $request, $id): \Illuminate\Http\JsonResponse
     {
         try {
@@ -104,11 +136,13 @@ class ConsultationRequestsController extends Controller
         try {
             DB::beginTransaction();
             $requestId = Crypt::decrypt($id);
+
             $consultationRequest = ConsultationRequest::find($requestId);
             $consultationRequest->comments = json_encode($request->comments ?? []);
             $consultationRequest->share_through_email = 'Yes';
             $consultationRequest->save();
 
+            ///////------ Generate PDF ------\\\\\\\
             $pdf = new Dompdf();
 
             // Set custom options
@@ -118,7 +152,11 @@ class ConsultationRequestsController extends Controller
             $pdf->setOptions($options);
 
             // Load HTML content
-            $html = view('neurologist.consultation.render.pdf_data')->render();
+            $admin_id = User::where('status', 'Super Admin')->first()?->id ?? null;
+            $consultationInfo = ConsultationRequest::with('neuroAssessmentInfo')->find($requestId);
+            $neuroExamInfo = NeuroAssessment::with('patientInfo','treatedByInfo','consultByInfo')->find($consultationInfo->neuro_assessment_id ?? null);
+            $examsInfo = Exam::where('added_by', $admin_id)->with('testInfo', 'instructionVideoInfo')->get();
+            $html = view('neurologist.consultation.render.pdf_data', compact('consultationInfo','neuroExamInfo','examsInfo',))->render();
             $htmlWithMargins = "
             <style>
                 @page {
@@ -151,6 +189,19 @@ class ConsultationRequestsController extends Controller
 
             // Save the PDF to the specified path
             file_put_contents($filePath, $pdfOutput);
+            ///////------ Generate PDF End ------\\\\\\\
+
+            //----Send Email----\\
+            $toEmail = $consultationRequest->neuroAssessmentInfo?->addedByInfo?->email ?? null;
+            $fromEmail = auth()->user()->email ?? null;
+            $subject = 'Patient Report';
+            $emailData = [
+                            'practitioner_name'=> $consultationRequest->neuroAssessmentInfo?->addedByInfo?->name ?? '',
+                            'neurologist_name'=> $consultationRequest->neuroAssessmentInfo?->addedByInfo?->name ?? ''
+                         ];
+            $pdfFile = $filePath;
+
+            $this->sendEmail($toEmail,$fromEmail,$subject,$emailData,$pdfFile);
 
             $response = ResponseMessage::ResponseNotifySuccess('Success!', 'Successfully send the patient complete report along with your comments.');
             Log::info('Successfully send the patient complete report along with your comments', ['result' => 'success' ?? '']);
@@ -164,5 +215,15 @@ class ConsultationRequestsController extends Controller
 
             return response()->json($response);
         }
+    }
+
+    public function sendEmail($toEmail,$fromEmail,$subject,$emailData,$pdfFile)
+    {
+        Mail::send('neurologist.consultation.render.email_data', compact('emailData'), function ($message) use ($toEmail, $fromEmail, $subject, $pdfFile) {
+            $message->to($toEmail)
+                ->from($fromEmail)
+                ->subject($subject)
+                ->attach($pdfFile); // Attach the PDF file
+        });
     }
 }

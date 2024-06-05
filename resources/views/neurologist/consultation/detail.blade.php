@@ -507,17 +507,42 @@
                                     </div>
 
                                     <div class="previous-comments">
-                                        <div class="col-md-12">
-                                            <label class="form-label font-weight-bold" style=" font-family: 'Poppins', sans-serif !important">Comment 1</label>
-                                            <div class="input-group input-group-outline mb-3">
-                                                <textarea rows="4" class="form-control neurologist-comment w-100"
-                                                          name="comments[]"
-                                                          aria-describedby="comments" onfocus="focused(this)"
-                                                          onfocusout="defocused(this)" style="resize: none;"
-                                                          placeholder="Please enter your comments"
-                                                ></textarea>
-                                            </div>
-                                        </div>
+                                        @php($neurologicalComments = json_decode($consultationRequest->comments, true) ?? [])
+                                        @foreach($neurologicalComments as $neurologicalCommentKey=>$neurologicalComment)
+                                            @if($neurologicalCommentKey == 0)
+                                                <div class="col-md-12">
+                                                    <label class="form-label font-weight-bold" style=" font-family: 'Poppins', sans-serif !important">Comment {{ $neurologicalCommentKey+1 }}</label>
+                                                    <div class="input-group input-group-outline mb-3">
+                                                        <textarea rows="4" class="form-control neurologist-comment w-100"
+                                                                  name="comments[]"
+                                                                  aria-describedby="comments" onfocus="focused(this)"
+                                                                  onfocusout="defocused(this)" style="resize: none;"
+                                                                  placeholder="Please enter your comments"
+                                                        >{{ $neurologicalComment ?? '' }}</textarea>
+                                                    </div>
+                                                </div>
+                                            @else
+                                                <div class="col-md-12 remove-neurologist-comment-{{ $neurologicalCommentKey+1 }}">
+                                                    <div class="d-flex">
+                                                        <label class="form-label font-weight-bold" style=" font-family: 'Poppins', sans-serif !important"
+                                                        >Comment {{ $neurologicalCommentKey+1 }}</label>
+                                                        <span class="material-symbols-outlined text-danger cursor-pointer text-bold request-remove-data"
+                                                              data-removed-name="Comment {{ $neurologicalCommentKey+1 }}"
+                                                              data-removed-class="remove-neurologist-comment-{{ $neurologicalCommentKey+1 }}"
+                                                              data-action-url="{{ route('neurologist.consultation.detail.comment.delete', ['request_id'=>Crypt::encrypt($consultationRequest->id), 'comment_id'=>Crypt::encrypt($neurologicalCommentKey)]) }}"
+                                                              style="padding-left: 5px;font-size: 20px;cursor: pointer;"> delete </span>
+                                                    </div>
+                                                    <div class="input-group input-group-outline mb-3">
+                                                        <textarea rows="4" class="form-control neurologist-comment w-100"
+                                                                  name="comments[]"
+                                                                  aria-describedby="comments" onfocus="focused(this)"
+                                                                  onfocusout="defocused(this)" style="resize: none;"
+                                                                  placeholder="Please enter your comments"
+                                                        >{{ $neurologicalComment ?? '' }}</textarea>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        @endforeach
                                     </div>
                                     <div class="new-comments">
                                     </div>
@@ -553,6 +578,40 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="deleteCommentModal" data-bs-backdrop="static" data-bs-keyboard="false"
+         tabindex="-1" role="dialog" aria-labelledby="deleteCommentModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered " role="document" style="">
+            <div class="modal-content ">
+                <div class=" modal-header" style="background-color: #FD4F4E;border-bottom: none;">
+                    <button type="button" class="btn-close text-dark float-end" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="background-color: #FD4F4E;">
+                    <div class="d-flex justify-content-center">
+                        <img src="{{ asset('portal/assets/img/Sad Emoji.png') }}" alt="icon"/>
+                    </div>
+                    <div class="text-center  m-3 p-3">
+                        <p class="text-white">Are you sure to want to delete <span class="text-bold removed-item-name"></span></p>
+                    </div>
+                </div>
+                <div class="conformation">
+                    <div class="my-3">
+
+                        <a href="javascript:">
+                            <p class="justify-content-center font-weight-bold text-info removed-data d-flex">
+                                    <span>
+                                        Continue
+                                    </span>
+                                <span id="removed-data-loader" class="spinner-border overflow-hidden d-none" role="status"
+                                      style="height: 15px !important;width: 15px !important;margin: 5px !important;">
+                                        <span class="sr-only">Loading...</span>
+                                    </span>
+                            </p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="modal fade" id="communicateDirectlyModal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="communicateDirectlyModalLabel"
          aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-md" role="document">
@@ -569,7 +628,7 @@
                         </div>
                     </div>
                     <button type="button" class="btn btn-primary float-end btn-md mt-3 mb-0 text-white communicate-directly"
-                        data-action-url="{{ route('neurologist.consultation.request.communicate.directly', request()->id) }}">
+                            data-action-url="{{ route('neurologist.consultation.request.communicate.directly', request()->id) }}">
                         <span>Communicate Directly</span>
                         <div id="communicateDirectly-loader" class="spinner-border text-green-700 d-none overflow-hidden" role="status"
                              style="height: 16px !important;width: 16px !important;margin-left: 5px;font-size: 16px;margin-top: 0px;color: #ffffff;">
@@ -656,7 +715,7 @@
         $(document).on('click', '.add-comments', function (e) {
             e.preventDefault();
             let appendClass = 'new-comments';
-            let commentNo = $('.neurologist-comment').length  + 1;
+            let commentNo = $('.neurologist-comment').length + 1;
             let appendValue = `<div class="col-md-12" id='remove-neurologist-comment-${commentNo}'>
                                     <div class="d-flex">
                                         <label class="form-label font-weight-bold" style=" font-family: 'Poppins', sans-serif !important"
@@ -683,6 +742,30 @@
             $(`#${removedId}`).remove();
         });
 
+        $(document).on('click', '.request-remove-data', function (e) {
+            let removedClass = $(this).attr('data-removed-class');
+            let actionURL = $(this).attr('data-action-url');
+            let removedName = $(this).attr('data-removed-name');
+
+            $('.removed-data').attr('data-removed-class', removedClass);
+            $('.removed-data').attr('data-action-url', actionURL);
+            $('.removed-item-name').html(removedName);
+            $('#deleteCommentModal').modal('show');
+        });
+
+        $(document).on('click', '.removed-data', function (e) {
+            let actionType = 'delete';
+            let loaderId = 'removed-data-loader';
+            let closedModalId = 'deleteCommentModal';
+            let removedClass = $(this).attr('data-removed-class');
+            let actionURL = $(this).attr('data-action-url');
+            let processData = {
+                "_token": "{{ csrf_token() }}",
+            };
+
+            removeInfo(actionURL, actionType, processData, removedClass, closedModalId, loaderId);
+        });
+
         $(document).on('click', '.communicate-directly', function (e) {
             e.preventDefault();
             let actionType = 'post';
@@ -690,7 +773,7 @@
             let loaderId = 'communicateDirectly-loader';
             let actionURL = $(this).attr('data-action-url');
             let email = $('.communicate_directly_email').val();
-            let processData  = {
+            let processData = {
                 "_token": "{{ csrf_token() }}",
                 "email": email,
             };
