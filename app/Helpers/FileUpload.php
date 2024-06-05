@@ -22,10 +22,10 @@ class FileUpload{
     public static function FileUpload($image, $folder, $oldImageName = null)
     {
         $name = date('YmdHis') . "-" . Str::uuid() . "." . $image->getClientOriginalExtension();
-        $img_upload_path = img_upload_path . $folder; // Note: No trailing slash (/) after img_upload_path
+        $file_upload_path = file_upload_path . $folder; // Note: No trailing slash (/) after file_upload_path
 
-        if ($image->move($img_upload_path, $name) && $oldImageName != null) {
-            $filename = $img_upload_path . '/' . $oldImageName;
+        if ($image->move($file_upload_path, $name) && $oldImageName != null) {
+            $filename = $file_upload_path . '/' . $oldImageName;
             if (file_exists($filename)) {
                 unlink($filename);
             }
@@ -36,8 +36,8 @@ class FileUpload{
 
     public static function FileDelete($image, $folder, $oldImageName = null)
     {
-        $img_upload_path = img_upload_path.$folder;
-       $filename = $img_upload_path .'/'.$image;
+        $file_upload_path = file_upload_path.$folder;
+       $filename = $file_upload_path .'/'.$image;
      
        if (file_exists($filename))
            {

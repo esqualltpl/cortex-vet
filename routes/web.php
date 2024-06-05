@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 | Upload File Path
 |--------------------------------------------------------------------------
 */
-define('img_upload_path', public_path('portal/assets/upload/'));
+define('file_upload_path', public_path('portal/assets/upload/'));
 /*------------------------------------------------------------------------*/
 
 /*

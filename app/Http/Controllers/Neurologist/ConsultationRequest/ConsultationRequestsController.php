@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Neurologist\ConsultationRequest;
 use Carbon\Carbon;
 use App\Models\Exam;
 use App\Models\User;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use Illuminate\Http\Request;
 use App\Models\NeuroAssessment;
 use App\Helpers\ResponseMessage;
@@ -14,6 +16,7 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 
 class ConsultationRequestsController extends Controller
@@ -106,8 +109,50 @@ class ConsultationRequestsController extends Controller
             $consultationRequest->share_through_email = 'Yes';
             $consultationRequest->save();
 
-            $response = ResponseMessage::ResponseNotifySuccess('Success!', 'Successfully send the patient complete report along with your comments.');
+            $pdf = new Dompdf();
 
+            // Set custom options
+            $options = new Options();
+            $options->set('defaultPaperSize', 'A4');
+            $options->set('isHtml5ParserEnabled', true);
+            $pdf->setOptions($options);
+
+            // Load HTML content
+            $html = view('neurologist.consultation.render.pdf_data')->render();
+            $htmlWithMargins = "
+            <style>
+                @page {
+                    margin: 5mm 0;
+                }
+                body {
+                    margin: 0;
+                    padding: 0;
+                }
+            </style>
+            $html";
+
+            // Load HTML with custom margins
+            $pdf->loadHtml($htmlWithMargins);
+
+            // Set the paper size and orientation
+            $pdf->setPaper('A3', 'portrait');
+
+            // Render the PDF
+            $pdf->render();
+
+            $pdfOutput = $pdf->output(); // Get the generated PDF content
+            $file_name = date('YmdHis') . "-" . Str::uuid() . ".pdf";
+            $filePath = public_path('portal/assets/pdf/consultation-pdf/') . $file_name; // Define the path where you want to save the PDF
+
+            // Create the directory if it does not exist
+            if (!file_exists(dirname($filePath))) {
+                mkdir(dirname($filePath), 0777, true);
+            }
+
+            // Save the PDF to the specified path
+            file_put_contents($filePath, $pdfOutput);
+
+            $response = ResponseMessage::ResponseNotifySuccess('Success!', 'Successfully send the patient complete report along with your comments.');
             Log::info('Successfully send the patient complete report along with your comments', ['result' => 'success' ?? '']);
             DB::commit();
 
