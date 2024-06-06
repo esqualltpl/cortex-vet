@@ -173,7 +173,6 @@
                         <th>Veterinary Practitioner</th>
                         <th>Consulting Neurologist</th>
                         <th>Neuro Exam Conducted</th>
-                        <th>Notes</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
@@ -201,19 +200,12 @@
                                     <p class="text-center">-</p>
                                 @endif
                             </td>
-                            <td class="text-sm ">
-                                <a href="{{ route('practitioner.patient.neuro.exam.detail', ['id' => Crypt::encrypt($appointmentHistory->id), 'no'=> Crypt::encrypt($sn)]) }}" class="text-info text-decoration-underline"> Neuro Exam {{ $sn }}</a>
+                            <td class="text-sm">
+                                <a href="{{ route('practitioner.patient.neuro.exam.detail', ['id' => Crypt::encrypt($appointmentHistory->id), 'no'=> Crypt::encrypt($sn)]) }}"
+                                   class="text-info text-decoration-underline"> Neuro Exam {{ $sn }}</a>
                             </td>
-                            <td class="">
-                                <div class="input-group input-group-outline w-50" data-bs-toggle="modal"
-                                     data-bs-target="#Notes">
-                                    <input type="text" class="form-control" placeholder="lorem Ipsum">
-                                </div>
-                            </td>
-                            <td class="">
-                                <a href="#"><i class="material-symbols-outlined">
-                                        note_alt
-                                    </i></a>
+                            <td>
+                                <span class="cursor-pointer show-export-modal" data-neuro-assessment-id="{{ Crypt::encrypt($appointmentHistory->id) }}"><i class="material-symbols-outlined">share_windows</i></span>
                             </td>
                         </tr>
                     @endforeach
@@ -222,200 +214,38 @@
             </div>
         </div>
 
-        <div class="modal fade" id="editPatientModal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="editPatientModalLabel"
+        <div class="modal fade" id="exportModal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="exportModalLabel"
              aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                 <div class="modal-content ">
                     <div class="modal-header">
-                        <h6 class="pt-1 mb-0">Patient's Details</h6>
+                        <h6 class="pt-1 mb-0">Export</h6>
                         <button type="button" class="btn-close text-dark float-end" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="container-fluid">
-                            <div class="row">
-                                <div class="col-md-3 mb-3 p-0 mt-1">
-                                    <div id="breedImage-loader" class="text-center d-none" style="margin-top: 135px !important;">
-                                        <img src="{{ asset('portal/assets/img/loader.gif') }}" width="120px" alt="loader"/>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <form method="post" id="sendEmailForm">
+                                    @csrf
+                                    <input type="hidden" name="neuro_assessment_id" class="neuro_assessment_id">
+                                    <label class="font-weight-bold">Enter Email</label>
+                                    <div class="input-group input-group-outline mb-1 ">
+                                        <input type="email" class="form-control" name="email" placeholder="Enter the email address" aria-label="Name">
                                     </div>
-                                    <img class="breed-type-image"
-                                         src="{{ $patientInfo->breedInfo?->getBreedImage($patientInfo->specieTypeInfo?->name ?? null) ?? asset('portal/assets/img/breeds/no-breed-type-selected.jpg') }}"
-                                         alt="icon"
-                                         style="margin-top: 78px;width: 175px;border-radius: 16px;">
-                                </div>
-                                <div class="col-md-9">
-                                    <div class="d-flex flex-wrap justify-content-between">
-                                        <form method="post" id="patientInfoUpdateForm">
-                                            @csrf
-                                            <input type="hidden" name="patient_id" value="{{ request()->id ?? '' }}">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <label class="form-label">Patient Name</label>
-                                                    <div class="input-group input-group-outline mb-3">
-                                                        <input type="text" class="form-control w-100 @error('patient_name') is-invalid @enderror"
-                                                               name="patient_name"
-                                                               value="{{ $patientInfo->patient_name ?? '' }}"
-                                                               placeholder="Enter patient name"
-                                                               aria-describedby="patient name" onfocus="focused(this)"
-                                                               onfocusout="defocused(this)">
-                                                        @error('patient_name')
-                                                        <span class="invalid-feedback" role="alert">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label class="form-label">Owner Name</label>
-                                                    <div class="input-group input-group-outline mb-3">
-                                                        <input type="text" class="form-control w-100 @error('owner_name') is-invalid @enderror"
-                                                               name="owner_name"
-                                                               value="{{ $patientInfo->owner_name ?? '' }}"
-                                                               placeholder="Enter owner name"
-                                                               aria-describedby="owner name" onfocus="focused(this)"
-                                                               onfocusout="defocused(this)">
-                                                        @error('owner_name')
-                                                        <span class="invalid-feedback" role="alert">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label class="form-label">DOB</label>
-                                                    <div class="input-group input-group-outline mb-3">
-                                                        <input type="date" class="form-control w-100 @error('dob') is-invalid @enderror"
-                                                               name="dob"
-                                                               value="{{ $patientInfo->dob ?? '' }}"
-                                                               placeholder="Enter DOB"
-                                                               aria-describedby="DOB" onfocus="focused(this)"
-                                                               onfocusout="defocused(this)">
-                                                        @error('dob')
-                                                        <span class="invalid-feedback" role="alert">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6 mb-3">
-                                                    <label class="form-label">Sex</label>
-                                                    <select class="form-select p-2 @error('sex') is-invalid @enderror" name="sex" aria-label="Sex Types">
-                                                        <option selected disabled>Select</option>
-                                                        <option {{ $patientInfo->sex === 'Male Intact' ? 'selected' : '' }} value="{{ Crypt::encrypt('Male Intact') }}">Male
-                                                            Intact
-                                                        </option>
-                                                        <option {{ $patientInfo->sex === 'Female Intact' ? 'selected' : '' }} value="{{ Crypt::encrypt('Female Intact') }}">
-                                                            Female Intact
-                                                        </option>
-                                                        <option {{ $patientInfo->sex === 'Male Neutered' ? 'selected' : '' }} value="{{ Crypt::encrypt('Male Neutered') }}">Male
-                                                            Neutered
-                                                        </option>
-                                                        <option {{ $patientInfo->sex === 'Female Spayed' ? 'selected' : '' }} value="{{ Crypt::encrypt('Female Spayed') }}">
-                                                            Female Spayed
-                                                        </option>
-                                                        <option {{ $patientInfo->sex === "Unknown" ? 'selected' : '' }} value="{{ Crypt::encrypt('Unknown') }}">Unknown</option>
-                                                    </select>
-                                                    @error('sex')
-                                                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-                                                <div class="col-md-6 mb-3">
-                                                    <label class="form-label">Specie Type</label>
-                                                    <select class="form-select p-2 specie-type @error('specie_type') is-invalid @enderror"
-                                                            name="specie_type" aria-label="Specie Type">
-                                                        <option selected disabled>Select</option>
-                                                        @foreach($species as $specie)
-                                                            <option data-specie-image="{{ asset('portal/assets/img/breeds/no-breed-type-selected.jpg') }}"
-                                                                    {{ $specie->id == $patientInfo->specie_type ? 'selected' : '' }}
-                                                                    value="{{ Crypt::encrypt($specie->id ?? 0) }}">{{ $specie->name ?? '' }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    @error('specie_type')
-                                                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-                                                <div class="col-md-6 mb-3">
-                                                    <label class="form-label">Weight Type</label>
-                                                    <select class="form-select p-2 @error('weight_type') is-invalid @enderror" name="weight_type" aria-label="Weight Type">
-                                                        <option selected disabled>Select</option>
-                                                        <option {{ $patientInfo->weight_type === "Lbs" ? 'selected' : '' }} value="{{ Crypt::encrypt('Lbs') }}">Lbs
-                                                        </option>
-                                                        <option {{ $patientInfo->weight_type === "Kgs" ? 'selected' : '' }} value="{{ Crypt::encrypt('Kgs') }}">Kgs
-                                                        </option>
-                                                    </select>
-                                                    @error('weight_type')
-                                                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-                                                <div class="col-md-6 mb-3">
-                                                    <label class="form-label">Breed</label>
-                                                    <select class="form-select p-2 breed-options @error('breed') is-invalid @enderror" name="breed" aria-label="Breed">
-                                                        <option selected disabled>Select</option>
-                                                        @foreach($breedsSelectedSpecie as $breed)
-                                                            <option {{ $breed->id == $patientInfo->breed ? 'selected' : '' }}
-                                                                    data-breed-image="{{ $breed->getBreedImage($patientInfo->specieTypeInfo?->name ?? null) }}"
-                                                                    value="{{ Crypt::encrypt($breed->id ?? 0) }}">{{ $breed->name ?? '' }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    <div id="breedOption-loader"
-                                                         class="spinner-border text-green-700 d-none overflow-hidden" role="status"
-                                                         style="height: 21px !important;width: 22px !important;margin-left: 5px;font-size: 15px;margin-top: 8px;color: #a2a6b8;">
-                                                        <span class="sr-only">Loading...</span>
-                                                    </div>
-                                                    @error('breed')
-                                                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label class="form-label">Weight</label>
-                                                    <div class="input-group input-group-outline mb-3">
-                                                        <input type="number" class="form-control w-100 @error('weight') is-invalid @enderror" name="weight"
-                                                               value="{{ $patientInfo->weight ?? 0 }}"
-                                                               placeholder="Enter weight"
-                                                               aria-describedby="weight" onfocus="focused(this)"
-                                                               onfocusout="defocused(this)">
-                                                        @error('weight')
-                                                        <span class="invalid-feedback" role="alert">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
+                                    <div class="d-flex mt-4" style="justify-content:end; align-items: center;">
+                                        <button type="button" class="btn btn-primary float-end btn-md mt-3 mb-0 text-white send-email"
+                                                data-action-url="{{ route('practitioner.patient.send.detail.report') }}">
+                                            <span>Send Email</span>
+                                            <div id="sendEmail-loader" class="spinner-border text-green-700 d-none overflow-hidden" role="status"
+                                                 style="height: 17px !important;width: 17px !important;margin-left: 5px;font-size: 16px;margin-top: 0px;color: #ffffff;">
+                                                <span class="sr-only">Loading...</span>
                                             </div>
-                                            <div class="d-flex mt-4" style="justify-content:end; align-items: center;">
-                                                <button type="button" class="btn btn-primary btn-sm py-2 text-white mb-2 patient-info-save"
-                                                        style=" font-family: 'Poppins', sans-serif !important" data-action-url="{{ route('practitioner.patient.info.update') }}">
-                                                    <i class="fa fa-plus me-2 mx-1" style=" font-size: 10px; !important;" aria-hidden="true"></i>
-                                                    <span>Update</span>
-                                                    <div id="updatePatientInfo-loader" class="spinner-border text-green-700 d-none overflow-hidden" role="status"
-                                                         style="height: 17px !important;width: 17px !important;margin-left: 5px;font-size: 16px;margin-top: 0px;color: #ffffff;">
-                                                        <span class="sr-only">Loading...</span>
-                                                    </div>
-                                                </button>
-                                            </div>
-                                        </form>
+                                        </button>
                                     </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="modal fade" id="Notes" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog modal- modal-dialog-centered modal-lg " role="document">
-                <div class="modal-content p-3">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel"><i
-                                    class="material-symbols-outlined text-sl text-info">
-                                description
-                            </i>Notes</h5>
-                        <button type="button" class="btn-close text-dark" data-bs-dismiss="modal"
-                                aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-
-                    <div class="modal-body">
-                        <div class="input-group input-group-outline">
-                                <textarea class="form-control"
-                                          placeholder="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,"
-                                          id="jkanban-task-description" rows="10" readonly></textarea>
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </div>
@@ -546,6 +376,24 @@
                 $(`#toggleWeight-loader`).addClass('d-none');
                 $(`.toggle-weight-switch-info`).removeClass('d-none');
             }, 500);
+        });
+
+        $(document).on('click', '.show-export-modal', function (e) {
+            let neuroAssessmentId = $(this).attr('data-neuro-assessment-id');
+            $('.neuro_assessment_id').val(neuroAssessmentId);
+            $('#exportModal').modal('show');
+        });
+
+        $(document).on('click', '.send-email', function (e) {
+            let actionType = 'post';
+            let loaderId = 'sendEmail-loader';
+            let actionURL = $(this).attr('data-action-url');
+            let formId = 'sendEmailForm';
+            let closeModalId = 'exportModal';
+            let processData = $(`#${formId}`).serialize();
+            let renderClass = null;
+
+            saveInfo(actionURL, actionType, processData, loaderId, formId, renderClass, closeModalId);
         });
     </script>
 @endsection

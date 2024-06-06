@@ -228,14 +228,12 @@
                         <button type="button" class="btn-close text-dark float-end" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="container-fluid">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div id="notesModal-loader" class="text-center d-none" style="margin-left: 34px;">
-                                        <img src="{{ asset('portal/assets/img/loader.gif') }}" width="120px" alt="loader"/>
-                                    </div>
-                                    <div class="neuro-assessment-notes-info"></div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div id="notesModal-loader" class="text-center d-none" style="margin-left: 34px;">
+                                    <img src="{{ asset('portal/assets/img/loader.gif') }}" width="120px" alt="loader"/>
                                 </div>
+                                <div class="neuro-assessment-notes-info"></div>
                             </div>
                         </div>
                     </div>
