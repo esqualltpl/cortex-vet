@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Practitioner\Dashboard;
 
+use App\Helpers\Notifications;
 use App\Helpers\ResponseMessage;
 use App\Http\Controllers\Controller;
 use App\Models\Affiliate;
 use App\Models\Breed;
 use App\Models\Letter;
+use App\Models\NotificationHistory;
 use App\Models\Patient;
 use App\Models\Resource;
 use App\Models\Specie;
@@ -29,6 +31,21 @@ class DashboardController extends Controller
         $exoticPatients = Patient::where('specie_type', '3')->orWhere('specie_type', '3')->count() ?? 0;
 
         return view('practitioner.dashboard.index', compact('resourceInfo', 'caninePatients', 'felinePatients', 'exoticPatients'));
+    }
+
+    public function activeNotificationSeen()
+    {
+        $getActiveNotifications = Notifications::GetNotifications();
+        foreach ($getActiveNotifications['notification'] as $getActiveNotification) {
+            if (NotificationHistory::where('notification_id', $getActiveNotification->id ?? null)->first() == null) {
+                $notification_history = new NotificationHistory;
+                $notification_history->notification_id = $getActiveNotification->id ?? null;
+                $notification_history->read_by = auth()->user()->id ?? null;
+                $notification_history->save();
+            }
+        }
+
+        return response()->json('Notification status updated.');
     }
 
     public function patient(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application

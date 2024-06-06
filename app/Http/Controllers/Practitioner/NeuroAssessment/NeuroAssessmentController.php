@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ConsultationRequest;
 use App\Models\Exam;
 use App\Models\NeuroAssessment;
+use App\Models\Notification;
 use App\Models\Patient;
 use App\Models\ResultDetail;
 use App\Models\User;
@@ -144,6 +145,12 @@ class NeuroAssessmentController extends Controller
             $consultationRequest->neuro_assessment_id = $treatedInfo->id ?? null;
             $consultationRequest->request_date_time = Carbon::now();
             $consultationRequest->save();
+
+            $practitionerName = auth()->user()->name ?? '';
+            $consultationRequestNotification = new Notification();
+            $consultationRequestNotification->message = '<span class="text-primary text-capitalize">'.$practitionerName.'</span> request for Neurologist Consultation.';
+            $consultationRequestNotification->notification_for = 0;
+            $consultationRequestNotification->save();
 
             $response = ResponseMessage::ResponseNotifySuccess('Success!', 'Successfully send the consult neurologist request.');
             $response['redirect_url'] = route('practitioner.neuro.assessment.exam', $id);

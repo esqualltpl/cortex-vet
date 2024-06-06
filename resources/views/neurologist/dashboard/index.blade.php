@@ -89,7 +89,6 @@
                     <div class=" mb-0 d-flex justify-content-between p-2 bg-transparent">
                         <div class="pt-1">
                             <h6 class="mb-0 text-capitalize font-weight-800 px-2">Resources</h6>
-                            <p class="mb-0 text-start font-weight-400 mt-1 px-2">Lorem Ipsum Dolor - Sit Amet (consecrate)</p>
                         </div>
                     </div>
                     <div class="row">

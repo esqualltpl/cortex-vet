@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Neurologist\ConsultationRequest;
 
+use App\Models\Notification;
 use Carbon\Carbon;
 use App\Models\Exam;
 use App\Models\User;
@@ -28,11 +29,18 @@ class ConsultationRequestsController extends Controller
         return view('neurologist.consultation.index', compact('consultationRequests'));
     }
 
-    public function detail($id): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    public function detail($id)
     {
         $requestId = Crypt::decrypt($id);
         $admin_id = User::where('status', 'Super Admin')->first()?->id ?? null;
         $consultationRequest = ConsultationRequest::with('neuroAssessmentInfo')->find($requestId);
+
+        if($consultationRequest->accept_by != null && $consultationRequest->accept_by != auth()->user()->id ?? 0){
+            $response = ResponseMessage::ResponseNotifyWarning('Info!', 'This request has been accepted by another neurologist.');
+            Log::info('This request has been accepted by another neurologist', ['Info' => 'already-accepted' ?? '']);
+            return to_route('neurologist.consultation.request')->with($response);
+        }
+
         $neuroExamInfo = NeuroAssessment::with('patientInfo','treatedByInfo','consultByInfo')->find($consultationRequest->neuro_assessment_id ?? null);
         $examsInfo = Exam::where('added_by', $admin_id)->with('testInfo', 'instructionVideoInfo')->get();
         return view('neurologist.consultation.detail', compact('consultationRequest', 'examsInfo', 'neuroExamInfo'));
@@ -51,6 +59,12 @@ class ConsultationRequestsController extends Controller
             $neuroAssessment = NeuroAssessment::find($consultationRequest->neuro_assessment_id ?? null);
             $neuroAssessment->consult_by = auth()->user()->id ?? null;
             $neuroAssessment->save();
+
+            $neurologistName = auth()->user()->name ?? '';
+            $neuroAssessmentNotification = new Notification();
+            $neuroAssessmentNotification->message = '<span class="text-primary text-capitalize">'.$neurologistName.'</span> has accepted your Neurologist Consultation Request.';
+            $neuroAssessmentNotification->notification_for = $consultationRequest->neuroAssessmentInfo?->addedByInfo?->id ?? null;
+            $neuroAssessmentNotification->save();
 
             $response = ResponseMessage::ResponseNotifySuccess('Success!', 'Successfully accept the consult neurologist request.');
             $response['redirect_url'] = route('neurologist.consultation.detail', $id);

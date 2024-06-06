@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 */
 Route::group(['prefix' => 'practitioner', 'middleware' => ['practitioner']], function () {
     Route::get('/', [DashboardController::class, 'dashboard'])->name('practitioner.dashboard');
+    Route::post('active/notification', [DashboardController::class, 'activeNotificationSeen'])->name('practitioner.active.notification.seen');
 
     //Add New Patient
     Route::prefix('add/new/patient')->group(function () {

@@ -17,4 +17,20 @@
 <script src="{{ asset('portal/assets/js/material-dashboard.min.js?v=3.0.5') }}"></script>
 
 <script src="{{ asset('portal/assets/js/functions.js') }}"></script>
+<script>
+    $(document).on('click', '.active-notifications', function (e) {
+        $('.active-notifications-counter').addClass('d-none');
+        $.ajax({
+            url: '{{ route('practitioner.active.notification.seen') }}',
+            type: 'POST',
+            dataType: 'json',
+            cache: false,
+            data: {
+                "_token": "{{ csrf_token() }}",
+            },
+            success: function (response) {
+            }
+        });
+    });
+</script>
 @yield('script')
