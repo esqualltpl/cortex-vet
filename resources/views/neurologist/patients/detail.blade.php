@@ -189,7 +189,7 @@
                                     <img src="{{ $appointmentHistory->addedByInfo->getUserPic() ?? '-' }}" alt="icon" class="avatar"/>
                                     {{ $appointmentHistory->addedByInfo?->name ?? '' }}
                                 @else
-                                    <p class="text-center">-</p>
+                                    <p class="px-6">-</p>
                                 @endif
                             </td>
                             <td class="text-sm">
@@ -197,22 +197,20 @@
                                     <img src="{{ $appointmentHistory->consultByInfo->getUserPic() ?? '-' }}" alt="icon" class="avatar"/>
                                     {{ $appointmentHistory->consultByInfo?->name ?? '' }}
                                 @else
-                                    <p class="text-center">-</p>
+                                    <p class="px-6">-</p>
                                 @endif
                             </td>
-                            <td class="text-sm ">
-                                <a href="{{ route('neurologist.patient.neuro.exam.detail', ['id' => Crypt::encrypt($appointmentHistory->id), 'no'=> Crypt::encrypt($sn)]) }}" class="text-info text-decoration-underline"> Neuro Exam {{ $sn }}</a>
+                            <td class="text-sm">
+                                <a href="{{ route('neurologist.patient.neuro.exam.detail', ['id' => Crypt::encrypt($appointmentHistory->id), 'no'=> Crypt::encrypt($sn)]) }}"
+                                   class="text-info text-decoration-underline"> Neuro Exam {{ $sn }}</a>
+                            </td>
+                            <td>
+                                <img class="cursor-pointer appointment-history-note" data-bs-toggle="modal" data-bs-target="#notesModal"
+                                     data-action-url="{{ route('neurologist.patients.neuro.assessment.get.notes', Crypt::encrypt($appointmentHistory->id)) }}"
+                                     src="{{ asset('portal/assets/img/notes.png') }}" alt="icon">
                             </td>
                             <td class="">
-                                <div class="input-group input-group-outline w-50" data-bs-toggle="modal"
-                                     data-bs-target="#Notes">
-                                    <input type="text" class="form-control" placeholder="lorem Ipsum">
-                                </div>
-                            </td>
-                            <td class="">
-                                <a href="#"><i class="material-symbols-outlined">
-                                        note_alt
-                                    </i></a>
+                                <a href="{{ route('neurologist.patients.report.detail', Crypt::encrypt($appointmentHistory->id)) }}"><span class="material-symbols-outlined">share_windows</span></a>
                             </td>
                         </tr>
                     @endforeach
@@ -221,29 +219,26 @@
             </div>
         </div>
 
-        <div class="modal fade" id="Notes" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        <div class="modal fade" id="notesModal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="notesModalLabel"
              aria-hidden="true">
-            <div class="modal-dialog modal- modal-dialog-centered modal-lg " role="document">
-                <div class="modal-content p-3">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content ">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel"><i
-                                    class="material-symbols-outlined text-sl text-info">
-                                description
-                            </i>Notes</h5>
-                        <button type="button" class="btn-close text-dark" data-bs-dismiss="modal"
-                                aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                        <h6 class="pt-1 mb-0">Notes</h6>
+                        <button type="button" class="btn-close text-dark float-end" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-
                     <div class="modal-body">
-                        <div class="input-group input-group-outline">
-                                <textarea class="form-control"
-                                          placeholder="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,"
-                                          id="jkanban-task-description" rows="10" readonly></textarea>
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div id="notesModal-loader" class="text-center d-none" style="margin-left: 34px;">
+                                        <img src="{{ asset('portal/assets/img/loader.gif') }}" width="120px" alt="loader"/>
+                                    </div>
+                                    <div class="neuro-assessment-notes-info"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -285,6 +280,30 @@
                 $(`#toggleWeight-loader`).addClass('d-none');
                 $(`.toggle-weight-switch-info`).removeClass('d-none');
             }, 500);
+        });
+
+        $(document).on('click', '.appointment-history-note', function (e) {
+            let actionType = 'get';
+            let loaderId = 'notesModal-loader';
+            let actionURL = $(this).attr('data-action-url');
+            let processData = {
+                "_token": "{{ csrf_token() }}",
+            };
+            let renderClass = 'neuro-assessment-notes-info';
+
+            getInfo(actionURL, actionType, processData, loaderId, renderClass);
+        });
+
+        $(document).on('click', '.save-notes', function (e) {
+            let actionType = 'post';
+            let loaderId = 'saveNotes-loader';
+            let actionURL = $(this).attr('data-action-url');
+            let formId = 'saveNotesForm';
+            let closeModalId = 'notesModal';
+            let processData = $(`#${formId}`).serialize();
+            let renderClass = null;
+
+            saveInfo(actionURL, actionType, processData, loaderId, formId, renderClass, closeModalId);
         });
     </script>
 @endsection

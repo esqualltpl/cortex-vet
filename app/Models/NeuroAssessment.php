@@ -33,4 +33,9 @@ class NeuroAssessment extends Model
     {
         return $this->belongsTo(User::class, 'consult_by');
     }
+
+    public function consultationInfo(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(ConsultationRequest::class, 'id','neuro_assessment_id');
+    }
 }

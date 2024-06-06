@@ -148,21 +148,21 @@
     @php($neurologicalExamSteps = json_decode($neuroExamInfo->neurological_exam_steps, true) ?? [])
     @if(count($neurologicalExamSteps) > 0)
         @foreach($examsInfo as $examInfo)
-        @if(isset($neurologicalExamSteps[$examInfo->id ?? 0]))
-            <h4 style="color: #344767 !important;">{{ $examInfo->step_name ?? '' }}</h4>
-            @if(count($examInfo->testInfo) > 0)
-                @foreach($examInfo->testInfo as $testKey=>$testInfo)
-                    @php($test_sn = $testKey+1)
+            @if(isset($neurologicalExamSteps[$examInfo->id ?? 0]))
+                <h4 style="color: #344767 !important;">{{ $examInfo->step_name ?? '' }}</h4>
+                @if(count($examInfo->testInfo) > 0)
+                    @foreach($examInfo->testInfo as $testKey=>$testInfo)
+                        @php($test_sn = $testKey+1)
                         <p>{{ $testInfo->name ?? '' }}:
                             @foreach($testInfo->optionsInfo ?? [] as $optionKey=>$options)
                                 @php($option_sn = $optionKey +1)
                                 <strong style="color: #866FBF;">{{ isset($neurologicalExamSteps[$examInfo->id ?? 0][$testInfo->id ?? 0]) && $neurologicalExamSteps[$examInfo->id ?? 0][$testInfo->id ?? 0] == $options->id ? $options->name ?? '' : '' }}</strong>
                             @endforeach
                         </p>
-                @endforeach
+                    @endforeach
+                @endif
             @endif
-        @endif
-    @endforeach
+        @endforeach
     @else
         <p> No :
             <strong style="color: #866FBF;">No Information found</strong>
@@ -187,9 +187,13 @@
 </div>
 <div style="padding-left: 32px !important">
     @php($neurologicalComments = json_decode($consultationInfo->comments, true) ?? [])
-    @foreach($neurologicalComments as $neurologicalCommentKey =>$neurologicalComment)
-        <p><strong>{{ $neurologicalCommentKey+1 }}.</strong> {{$neurologicalComment ?? ''}}</p>
-    @endforeach
+    @if(count($neurologicalComments) > 0)
+        @foreach($neurologicalComments as $neurologicalCommentKey =>$neurologicalComment)
+            <p><strong>{{ $neurologicalCommentKey+1 }}.</strong> {{$neurologicalComment ?? ''}}</p>
+        @endforeach
+    @else
+        <p class="text-center">No comments found.</p>
+    @endif
 </div>
 <h4 style="font-size: 17px;margin-top: 40px;margin-bottom: 20px !important;color: #7b809a;text-align: center;">Thank You!!</h4>
 

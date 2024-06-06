@@ -29,6 +29,10 @@ Route::group(['prefix' => 'neurologist', 'middleware' => ['neurologist']], funct
         Route::get('/list', [PatientsController::class, 'index'])->name('neurologist.patients');
         Route::get('/detail/{id}', [PatientsController::class, 'detail'])->name('neurologist.patient.detail');
         Route::get('neuro/exam/detail/{id}/{no}', [PatientsController::class, 'neuroExamDetail'])->name('neurologist.patient.neuro.exam.detail');
+        Route::get('/notes/get/{id}', [PatientsController::class, 'getNeuroAssessmentNotes'])->name('neurologist.patients.neuro.assessment.get.notes');
+        Route::post('/notes/save', [PatientsController::class, 'saveNeuroAssessmentNotes'])->name('neurologist.patients.neuro.assessment.save.notes');
+        Route::get('report/detail/{id}', [PatientsController::class, 'reportDetail'])->name('neurologist.patients.report.detail');
+
     });
 
     //Settings
