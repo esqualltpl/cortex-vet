@@ -197,7 +197,7 @@ class ConsultationRequestsController extends Controller
             $subject = 'Patient Report';
             $emailData = [
                             'practitioner_name'=> $consultationRequest->neuroAssessmentInfo?->addedByInfo?->name ?? '',
-                            'neurologist_name'=> $consultationRequest->neuroAssessmentInfo?->addedByInfo?->name ?? ''
+                            'neurologist_name'=> $consultationRequest->neuroAssessmentInfo?->consultByInfo?->name ?? ''
                          ];
             $pdfFile = $filePath;
 
