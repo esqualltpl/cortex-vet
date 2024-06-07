@@ -13,7 +13,6 @@ class SendEmail
     {
         Mail::send($emailTemplate, compact('emailData'), function ($message) use ($toEmail, $fromEmail, $subject, $pdfFile) {
             $message->to($toEmail)
-                ->from($fromEmail)
                 ->subject($subject);
 
             if ($pdfFile != null)
