@@ -238,7 +238,6 @@
                     <h6>Neurolocalizations</h6>
                     <div class="row mt-3  gap-8 ms-1">
                         <div class="col-md-5 p-2  border-radius-lg " style="border:1px solid #bab8b8;">
-                            <p class="font-weight-bold text-dark ">Mentation</p>
                             <strong style="color: #2E97A9;">Results:</strong>
                             <p>{{ $neuroExamInfo->result ?? '' }}</p>
                         </div>
