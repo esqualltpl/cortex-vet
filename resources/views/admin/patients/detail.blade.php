@@ -14,7 +14,7 @@
                     Patients
                 </a>
             </li>
-            <li class="breadcrumb-item text-sm mx-2 text-dark active" aria-current="page">Oreo</li>
+            <li class="breadcrumb-item text-sm mx-2 text-dark active" aria-current="page">{{ $patientInfo->patient_name ?? '' }}</li>
         </ol>
     </nav>
 @endsection
@@ -25,11 +25,13 @@
     <div class="container-fluid py-2">
         <div class="card p-3 mt-3">
             <div class="col-md-12 d-flex justify-content-between flex-wrap">
-                <h5>Orea Detail</h5>
-                <p>Patient created on: <span style="color: #5534A5;">12-01-2023</span></p>
+                <h5>{{ $patientInfo->patient_name ?? '' }} Detail</h5>
+                <p>Patient created on: <span style="color: #5534A5;">{{ $patientInfo->created_at ?? '0000-00-00 00:00' }}</span></p>
             </div>
             <div class="row">
-                <h5>Patient Detail</h5>
+                <div class="d-flex">
+                    <h6>Patient Detail</h6>
+                </div>
                 <div class="col-md-9 mt-3 d-flex flex-wrap justify-content-between">
                     <div class="container p-0">
                         <div class="row">
@@ -37,12 +39,10 @@
                                 <div class="container p-0">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <p class="font-weight-bold text-dark mb-0">Patient ID
-                                            </p>
+                                            <p class="font-weight-bold text-dark mb-0">Patient ID</p>
                                         </div>
                                         <div class="col-md-6">
-                                            <p class="font-weight-normal text-dark opacity-8">PID-001
-                                            </p>
+                                            <p class="font-weight-normal text-dark opacity-8">{{ $patientInfo->patient_id ?? '' }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -51,12 +51,10 @@
                                 <div class="container p-0">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <p class="font-weight-bold text-dark mb-0">Owner Name
-                                            </p>
+                                            <p class="font-weight-bold text-dark mb-0">Owner Name</p>
                                         </div>
                                         <div class="col-md-6">
-                                            <p class="font-weight-normal text-dark opacity-8">
-                                                Johan Thomos</p>
+                                            <p class="font-weight-normal text-dark opacity-8">{{ $patientInfo->owner_name ?? '' }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -67,12 +65,10 @@
                                 <div class="container p-0">
                                     <div class="row">
                                         <div class="col-md-6 col-sm-6">
-                                            <p class="font-weight-bold text-dark mb-0">Patient Name
-                                            </p>
+                                            <p class="font-weight-bold text-dark mb-0">Patient Name</p>
                                         </div>
                                         <div class="col-md-6 col-sm-6">
-                                            <p class="font-weight-normal text-dark opacity-8">Orea
-                                            </p>
+                                            <p class="font-weight-normal text-dark opacity-8">{{ $patientInfo->patient_name ?? '' }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -81,12 +77,10 @@
                                 <div class="container p-0">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <p class="font-weight-bold text-dark mb-0">Age/DOB
-                                            </p>
+                                            <p class="font-weight-bold text-dark mb-0">Age/DOB</p>
                                         </div>
                                         <div class="col-md-6">
-                                            <p class="font-weight-normal text-dark opacity-8">
-                                                12-01-2023</p>
+                                            <p class="font-weight-normal text-dark opacity-8">{{ $patientInfo->dob ?? '' }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -97,12 +91,10 @@
                                 <div class="container p-0">
                                     <div class="row">
                                         <div class="col-md-6 col-sm-6">
-                                            <p class="font-weight-bold text-dark mb-0">Sex
-                                            </p>
+                                            <p class="font-weight-bold text-dark mb-0">Sex</p>
                                         </div>
                                         <div class="col-md-6 col-sm-6">
-                                            <p class="font-weight-normal text-dark opacity-8">Female Intact
-                                            </p>
+                                            <p class="font-weight-normal text-dark opacity-8">{{ $patientInfo->sex ?? '' }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -111,12 +103,10 @@
                                 <div class="container p-0">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <p class="font-weight-bold text-dark mb-0">Breed
-                                            </p>
+                                            <p class="font-weight-bold text-dark mb-0">Breed</p>
                                         </div>
                                         <div class="col-md-6">
-                                            <p class="font-weight-normal text-dark opacity-8">
-                                                German Shepherd</p>
+                                            <p class="font-weight-normal text-dark opacity-8">{{ $patientInfo->breedInfo?->name ?? '' }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -128,15 +118,22 @@
                                     <div class="row">
                                         <div class="col-md-6 col-sm-6">
                                             <div class="d-flex">
-                                                <p class="font-weight-bold   text-dark mb-0">Weight </p>
-                                                <div class="form-check form-switch ms-2 ">
-                                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault23"
-                                                           checked onchange="visible()">
+                                                <p class="font-weight-bold text-dark mb-0">Weight</p>
+                                                <div class="form-check form-switch ms-2 mt-1 mx-1">
+                                                    <input class="form-check-input toggle-weight-switch" data-weight="{{ $patientInfo->weight ?? '' }}" type="checkbox"
+                                                           id="weightSwitch" {{ $patientInfo->weight_type == 'Kgs' ? 'checked' : '' }}>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-sm-6">
-                                            <p class="font-weight-normal text-dark opacity-8" id="profileVisibility">6.5Lbs
+                                            <div id="toggleWeight-loader"
+                                                 class="spinner-border text-green-700 d-none overflow-hidden" role="status"
+                                                 style="height: 21px !important;width: 21px !important;margin-left: 25px;font-size: 15px;margin-top: 8px;color: #a2a6b8;">
+                                                <span class="sr-only">Loading...</span>
+                                            </div>
+                                            <p class="font-weight-normal text-dark opacity-8 toggle-weight-switch-info" id="profileVisibility">
+                                                <span class="toggle-weight">{{ $patientInfo->weight ?? '' }}</span>
+                                                <span class="text-sm toggle-weight-label">{{ $patientInfo->weight_type ?? '' }}</span>
                                             </p>
                                         </div>
                                     </div>
@@ -146,12 +143,10 @@
                                 <div class="container p-0">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <p class="font-weight-bold text-dark mb-0">Species Type
-                                            </p>
+                                            <p class="font-weight-bold text-dark mb-0">Species Type</p>
                                         </div>
                                         <div class="col-md-6">
-                                            <p class="font-weight-normal text-dark opacity-8">
-                                                Canine</p>
+                                            <p class="font-weight-normal text-dark opacity-8">{{ $patientInfo->specieTypeInfo?->name ?? '' }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -161,16 +156,15 @@
                 </div>
                 <div class="col-md-1">
                     <div style="width: 90px; max-height: 90px">
-                        <img src="{{ asset('portal/assets/img/german_shephard.jpg') }}" alt="icon" style="width: 90px; height: 90px; border-radius:300px;"
-                        />
+                        <img src="{{ $patientInfo->getPatientImage($patientInfo->specieTypeInfo?->name ?? null,$patientInfo->breedInfo?->image ?? null) }}" alt="icon"
+                             style="width: 130px;height: 130px;border-radius:300px;"/>
                     </div>
-                </div> </div>
+                </div>
+            </div>
         </div>
         <div class="card mt-3 ">
-            <h5 class="p-3">Appointment History</h5>
-
+            <h6 class="p-3">Appointment History</h6>
             <div class="table-responsive">
-
                 <table class="table table-flush" id="datatable-basic">
                     <thead class="thead-light">
                     <tr>
@@ -183,80 +177,66 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td class="text-sm ">
-                            1-01-2024, 11:10 Am
-                        </td>
-                        <td class="text-sm "><img src="{{ asset('portal/assets/img/Image 1.png') }}" alt="icon" class="avatar" /> Ryan Holland
-                        </td>
-                        <td class="text-sm "><img src="{{ asset('portal/assets/img/Image 2.png') }}" alt="icon" class="avatar" /> Ryan Holland
-                        </td>
-
-                        <td class="text-sm ">
-                            <a href="{{ route('admin.patient.neuro.exam', 1) }}" class="text-info text-decoration-underline">   Neuro Exam 1</a>
-                        </td>
-                        <td class="">
-                            <div class="input-group input-group-outline w-50" data-bs-toggle="modal"
-                                 data-bs-target="#Notes">
-                                <input type="text" class="form-control" placeholder="lorem Ipsum">
-                            </div>
-                        </td>
-                        <td class="">
-                            <a href="{{ route('admin.patient.neuro.exam', 1) }}"><i class="material-symbols-outlined">
-                                    note_alt
-                                </i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="text-sm ">
-                            1-01-2024, 11:10 Am
-                        </td>
-                        <td class="text-sm "><img src="{{ asset('portal/assets/img/Image 1.png') }}" alt="icon" class="avatar" /> Ryan Holland
-                        </td>
-                        <td class="text-sm "><img src="{{ asset('portal/assets/img/Image 2.png') }}" alt="icon" class="avatar" /> Ryan Holland
-                        </td>
-
-                        <td class="text-sm ">
-                            <a href="{{ route('admin.patient.neuro.exam', 1) }}" class="text-info text-decoration-underline">   Neuro Exam 1</a>
-                        </td>
-                        <td class="">
-                            <i class="fa fa-sticky-note-o" aria-hidden="true"></i>
-                        </td>
-                        <td class="">
-                            <a href="{{ route('admin.patient.neuro.exam', 1) }}"><i class="material-symbols-outlined">
-                                    note_alt
-                                </i></a>
-                        </td>
-                    </tr>
-
+                    @php($sn = 0)
+                    @foreach($appointmentsHistory as $appointmentHistory)
+                        @php($sn = $sn+1)
+                        <tr>
+                            <td class="text-sm ">
+                                {{ $appointmentHistory->created_at }}
+                            </td>
+                            <td class="text-sm">
+                                @if($appointmentHistory->addedByInfo != null)
+                                    <img src="{{ $appointmentHistory->addedByInfo->getUserPic() ?? '-' }}" alt="icon" class="avatar"/>
+                                    {{ $appointmentHistory->addedByInfo?->name ?? '' }}
+                                @else
+                                    <p class="px-6">-</p>
+                                @endif
+                            </td>
+                            <td class="text-sm">
+                                @if($appointmentHistory->consultByInfo != null)
+                                    <img src="{{ $appointmentHistory->consultByInfo->getUserPic() ?? '-' }}" alt="icon" class="avatar"/>
+                                    {{ $appointmentHistory->consultByInfo?->name ?? '' }}
+                                @else
+                                    <p class="px-6">-</p>
+                                @endif
+                            </td>
+                            <td class="text-sm">
+                                <a href="{{ route('admin.patient.neuro.exam.detail', ['id' => Crypt::encrypt($appointmentHistory->id), 'no'=> Crypt::encrypt($sn)]) }}"
+                                   class="text-info text-decoration-underline"> Neuro Exam {{ $sn }}</a>
+                            </td>
+                            <td>
+                                <img class="cursor-pointer appointment-history-note" data-bs-toggle="modal" data-bs-target="#notesModal"
+                                     data-action-url="{{ route('admin.patients.neuro.assessment.get.notes', Crypt::encrypt($appointmentHistory->id)) }}"
+                                     src="{{ asset('portal/assets/img/notes.png') }}" alt="icon">
+                            </td>
+                            <td class="">
+                                <a href="{{ route('admin.patients.report.detail', Crypt::encrypt($appointmentHistory->id)) }}"><span class="material-symbols-outlined">share_windows</span></a>
+                            </td>
+                        </tr>
+                    @endforeach
                     </tbody>
-
                 </table>
             </div>
         </div>
-        <div class="modal fade" id="Notes" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog modal- modal-dialog-centered modal-lg " role="document">
-                <div class="modal-content p-3">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel"><i
-                                    class="material-symbols-outlined text-sl text-info">
-                                description
-                            </i>Notes</h5>
-                        <button type="button" class="btn-close text-dark" data-bs-dismiss="modal"
-                                aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
 
+        <div class="modal fade" id="notesModal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="notesModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content ">
+                    <div class="modal-header">
+                        <h6 class="pt-1 mb-0">Notes</h6>
+                        <button type="button" class="btn-close text-dark float-end" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
                     <div class="modal-body">
-                        <div class="input-group input-group-outline">
-                                <textarea class="form-control"
-                                          placeholder="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,"
-                                          id="jkanban-task-description" rows="10" readonly></textarea>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div id="notesModal-loader" class="text-center d-none" style="margin-left: 34px;">
+                                    <img src="{{ asset('portal/assets/img/loader.gif') }}" width="120px" alt="loader"/>
+                                </div>
+                                <div class="neuro-assessment-notes-info"></div>
+                            </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -273,5 +253,55 @@
                 perPage: 10
             });
         }
+
+        $(document).on('change', '.toggle-weight-switch', function () {
+            let weight = $(this).attr('data-weight');
+            let currentValue = parseFloat(weight);
+
+            $(`#toggleWeight-loader`).removeClass('d-none');
+            $(`.toggle-weight-switch-info`).addClass('d-none');
+
+
+            if ($(this).is(':checked')) {
+                let newValue = Math.round((currentValue / 2.20462) * 100) / 100;
+                $('.toggle-weight').text(newValue);
+                $(this).attr('data-weight', newValue);
+                $('.toggle-weight-label').text('kgs');
+            } else {
+                let newValue = Math.round((currentValue * 2.20462) * 100) / 100;
+                $('.toggle-weight').text(newValue);
+                $(this).attr('data-weight', newValue);
+                $('.toggle-weight-label').text('lbs');
+            }
+
+            setTimeout(function () {
+                $(`#toggleWeight-loader`).addClass('d-none');
+                $(`.toggle-weight-switch-info`).removeClass('d-none');
+            }, 500);
+        });
+
+        $(document).on('click', '.appointment-history-note', function (e) {
+            let actionType = 'get';
+            let loaderId = 'notesModal-loader';
+            let actionURL = $(this).attr('data-action-url');
+            let processData = {
+                "_token": "{{ csrf_token() }}",
+            };
+            let renderClass = 'neuro-assessment-notes-info';
+
+            getInfo(actionURL, actionType, processData, loaderId, renderClass);
+        });
+
+        $(document).on('click', '.save-notes', function (e) {
+            let actionType = 'post';
+            let loaderId = 'saveNotes-loader';
+            let actionURL = $(this).attr('data-action-url');
+            let formId = 'saveNotesForm';
+            let closeModalId = 'notesModal';
+            let processData = $(`#${formId}`).serialize();
+            let renderClass = null;
+
+            saveInfo(actionURL, actionType, processData, loaderId, formId, renderClass, closeModalId);
+        });
     </script>
 @endsection

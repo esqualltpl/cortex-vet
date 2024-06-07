@@ -25,16 +25,11 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <!-- Card header -->
-
                     <div class="card-header pb-0">
-
                         <div class="d-lg-flex">
                             <div>
-                                <h5 class="mb-0">Patients</h5>
-
+                                <h6 class="mb-0">Patients</h6>
                             </div>
-
                         </div>
                     </div>
                     <div class="table-responsive">
@@ -42,198 +37,45 @@
                             <thead class="thead-light">
                             <tr>
                                 <th>Patient ID</th>
+                                <th>Owner Name</th>
                                 <th>Patient Name</th>
                                 <th>Specie Type</th>
                                 <th>Breed</th>
-                                <th>Owner Name</th>
+                                <th>Date & Time</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td class="text-sm ">
-                                    P-001
-                                </td>
-                                <td class="text-sm "><img src="{{ asset('portal/assets/img/cat.png') }}" alt="icon" /> Ore</td>
-                                <td class="text-sm">
-                                    Feline
-                                </td>
-                                <td class="text-sm">
-                                    percian
-                                </td>
-                                <td class="text-sm">
-                                    Ryan Holland
-                                </td>
-                                <td class="text-sm">
-                                    <a href="javascript:" class="mx-1" data-bs-toggle="modal"
-                                       data-bs-target="#deleteUser">
-                                        <img src="{{ asset('portal/assets/img/Delete.png') }}" alt="icon">
-                                    </a>
-                                    <a href="{{ route('admin.patient.detail', 1) }}">
-                                        <img src="{{ asset('portal/assets/img/view.png') }}" alt="icon">
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-sm ">
-                                    P-002
-                                </td>
-                                <td class="text-sm"><img src="{{ asset('portal/assets/img/dog.png') }}" alt="icon" />
-                                    Pebble
-                                </td>
-                                <td class="text-sm">
-                                    Ecotic
-                                </td>
-                                <td class="text-sm">
-                                    Avian
-                                </td>
-                                <td class="text-sm">
-                                    Jeremy Wills
-                                </td>
-                                <td class="text-sm">
-                                    <a href="javascript:" class="mx-1" data-bs-toggle="modal"
-                                       data-bs-target="#deleteUser">
-                                        <img src="{{ asset('portal/assets/img/Delete.png') }}" alt="icon">
-                                    </a>
-                                    <a href="{{ route('admin.patient.detail', 1) }}">
-                                        <img src="{{ asset('portal/assets/img/view.png') }}" alt="icon">
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-sm ">
-                                    P-003
-                                </td>
-                                <td class="text-sm "><img src="{{ asset('portal/assets/img/cat.png') }}" alt="icon" /> Ore</td>
-                                <td class="text-sm">
-                                    Feline
-                                </td>
-                                <td class="text-sm">
-                                    percian
-                                </td>
-                                <td class="text-sm">
-                                    Ryan Holland
-                                </td>
-                                <td class="text-sm">
-                                    <a href="javascript:" class="mx-1" data-bs-toggle="modal"
-                                       data-bs-target="#deleteUser">
-                                        <img src="{{ asset('portal/assets/img/Delete.png') }}" alt="icon">
-                                    </a>
-                                    <a href="{{ route('admin.patient.detail', 1) }}">
-                                        <img src="{{ asset('portal/assets/img/view.png') }}" alt="icon">
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-sm ">
-                                    P-004
-                                </td>
-                                <td class="text-sm"><img src="{{ asset('portal/assets/img/dog.png') }}" alt="icon" />
-                                    Pebble
-                                </td>
-                                <td class="text-sm">
-                                    Ecotic
-                                </td>
-                                <td class="text-sm">
-                                    Avian
-                                </td>
-                                <td class="text-sm">
-                                    Jeremy Wills
-                                </td>
-                                <td class="text-sm">
-                                    <a href="javascript:" class="mx-1" data-bs-toggle="modal"
-                                       data-bs-target="#deleteUser">
-                                        <img src="{{ asset('portal/assets/img/Delete.png') }}" alt="icon">
-                                    </a>
-                                    <a href="{{ route('admin.patient.detail', 1) }}">
-                                        <img src="{{ asset('portal/assets/img/view.png') }}" alt="icon">
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-sm ">
-                                    P-005
-                                </td>
-                                <td class="text-sm "><img src="{{ asset('portal/assets/img/cat.png') }}" alt="icon" /> Ore</td>
-                                <td class="text-sm">
-                                    Feline
-                                </td>
-                                <td class="text-sm">
-                                    percian
-                                </td>
-                                <td class="text-sm">
-                                    Ryan Holland
-                                </td>
-                                <td class="text-sm">
-                                    <a href="javascript:" class="mx-1" data-bs-toggle="modal"
-                                       data-bs-target="#deleteUser">
-                                        <img src="{{ asset('portal/assets/img/Delete.png') }}" alt="icon">
-                                    </a>
-                                    <a href="{{ route('admin.patient.detail', 1) }}">
-                                        <img src="{{ asset('portal/assets/img/view.png') }}" alt="icon">
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-sm ">
-                                    P-006
-                                </td>
-                                <td class="text-sm"><img src="{{ asset('portal/assets/img/dog.png') }}" alt="icon" />
-                                    Pebble
-                                </td>
-                                <td class="text-sm">
-                                    Ecotic
-                                </td>
-                                <td class="text-sm">
-                                    Avian
-                                </td>
-                                <td class="text-sm">
-                                    Jeremy Wills
-                                </td>
-                                <td class="text-sm">
-                                    <a href="javascript:" class="mx-1" data-bs-toggle="modal"
-                                       data-bs-target="#deleteUser">
-                                        <img src="{{ asset('portal/assets/img/Delete.png') }}" alt="icon">
-                                    </a>
-                                    <a href="{{ route('admin.patient.detail', 1) }}">
-                                        <img src="{{ asset('portal/assets/img/view.png') }}" alt="icon">
-                                    </a>
-                                </td>
-                            </tr>
-                            </tbody>
-
+                            @foreach($patients as $patient)
+                                <tr>
+                                    <td class="text-sm ">
+                                        {{ $patient->patient_id ?? '' }}
+                                    </td>
+                                    <td class="text-sm ">
+                                        {{ $patient->owner_name ?? '' }}
+                                    </td>
+                                    <td class="text-sm "><img src="{{ $patient->getPatientImage($patient->specieTypeInfo?->name ?? null,$patient->breedInfo?->image ?? null) }}" alt="icon" class="avatar"> {{ $patient->patient_name ?? '' }}</td>
+                                    <td class="text-sm">
+                                        {{ $patient->specieTypeInfo?->name ?? '' }}
+                                    </td>
+                                    <td class="text-sm">
+                                        {{ $patient->breedInfo?->name ?? '' }}
+                                    </td>
+                                    <td class="text-sm">
+                                        {{ $patient->created_at ?? '' }}
+                                    </td>
+                                    <td class="text-sm">
+                                        {{--<a href="javascript:" class="mx-1" data-bs-toggle="modal"
+                                           data-bs-target="#deleteUser">
+                                            <img src="{{ asset('portal/assets/img/Delete.png') }}" alt="icon">
+                                        </a>--}}
+                                        <a href="{{ route('admin.patient.detail', Crypt::encrypt($patient->id)) }}">
+                                            <img src="{{ asset('portal/assets/img/view.png') }}" alt="icon">
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </table>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        <div class="modal fade" id="deleteUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog  modal-dialog-centered   " role="document" style="width: 35%;">
-                <div class="modal-content ">
-                    <div class=" modal-header" style="background-color: #FD4F4E;border-bottom: none;">
-
-                        <button type="button" class="btn-close text-dark float-end" data-bs-dismiss="modal"
-                                aria-label="Close">
-
-                        </button>
-                    </div> <div class="modal-body" style="background-color: #FD4F4E;">
-                        <div class="d-flex justify-content-center">
-                            <img src="{{ asset('portal/assets/img/Sad Emoji.png') }}" alt="icon" />
-                        </div>
-                        <div class="text-center  m-3 p-3">
-
-                            <p class="text-white">Are you sure to want to delete "Ryan Holland"</p>
-                        </div>
-
-                    </div>
-                    <div class="">
-                        <div class="my-3">
-                            <a href="">
-                                <p class="text-center font-weight-bold text-info ">Continue</p>
-                            </a>
-                        </div>
                     </div>
                 </div>
             </div>

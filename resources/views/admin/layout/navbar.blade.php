@@ -15,7 +15,7 @@
             <div class="ms-md-auto pe-md-3 d-flex align-items-center">
             </div>
             <ul class="navbar-nav  justify-content-end">
-                <li class="nav-item dropdown pe-2 mt-3 me-3">
+                {{--<li class="nav-item dropdown pe-2 mt-3 me-3">
                     <a href="javascript:;" class="nav-link text-body p-0 position-relative"
                        id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="material-icons cursor-pointer">
@@ -89,7 +89,7 @@
                             </a>
                         </li>
                     </ul>
-                </li>
+                </li>--}}
                 <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
                     <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
                         <div class="sidenav-toggler-inner">
