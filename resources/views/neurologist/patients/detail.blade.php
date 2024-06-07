@@ -36,7 +36,7 @@
                     <div class="container p-0">
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="container p-0">
+                                    <div class="container p-0">
                                     <div class="row">
                                         <div class="col-md-6">
                                             <p class="font-weight-bold text-dark mb-0">Patient ID</p>
