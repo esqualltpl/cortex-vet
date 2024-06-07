@@ -67,4 +67,14 @@ class User extends Authenticatable
     {
         return $this->belongsTo(UserDetail::class, 'id', 'user_id');
     }
+
+    public function practitionerPatientInfo(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Patient::class, 'added_by', 'id');
+    }
+
+    public function neurologistPatientInfo(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(NeuroAssessment::class, 'consult_by', 'id');
+    }
 }

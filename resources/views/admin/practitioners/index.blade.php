@@ -58,7 +58,7 @@
                                         {{ $practitioner->email ?? '' }}
                                     </td>
 
-                                    <td class="text-sm "><img src="{{ asset('portal/assets/img/Patient Count.png') }}" alt="icon"/> 0</td>
+                                    <td class="text-sm "><img src="{{ asset('portal/assets/img/Patient Count.png') }}" alt="icon"/> {{ $practitioner->practitionerPatientInfo?->count() ?? 0 }}</td>
                                     <td class="text-sm">
                                         <a href="javascript:" class="mx-1 request-remove-data"
                                            data-removed-name="{{ $practitioner->name ?? '' }}"

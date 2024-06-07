@@ -28,6 +28,7 @@
                     <div class="mb-0 d-flex justify-content-between p-2  bg-transparent">
                         <h6 class=" mb-0 text-capitalize font-weight-800">Consultation Request</h6>
                     </div>
+                    @if(count($consultationRequests) > 0)
                     @foreach($consultationRequests as $consultationRequest)
                         @if($consultationRequest->accept_by == null)
                             <div class="card p-2 mt-3">
@@ -99,6 +100,9 @@
                         @else
                         @endif
                     @endforeach
+                    @else
+                        <p class="text-center mt-5 font-weight-bold">No Consultation Request Found.</p>
+                    @endif
                 </div>
             </div>
         </div>

@@ -32,7 +32,7 @@
                             <div class=" mb-0 d-flex justify-content-between p-2  bg-transparent">
                                 <div class="pt-1">
                                     <h6 class=" mb-0 text-capitalize font-weight-800">Veterinary Neurologists</h6>
-                                    <p class="mb-0 text-start  font-weight-400 mt-3">237</p>
+                                    <p class="mb-0 text-start  font-weight-400 mt-3">{{ $dashboardInfo['veterinary_neurologists'] ?? 0 }}</p>
                                 </div>
                                 <div class="mb-0"><img alt="icon" src="{{ asset('portal/assets/img/Veterinary Neurologists.png') }}" style="width: 90px;"/></div>
                             </div>
@@ -43,7 +43,7 @@
                             <div class=" mb-0 d-flex justify-content-between p-2  bg-transparent">
                                 <div class="pt-1">
                                     <h6 class=" mb-0 text-capitalize font-weight-800">Veterinary Practitioners</h6>
-                                    <p class="mb-0 text-start  font-weight-400 mt-3">237</p>
+                                    <p class="mb-0 text-start  font-weight-400 mt-3">{{ $dashboardInfo['veterinary_practitioners'] ?? 0 }}</p>
                                 </div>
                                 <div class="mb-0"><img alt="icon" src="{{ asset('portal/assets/img/Veterinary Practitioners.png') }}" style="width: 90px;"/></div>
                             </div>
@@ -54,7 +54,7 @@
                             <div class=" mb-0 d-flex justify-content-between p-2  bg-transparent">
                                 <div class="pt-1">
                                     <h6 class=" mb-0 text-capitalize font-weight-800">Onboarded Students</h6>
-                                    <p class="mb-0 text-start  font-weight-400 mt-3">237</p>
+                                    <p class="mb-0 text-start  font-weight-400 mt-3">{{ $dashboardInfo['onboarded_students'] ?? 0 }}</p>
                                 </div>
                                 <div class="mb-0"><img alt="icon" src="{{ asset('portal/assets/img/Onboarded Students.png') }}" style="width: 90px;"/></div>
                             </div>
@@ -66,7 +66,7 @@
 
                                 <div class="pt-1">
                                     <h6 class=" mb-0 text-capitalize font-weight-800">Consultations by Neurologists</h6>
-                                    <p class="mb-0 text-start  font-weight-400 mt-3">297</p>
+                                    <p class="mb-0 text-start  font-weight-400 mt-3">{{ $dashboardInfo['consultations_by_neurologists'] ?? 0 }}</p>
 
                                 </div>
                                 <div class="mb-0"><img alt="icon" src="{{ asset('portal/assets/img/Consultations by Neurologists.png') }}" style="width: 90px;"/></div>
@@ -78,7 +78,7 @@
                             <div class=" mb-0 d-flex justify-content-between p-2  bg-transparent">
                                 <div class="pt-1">
                                     <h6 class=" mb-0 text-capitalize font-weight-800">Consultations by Practitioners</h6>
-                                    <p class="mb-0 text-start  font-weight-400 mt-3">297</p>
+                                    <p class="mb-0 text-start  font-weight-400 mt-3">{{ $dashboardInfo['consultations_by_practitioners'] ?? 0 }}</p>
                                 </div>
                                 <div class="mb-0"><img alt="icon" src="{{ asset('portal/assets/img/Consultations by Practitioners.png') }}" style="width: 90px;"/></div>
                             </div>
@@ -89,7 +89,7 @@
                             <div class=" mb-0 d-flex justify-content-between p-2  bg-transparent">
                                 <div class="pt-1">
                                     <h6 class=" mb-0 text-capitalize font-weight-800">Total Payment</h6>
-                                    <p class="mb-0 text-start  font-weight-400 mt-3">297</p>
+                                    <p class="mb-0 text-start  font-weight-400 mt-3">{{ $dashboardInfo['total_payment'] ?? 0 }}</p>
                                 </div>
                                 <div class="mb-0"><img alt="icon" src="{{ asset('portal/assets/img/Total Payments.png') }}" style="width: 90px;"/></div>
                             </div>
@@ -136,12 +136,12 @@
             data: {
                 labels: ["6PM", "9PM", "11PM", "2AM", "4AM", "6AM", "8AM", "10AM", "12PM"],
                 datasets: [{
-                    label: "Facebook Ads",
+                    label: "Veterinary Neurologists",
                     tension: 0,
                     pointRadius: 5,
-                    pointBackgroundColor: "68B95F",
-                    pointBorderColor: "68B95F",
-                    borderColor: "68B95F",
+                    pointBackgroundColor: "#344767",
+                    pointBorderColor: "#344767",
+                    borderColor: "#344767",
                     borderWidth: 4,
                     backgroundColor: "transparent",
                     fill: true,
@@ -149,31 +149,31 @@
                     maxBarThickness: 6
                 },
                     {
-                        label: "Google Ads",
-                        tension: 0,
-                        borderWidth: 0,
-                        pointRadius: 5,
-                        pointBackgroundColor: "#344767",
-                        pointBorderColor: "#344767",
-                        borderColor: "#344767",
-                        borderWidth: 4,
-                        backgroundColor: "transparent",
-                        fill: true,
-                        data: [100, 130, 40, 140, 150, 210, 30, 250, 280],
-                        maxBarThickness: 6
-                    },
-                    {
-                        label: "Google Ads",
+                        label: "Veterinary Practitioners",
                         tension: 0,
                         borderWidth: 0,
                         pointRadius: 5,
                         pointBackgroundColor: "#A85CF9",
-                        pointBorderColor: "transparent",
+                        pointBorderColor: "#A85CF9",
                         borderColor: "#A85CF9",
                         borderWidth: 4,
                         backgroundColor: "transparent",
                         fill: true,
-                        data: [190, 30, 90, 10, 50, 220, 10, 250, 280],
+                        data: [100, 130, 40, 140, 150, 110, 30, 250, 280],
+                        maxBarThickness: 6
+                    },
+                    {
+                        label: "Onboarded Students",
+                        tension: 0,
+                        borderWidth: 0,
+                        pointRadius: 5,
+                        pointBackgroundColor: "#2E97A9",
+                        pointBorderColor: "#2E97A9",
+                        borderColor: "#2E97A9",
+                        borderWidth: 4,
+                        backgroundColor: "transparent",
+                        fill: true,
+                        data: [190, 30, 90, 10, 50, 320, 10, 150, 480],
                         maxBarThickness: 6
                     },
                 ],

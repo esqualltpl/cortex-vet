@@ -43,10 +43,10 @@
                             <div class=" mb-0 d-flex justify-content-between p-2  bg-transparent">
                                 <div class="text-end pt-1">
                                     <h6 class=" mb-0 text-capitalize font-weight-800">Consultation Request</h6>
-                                    <p class="mb-0 text-start  font-weight-400 mt-3">237</p>
+                                    <p class="mb-0 text-start  font-weight-400 mt-3">{{ $dashboardInfo['consultation_request'] ?? 0 }}</p>
                                 </div>
                                 <div class="mb-0">
-                                    <img src="{{ asset('portal/assets/img/Consultation Request.png') }}" style="width: 90px;"/>
+                                    <img src="{{ asset('portal/assets/img/Consultation Request.png') }}" style="width: 90px;" alt="icon"/>
                                 </div>
                             </div>
 
@@ -57,10 +57,10 @@
                             <div class=" mb-0 d-flex justify-content-between p-2  bg-transparent">
                                 <div class="text-end pt-1">
                                     <h6 class=" mb-0 text-capitalize font-weight-800">Total Payment</h6>
-                                    <p class="mb-0 text-start  font-weight-400 mt-3">237</p>
+                                    <p class="mb-0 text-start  font-weight-400 mt-3">{{ $dashboardInfo['total_payment'] ?? 0 }}</p>
                                 </div>
                                 <div class="mb-0">
-                                    <img src="{{ asset('portal/assets/img/Total Payment.png') }}" style="width: 90px;"/>
+                                    <img src="{{ asset('portal/assets/img/Total Payment.png') }}" style="width: 90px;" alt="icon"/>
                                 </div>
                             </div>
 
@@ -71,10 +71,10 @@
                             <div class=" mb-0 d-flex justify-content-between p-2  bg-transparent">
                                 <div class="text-end pt-1">
                                     <h6 class=" mb-0 text-capitalize font-weight-800">Past Consultations</h6>
-                                    <p class="mb-0 text-start  font-weight-400 mt-3">237</p>
+                                    <p class="mb-0 text-start  font-weight-400 mt-3">{{ $dashboardInfo['past_consultations'] ?? 0 }}</p>
                                 </div>
                                 <div class="mb-0">
-                                    <img src="{{ asset('portal/assets/img/Patients Count.png') }}" style="width: 90px;"/>
+                                    <img src="{{ asset('portal/assets/img/Patients Count.png') }}" style="width: 90px;" alt="icon"/>
                                 </div>
                             </div>
                         </div>
@@ -82,7 +82,6 @@
                 </div>
             </div>
         </div>
-
         <div class="row">
             <div class="col-md-12">
                 <div class="card mb-2">

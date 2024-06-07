@@ -15,7 +15,7 @@ class PractitionersController extends Controller
 {
     public function index(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
-        $practitioners = User::where('status', 'Practitioner')->with('userInfo')->get();
+        $practitioners = User::where('status', 'Practitioner')->with('userInfo', 'practitionerPatientInfo')->get();
         return view('admin.practitioners.index', compact('practitioners'));
     }
 

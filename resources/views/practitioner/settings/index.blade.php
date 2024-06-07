@@ -73,7 +73,7 @@
                                             <div class="row" id="showedit">
                                                 <div class="row">
                                                     <div class="col-md-3 mb-3">
-                                                        <img src="{{ $settings['profile-information'] != null ? $settings['profile-information']->getUserPic() ?? '' : '' }}" alt="icon"
+                                                        <img class="profile-image-show" src="{{ $settings['profile-information'] != null ? $settings['profile-information']->getUserPic() ?? '' : '' }}" alt="icon"
                                                              style="width: 90%; border-radius: 16px; border: 1px solid #cccccc; margin-top: 10px;">
                                                     </div>
                                                     <div class="col-md-9 d-flex flex-wrap justify-content-between  ">

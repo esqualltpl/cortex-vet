@@ -15,7 +15,7 @@ class NeurologistsController extends Controller
 {
     public function index(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
-        $neurologists = User::where('status', 'Neurologist')->with('userInfo')->get();
+        $neurologists = User::where('status', 'Neurologist')->with('userInfo', 'neurologistPatientInfo')->get();
         return view('admin.neurologists.index', compact('neurologists'));
     }
 
