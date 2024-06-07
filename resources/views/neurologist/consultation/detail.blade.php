@@ -508,6 +508,19 @@
 
                                     <div class="previous-comments">
                                         @php($neurologicalComments = json_decode($consultationRequest->comments, true) ?? [])
+                                        @if(count($neurologicalComments) == 0)
+                                            <div class="col-md-12">
+                                                <label class="form-label font-weight-bold" style=" font-family: 'Poppins', sans-serif !important">Comment 1</label>
+                                                <div class="input-group input-group-outline mb-3">
+                                                        <textarea rows="4" class="form-control neurologist-comment w-100"
+                                                                  name="comments[]"
+                                                                  aria-describedby="comments" onfocus="focused(this)"
+                                                                  onfocusout="defocused(this)" style="resize: none;"
+                                                                  placeholder="Please enter your comments"
+                                                        ></textarea>
+                                                </div>
+                                            </div>
+                                        @endif
                                         @foreach($neurologicalComments as $neurologicalCommentKey=>$neurologicalComment)
                                             @if($neurologicalCommentKey == 0)
                                                 <div class="col-md-12">

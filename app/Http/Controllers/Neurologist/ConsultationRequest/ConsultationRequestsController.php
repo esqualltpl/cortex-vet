@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Neurologist\ConsultationRequest;
 
+use App\Helpers\SendEmail;
 use App\Models\Notification;
 use Carbon\Carbon;
 use App\Models\Exam;
@@ -206,6 +207,7 @@ class ConsultationRequestsController extends Controller
             ///////------ Generate PDF End ------\\\\\\\
 
             //----Send Email----\\
+            $emailTemplate = 'neurologist.consultation.render.email_data';
             $toEmail = $consultationRequest->neuroAssessmentInfo?->addedByInfo?->email ?? null;
             $fromEmail = auth()->user()->email ?? null;
             $subject = 'Patient Report';
@@ -215,7 +217,7 @@ class ConsultationRequestsController extends Controller
                          ];
             $pdfFile = $filePath;
 
-            $this->sendEmail($toEmail,$fromEmail,$subject,$emailData,$pdfFile);
+            SendEmail::email($emailTemplate,$toEmail,$fromEmail,$subject,$emailData,$pdfFile);
 
             $response = ResponseMessage::ResponseNotifySuccess('Success!', 'Successfully send the patient complete report along with your comments.');
             Log::info('Successfully send the patient complete report along with your comments', ['result' => 'success' ?? '']);
@@ -229,15 +231,5 @@ class ConsultationRequestsController extends Controller
 
             return response()->json($response);
         }
-    }
-
-    public function sendEmail($toEmail,$fromEmail,$subject,$emailData,$pdfFile)
-    {
-        Mail::send('neurologist.consultation.render.email_data', compact('emailData'), function ($message) use ($toEmail, $fromEmail, $subject, $pdfFile) {
-            $message->to($toEmail)
-                ->from($fromEmail)
-                ->subject($subject)
-                ->attach($pdfFile); // Attach the PDF file
-        });
     }
 }

@@ -28,6 +28,7 @@
             "Database\\Seeders\\": "database/seeders/"
         },
         "files": [
+            "app/Helpers/SendEmail.php",
             "app/Helpers/FileUpload.php",
             "app/Helpers/Notifications.php",
             "app/Helpers/ResponseMessage.php",
