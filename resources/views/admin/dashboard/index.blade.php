@@ -180,11 +180,6 @@
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                layout: {
-                    padding: {
-                        bottom: 30 // Adjust this value as needed
-                    }
-                },
                 plugins: {
                     title: {
                         display: true,
@@ -218,6 +213,9 @@
                     mode: 'index',
                 },
                 scales: {
+                    margin: {
+                        top: 50
+                    },
                     y: {
                         grid: {
                             drawBorder: false,
