@@ -61,7 +61,7 @@
                             Patient Count
                         </p>
                         <p class="font-weight-normal text-dark opacity-8">
-                            0
+                            {{ $neurologist->neurologistPatientInfo?->count() ?? 0 }}
                         </p>
                     </div>
 

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Affiliate;
 use App\Models\ConsultationRequest;
 use App\Models\Letter;
+use App\Models\NeuroAssessment;
 use App\Models\NotificationHistory;
 use App\Models\Resource;
 use App\Models\User;
@@ -16,7 +17,7 @@ class DashboardController extends Controller
     public function dashboard(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $dashboardInfo['consultation_request'] = ConsultationRequest::where('accept_by', null)->count() ?? 0;
-        $dashboardInfo['total_payment'] = 0;
+        $dashboardInfo['total_payment'] = NeuroAssessment::where('consult_by', auth()->user()->id)->where('status', 'Consult Neurologist')->sum('charge_by_hospital') ?? 0;
         $dashboardInfo['past_consultations'] = ConsultationRequest::where('accept_by', auth()->user()->id)->count() ?? 0;
 
         $superAdmin = User::where('status', 'Super Admin')->first();

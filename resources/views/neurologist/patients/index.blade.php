@@ -70,7 +70,7 @@
                                     {{ $patient->patientInfo?->practitionerInfo?->name ?? '' }}
                                 </td>
                                 <td class="text-sm">
-                                    $ 0.00
+                                    $ {{ number_format($patient->charge_by_hospital ?? 0, 2) }}
                                 </td>
                                 <td class="text-sm">
                                     <a href="{{ route('neurologist.patient.detail', Crypt::encrypt($patient->patientInfo?->id)) }}">

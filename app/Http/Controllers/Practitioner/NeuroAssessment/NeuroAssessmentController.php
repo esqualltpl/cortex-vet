@@ -9,6 +9,7 @@ use App\Models\Exam;
 use App\Models\NeuroAssessment;
 use App\Models\Notification;
 use App\Models\Patient;
+use App\Models\Payment;
 use App\Models\ResultDetail;
 use App\Models\User;
 use Carbon\Carbon;
@@ -127,6 +128,7 @@ class NeuroAssessmentController extends Controller
             $patients_environment = $request->patients_environment ?? null;
             $options = $request->options ?? [];
             $result = $request->result ?? null;
+            $superAdmin = User::where('status', 'Super Admin')->first();
 
             $treatedInfo = new NeuroAssessment;
             $treatedInfo->patient_id = $patient_id;
@@ -137,6 +139,7 @@ class NeuroAssessmentController extends Controller
             $treatedInfo->patients_environment = $patients_environment;
             $treatedInfo->neurological_exam_steps = json_encode($options);
             $treatedInfo->result = $result;
+            $treatedInfo->charge_by_hospital = Payment::where('added_by', $superAdmin->id)->first()?->amount ?? 0;
             $treatedInfo->status = 'Consult Neurologist';
             $treatedInfo->added_by = auth()->user()->id;
             $treatedInfo->save();
@@ -180,6 +183,7 @@ class NeuroAssessmentController extends Controller
             $patients_environment = $request->patients_environment ?? null;
             $options = $request->options ?? [];
             $result = $request->result ?? null;
+            $superAdmin = User::where('status', 'Super Admin')->first();
 
             $treatedInfo = new NeuroAssessment;
             $treatedInfo->patient_id = $patient_id;
@@ -191,6 +195,7 @@ class NeuroAssessmentController extends Controller
             $treatedInfo->neurological_exam_steps = json_encode($options);
             $treatedInfo->result = $result;
             $treatedInfo->treated_by = auth()->user()->id;
+            $treatedInfo->charge_by_hospital = Payment::where('added_by', $superAdmin->id)->first()?->amount ?? 0;
             $treatedInfo->status = 'Treated';
             $treatedInfo->added_by = auth()->user()->id;
             $treatedInfo->save();
