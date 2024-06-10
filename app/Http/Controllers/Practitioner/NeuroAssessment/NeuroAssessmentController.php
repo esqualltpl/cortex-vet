@@ -31,7 +31,7 @@ class NeuroAssessmentController extends Controller
         ]);
 
         try {
-            if ($patientInfo = Patient::where('patient_id', $request->patient_id)->first()) {
+            if ($patientInfo = Patient::where('patient_id', $request->patient_id)->where('added_by', auth()->user()->id)->first()) {
                 $response = ResponseMessage::ResponseNotifySuccess('Success!', 'Patient information get successfully.');
                 Log::info('Successfully get the patient information', ['get' => 'success' ?? '']);
 

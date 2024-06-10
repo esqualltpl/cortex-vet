@@ -145,7 +145,7 @@
                     borderWidth: 4,
                     backgroundColor: "transparent",
                     fill: true,
-                    data: [200, 100, 200, 190, 400, 350, 500, 450, 700],
+                    data: [100, 250, 100, 190, 200, 150, 100, 150, 150],
                     maxBarThickness: 6
                 },
                     {
@@ -159,7 +159,7 @@
                         borderWidth: 4,
                         backgroundColor: "transparent",
                         fill: true,
-                        data: [100, 130, 40, 140, 150, 110, 30, 250, 280],
+                        data: [200, 200, 200, 290, 250, 250, 200, 250, 250],
                         maxBarThickness: 6
                     },
                     {
@@ -173,7 +173,7 @@
                         borderWidth: 4,
                         backgroundColor: "transparent",
                         fill: true,
-                        data: [190, 30, 90, 10, 50, 320, 10, 150, 480],
+                        data: [300, 200, 300, 390, 200, 350, 300, 350, 150],
                         maxBarThickness: 6
                     },
                 ],

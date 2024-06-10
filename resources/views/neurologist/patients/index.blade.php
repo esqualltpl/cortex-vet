@@ -51,29 +51,29 @@
                             @foreach($patients as $patient)
                             <tr>
                                 <td class="text-sm ">
-                                    {{ $patient->patient_id ?? '' }}
+                                    {{ $patient->patientInfo?->patient_id ?? '' }}
                                 </td>
                                 <td class="text-sm ">
-                                    {{ $patient->owner_name ?? '' }}
+                                    {{ $patient->patientInfo?->owner_name ?? '' }}
                                 </td>
-                                <td class="text-sm "><img src="{{ $patient->getPatientImage($patient->specieTypeInfo?->name ?? null,$patient->breedInfo?->image ?? null) }}" alt="icon" class="avatar"> {{ $patient->patient_name ?? '' }}</td>
+                                <td class="text-sm "><img src="{{ $patient->patientInfo?->getPatientImage($patient->patientInfo?->specieTypeInfo?->name ?? null,$patient->patientInfo?->breedInfo?->image ?? null) }}" alt="icon" class="avatar"> {{ $patient->patientInfo?->patient_name ?? '' }}</td>
                                 <td class="text-sm">
-                                    {{ $patient->specieTypeInfo?->name ?? '' }}
-                                </td>
-                                <td class="text-sm">
-                                    {{ $patient->breedInfo?->name ?? '' }}
+                                    {{ $patient->patientInfo?->specieTypeInfo?->name ?? '' }}
                                 </td>
                                 <td class="text-sm">
-                                    {{ $patient->created_at ?? '' }}
+                                    {{ $patient->patientInfo?->breedInfo?->name ?? '' }}
                                 </td>
                                 <td class="text-sm">
-                                    {{ $patient->practitionerInfo?->name ?? '' }}
+                                    {{ $patient->patientInfo?->created_at ?? '' }}
+                                </td>
+                                <td class="text-sm">
+                                    {{ $patient->patientInfo?->practitionerInfo?->name ?? '' }}
                                 </td>
                                 <td class="text-sm">
                                     $ 0.00
                                 </td>
                                 <td class="text-sm">
-                                    <a href="{{ route('neurologist.patient.detail', Crypt::encrypt($patient->id)) }}">
+                                    <a href="{{ route('neurologist.patient.detail', Crypt::encrypt($patient->patientInfo?->id)) }}">
                                         <img src="{{ asset('portal/assets/img/view.png') }}" alt="icon">
                                     </a>
                                 </td>

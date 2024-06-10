@@ -20,7 +20,7 @@ class PatientsController extends Controller
 {
     public function index(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
-        $patients = Patient::with('specieTypeInfo', 'practitionerInfo')->get();
+        $patients = NeuroAssessment::where('consult_by', auth()->user()->id)->with('patientInfo')->get();
         return view('neurologist.patients.index', compact('patients'));
     }
 
