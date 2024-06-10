@@ -213,9 +213,6 @@
                     mode: 'index',
                 },
                 scales: {
-                    margin: {
-                        top: 50
-                    },
                     y: {
                         grid: {
                             drawBorder: false,
@@ -283,7 +280,7 @@
                                 lineHeight: 2
                             }
                         }
-                    }
+                    },
                 }
             }
         });
