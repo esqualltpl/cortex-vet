@@ -80,6 +80,13 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
             });
         });
 
+        //Set Main First Video
+        Route::prefix('set/main/first/video')->group(function () {
+            Route::get('/', [SettingsController::class, 'setMainFirstVideo'])->name('admin.setting.set.main.first.video');
+            Route::post('save', [SettingsController::class, 'uploadSetMainFirstVideo'])->name('admin.setting.set.main.first.video.upload');
+            Route::get('preview', [SettingsController::class, 'setMainFirstVideoPreview'])->name('admin.setting.set.main.first.video.preview');
+        });
+
         //Set Result
         Route::prefix('set/result')->group(function () {
             Route::get('/', [SettingsController::class, 'setResultList'])->name('admin.setting.set.result.list');

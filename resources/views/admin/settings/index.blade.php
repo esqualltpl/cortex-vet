@@ -67,6 +67,17 @@
                                             </span>
                                         </p>
                                     </button>
+                                    <button class="nav-link h-navlinks px-2 py-2 my-0 mb-1 main-first-video-info" id="v-pills-video-tab"
+                                            data-action-url="{{ route('admin.setting.set.main.first.video') }}"
+                                            data-bs-toggle="pill" data-bs-target="#v-pills-video" type="button"
+                                            role="tab" aria-controls="v-pills-video" aria-selected="true" tabindex="-1">
+                                        <p class="nav-link1 text-dark mb-0 text-start px-0 mx-0 d-flex">
+                                            <span class="text-sm">
+                                                <i class="material-symbols-outlined float-start me-2 opacity-7" style="font-size: 22px">smart_display</i>
+                                                <span>Set Main First Video</span>
+                                            </span>
+                                        </p>
+                                    </button>
                                     <button class="nav-link h-navlinks px-2 py-2 my-0 mb-1 set-results-step-info" id="v-pills-result-tab"
                                             data-action-url="{{ route('admin.setting.set.result.list') }}"
                                             data-bs-toggle="pill" data-bs-target="#v-pills-result" type="button"
@@ -615,6 +626,21 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="tab-pane fade" id="v-pills-video" role="tabpanel"
+                                         aria-labelledby="v-pills-video-tab">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="card p-3">
+                                                    <h6>Set Main First Video</h6>
+                                                    <div id="setMainFirstVideo-loader" class="text-center d-none" style="margin-left: 34px;">
+                                                        <img src="{{ asset('portal/assets/img/loader.gif') }}" width="120px" alt="loader"/>
+                                                    </div>
+                                                    <div class="set-main-first-video-data accordion-body p-3">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="tab-pane fade" id="v-pills-result" role="tabpanel"
                                          aria-labelledby="v-pills-result-tab">
                                         <div class="row">
@@ -846,6 +872,23 @@
                         <img src="{{ asset('portal/assets/img/loader.gif') }}" width="120px" alt="loader"/>
                     </div>
                     <div class="modal-body show-exam-uploaded-video">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="viewMainFirstVideoInfoModal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false"
+             aria-labelledby="viewMainFirstVideoInfoModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content ">
+                    <div class="modal-header">
+                        <h6 class="pt-1 mb-0">Main First Video</h6>
+                        <button type="button" class="btn-close text-dark float-end" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div id="viewMainFirstUploadedVideo-loader" class="text-center d-none" style="margin-left: 34px;">
+                        <img src="{{ asset('portal/assets/img/loader.gif') }}" width="120px" alt="loader"/>
+                    </div>
+                    <div class="modal-body show-main-first-uploaded-video">
 
                     </div>
                 </div>
@@ -1187,6 +1230,45 @@
             $('.removed-item-name').html(removedName);
             $('#deleteInfoModal').modal('show');
         });
+        /*----------- Set Localization Exam Form End -----------*/
+
+        /*----------- Main First Video/URL -----------*/
+        $(document).on('click', '.main-first-video-info', function (e) {
+            let actionType = 'get';
+            let loaderId = 'setMainFirstVideo-loader';
+            let actionURL = $(this).attr('data-action-url');
+            let processData = {
+                "_token": "{{ csrf_token() }}",
+            };
+            let renderClass = 'set-main-first-video-data';
+
+            getInfo(actionURL, actionType, processData, loaderId, renderClass);
+        });
+
+        $(document).on('click', '.upload-main-first-video-or-url', function (e) {
+            e.preventDefault();
+            let actionType = 'post';
+            let loaderId = 'uploadMainFirstVideo-loader';
+            let formId = 'mainFirstVideoForm';
+            let actionURL = $(this).attr('data-action-url');
+            let processData = new FormData($(`#${formId}`)[0]);
+
+            uploadFile(actionURL, actionType, processData, loaderId);
+        });
+
+        $(document).on('click', '.preview-main-first-uploaded-video', function (e) {
+            e.preventDefault();
+            let actionType = 'get';
+            let loaderId = 'viewMainFirstUploadedVideo-loader';
+            let actionURL = $(this).attr('data-action-url');
+            let processData = {
+                "_token": "{{ csrf_token() }}",
+            };
+            let renderClass = 'show-main-first-uploaded-video';
+
+            getInfo(actionURL, actionType, processData, loaderId, renderClass);
+        });
+        /*----------- Main First Video/URL End -----------*/
 
         /*----------- Removed Data Start -----------*/
         $(document).on('click', '.removed-data', function (e) {

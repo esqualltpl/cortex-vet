@@ -7,7 +7,9 @@ use App\Helpers\ResponseMessage;
 use App\Http\Controllers\Controller;
 use App\Models\Exam;
 use App\Models\InstructionVideo;
+use App\Models\MainFirstVideo;
 use App\Models\Payment;
+use App\Models\Resource;
 use App\Models\Result;
 use App\Models\ResultDetail;
 use App\Models\Student;
@@ -482,6 +484,109 @@ class SettingsController extends Controller
             DB::rollBack();
             $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to remove the test information. Please try again later.');
             Log::info('The system is unable to remove the test information. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
+
+            return response()->json($response);
+        }
+    }
+
+    public function setMainFirstVideo()
+    {
+        try {
+            DB::beginTransaction();
+
+            $superAdmin = User::where('status', 'Super Admin')->first();
+            $mainFirstVideoInfo = MainFirstVideo::where('added_by', $superAdmin->id ?? null)->first();
+
+            //Render Data
+            $renderData = view('admin.settings.render.set_main_first_video_data', compact('mainFirstVideoInfo'))->render();
+
+            $response = ResponseMessage::ResponseNotifySuccess('Success!', 'Main first video/url information get successfully.');
+            $response['rendered_info'] = $renderData;
+            Log::info('Successfully get the main first video/url info', ['list' => 'success' ?? '']);
+            DB::commit();
+
+            return response()->json($response);
+        } catch (Exception $e) {
+            DB::rollBack();
+            $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to get the main first video/url info. Please try again later.');
+            Log::info('The system is unable to get the main first video/url info. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
+            return response()->json($response);
+        }
+    }
+
+    public function uploadSetMainFirstVideo(Request $request)
+    {
+        // Validate the request
+        $validator = Validator::make($request->all(), [
+            'url' => 'nullable|url|required_without:video',
+            'video' => 'nullable|file|mimes:mp4,avi,mov|max:20480|required_without:url'
+        ]);
+
+        if ($validator->fails()) {
+            $response = ResponseMessage::ResponseNotifyError('Error!', 'Please provide either a Video URL or Upload a Video.');
+
+            return response()->json($response);
+        }
+
+        try {
+            DB::beginTransaction();
+
+            //Upload Video
+            $upload_video = null;
+            if ($video = $request->file('video')) {
+                $upload_video = FileUpload::FileUpload($video, "main-first-videos");
+            }
+
+            if ($setMainFirstVideoVideo = MainFirstVideo::first()) {
+                $setMainFirstVideoVideo->url = $request->url ?? null;
+                $setMainFirstVideoVideo->video = $upload_video;
+                $setMainFirstVideoVideo->save();
+            } else {
+                $setMainFirstVideoVideo = new MainFirstVideo;
+                $setMainFirstVideoVideo->url = $request->url ?? null;
+                $setMainFirstVideoVideo->video = $upload_video;
+                $setMainFirstVideoVideo->added_by = auth()->user()->id;
+                $setMainFirstVideoVideo->save();
+            }
+
+            $response = ResponseMessage::ResponseNotifySuccess('Success!', 'Main first video/url information save successfully.');
+            Log::info('Successfully save the main first video/url information', ['added' => 'success' ?? '']);
+            DB::commit();
+
+            return response()->json($response);
+        } catch (Exception $e) {
+            DB::rollBack();
+            $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to save the main first video/url information. Please try again later.');
+            Log::info('The system is unable to save the main first video/url information. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
+
+            return response()->json($response);
+        }
+    }
+
+    public function setMainFirstVideoPreview(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $mainFirstVideoInfo = MainFirstVideo::first();
+            $video = $mainFirstVideoInfo != null ? $mainFirstVideoInfo->getMainFirstVideo() : null;
+            if ($video != null) {
+                $renderData = '<video controls="" style="width: 100%">
+                            <source src="' . $video . '">
+                        </video>';
+            } else {
+                $renderData = '<h6 class="text-center">No Video found!</h6>';
+            }
+
+            $response = ResponseMessage::ResponseNotifySuccess('Success!', 'Main first video information get successfully.');
+            $response['rendered_info'] = $renderData;
+            Log::info('Successfully get the main first video information', ['get' => 'success' ?? '']);
+            DB::commit();
+
+            return response()->json($response);
+        } catch (Exception $e) {
+            DB::rollBack();
+            $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to get the main first video information. Please try again later.');
+            Log::info('The system is unable to get the main first video information. Please try again later.', ['title' => $e->getMessage(), 'error', $e]);
 
             return response()->json($response);
         }
