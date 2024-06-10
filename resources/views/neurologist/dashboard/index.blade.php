@@ -57,7 +57,7 @@
                             <div class=" mb-0 d-flex justify-content-between p-2  bg-transparent">
                                 <div class="text-end pt-1">
                                     <h6 class=" mb-0 text-capitalize font-weight-800">Total Payment</h6>
-                                    <p class="mb-0 text-start  font-weight-400 mt-3">{{ $dashboardInfo['total_payment'] ?? 0 }}</p>
+                                    <p class="mb-0 text-start  font-weight-400 mt-3">{{ number_format($dashboardInfo['total_payment'] ?? 0) }}</p>
                                 </div>
                                 <div class="mb-0">
                                     <img src="{{ asset('portal/assets/img/Total Payment.png') }}" style="width: 90px;" alt="icon"/>

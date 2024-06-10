@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\File;
  * @property mixed $picture
  * @method static where(string $string, mixed $email)
  * @method static find(mixed $decrypt)
+ * @method static select($raw, $raw1)
  */
 class User extends Authenticatable
 {
