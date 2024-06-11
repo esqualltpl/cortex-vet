@@ -6,6 +6,7 @@ use App\Helpers\ResponseMessage;
 use App\Http\Controllers\Controller;
 use App\Models\ConsultationRequest;
 use App\Models\Exam;
+use App\Models\MainFirstVideo;
 use App\Models\NeuroAssessment;
 use App\Models\Notification;
 use App\Models\Patient;
@@ -55,10 +56,11 @@ class NeuroAssessmentController extends Controller
     {
         $patient_id = Crypt::decrypt($id);
         $admin_id = User::where('status', 'Super Admin')->first()?->id ?? null;
+        $mainFirstVideo = MainFirstVideo::where('added_by', $admin_id)->first();
         $patientInfo = Patient::with('specieTypeInfo', 'breedInfo')->find($patient_id);
         $examsInfo = Exam::where('added_by', $admin_id)->with('testInfo', 'instructionVideoInfo')->get();
 
-        return view('practitioner.neuroAssessment.exam', compact('patientInfo', 'examsInfo'));
+        return view('practitioner.neuroAssessment.exam', compact('patientInfo', 'mainFirstVideo', 'examsInfo'));
     }
 
     public function neuroExamResult(Request $request, $id)

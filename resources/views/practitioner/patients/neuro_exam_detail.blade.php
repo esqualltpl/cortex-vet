@@ -102,18 +102,29 @@
                                 <div class="form-check form-switch ms-2">
                                     <input class="form-check-input" type="checkbox"
                                            id="flexSwitchCheckDefault23"
-                                           onchange="toggleVideo('sampleVideo' , this.checked ? 'show' : 'hide')">
+                                           onchange="toggleVideo('mainFirstVideo' , this.checked ? 'show' : 'hide')">
 
                                 </div>
                             </div>
-                            <div id="sampleVideo" style="display: none;">
+                            <div id="mainFirstVideo" style="display: none;">
                                 <div class=" p-5 border-radius-lg" style="border: 1px solid #e8e8e8;">
                                     <div class="p-2 d-flex justify-content-center">
-                                        <video controls style="width: 80%;">
-                                            <source src="{{ asset('portal/assets/img/vet sample video.mp4') }}"
-                                                    type="video/mp4">
-                                            Your browser does not support the video tag.
-                                        </video>
+                                        @if($mainFirstVideo != null)
+                                            @if($mainFirstVideo->video ?? '' !== null)
+                                                <video controls="" style="width: 70%">
+                                                    <source src="{{ $mainFirstVideo->getMainFirstVideo() ?? '' }}">
+                                                    Your browser does not support the video tag.
+                                                </video>
+                                            @elseif($mainFirstVideo->url ?? '' !== null)
+                                                <iframe width="70%" height="415" src="{{ $mainFirstVideo->url ?? '' }}" frameborder="0"
+                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                        allowfullscreen></iframe>
+                                            @else
+                                                <p class="text-center mt-3 font-weight-bold">No Video/URL Found.</p>
+                                            @endif
+                                        @else
+                                            <p class="text-center mt-3 font-weight-bold">No Video/URL Found.</p>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
