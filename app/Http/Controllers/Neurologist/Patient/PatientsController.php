@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Breed;
 use App\Models\ConsultationRequest;
 use App\Models\Exam;
+use App\Models\MainFirstVideo;
 use App\Models\NeuroAssessment;
 use App\Models\Patient;
 use App\Models\Specie;
@@ -39,10 +40,11 @@ class PatientsController extends Controller
     {
         $neuro_exam_detail_id = Crypt::decrypt($id);
         $admin_id = User::where('status', 'Super Admin')->first()?->id ?? null;
+        $mainFirstVideo = MainFirstVideo::where('added_by', $admin_id)->first();
         $neuro_exam_no = Crypt::decrypt($no);
         $neuroExamInfo = NeuroAssessment::with('patientInfo', 'treatedByInfo', 'consultByInfo')->find($neuro_exam_detail_id);
         $examsInfo = Exam::where('added_by', $admin_id)->with('testInfo', 'instructionVideoInfo')->get();
-        return view('neurologist.patients.neuro_exam_detail', compact('neuroExamInfo', 'neuro_exam_no', 'examsInfo'));
+        return view('neurologist.patients.neuro_exam_detail', compact('mainFirstVideo', 'neuroExamInfo', 'neuro_exam_no', 'examsInfo'));
     }
 
     public function getNeuroAssessmentNotes($id)

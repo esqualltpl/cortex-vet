@@ -152,12 +152,12 @@
                                             <div class="p-5 border-radius-lg">
                                                 <div class="p-2 d-flex justify-content-center">
                                                     @if($examInfo->instructionVideoInfo != null)
-                                                        @if($examInfo->instructionVideoInfo->video ?? '' !== null)
+                                                        @if($examInfo->instructionVideoInfo->video ?? '' != null)
                                                             <video controls="" style="width: 70%">
                                                                 <source src="{{ $examInfo->instructionVideoInfo->getExamVideo() ?? '' }}">
                                                                 Your browser does not support the video tag.
                                                             </video>
-                                                        @elseif($examInfo->instructionVideoInfo->url ?? '' !== null)
+                                                        @elseif($examInfo->instructionVideoInfo->url ?? '' != null)
                                                             <iframe width="70%" height="415" src="{{ $examInfo->instructionVideoInfo->url ?? '' }}" frameborder="0"
                                                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                                                     allowfullscreen></iframe>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Neurologist\ConsultationRequest;
 
 use App\Helpers\SendEmail;
+use App\Models\MainFirstVideo;
 use App\Models\Notification;
 use Carbon\Carbon;
 use App\Models\Exam;
@@ -34,6 +35,7 @@ class ConsultationRequestsController extends Controller
     {
         $requestId = Crypt::decrypt($id);
         $admin_id = User::where('status', 'Super Admin')->first()?->id ?? null;
+        $mainFirstVideo = MainFirstVideo::where('added_by', $admin_id)->first();
         $consultationRequest = ConsultationRequest::with('neuroAssessmentInfo')->find($requestId);
 
         if($consultationRequest->accept_by != null && $consultationRequest->accept_by != auth()->user()->id ?? 0){
@@ -44,7 +46,7 @@ class ConsultationRequestsController extends Controller
 
         $neuroExamInfo = NeuroAssessment::with('patientInfo','treatedByInfo','consultByInfo')->find($consultationRequest->neuro_assessment_id ?? null);
         $examsInfo = Exam::where('added_by', $admin_id)->with('testInfo', 'instructionVideoInfo')->get();
-        return view('neurologist.consultation.detail', compact('consultationRequest', 'examsInfo', 'neuroExamInfo'));
+        return view('neurologist.consultation.detail', compact('mainFirstVideo', 'consultationRequest', 'examsInfo', 'neuroExamInfo'));
     }
 
     public function acceptRequest(Request $request, $id): \Illuminate\Http\JsonResponse
