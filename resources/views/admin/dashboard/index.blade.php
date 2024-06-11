@@ -180,11 +180,6 @@
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                layout: {
-                    padding: {
-                        bottom: 30 // Adjust this value as needed
-                    }
-                },
                 plugins: {
                     title: {
                         display: true,
@@ -285,7 +280,7 @@
                                 lineHeight: 2
                             }
                         }
-                    }
+                    },
                 }
             }
         });
