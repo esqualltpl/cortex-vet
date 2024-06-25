@@ -158,7 +158,8 @@ class NeuroAssessmentController extends Controller
             $consultationRequestNotification->save();
 
             $response = ResponseMessage::ResponseNotifySuccess('Success!', 'Successfully send the consult neurologist request.');
-            $response['redirect_url'] = route('practitioner.neuro.assessment.exam', $id);
+//            $response['redirect_url'] = route('practitioner.neuro.assessment.exam', $id);
+            $response['redirect_url'] = route('practitioner.neuro.assessment');
             Log::info('Successfully send the consult neurologist request', ['result' => 'success' ?? '']);
             DB::commit();
 
