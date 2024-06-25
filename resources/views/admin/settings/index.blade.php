@@ -56,17 +56,6 @@
                                             </span>
                                         </p>
                                     </button>
-                                    <button class="nav-link h-navlinks px-2 py-2 my-0 mb-1 set-localization-form-step-info" id="v-pills-exam-tab"
-                                            data-action-url="{{ route('admin.setting.exams.list') }}"
-                                            data-bs-toggle="pill" data-bs-target="#v-pills-exam" type="button"
-                                            role="tab" aria-controls="v-pills-exam" aria-selected="true" tabindex="-1">
-                                        <p class="nav-link1 text-dark mb-0 text-start px-0 mx-0 d-flex">
-                                            <span class="text-sm">
-                                                <i class="material-symbols-outlined float-start me-2 opacity-7" style="font-size: 22px">lab_profile</i>
-                                                <span>Set Localization Form</span>
-                                            </span>
-                                        </p>
-                                    </button>
                                     <button class="nav-link h-navlinks px-2 py-2 my-0 mb-1 main-first-video-info" id="v-pills-video-tab"
                                             data-action-url="{{ route('admin.setting.set.main.first.video') }}"
                                             data-bs-toggle="pill" data-bs-target="#v-pills-video" type="button"
@@ -75,6 +64,17 @@
                                             <span class="text-sm">
                                                 <i class="material-symbols-outlined float-start me-2 opacity-7" style="font-size: 22px">smart_display</i>
                                                 <span>Set Main First Video</span>
+                                            </span>
+                                        </p>
+                                    </button>
+                                    <button class="nav-link h-navlinks px-2 py-2 my-0 mb-1 set-localization-form-step-info" id="v-pills-exam-tab"
+                                            data-action-url="{{ route('admin.setting.exams.list') }}"
+                                            data-bs-toggle="pill" data-bs-target="#v-pills-exam" type="button"
+                                            role="tab" aria-controls="v-pills-exam" aria-selected="true" tabindex="-1">
+                                        <p class="nav-link1 text-dark mb-0 text-start px-0 mx-0 d-flex">
+                                            <span class="text-sm">
+                                                <i class="material-symbols-outlined float-start me-2 opacity-7" style="font-size: 22px">lab_profile</i>
+                                                <span>Set Localization Form</span>
                                             </span>
                                         </p>
                                     </button>
