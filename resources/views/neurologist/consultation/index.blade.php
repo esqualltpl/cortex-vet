@@ -33,9 +33,10 @@
                         @if($consultationRequest->accept_by == null)
                             <div class="card p-2 mt-3">
                                 <div class="row ">
-                                    <div class="col-md-1 mt-3">
-                                        <img src="{{ asset('portal/assets/img/Consultation Request img.png') }}" alt="icon"
-                                             class="w-100" style="border-radius: 100px;"/>
+                                    <div class="col-md-1 mt-2">
+                                        <img src="{{ $consultationRequest->neuroAssessmentInfo?->patientInfo?->getPatientImage($consultationRequest->neuroAssessmentInfo?->patientInfo?->specieTypeInfo?->name ?? null,$consultationRequest->neuroAssessmentInfo?->patientInfo?->breedInfo?->image ?? null) }}"
+                                             alt="icon"
+                                             style="width: 85px;height: 85px;border-radius:300px"/>
                                     </div>
                                     <div class="col-md-9 mt-3 d-flex flex-wrap justify-content-between">
                                         <div class="col-md-3  ">
@@ -66,9 +67,10 @@
                         @elseif($consultationRequest->accept_by == auth()->user()->id)
                             <div class="card p-2 mt-3" style="background-color: #D4FFD8;">
                                 <div class="row ">
-                                    <div class="col-md-1 mt-3">
-                                        <img src="{{ asset('portal/assets/img/Consultation Request img.png') }}" alt="icon"
-                                             class="w-100" style="border-radius: 100px;"/>
+                                    <div class="col-md-1 mt-2">
+                                        <img src="{{ $consultationRequest->neuroAssessmentInfo?->patientInfo?->getPatientImage($consultationRequest->neuroAssessmentInfo?->patientInfo?->specieTypeInfo?->name ?? null,$consultationRequest->neuroAssessmentInfo?->patientInfo?->breedInfo?->image ?? null) }}"
+                                             alt="icon"
+                                             style="width: 85px;height: 85px;border-radius:300px"/>
                                     </div>
                                     <div class="col-md-9 mt-3 d-flex flex-wrap justify-content-between">
                                         <div class="col-md-3  ">

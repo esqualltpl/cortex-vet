@@ -64,9 +64,11 @@ class ConsultationRequestsController extends Controller
             $neuroAssessment->save();
 
             $neurologistName = auth()->user()->name ?? '';
+            $neurologistId = auth()->user()->id ?? null;
             $neuroAssessmentNotification = new Notification();
             $neuroAssessmentNotification->message = '<span class="text-primary text-capitalize">'.$neurologistName.'</span> has accepted your Neurologist Consultation Request.';
             $neuroAssessmentNotification->notification_for = $consultationRequest->neuroAssessmentInfo?->addedByInfo?->id ?? null;
+            $neuroAssessmentNotification->user_id = $neurologistId;
             $neuroAssessmentNotification->save();
 
             $response = ResponseMessage::ResponseNotifySuccess('Success!', 'Successfully accept the consult neurologist request.');

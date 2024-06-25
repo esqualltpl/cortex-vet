@@ -44,7 +44,12 @@
                         <li class="mb-2 card" style="box-shadow: 2px 4px 10px rgba(0, 0, 0, .1);">
                             <a class="dropdown-item border-radius" href="{{ route('practitioner.patients') }}">
                                 <div class="d-flex align-items-center py-2">
-                                    <i class="fa fa-user-circle" aria-hidden="true"></i>
+                                    {{--<i class="fa fa-user-circle" aria-hidden="true"></i>--}}
+                                    <div class="col-md-1 mt-1">
+                                        <img src="{{ $getNotification->userInfo?->getUserPic() ?? asset('portal/assets/img/no-image.png') }}"
+                                             alt="icon"
+                                             style="width: 45px;height: 45px;border-radius:300px"/>
+                                    </div>
                                     <div class="ms-2">
                                         <h6 class="text-sm font-weight-normal my-auto">
                                             {!! $getNotification->message ?? '' !!}

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->text('message')->nullable();
             $table->unsignedBigInteger('notification_for')->default(0)->comment('0=All Neurologists');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();
         });
     }

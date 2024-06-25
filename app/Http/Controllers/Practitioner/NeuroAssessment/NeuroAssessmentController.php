@@ -152,9 +152,11 @@ class NeuroAssessmentController extends Controller
             $consultationRequest->save();
 
             $practitionerName = auth()->user()->name ?? '';
+            $practitionerId = auth()->user()->id ?? null;
             $consultationRequestNotification = new Notification();
             $consultationRequestNotification->message = '<span class="text-primary text-capitalize">'.$practitionerName.'</span> request for Neurologist Consultation.';
             $consultationRequestNotification->notification_for = 0;
+            $consultationRequestNotification->user_id = $practitionerId;
             $consultationRequestNotification->save();
 
             $response = ResponseMessage::ResponseNotifySuccess('Success!', 'Successfully send the consult neurologist request.');
