@@ -77,7 +77,7 @@ class NewPasswordController extends Controller
         return view('auth.reset-password-success');
     }
 
-    public function magicallyLogin($email, $password): RedirectResponse
+    public function magicallyLogin($email, $password)
     {
         if (Auth::attempt(['email' => Crypt::decrypt($email), 'password' => Crypt::decrypt($password)])) {
             if (auth()->user()->status == 'Super Admin')
@@ -86,7 +86,21 @@ class NewPasswordController extends Controller
                 return to_route('neurologist.dashboard');
             elseif (auth()->user()->status == 'Practitioner')
                 return to_route('practitioner.dashboard');
-            else
+            elseif (auth()->user()->status == 'Student') {
+                $studentInfo = auth()->user()?->studentInfo ?? '';
+                $modules = explode(',', $studentInfo->module);
+
+                if (in_array("Dashboard", $modules))
+                    return to_route('student.dashboard');
+                elseif (in_array("Neuro Assessment", $modules))
+                    return to_route('student.neuro.assessment');
+                elseif (in_array("Patients", $modules))
+                    return to_route('student.patient');
+                elseif (in_array("Settings", $modules))
+                    return to_route('student.settings');
+                else
+                    return to_route('login');
+            } else
                 return to_route('login');
         } else {
             return to_route('login');
