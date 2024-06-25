@@ -459,6 +459,7 @@
                                     </div>
                                     <div class="button-row d-flex justify-content-end gap-2 mt-4">
                                         <button class="btn btn-primary text-white px-3 request-consult-neurologist-data"
+                                                data-patient-name="{{ $patientInfo->patient_name ?? '' }}"
                                                 data-action-url="{{ route('practitioner.neuro.assessment.consult.neurologist.request', request()->id) }}"
                                                 type="button" title="Consult Neurologist">
                                             <i class="fas fa-user-md me-2 mx-1" style=" font-size: 14px; !important;" aria-hidden="true"></i>
@@ -486,7 +487,7 @@
                             <img src="{{ asset('portal/assets/img/Sad Emoji.png') }}" alt="icon"/>
                         </div>
                         <div class="text-center  m-3 p-3">
-                            <p class="text-white">Are you sure to want to send <span class="text-bold">Consult Neurologist</span> request</p>
+                            <p class="text-white">Are you sure you want to send  <span class="text-bold patient-name-show"></span> consultation request to Neurologists?</p>
                         </div>
                     </div>
                     <div class="conformation">
@@ -551,8 +552,10 @@
 
         $(document).on('click', '.request-consult-neurologist-data', function (e) {
             let actionURL = $(this).attr('data-action-url');
+            let patientName = $(this).attr('data-patient-name');
 
             $('.consult-neurologist-request').attr('data-action-url', actionURL);
+            $('.patient-name-show').text(patientName);
             $('#consultNeurologistRequestModal').modal('show');
         });
 
