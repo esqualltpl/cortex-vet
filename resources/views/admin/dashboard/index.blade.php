@@ -159,7 +159,6 @@
                         backgroundColor: "transparent",
                         fill: true,
                         data: {!! json_encode(array_values($dashboardInfo['chat_veterinary_practitioners'])) ?? [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] !!},
-
                         maxBarThickness: 6
                     },
                     {
@@ -181,13 +180,6 @@
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
-                    title: {
-                        display: true,
-                        text: 'Monthly Onboarding Data',
-                        font: {
-                            size: 14
-                        }
-                    },
                     legend: {
                         display: true,
                         position: 'top',
@@ -200,13 +192,14 @@
                                 family: "Roboto",
                                 weight: 500
                             },
+                            padding: 20  // Add spacing after the circular buttons
                         }
                     },
                     tooltip: {
                         enabled: true,
                         mode: 'index',
                         intersect: false,
-                    },
+                    }
                 },
                 interaction: {
                     intersect: false,
@@ -232,6 +225,10 @@
                                 family: "Roboto",
                                 style: 'normal',
                                 lineHeight: 2
+                            },
+                            stepSize: 10,  // Adjust the step size to show whole numbers
+                            callback: function(value) {
+                                return Number.isInteger(value) ? value : '';
                             }
                         },
                         title: {
@@ -280,7 +277,7 @@
                                 lineHeight: 2
                             }
                         }
-                    },
+                    }
                 }
             }
         });
