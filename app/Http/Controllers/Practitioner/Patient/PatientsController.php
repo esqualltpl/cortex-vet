@@ -48,7 +48,7 @@ class PatientsController extends Controller
         $admin_id = User::where('status', 'Super Admin')->first()?->id ?? null;
         $mainFirstVideo = MainFirstVideo::where('added_by', $admin_id)->first();
 
-        $neuroExamInfo = NeuroAssessment::with('patientInfo', 'treatedByInfo', 'consultByInfo')->find($neuro_exam_detail_id);
+        $neuroExamInfo = NeuroAssessment::with('patientInfo', 'treatedByInfo', 'consultByInfo', 'consultationInfo')->find($neuro_exam_detail_id);
         $examsInfo = Exam::where('added_by', $admin_id)->with('testInfo', 'instructionVideoInfo')->get();
         return view('practitioner.patients.neuro_exam_detail', compact('mainFirstVideo','neuroExamInfo', 'neuro_exam_no', 'examsInfo'));
     }

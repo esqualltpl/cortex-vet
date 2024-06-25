@@ -215,16 +215,19 @@
                                                                                     <div class="row">
                                                                                         @foreach($testInfo->optionsInfo ?? [] as $optionKey=>$options)
                                                                                             @php($option_sn = $optionKey +1)
-                                                                                            <div class="col-md-2 col-sm-6">
-                                                                                                <div class="form-check ps-0">
-                                                                                                    <input class="form-check-input" type="radio"
-                                                                                                           {{ isset($neurologicalExamSteps[$examInfo->id ?? 0][$testInfo->id ?? 0]) && $neurologicalExamSteps[$examInfo->id ?? 0][$testInfo->id ?? 0] == $options->id ? 'checked' : '' }}
-                                                                                                           name="options[{{$examInfo->id ?? 0}}][{{$testInfo->id ?? 0}}]" value="{{ $options->id }}"
-                                                                                                           id="customRadio{{ $options->id }}">
-                                                                                                    <label class="custom-control-label"
-                                                                                                           for="customRadio{{ $options->id }}">{{ $options->name ?? '' }}</label>
+                                                                                            @if(isset($neurologicalExamSteps[$examInfo->id ?? 0][$testInfo->id ?? 0]) && $neurologicalExamSteps[$examInfo->id ?? 0][$testInfo->id ?? 0] == $options->id)
+                                                                                                <div class="col-md-2 col-sm-6">
+                                                                                                    <p class="font-weight-bold">{{ $options->name ?? '' }}</p>
+                                                                                                    {{--<div class="form-check ps-0">
+                                                                                                        <input class="form-check-input" type="radio"
+                                                                                                               {{ isset($neurologicalExamSteps[$examInfo->id ?? 0][$testInfo->id ?? 0]) && $neurologicalExamSteps[$examInfo->id ?? 0][$testInfo->id ?? 0] == $options->id ? 'checked' : '' }}
+                                                                                                               name="options[{{$examInfo->id ?? 0}}][{{$testInfo->id ?? 0}}]" value="{{ $options->id }}"
+                                                                                                               id="customRadio{{ $options->id }}">
+                                                                                                        <label class="custom-control-label"
+                                                                                                               for="customRadio{{ $options->id }}">{{ $options->name ?? '' }}</label>
+                                                                                                    </div>--}}
                                                                                                 </div>
-                                                                                            </div>
+                                                                                            @endif
                                                                                         @endforeach
                                                                                     </div>
                                                                                 </div>
@@ -252,6 +255,19 @@
                             <strong style="color: #2E97A9;">Results:</strong>
                             <p>{{ $neuroExamInfo->result ?? '' }}</p>
                         </div>
+                    </div>
+                </div>
+                <hr class="horizontal dark my-4"/>
+                <div class="row">
+                    <h6>Neurologist's Comments</h6>
+                    <div class="row mt-3 gap-8 ms-1">
+                        @php($neurologicalComments = json_decode($neuroExamInfo->consultationInfo?->comments, true) ?? [])
+                        @foreach($neurologicalComments as $key=>$neurologicalComment)
+                            <div class="col-md-5 p-2  border-radius-lg " style="border:1px solid #bab8b8;">
+                                <strong style="color: #2E97A9;">Comment {{ $key+1 }}</strong>
+                                <p>{{ $neurologicalComment ?? '' }}</p>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
