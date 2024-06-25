@@ -23,6 +23,21 @@ class CheckUser
                 $user_view = 'neurologist.dashboard';
             elseif (auth()->user()->status == 'Practitioner')
                 $user_view = 'practitioner.dashboard';
+            elseif (auth()->user()->status == 'Student') {
+                $studentInfo = auth()->user()?->studentInfo ?? '';
+                $modules = explode(',', $studentInfo->module);
+
+                if (in_array("Dashboard", $modules))
+                    $user_view = 'student.dashboard';
+                elseif (in_array("Neuro Assessment", $modules))
+                    $user_view = 'student.neuro.assessment';
+                elseif (in_array("Patients", $modules))
+                    $user_view = 'student.patient';
+                elseif (in_array("Settings", $modules))
+                    $user_view = 'student.settings';
+                else
+                    return response()->view('errors.' . '404', [], 404);
+            }
             else
                 return response()->view('errors.' . '404', [], 404);
 
