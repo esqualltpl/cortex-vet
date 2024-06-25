@@ -1,15 +1,15 @@
-@extends("practitioner.layout.master")
+@extends("student.layout.master")
 @section('title')
     Consultation Request
 @endsection
 @section('type')
-    Practitioner
+    Student
 @endsection
 @section('breadcrumb')
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 ">
             <li class="breadcrumb-item text-sm">
-                <a class="opacity-7 text-dark" href="{{ route('practitioner.dashboard') }}">
+                <a class="opacity-7 text-dark" href="{{ route('student.dashboard') }}">
                     <img src="{{ asset('portal/assets/img/dashboard gray.png') }}" alt="icon" class="me-1"/>
                     Dashboard
                 </a>
@@ -45,7 +45,7 @@
                                 <div class="col-md-9">
                                     <div class="d-flex flex-wrap justify-content-between">
                                         <div class="container">
-                                            <form method="post" action="{{ route('practitioner.patient.info.save') }}">
+                                            <form method="post" action="{{ route('student.patient.info.save') }}">
                                                 @csrf
                                                 <div class="row">
                                                     <div class="col-md-6">
@@ -207,7 +207,7 @@
             let selectedOption = $(this).find("option:selected");
             let specieOptionId = selectedOption.val();
             let specieImage = selectedOption.attr('data-specie-image');
-            let actionURL = "{{ route('practitioner.breed.options', ':id') }}";
+            let actionURL = "{{ route('student.breed.options', ':id') }}";
             actionURL = actionURL.replace(':id', specieOptionId);
             let processData = {
                 "_token": "{{ csrf_token() }}",

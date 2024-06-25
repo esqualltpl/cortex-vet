@@ -1,15 +1,15 @@
-@extends("practitioner.layout.master")
+@extends("student.layout.master")
 @section('title')
     Neuro Exam
 @endsection
 @section('type')
-    Practitioner
+    Student
 @endsection
 @section('breadcrumb')
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 ">
             <li class="breadcrumb-item text-sm">
-                <a class="opacity-7 text-dark" href="{{ route('practitioner.neuro.assessment') }}">
+                <a class="opacity-7 text-dark" href="{{ route('student.neuro.assessment') }}">
                     <img src="{{ asset('portal/assets/img/Veterinary Practitioners gray.png') }}" alt="icon" class="me-1"/>
                     Neuro Assessment
                 </a>
@@ -189,7 +189,7 @@
                             </div>
                         </div>
                     </div>
-                    <form class="multisteps-form__form neuro-exam-form" action="{{ route('practitioner.neuro.assessment.treated', request()->id) }}" method="post">
+                    <form class="multisteps-form__form neuro-exam-form" action="{{ route('student.neuro.assessment.treated', request()->id) }}" method="post">
                         @csrf
                         <div class="neuro-exam-info">
                             <!--History-->
@@ -427,7 +427,7 @@
                                             <!-- <button class="btn bg-gradient-primary mb-0 js-btn-next" type="button"
                                                 title="Back">Back</button> -->
                                             <button class="btn btn-primary text-white mb-2 js-btn-next get-neuro-exam-result"
-                                                    data-action-url="{{ route('practitioner.neuro.assessment.exam.result', request()->id) }}"
+                                                    data-action-url="{{ route('student.neuro.assessment.exam.result', request()->id) }}"
                                                     type="button"
                                                     title="Localize">Localize
                                             </button>
@@ -460,7 +460,7 @@
                                     <div class="button-row d-flex justify-content-end gap-2 mt-4">
                                         <button class="btn btn-primary text-white px-3 request-consult-neurologist-data"
                                                 data-patient-name="{{ $patientInfo->patient_name ?? '' }}"
-                                                data-action-url="{{ route('practitioner.neuro.assessment.consult.neurologist.request', request()->id) }}"
+                                                data-action-url="{{ route('student.neuro.assessment.consult.neurologist.request', request()->id) }}"
                                                 type="button" title="Consult Neurologist">
                                             <i class="fas fa-user-md me-2 mx-1" style=" font-size: 14px; !important;" aria-hidden="true"></i>
                                             Consult Neurologist

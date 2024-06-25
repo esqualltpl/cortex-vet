@@ -20,6 +20,9 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->appendToGroup('practitioner', [
             \App\Http\Middleware\Practitioner::class,
         ]);
+        $middleware->appendToGroup('student', [
+            \App\Http\Middleware\Student::class,
+        ]);
         $middleware->appendToGroup('check.user', [
             \App\Http\Middleware\CheckUser::class,
         ]);

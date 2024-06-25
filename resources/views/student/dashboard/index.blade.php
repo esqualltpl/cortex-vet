@@ -1,4 +1,4 @@
-@extends("practitioner.layout.master")
+@extends("student.layout.master")
 @section('title')
     Dashboard
 @endsection
@@ -9,7 +9,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 ">
             <li class="breadcrumb-item text-sm">
-                <a class="opacity-7 text-dark" href="{{ route('practitioner.dashboard') }}">
+                <a class="opacity-7 text-dark" href="{{ route('student.dashboard') }}">
                 <span class="material-symbols-outlined">
                   dashboard
                   </span>
@@ -98,7 +98,7 @@
                 <div class="card p-2">
                     <button type="button" class="btn btn-primary btn-lg text-white mt-2 mb-2"
                             style=" font-family: 'Poppins', sans-serif !important"
-                            onclick="location.href = '{{ route("practitioner.patient") }}'">
+                            onclick="location.href = '{{ route("student.patient") }}'">
                         Add New Patient
                     </button>
                 </div>
