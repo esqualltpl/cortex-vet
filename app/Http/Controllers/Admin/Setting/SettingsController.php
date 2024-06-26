@@ -914,6 +914,7 @@ class SettingsController extends Controller
             $userInfoSave = new User;
             $userInfoSave->name = $request->full_name;
             $userInfoSave->email = $request->email;
+            $userInfoSave->status = 'Student';
             if ($request->password) //If password add
                 $userInfoSave->password = Hash::make($request->password);
             $userInfoSave->save();

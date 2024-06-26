@@ -49,9 +49,9 @@ class AuthenticatedSessionController extends Controller
             elseif (in_array("Settings", $modules))
                 $user_route = 'student.settings';
             else
-                return response()->view('errors.' . '404', [], 404);
+                abort(404);
         } else
-            return response()->view('errors.' . '404', [], 404);
+            abort(404);
 
         return redirect()->intended(route($user_route, absolute: false));
     }

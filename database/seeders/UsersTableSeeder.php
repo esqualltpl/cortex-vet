@@ -75,7 +75,7 @@ class UsersTableSeeder extends Seeder
                 array(
                     'id' => 5,
                     'name' => 'KM Neurologist',
-                    'email' => 'km.testing12@gmail.com ',
+                    'email' => 'km.testing12@gmail.com',
                     'email_verified_at' => NULL,
                     'password' => Hash::make('123456789'),
                     'status' => 'Neurologist',
