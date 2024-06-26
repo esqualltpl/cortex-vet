@@ -29,9 +29,8 @@
                         <h6 class=" mb-0 text-capitalize font-weight-800">Consultation Request</h6>
                     </div>
                     @if(count($consultationRequests) > 0)
-                    @foreach($consultationRequests as $consultationRequest)
-                        @if($consultationRequest->accept_by == null)
-                            <div class="card p-2 mt-3">
+                        @foreach($consultationRequests as $consultationRequest)
+                            <div class="card p-2 mt-3" style="background-color: {{ $consultationRequest->accept_by != null ? '#D4FFD8' : '' }};">
                                 <div class="row ">
                                     <div class="col-md-1 mt-2">
                                         <img src="{{ $consultationRequest->neuroAssessmentInfo?->patientInfo?->getPatientImage($consultationRequest->neuroAssessmentInfo?->patientInfo?->specieTypeInfo?->name ?? null,$consultationRequest->neuroAssessmentInfo?->patientInfo?->breedInfo?->image ?? null) }}"
@@ -57,51 +56,31 @@
                                             <p class="font-weight-normal text-dark opacity-8">{{ calculateAge($consultationRequest->neuroAssessmentInfo?->patientInfo?->dob ?? '0000-00-00') ?? 0 }}</p>
                                         </div>
                                     </div>
-                                    <div class="col-md-2 ms-auto my-4">
-                                        <a href="{{ route('neurologist.consultation.detail', Crypt::encrypt($consultationRequest->id)) }}">
-                                            <button class="btn btn-outline-primary btn-sm mb-2" type="button" title="Accept">Perform Consultation</button>
-                                        </a>
-                                    </div>
+                                    @if($consultationRequest->accept_by == null)
+                                        <div class="col-md-2 ms-auto my-4">
+                                            <a href="{{ route('neurologist.consultation.detail', Crypt::encrypt($consultationRequest->id)) }}">
+                                                <button class="btn btn-outline-primary btn-sm mb-2" type="button" title="Accept">Perform Consultation</button>
+                                            </a>
+                                        </div>
+                                    @elseif($consultationRequest->accept_by == auth()->user()->id)
+                                        @if($consultationRequest->communicate_directly == null && $consultationRequest->share_through_email == null )
+                                            <div class="col-md-2 ms-auto my-4">
+                                                <a href="{{ route('neurologist.consultation.detail', Crypt::encrypt($consultationRequest->id)) }}">
+                                                    <button class="btn text-success pt-2" style="background-color: #4CAF5033;text-transform: none" type="button" title="In Progress">In Progress</button>
+                                                </a>
+                                                {{--<button class="btn text-success" style="background-color: #4CAF5033;text-transform: none" type="button" disabled title="Consulted">Consulted</button>--}}
+                                            </div>
+                                        @else
+                                            <div class="col-md-2 ms-auto my-4">
+                                                <button class="btn text-success pt-2" style="background-color: #4caf503d;text-transform: none" type="button" title="Consulted" disabled>Consulted</button>
+                                                {{--<button class="btn text-success" style="background-color: #4CAF5033;text-transform: none" type="button" disabled title="Consulted">Consulted</button>--}}
+                                            </div>
+                                        @endif
+                                    @else
+                                    @endif
                                 </div>
                             </div>
-                        @elseif($consultationRequest->accept_by == auth()->user()->id)
-                            <div class="card p-2 mt-3" style="background-color: #D4FFD8;">
-                                <div class="row ">
-                                    <div class="col-md-1 mt-2">
-                                        <img src="{{ $consultationRequest->neuroAssessmentInfo?->patientInfo?->getPatientImage($consultationRequest->neuroAssessmentInfo?->patientInfo?->specieTypeInfo?->name ?? null,$consultationRequest->neuroAssessmentInfo?->patientInfo?->breedInfo?->image ?? null) }}"
-                                             alt="icon"
-                                             style="width: 85px;height: 85px;border-radius:300px"/>
-                                    </div>
-                                    <div class="col-md-9 mt-3 d-flex flex-wrap justify-content-between">
-                                        <div class="col-md-3  ">
-                                            <p class="font-weight-bold text-dark">Requested By:</p>
-                                            <p class="font-weight-bold text-dark">Requested Time:</p>
-                                        </div>
-
-                                        <div class="col-md-3 ">
-                                            <p class="font-weight-normal text-dark opacity-8">{{ $consultationRequest->neuroAssessmentInfo?->addedByInfo?->name ?? '' }}</p>
-                                            <p class="font-weight-normal text-dark opacity-8">{{ $consultationRequest->request_date_time ?? '' }}</p>
-                                        </div>
-                                        <div class="col-md-3  ">
-                                            <p class="font-weight-bold text-dark">Patient Breed:</p>
-                                            <p class="font-weight-bold text-dark">Patient Age:</p>
-                                        </div>
-                                        <div class="col-md-3 ">
-                                            <p class="font-weight-normal text-dark opacity-8">{{ $consultationRequest->neuroAssessmentInfo?->patientInfo?->breedInfo?->name ?? '' }}</p>
-                                            <p class="font-weight-normal text-dark opacity-8">{{ calculateAge($consultationRequest->neuroAssessmentInfo?->patientInfo?->dob ?? '0000-00-00') ?? 0 }}</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2 ms-auto my-4">
-                                        <a href="{{ route('neurologist.consultation.detail', Crypt::encrypt($consultationRequest->id)) }}">
-                                            <button class="btn text-success pt-2" style="background-color: #4CAF5033;text-transform: none" type="button" title="Consulted">Consulted</button>
-                                        </a>
-                                        {{--<button class="btn text-success" style="background-color: #4CAF5033;text-transform: none" type="button" disabled title="Consulted">Consulted</button>--}}
-                                    </div>
-                                </div>
-                            </div>
-                        @else
-                        @endif
-                    @endforeach
+                        @endforeach
                     @else
                         <p class="text-center mt-5 font-weight-bold">No Consultation Request Found.</p>
                     @endif

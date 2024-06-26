@@ -27,7 +27,7 @@ class ConsultationRequestsController extends Controller
 {
     public function index(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
-        $consultationRequests = ConsultationRequest::where('accept_by', null)->orWhere('accept_by', auth()->user()->id)->with('neuroAssessmentInfo')->get();
+        $consultationRequests = ConsultationRequest::with('neuroAssessmentInfo')->get();
         return view('neurologist.consultation.index', compact('consultationRequests'));
     }
 
@@ -128,7 +128,7 @@ class ConsultationRequestsController extends Controller
             $consultationRequest->save();
 
             $response = ResponseMessage::ResponseNotifySuccess('Success!', 'Successfully generate the communicate directly mail link.');
-
+            $response['redirect_url'] = route('neurologist.consultation.request');
             Log::info('Successfully generate the communicate directly mail link', ['result' => 'success' ?? '']);
             DB::commit();
 
@@ -224,6 +224,8 @@ class ConsultationRequestsController extends Controller
             SendEmail::email($emailTemplate,$toEmail,$fromEmail,$subject,$emailData,$pdfFile);
 
             $response = ResponseMessage::ResponseNotifySuccess('Success!', 'Successfully send the patient complete report along with your comments.');
+            $response['redirect_url'] = route('neurologist.consultation.request');
+
             Log::info('Successfully send the patient complete report along with your comments', ['result' => 'success' ?? '']);
             DB::commit();
 
