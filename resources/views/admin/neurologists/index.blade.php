@@ -44,6 +44,7 @@
                                 <th>ID</th>
                                 <th>Doctor Name</th>
                                 <th>Email</th>
+                                <th>Total Payment</th>
                                 <th>Contact</th>
                                 <th>Actions</th>
                             </tr>
@@ -61,6 +62,9 @@
                                     </td>
                                     <td class="text-sm">
                                         {{ $neurologist->email ?? '' }}
+                                    </td>
+                                    <td class="text-sm">
+                                        $ {{ number_format($neurologist->neurologistPatientInfo?->sum('charge_by_hospital') ?? 0, 2) }}
                                     </td>
 
                                     <td class="text-sm "><img src="{{ asset('portal/assets/img/Patient Count.png') }}" alt="icon"/> {{ $neurologist->neurologistPatientInfo?->count() ?? 0 }}</td>
