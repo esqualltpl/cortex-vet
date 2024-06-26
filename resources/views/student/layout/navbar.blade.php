@@ -79,7 +79,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('student.settings') }}" class="nav-link text-body p-0 position-relative" {{--target="_blank"--}}>
+                    {{--{{ route('student.settings') }}--}}
+                    <a href="javascript:" class="nav-link text-body p-0 position-relative" {{--target="_blank"--}}>
                         <img alt="profile image" src="{{ auth()->user()?->getUserPic() ?? '' }}" class="avatar profile-image-show" width="40px">
                     </a>
                 </li>
