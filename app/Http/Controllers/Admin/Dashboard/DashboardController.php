@@ -19,7 +19,7 @@ class DashboardController extends Controller
         $dashboardInfo['onboarded_students'] = User::where('status', 'Student')->count() ?? 0;
         $dashboardInfo['consultations_by_neurologists'] = NeuroAssessment::where('consult_by', '!=', null)->count() ?? 0;
         $dashboardInfo['consultations_by_practitioners'] = NeuroAssessment::where('treated_by', '!=', null)->count() ?? 0;
-        $dashboardInfo['total_payment'] = NeuroAssessment::where('consult_by', '!=', null)->orWhere('treated_by', '!=', null)->sum('charge_by_hospital') ?? 0;
+        $dashboardInfo['total_payment'] = NeuroAssessment::where('consult_by', '!=', null)->sum('charge_by_hospital') ?? 0;
 
         $getUsersCountByMonth = $this->getUsersCountByMonth();
         $dashboardInfo['chat_veterinary_neurologists'] = $getUsersCountByMonth['Neurologist'];
