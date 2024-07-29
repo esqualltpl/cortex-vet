@@ -228,7 +228,7 @@
             }
         });
 
-        $(document).on('change', '.breed-options', function (e) {
+        /*$(document).on('change', '.breed-options', function (e) {
             e.preventDefault();
 
             let selectedOption = $(this).find('option:selected');
@@ -274,6 +274,6 @@
                     }
                 });
             }
-        });
+        });*/
     </script>
 @endsection

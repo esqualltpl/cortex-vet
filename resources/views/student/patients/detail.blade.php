@@ -463,7 +463,7 @@
             }
         });
 
-        $(document).on('change', '.breed-options', function (e) {
+        /*$(document).on('change', '.breed-options', function (e) {
             e.preventDefault();
 
             let selectedOption = $(this).find('option:selected');
@@ -509,7 +509,7 @@
                     }
                 });
             }
-        });
+        });*/
 
         $(document).on('click', '.patient-info-save', function (e) {
             let actionType = 'post';
