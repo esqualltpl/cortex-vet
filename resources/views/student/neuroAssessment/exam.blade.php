@@ -465,7 +465,7 @@
                                             <i class="fas fa-user-md me-2 mx-1" style=" font-size: 14px; !important;" aria-hidden="true"></i>
                                             Consult Neurologist
                                         </button>
-                                        <button class="btn btn-primary text-white" type="submit" title="Treated">Treated</button>
+                                        <button class="btn btn-primary text-white" type="submit" title="Finished">Finished</button>
                                     </div>
                                 </div>
                             </div>
@@ -479,12 +479,12 @@
              tabindex="-1" role="dialog" aria-labelledby="consultNeurologistRequestModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered " role="document" style="">
                 <div class="modal-content ">
-                    <div class=" modal-header" style="background-color: #FD4F4E;border-bottom: none;">
+                    <div class=" modal-header" style="background-color: #8871c096;border-bottom: none;">
                         <button type="button" class="btn-close text-dark float-end" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body" style="background-color: #FD4F4E;">
+                    <div class="modal-body" style="background-color: #8871c096;">
                         <div class="d-flex justify-content-center">
-                            <img src="{{ asset('portal/assets/img/Sad Emoji.png') }}" alt="icon"/>
+                            <img src="{{ asset('portal/assets/img/consultation-request.png') }}" style="width: 120px !important;" alt="icon"/>
                         </div>
                         <div class="text-center  m-3 p-3">
                             <p class="text-white">Are you sure you want to send  <span class="text-bold patient-name-show"></span> consultation request to Neurologists?</p>
