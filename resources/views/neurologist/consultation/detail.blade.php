@@ -646,7 +646,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="col-md-12">
-                        <label class="form-label font-weight-bold">Enter Email to share call link</label>
+                        <label class="form-label font-weight-bold">Enter Email To Contact Practitioner</label>
                         <div class="input-group input-group-outline mb-3">
                             <input type="email" name="test" class="form-control communicate_directly_email" placeholder="Enter the email">
                         </div>
