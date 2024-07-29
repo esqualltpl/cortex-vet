@@ -127,7 +127,7 @@ class DashboardController extends Controller
             $response = ResponseMessage::ResponseNotifySuccess('Success!', 'New patient added successfully.');
             Log::info('Successfully add the new patient', ['updated' => 'success' ?? '']);
             DB::commit();
-           return redirect()->route('practitioner.dashboard')->with($response);
+           return redirect()->route('practitioner.patient.detail', Crypt::encrypt($patientInfo->id))->with($response);
         } catch (Exception $e) {
             DB::rollBack();
             $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to add the new patient. Please try again later.');
