@@ -52,32 +52,6 @@
                                 <div class="container p-0">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <p class="font-weight-bold text-dark mb-0">Owner Name</p>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <p class="font-weight-normal text-dark opacity-8">{{ $patientInfo->owner_name ?? '' }}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 col-sm-12">
-                                <div class="container p-0">
-                                    <div class="row">
-                                        <div class="col-md-6 col-sm-6">
-                                            <p class="font-weight-bold text-dark mb-0">Patient Name</p>
-                                        </div>
-                                        <div class="col-md-6 col-sm-6">
-                                            <p class="font-weight-normal text-dark opacity-8">{{ $patientInfo->patient_name ?? '' }}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="container p-0">
-                                    <div class="row">
-                                        <div class="col-md-6">
                                             <p class="font-weight-bold text-dark mb-0">Age/DOB</p>
                                         </div>
                                         <div class="col-md-6">
@@ -86,9 +60,19 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 col-sm-12">
+                            <div class="col-md-6">
+                                <div class="container p-0">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p class="font-weight-bold text-dark mb-0">Owner Name</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p class="font-weight-normal text-dark opacity-8">{{ $patientInfo->owner_name ?? '' }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
                                 <div class="container p-0">
                                     <div class="row">
                                         <div class="col-md-6 col-sm-6">
@@ -96,6 +80,18 @@
                                         </div>
                                         <div class="col-md-6 col-sm-6">
                                             <p class="font-weight-normal text-dark opacity-8">{{ $patientInfo->sex ?? '' }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="container p-0">
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-6">
+                                            <p class="font-weight-bold text-dark mb-0">Patient Name</p>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6">
+                                            <p class="font-weight-normal text-dark opacity-8">{{ $patientInfo->patient_name ?? '' }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -112,9 +108,19 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 col-sm-12">
+                            <div class="col-md-6">
+                                <div class="container p-0">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p class="font-weight-bold text-dark mb-0">Species Type</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p class="font-weight-normal text-dark opacity-8">{{ $patientInfo->specieTypeInfo?->name ?? '' }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
                                 <div class="container p-0">
                                     <div class="row">
                                         <div class="col-md-6 col-sm-6">
@@ -136,18 +142,6 @@
                                                 <span class="toggle-weight">{{ $patientInfo->weight ?? '' }}</span>
                                                 <span class="text-sm toggle-weight-label">{{ $patientInfo->weight_type ?? '' }}</span>
                                             </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="container p-0">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <p class="font-weight-bold text-dark mb-0">Species Type</p>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <p class="font-weight-normal text-dark opacity-8">{{ $patientInfo->specieTypeInfo?->name ?? '' }}</p>
                                         </div>
                                     </div>
                                 </div>
