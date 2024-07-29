@@ -25,11 +25,11 @@
 <body class="g-sidenav-show" style="background-color: #FAFAFA;">
 <nav class="navbar px-md-7 navbar-expand-lg position-absolute top-0 z-index-3 shadow-none my-3 navbar-transparent mt-4">
     <a class="navbar-brand font-weight-bolder ms-lg-0 ms-md-3 text-white" href="{{ url('/') }}">
-        <img src="{{ asset('portal/assets/img/Logo.png') }}" width="110px" alt="Logo"/>
-        <div class="position-relative  h-100 m-3  border-radius-lg d-flex flex-column justify-content-start">
+        <img src="{{ asset('portal/assets/img/Logo.png') }}" width="140px" alt="Logo"/>
+        {{--<div class="position-relative  h-100 m-3  border-radius-lg d-flex flex-column justify-content-start">
             <h2 class="">Hi,</h2>
             <h5>Welcome to Cortex Vet!</h5>
-        </div>
+        </div>--}}
     </a>
 </nav>
 <main class="main-content mt-0">
