@@ -68,6 +68,9 @@
                                     <a href="{{ route('practitioner.patient.detail', Crypt::encrypt($patient->id)) }}">
                                         <img src="{{ asset('portal/assets/img/view.png') }}" alt="icon">
                                     </a>
+                                    <a href="{{ route('practitioner.neuro.assessment.exam', Crypt::encrypt($patient->id)) }}">
+                                        <img src="{{ asset('portal/assets/img/Veterinary Practitioners Blue.png') }}" style=" width: 29px !important; margin-left: 2px !important; " alt="icon">
+                                    </a>
                                 </td>
                             </tr>
                             @endforeach
