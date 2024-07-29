@@ -41,16 +41,7 @@ class SpeciesTableSeeder extends Seeder
             2 =>
                 array(
                     'id' => 3,
-                    'name' => 'Exotic Canine (Dogs)',
-                    'added_by' => 1,
-                    'created_at' => Carbon::now(),
-                    'updated_at' => NULL,
-                    'deleted_at' => NULL,
-                ),
-            3 =>
-                array(
-                    'id' => 4,
-                    'name' => 'Exotic Feline (Cats)',
+                    'name' => 'Exotic',
                     'added_by' => 1,
                     'created_at' => Carbon::now(),
                     'updated_at' => NULL,
