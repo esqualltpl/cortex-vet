@@ -52,4 +52,9 @@ class Patient extends Model
     {
         return $this->belongsTo(User::class, 'added_by');
     }
+
+    public function neuroAssessmentInfo(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(NeuroAssessment::class, 'patient_id');
+    }
 }

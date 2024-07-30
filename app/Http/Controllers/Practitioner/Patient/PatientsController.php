@@ -35,7 +35,7 @@ class PatientsController extends Controller
         $species = Specie::all();
         $patient_id = Crypt::decrypt($id);
         $patientInfo = Patient::with('specieTypeInfo', 'breedInfo')->find($patient_id);
-        $appointmentsHistory = NeuroAssessment::where('patient_id', $patient_id)->with('treatedByInfo', 'consultByInfo')->get();
+        $appointmentsHistory = NeuroAssessment::where('patient_id', $patient_id)->with('treatedByInfo', 'consultByInfo', 'patientInfo')->get();
         $breedsSelectedSpecie = Breed::where('specie_id', $patientInfo->specie_type)->get();
 
         return view('practitioner.patients.detail', compact('patientInfo', 'species', 'breedsSelectedSpecie', 'appointmentsHistory'));
