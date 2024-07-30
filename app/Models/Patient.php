@@ -23,7 +23,7 @@ class Patient extends Model
         if ($breed_image !== null && File::exists($imagePath)) {
             return asset('portal/assets/img/breeds/' . $specie_type . '/' . $breed_image);
         } else {
-            return asset('portal/assets/img/breeds/no-breed-type-selected.jpg');
+            return asset('portal/assets/img/breeds/no-breed-type-selected.png');
         }
     }
 
@@ -34,7 +34,7 @@ class Patient extends Model
         if ($breed_image !== null && File::exists($imagePath)) {
             return public_path('portal/assets/img/breeds/' . $specie_type . '/' . $breed_image);
         } else {
-            return public_path('portal/assets/img/breeds/no-breed-type-selected.jpg');
+            return public_path('portal/assets/img/breeds/no-breed-type-selected.png');
         }
     }
 

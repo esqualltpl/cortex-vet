@@ -21,7 +21,7 @@ class Breed extends Model
         if ($this->image !== null && File::exists($imagePath)) {
             return asset('portal/assets/img/breeds/' . $specie_type . '/' . $this->image);
         } else {
-            return asset('portal/assets/img/breeds/no-breed-type-selected.jpg');
+            return asset('portal/assets/img/breeds/no-breed-type-selected.png');
         }
     }
 }

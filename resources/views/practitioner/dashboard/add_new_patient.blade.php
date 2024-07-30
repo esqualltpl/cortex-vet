@@ -39,7 +39,7 @@
                                     <div id="breedImage-loader" class="text-center d-none" style="margin-top: 135px !important;">
                                         <img src="{{ asset('portal/assets/img/loader.gif') }}" width="120px" alt="loader"/>
                                     </div>
-                                    <img class="breed-type-image" src="{{ asset('portal/assets/img/breeds/no-breed-type-selected.jpg') }}" alt="icon"
+                                    <img class="breed-type-image" src="{{ asset('portal/assets/img/breeds/no-breed-type-selected.png') }}" alt="icon"
                                          style="margin-top: 10px;width: 330px;border-radius: 16px;">
                                 </div>
                                 <div class="col-md-9">
@@ -128,7 +128,7 @@
                                                                 name="specie_type" aria-label="Specie Type">
                                                             <option selected disabled>Select</option>
                                                             @foreach($species as $specie)
-                                                                <option data-specie-image="{{ asset('portal/assets/img/breeds/no-breed-type-selected.jpg') }}" value="{{ Crypt::encrypt($specie->id ?? 0) }}">{{ $specie->name ?? '' }}</option>
+                                                                <option data-specie-image="{{ asset('portal/assets/img/breeds/no-breed-type-selected.png') }}" value="{{ Crypt::encrypt($specie->id ?? 0) }}">{{ $specie->name ?? '' }}</option>
                                                             @endforeach
                                                         </select>
                                                         @error('specie_type')

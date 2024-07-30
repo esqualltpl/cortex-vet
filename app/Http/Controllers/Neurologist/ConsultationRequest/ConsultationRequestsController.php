@@ -216,6 +216,7 @@ class ConsultationRequestsController extends Controller
             $fromEmail = auth()->user()->email ?? null;
             $subject = 'Patient Report';
             $emailData = [
+                            'patient_name'=> $consultationRequest->neuroAssessmentInfo?->patientInfo?->patient_name ?? '',
                             'practitioner_name'=> $consultationRequest->neuroAssessmentInfo?->addedByInfo?->name ?? '',
                             'neurologist_name'=> $consultationRequest->neuroAssessmentInfo?->consultByInfo?->name ?? ''
                          ];

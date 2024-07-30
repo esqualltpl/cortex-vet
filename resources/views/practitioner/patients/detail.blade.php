@@ -224,7 +224,7 @@
                                         <img src="{{ asset('portal/assets/img/loader.gif') }}" width="120px" alt="loader"/>
                                     </div>
                                     <img class="breed-type-image"
-                                         src="{{ $patientInfo->breedInfo?->getBreedImage($patientInfo->specieTypeInfo?->name ?? null) ?? asset('portal/assets/img/breeds/no-breed-type-selected.jpg') }}"
+                                         src="{{ $patientInfo->breedInfo?->getBreedImage($patientInfo->specieTypeInfo?->name ?? null) ?? asset('portal/assets/img/breeds/no-breed-type-selected.png') }}"
                                          alt="icon"
                                          style="margin-top: 78px;width: 175px;border-radius: 16px;">
                                 </div>
@@ -304,7 +304,7 @@
                                                             name="specie_type" aria-label="Specie Type">
                                                         <option selected disabled>Select</option>
                                                         @foreach($species as $specie)
-                                                            <option data-specie-image="{{ asset('portal/assets/img/breeds/no-breed-type-selected.jpg') }}"
+                                                            <option data-specie-image="{{ asset('portal/assets/img/breeds/no-breed-type-selected.png') }}"
                                                                     {{ $specie->id == $patientInfo->specie_type ? 'selected' : '' }}
                                                                     value="{{ Crypt::encrypt($specie->id ?? 0) }}">{{ $specie->name ?? '' }}</option>
                                                         @endforeach
