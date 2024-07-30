@@ -205,14 +205,15 @@
                                                 Medical History <span class="text-danger">*</span>
                                             </label>
                                             <div class="input-group input-group-outline mb-3">
-                                                <textarea rows="4" class="form-control w-100"
-                                                          readonly="true"
+                                                <textarea rows="4" class="form-control w-100 medical_history-validation"
+                                                          {{--readonly="true"--}}
                                                           name="medical_history"
                                                           aria-describedby="Medical History" onfocus="focused(this)"
                                                           onfocusout="defocused(this)"
                                                           style="resize: none;"
                                                           placeholder="Please describe the presenting complaint and associated history. Please also note any historical medical information. Please include the results of any diagnostics already performed. Please note any previous therapies and response."
                                                 >{{ $neuroAssessmentInfo->medical_history ?? '' }}</textarea>
+                                                <span class="text-danger medical_history-error mt-1 text-sm px-1 d-none">Medical History field is required.</span>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
@@ -221,7 +222,7 @@
                                             </label>
                                             <div class="input-group input-group-outline mb-3">
                                                 <textarea rows="4" class="form-control w-100"
-                                                          readonly="true"
+                                                          {{--readonly="true"--}}
                                                           name="vaccination_history"
                                                           aria-describedby="Vaccination History" onfocus="focused(this)"
                                                           onfocusout="defocused(this)" style="resize: none;"
@@ -235,7 +236,7 @@
                                             </label>
                                             <div class="input-group input-group-outline mb-3">
                                                 <textarea rows="4" class="form-control w-100"
-                                                          readonly="true"
+                                                          {{--readonly="true"--}}
                                                           name="diet_feeding_routine"
                                                           aria-describedby="Diet/Feeding Routine" onfocus="focused(this)"
                                                           onfocusout="defocused(this)" style="resize: none;"
@@ -249,7 +250,7 @@
                                             </label>
                                             <div class="input-group input-group-outline mb-3">
                                                 <textarea rows="4" class="form-control w-100"
-                                                          readonly="true"
+                                                          {{--readonly="true"--}}
                                                           name="current_therapy_response"
                                                           aria-describedby="Current Therapy/Response" onfocus="focused(this)"
                                                           onfocusout="defocused(this)"
@@ -264,7 +265,7 @@
                                             </label>
                                             <div class="input-group input-group-outline mb-3">
                                                 <textarea rows="4" class="form-control w-100"
-                                                          readonly="true"
+                                                          {{--readonly="true"--}}
                                                           name="patients_environment"
                                                           aria-describedby="Patient's Environment" onfocus="focused(this)"
                                                           onfocusout="defocused(this)" style="resize: none;"
@@ -274,8 +275,11 @@
                                         </div>
                                     </div>
                                     <div class="button-row d-flex mt-4">
-                                        <button class="btn btn-primary text-white ms-auto js-btn-next" type="button"
-                                                title="Conduct Exam">
+                                        <button
+                                                class="btn btn-primary text-white ms-auto conduct-exam-button {{ isset($neuroAssessmentInfo) && $neuroAssessmentInfo->medical_history ? 'js-btn-next' : '' }}"
+                                                type="button"
+                                                title="Conduct Exam"
+                                        >
                                             Conduct Exam
                                         </button>
                                     </div>
@@ -520,6 +524,27 @@
 @section('script')
     <script src="{{ asset('portal/assets/js/plugins/multistep-form.js') }}"></script>
     <script>
+        $(document).on('click', '.conduct-exam-button', function (e) {
+            let validation_class = $('.medical_history-validation').val().trim();
+
+            if (!validation_class) {
+                e.preventDefault();
+                $('.medical_history-error').removeClass('d-none');
+            } else {
+                $('.medical_history-error').addClass('d-none');
+            }
+        });
+
+        $(document).on('input', '.medical_history-validation', function () {
+            if ($(this).val().trim() !== '') {
+                $('.medical_history-error').addClass('d-none');
+                $('.conduct-exam-button').addClass('js-btn-next');
+            }else{
+                $('.medical_history-error').removeClass('d-none');
+                $('.conduct-exam-button').removeClass('js-btn-next');
+            }
+        });
+
         $(document).on('change', '.toggle-weight-switch', function () {
             let weight = $(this).attr('data-weight');
             let currentValue = parseFloat(weight);

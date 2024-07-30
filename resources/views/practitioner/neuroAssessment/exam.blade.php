@@ -127,7 +127,8 @@
                                                     <div class="d-flex">
                                                         <p class="font-weight-bold text-dark mb-0">Weight</p>
                                                         <div class="form-check form-switch ms-2 mt-1 mx-1">
-                                                            <input class="form-check-input toggle-weight-switch" data-weight="{{ $patientInfo->weight ?? '' }}" type="checkbox" id="weightSwitch" {{ $patientInfo->weight_type == 'Kgs' ? 'checked' : '' }}>
+                                                            <input class="form-check-input toggle-weight-switch" data-weight="{{ $patientInfo->weight ?? '' }}" type="checkbox"
+                                                                   id="weightSwitch" {{ $patientInfo->weight_type == 'Kgs' ? 'checked' : '' }}>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -205,14 +206,15 @@
                                                 Medical History <span class="text-danger">*</span>
                                             </label>
                                             <div class="input-group input-group-outline mb-3">
-                                                <textarea rows="4" class="form-control w-100"
-                                                          readonly="true"
+                                                <textarea rows="4" class="form-control w-100 medical_history-validation"
+                                                          {{--readonly="true"--}}
                                                           name="medical_history"
                                                           aria-describedby="Medical History" onfocus="focused(this)"
                                                           onfocusout="defocused(this)"
                                                           style="resize: none;"
                                                           placeholder="Please describe the presenting complaint and associated history. Please also note any historical medical information. Please include the results of any diagnostics already performed. Please note any previous therapies and response."
                                                 >{{ $neuroAssessmentInfo->medical_history ?? '' }}</textarea>
+                                                <span class="text-danger medical_history-error mt-1 text-sm px-1 d-none">Medical History field is required.</span>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
@@ -221,7 +223,7 @@
                                             </label>
                                             <div class="input-group input-group-outline mb-3">
                                                 <textarea rows="4" class="form-control w-100"
-                                                          readonly="true"
+                                                          {{--readonly="true"--}}
                                                           name="vaccination_history"
                                                           aria-describedby="Vaccination History" onfocus="focused(this)"
                                                           onfocusout="defocused(this)" style="resize: none;"
@@ -235,7 +237,7 @@
                                             </label>
                                             <div class="input-group input-group-outline mb-3">
                                                 <textarea rows="4" class="form-control w-100"
-                                                          readonly="true"
+                                                          {{--readonly="true"--}}
                                                           name="diet_feeding_routine"
                                                           aria-describedby="Diet/Feeding Routine" onfocus="focused(this)"
                                                           onfocusout="defocused(this)" style="resize: none;"
@@ -249,7 +251,7 @@
                                             </label>
                                             <div class="input-group input-group-outline mb-3">
                                                 <textarea rows="4" class="form-control w-100"
-                                                          readonly="true"
+                                                          {{--readonly="true"--}}
                                                           name="current_therapy_response"
                                                           aria-describedby="Current Therapy/Response" onfocus="focused(this)"
                                                           onfocusout="defocused(this)"
@@ -264,7 +266,7 @@
                                             </label>
                                             <div class="input-group input-group-outline mb-3">
                                                 <textarea rows="4" class="form-control w-100"
-                                                          readonly="true"
+                                                          {{--readonly="true"--}}
                                                           name="patients_environment"
                                                           aria-describedby="Patient's Environment" onfocus="focused(this)"
                                                           onfocusout="defocused(this)" style="resize: none;"
@@ -274,11 +276,15 @@
                                         </div>
                                     </div>
                                     <div class="button-row d-flex mt-4">
-                                        <button class="btn btn-primary text-white ms-auto js-btn-next" type="button"
-                                                title="Conduct Exam">
+                                        <button
+                                                class="btn btn-primary text-white ms-auto conduct-exam-button {{ isset($neuroAssessmentInfo) && $neuroAssessmentInfo->medical_history ? 'js-btn-next' : '' }}"
+                                                type="button"
+                                                title="Conduct Exam"
+                                        >
                                             Conduct Exam
                                         </button>
                                     </div>
+
                                 </div>
                             </div>
 
@@ -403,7 +409,8 @@
                                                                                                                             <div class="form-check ps-0">
                                                                                                                                 <input class="form-check-input" type="radio"
                                                                                                                                        {{ isset($neurologicalExamStepInfo[$examInfo->id ?? 0][$testInfo->id ?? 0]) && $neurologicalExamStepInfo[$examInfo->id ?? 0][$testInfo->id ?? 0] == $options->id ? 'checked' ?? '' : '' }}
-                                                                                                                                       name="options[{{$examInfo->id ?? 0}}][{{$testInfo->id ?? 0}}]" value="{{ $options->id }}"
+                                                                                                                                       name="options[{{$examInfo->id ?? 0}}][{{$testInfo->id ?? 0}}]"
+                                                                                                                                       value="{{ $options->id }}"
                                                                                                                                        id="customRadio{{ $options->id }}">
                                                                                                                                 <label class="custom-control-label"
                                                                                                                                        for="customRadio{{ $options->id }}">{{ $options->name ?? '' }}</label>
@@ -493,7 +500,7 @@
                             <img src="{{ asset('portal/assets/img/consultation-request.png') }}" style="width: 120px !important;" alt="icon"/>
                         </div>
                         <div class="text-center  m-3 p-3">
-                            <p class="text-white">Are you sure you want to send  <span class="text-bold patient-name-show"></span> consultation request to Neurologists?</p>
+                            <p class="text-white">Are you sure you want to send <span class="text-bold patient-name-show"></span> consultation request to Neurologists?</p>
                         </div>
                     </div>
                     <div class="conformation">
@@ -520,6 +527,27 @@
 @section('script')
     <script src="{{ asset('portal/assets/js/plugins/multistep-form.js') }}"></script>
     <script>
+        $(document).on('click', '.conduct-exam-button', function (e) {
+            let validation_class = $('.medical_history-validation').val().trim();
+
+            if (!validation_class) {
+                e.preventDefault();
+                $('.medical_history-error').removeClass('d-none');
+            } else {
+                $('.medical_history-error').addClass('d-none');
+            }
+        });
+
+        $(document).on('input', '.medical_history-validation', function () {
+            if ($(this).val().trim() !== '') {
+                $('.medical_history-error').addClass('d-none');
+                $('.conduct-exam-button').addClass('js-btn-next');
+            }else{
+                $('.medical_history-error').removeClass('d-none');
+                $('.conduct-exam-button').removeClass('js-btn-next');
+            }
+        });
+
         $(document).on('change', '.toggle-weight-switch', function () {
             let weight = $(this).attr('data-weight');
             let currentValue = parseFloat(weight);
