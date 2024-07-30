@@ -46,7 +46,7 @@
                  alt="icon" style="width: 110px"/>
         </td>
         <td style="text-align: right;">
-            <p style="margin-top:0 !important;font-family: Roboto, Helvetica, Arial, sans-serif;">Page 1 by 2</p>
+            <p style="margin-top:0 !important;font-family: Roboto, Helvetica, Arial, sans-serif;">Page {PAGENO} of {nbpg}</p>
         </td>
     </tr>
 </table>
