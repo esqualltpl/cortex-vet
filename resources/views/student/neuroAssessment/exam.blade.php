@@ -206,12 +206,13 @@
                                             </label>
                                             <div class="input-group input-group-outline mb-3">
                                                 <textarea rows="4" class="form-control w-100"
+                                                          readonly="true"
                                                           name="medical_history"
                                                           aria-describedby="Medical History" onfocus="focused(this)"
                                                           onfocusout="defocused(this)"
                                                           style="resize: none;"
                                                           placeholder="Please describe the presenting complaint and associated history. Please also note any historical medical information. Please include the results of any diagnostics already performed. Please note any previous therapies and response."
-                                                ></textarea>
+                                                >{{ $neuroAssessmentInfo->medical_history ?? '' }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
@@ -220,11 +221,12 @@
                                             </label>
                                             <div class="input-group input-group-outline mb-3">
                                                 <textarea rows="4" class="form-control w-100"
+                                                          readonly="true"
                                                           name="vaccination_history"
                                                           aria-describedby="Vaccination History" onfocus="focused(this)"
                                                           onfocusout="defocused(this)" style="resize: none;"
                                                           placeholder="Please comment if this patient is up to date on vaccines (rabies and distemper)."
-                                                ></textarea>
+                                                >{{ $neuroAssessmentInfo->vaccination_history ?? '' }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
@@ -233,11 +235,12 @@
                                             </label>
                                             <div class="input-group input-group-outline mb-3">
                                                 <textarea rows="4" class="form-control w-100"
+                                                          readonly="true"
                                                           name="diet_feeding_routine"
                                                           aria-describedby="Diet/Feeding Routine" onfocus="focused(this)"
                                                           onfocusout="defocused(this)" style="resize: none;"
                                                           placeholder="Please note the type of diet and feeding frequency."
-                                                ></textarea>
+                                                >{{ $neuroAssessmentInfo->diet_feeding_routine ?? '' }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
@@ -246,12 +249,13 @@
                                             </label>
                                             <div class="input-group input-group-outline mb-3">
                                                 <textarea rows="4" class="form-control w-100"
+                                                          readonly="true"
                                                           name="current_therapy_response"
                                                           aria-describedby="Current Therapy/Response" onfocus="focused(this)"
                                                           onfocusout="defocused(this)"
                                                           style="resize: none;"
                                                           placeholder="Please note any current or previous therapies and include clinical response to each therapy"
-                                                ></textarea>
+                                                >{{ $neuroAssessmentInfo->current_therapy_response ?? '' }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
@@ -260,11 +264,12 @@
                                             </label>
                                             <div class="input-group input-group-outline mb-3">
                                                 <textarea rows="4" class="form-control w-100"
+                                                          readonly="true"
                                                           name="patients_environment"
                                                           aria-describedby="Patient's Environment" onfocus="focused(this)"
                                                           onfocusout="defocused(this)" style="resize: none;"
                                                           placeholder="Please note if the patient is indoor/outdoor, has recent travel, other pets in the home, and any environmental history such as tick or potential toxin exposure."
-                                                ></textarea>
+                                                >{{ $neuroAssessmentInfo->patients_environment ?? '' }}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -397,6 +402,7 @@
                                                                                                                         <div class="col-md-2 col-sm-6">
                                                                                                                             <div class="form-check ps-0">
                                                                                                                                 <input class="form-check-input" type="radio"
+                                                                                                                                       {{ isset($neurologicalExamStepInfo[$examInfo->id ?? 0][$testInfo->id ?? 0]) && $neurologicalExamStepInfo[$examInfo->id ?? 0][$testInfo->id ?? 0] == $options->id ? 'checked' ?? '' : '' }}
                                                                                                                                        name="options[{{$examInfo->id ?? 0}}][{{$testInfo->id ?? 0}}]" value="{{ $options->id }}"
                                                                                                                                        id="customRadio{{ $options->id }}">
                                                                                                                                 <label class="custom-control-label"
@@ -451,7 +457,7 @@
                                                       onfocus="focused(this)"
                                                       onfocusout="defocused(this)"
                                                       style="resize: none;"
-                                            ></textarea>
+                                            >{{ $neuroAssessmentInfo->result ?? '' }}</textarea>
                                         </div>
                                         <div id="neuroExamResult-loader" class="text-center d-none" style="margin-left: 34px;">
                                             <img src="{{ asset('portal/assets/img/loader.gif') }}" width="120px" alt="loader"/>

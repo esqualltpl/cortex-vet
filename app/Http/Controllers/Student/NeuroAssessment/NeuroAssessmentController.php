@@ -52,15 +52,18 @@ class NeuroAssessmentController extends Controller
         }
     }
 
-    public function neuroExam($id): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    public function neuroExam($id, $na_id = null): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $patient_id = Crypt::decrypt($id);
+        $neuroAssessment_id = $na_id != null ? Crypt::decrypt($na_id) : null;
         $admin_id = User::where('status', 'Super Admin')->first()?->id ?? null;
         $mainFirstVideo = MainFirstVideo::where('added_by', $admin_id)->first();
         $patientInfo = Patient::with('specieTypeInfo', 'breedInfo')->find($patient_id);
         $examsInfo = Exam::where('added_by', $admin_id)->with('testInfo', 'instructionVideoInfo')->get();
+        $neuroAssessmentInfo = NeuroAssessment::find($neuroAssessment_id) ?? null;
+        $neurologicalExamStepInfo = json_decode($neuroAssessmentInfo->neurological_exam_steps ?? '', true) ?? null;
 
-        return view('student.neuroAssessment.exam', compact('patientInfo', 'mainFirstVideo', 'examsInfo'));
+        return view('student.neuroAssessment.exam', compact('patientInfo', 'mainFirstVideo', 'examsInfo', 'neuroAssessmentInfo', 'neurologicalExamStepInfo'));
     }
 
     public function neuroExamResult(Request $request, $id)
