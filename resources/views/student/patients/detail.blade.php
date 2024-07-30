@@ -208,7 +208,7 @@
                                 <span class="cursor-pointer show-export-modal" data-neuro-assessment-id="{{ Crypt::encrypt($appointmentHistory->id) }}">
                                     <img src="{{ asset('portal/assets/img/Email gray.png') }}" style=" width: 22px !important; margin-left: 2px !important; " alt="icon">
                                 </span>
-                                <a href="{{ route('practitioner.neuro.assessment.detail', ['id'=>Crypt::encrypt($appointmentHistory->patientInfo?->id), 'na_id'=>Crypt::encrypt($appointmentHistory->id)]) }}">
+                                <a href="{{ route('student.neuro.assessment.detail', ['id'=>Crypt::encrypt($appointmentHistory->patientInfo?->id), 'na_id'=>Crypt::encrypt($appointmentHistory->id)]) }}">
                                     <img src="{{ asset('portal/assets/img/Veterinary Practitioners gray.png') }}" style=" width: 20px !important; margin-left: 2px !important; " alt="icon">
                                 </a>
                             </td>
