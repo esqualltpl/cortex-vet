@@ -205,7 +205,12 @@
                                    class="text-info text-decoration-underline"> Neuro Exam {{ $sn }}</a>
                             </td>
                             <td>
-                                <span class="cursor-pointer show-export-modal" data-neuro-assessment-id="{{ Crypt::encrypt($appointmentHistory->id) }}"><i class="material-symbols-outlined">share_windows</i></span>
+                                <span class="cursor-pointer show-export-modal" data-neuro-assessment-id="{{ Crypt::encrypt($appointmentHistory->id) }}">
+                                    <img src="{{ asset('portal/assets/img/Email gray.png') }}" style=" width: 22px !important; margin-left: 2px !important; " alt="icon">
+                                </span>
+                                <a href="{{ route('practitioner.neuro.assessment.detail', ['id'=>Crypt::encrypt($appointmentHistory->patientInfo?->id), 'na_id'=>Crypt::encrypt($appointmentHistory->id)]) }}">
+                                    <img src="{{ asset('portal/assets/img/Veterinary Practitioners gray.png') }}" style=" width: 20px !important; margin-left: 2px !important; " alt="icon">
+                                </a>
                             </td>
                         </tr>
                     @endforeach
