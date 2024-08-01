@@ -83,12 +83,12 @@
              tabindex="-1" role="dialog" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered " role="document" style="">
                 <div class="modal-content ">
-                    <div class=" modal-header" style="background-color: #FD4F4E;border-bottom: none;">
+                    <div class=" modal-header" style="background-color: #8871c096;border-bottom: none;">
                         <button type="button" class="btn-close text-dark float-end" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body" style="background-color: #FD4F4E;">
+                    <div class="modal-body" style="background-color: #8871c096;">
                         <div class="d-flex justify-content-center">
-                            <img src="{{ asset('portal/assets/img/Sad Emoji.png') }}" alt="icon"/>
+                            <img src="{{ asset('portal/assets/img/consultation-request.png') }}" alt="icon" style="width: 120px !important;"/>
                         </div>
                         <div class="text-center  m-3 p-3">
                             <p class="text-white">Are you sure to want to delete <span class="text-bold removed-item-name"></span></p>
