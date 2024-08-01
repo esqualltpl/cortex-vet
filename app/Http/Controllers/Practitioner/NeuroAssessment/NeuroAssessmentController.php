@@ -212,7 +212,7 @@ class NeuroAssessmentController extends Controller
             Log::info('Successfully save the neuro assessment treated information', ['result' => 'success' ?? '']);
             DB::commit();
 
-            return redirect()->back()->with($response);
+            return redirect()->route('practitioner.patient.detail', $id)->with($response);
         } catch (Exception $e) {
             DB::rollBack();
             $response = ResponseMessage::ResponseNotifyError('Error!', 'The system is unable to save the neuro assessment treated information. Please try again later.');
