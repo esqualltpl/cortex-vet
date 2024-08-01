@@ -24,6 +24,13 @@
         }
         Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
+
+    $(document).ready(function () {
+        $('body').tooltip({
+            selector: '[data-toggle="tooltip"]',
+            trigger: 'hover',
+        });
+    });
 </script>
 <script src="{{ asset('portal/assets/js/functions.js') }}"></script>
 @yield('script')

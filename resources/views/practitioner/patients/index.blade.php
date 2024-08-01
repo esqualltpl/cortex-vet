@@ -65,10 +65,10 @@
                                     {{ $patient->created_at ?? '' }}
                                 </td>
                                 <td class="text-sm">
-                                    <a href="{{ route('practitioner.patient.detail', Crypt::encrypt($patient->id)) }}">
+                                    <a data-toggle="tooltip" data-placement="top" title="View" href="{{ route('practitioner.patient.detail', Crypt::encrypt($patient->id)) }}">
                                         <img src="{{ asset('portal/assets/img/view.png') }}" alt="icon">
                                     </a>
-                                    <a href="{{ route('practitioner.neuro.assessment.exam', Crypt::encrypt($patient->id)) }}">
+                                    <a data-toggle="tooltip" data-placement="top" title="Start Neuro Assessment" href="{{ route('practitioner.neuro.assessment.exam', Crypt::encrypt($patient->id)) }}">
                                         <img src="{{ asset('portal/assets/img/Veterinary Practitioners Blue.png') }}" style=" width: 29px !important; margin-left: 2px !important; " alt="icon">
                                     </a>
                                 </td>
