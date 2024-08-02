@@ -209,8 +209,13 @@
                                      data-action-url="{{ route('neurologist.patients.neuro.assessment.get.notes', Crypt::encrypt($appointmentHistory->id)) }}"
                                      src="{{ asset('portal/assets/img/notes.png') }}" alt="icon">
                             </td>
-                            <td class="">
-                                <a href="{{ route('neurologist.patients.report.detail', Crypt::encrypt($appointmentHistory->id)) }}"><span class="material-symbols-outlined">share_windows</span></a>
+                            <td>
+                                <a data-toggle="tooltip" data-placement="top" title="Patient Report" href="{{ route('neurologist.patients.report.detail', Crypt::encrypt($appointmentHistory->id)) }}">
+                                    <img src="{{ asset('portal/assets/img/share-report.png') }}" style=" width: 20px !important; margin-left: 2px !important; " alt="icon">
+                                </a>
+                                <a data-toggle="tooltip" data-placement="top" title="Edit" href="{{ $appointmentHistory->consultationInfo?->id ? route('neurologist.consultation.detail', encrypt($appointmentHistory->consultationInfo?->id)) : 'javascript:' }}">
+                                    <img src="{{ asset('portal/assets/img/edit png.png') }}" style=" width: 20px !important; margin-left: 2px !important; " alt="icon">
+                                </a>
                             </td>
                         </tr>
                     @endforeach
