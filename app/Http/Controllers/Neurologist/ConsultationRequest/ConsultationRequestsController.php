@@ -179,7 +179,7 @@ class ConsultationRequestsController extends Controller
             $htmlWithMargins = "
             <style>
                 @page {
-                    margin: 5mm 0;
+                    margin: 10mm 0;
                 }
                 body {
                     margin: 0;
@@ -196,6 +196,9 @@ class ConsultationRequestsController extends Controller
 
             // Render the PDF
             $pdf->render();
+
+            $font = $pdf->getFontMetrics()->get_font("Helvetica", "normal");
+            $pdf->getCanvas()->page_text($pdf->getCanvas()->get_width() - 72, 18, "Page {PAGE_NUM} of {PAGE_COUNT}", $font, 10, array(0,0,0));
 
             $pdfOutput = $pdf->output(); // Get the generated PDF content
             $file_name = date('YmdHis') . "-" . Str::uuid() . ".pdf";
