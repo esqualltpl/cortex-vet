@@ -105,7 +105,7 @@ class PatientsController extends Controller
         }
     }
 
-    public function reportDetail($id): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    public function reportDetail($id): \Illuminate\Http\RedirectResponse
     {
         try {
             ///////------ Generate PDF ------\\\\\\\
