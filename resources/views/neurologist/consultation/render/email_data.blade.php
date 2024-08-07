@@ -444,7 +444,7 @@
 
                                                                                                 <p style="line-height: 140%;">&nbsp;</p>
                                                                                                 <p style="line-height: 140%; text-align: justify;"><span
-                                                                                                            style="line-height: 19.6px;">Thank you for choosing CortexVet for all your neurolocalization needs!.</span>
+                                                                                                            style="line-height: 19.6px;">Thank you for choosing CortexVet for all your neurolocalization needs.</span>
                                                                                                 </p>
 
                                                                                                 <p style="line-height: 140%;">&nbsp;</p>
