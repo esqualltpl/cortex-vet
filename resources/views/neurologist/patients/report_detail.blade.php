@@ -167,7 +167,7 @@
                         <p class="text-center">No comments found.</p>
                     @endif
                 </div>
-                <p class="text-center font-weight-bold text-lg">Thank You!</p>
+                <p class="text-center font-weight-bold text-lg">Thank You</p>
             </div>
         </div>
     </div>

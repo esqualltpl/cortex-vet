@@ -423,7 +423,7 @@
                                                                                                 </p>
 
                                                                                                 <p style="line-height: 140%;">&nbsp;</p>
-                                                                                                <p style="line-height: 140%; text-align: justify;"><span style="line-height: 19.6px;">Thank you!</span>
+                                                                                                <p style="line-height: 140%; text-align: justify;"><span style="line-height: 19.6px;">Thank You</span>
                                                                                                 <p style="line-height: 140%; text-align: justify;"><span
                                                                                                             style="line-height: 19.6px;">The CortexVet Team</span>
                                                                                                 </p>
@@ -448,7 +448,7 @@
                                                                                                 </p>
 
                                                                                                 <p style="line-height: 140%;">&nbsp;</p>
-                                                                                                <p style="line-height: 140%; text-align: justify;"><span style="line-height: 19.6px;">Thank you!</span>
+                                                                                                <p style="line-height: 140%; text-align: justify;"><span style="line-height: 19.6px;">Thank You</span>
                                                                                                 <p style="line-height: 140%; text-align: justify;"><span
                                                                                                             style="line-height: 19.6px;">The CortexVet Team</span>
                                                                                                 </p>

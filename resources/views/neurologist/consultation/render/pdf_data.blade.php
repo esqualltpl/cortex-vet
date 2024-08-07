@@ -195,7 +195,7 @@
         <p class="text-center">No comments found.</p>
     @endif
 </div>
-<h4 style="font-size: 17px;margin-top: 40px;margin-bottom: 20px !important;color: #7b809a;text-align: center;">Thank You!</h4>
+<h4 style="font-size: 17px;margin-top: 40px;margin-bottom: 20px !important;color: #7b809a;text-align: center;">Thank You</h4>
 
 </body>
 
