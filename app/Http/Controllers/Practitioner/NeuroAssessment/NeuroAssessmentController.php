@@ -93,7 +93,7 @@ class NeuroAssessmentController extends Controller
 
             // Check if results are found
             if (count($results ?? []) == 0) {
-                $response = ResponseMessage::ResponseNotifyWarning('Warning!', 'No matching results found.');
+                $response = ResponseMessage::ResponseNotifyWarning('Result!', 'No disease detected.');
                 return response()->json($response);
             }
 
@@ -109,7 +109,7 @@ class NeuroAssessmentController extends Controller
                 $output[] = $resultName;
             }
 
-            $response = ResponseMessage::ResponseNotifySuccess('Success!', 'Successfully get the neuro exam result info.');
+            $response = ResponseMessage::ResponseNotifySuccess('Result!', 'Successfully get the neuro exam result info.');
             $response['rendered_info'] = implode(', ', $output);
             Log::info('Successfully get the neuro exam result info', ['result' => 'success' ?? '']);
             return response()->json($response);
