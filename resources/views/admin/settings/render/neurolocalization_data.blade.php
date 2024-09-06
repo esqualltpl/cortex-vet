@@ -16,7 +16,7 @@
                 Result {{ $result->id ?? 0 }}
             </td>
             <td class="text-sm ">
-                {{ $result->name ?? '' }}
+                {{ Str::limit($result->name ?? '', 50) }}
             </td>
             <td class="text-sm ">
                 {{ $result->detail->count() ?? 0 }}
