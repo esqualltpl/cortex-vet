@@ -736,6 +736,7 @@ class SettingsController extends Controller
             $neurolocalizationInfo = ResultDetail::where('result_id', $neurolocalization_id)
                 ->with('examInfo', 'testInfo', 'optionInfo')->get();
             if (count($neurolocalizationInfo) > 0) {
+                $resultInfo = Result::find($neurolocalization_id)?->name ?? null;
                 $renderData = '';
                 $info_sn = 0;
                 foreach ($neurolocalizationInfo as $info) {
@@ -751,6 +752,11 @@ class SettingsController extends Controller
                                         <div class="col-md-3"><p class="ml-2 mt-0" style="color: #83C1CC">' . $option_info . '</p></div>
                                     </div>';
                 }
+
+                $renderData .= '<div class="col-md-12 row mt-1">
+                                        <div class="col-md-3"><h6 class="mx-3">Result</h6></div>
+                                        <div class="col-md-9"><p class="mx-3">' . $resultInfo . '</p></div>
+                                    </div>';
             } else {
                 $renderData = '<h6 class="text-center">No Information found!</h6>';
             }
