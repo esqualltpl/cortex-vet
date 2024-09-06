@@ -419,7 +419,7 @@
                                                                     <button type="button"
                                                                             class="upload-instruction-video-toggle btn btn-outline-primary btn-sm py-2 mb-2"
                                                                             style=" font-family: 'Poppins', sans-serif !important">
-                                                                        <i class="fa fa-check-circle-o text-sm mx-1"
+                                                                        <i class="fa-regular fa-circle-check text-sm mx-1"
                                                                            aria-hidden="true"></i>
                                                                         <span class="upload-instruction-video-button-text">Upload Instruction Video</span>
                                                                     </button>

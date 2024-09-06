@@ -94,7 +94,7 @@
                                         <div class="d-flex justify-content-end gap-2 p-2 ">
                                             <a href="javascript:" class="edit-test-options" data-action-url="{{ route('admin.setting.exam.test.options.edit', Crypt::encrypt($testInfo->id)) }}"
                                                data-test-updated-class="show-updated-test-info{{ $test_sn }}">
-                                                <i class="fa fa-pencil-square-o" aria-hidden="true" style="cursor: pointer; color: #5534A5"></i>
+                                                <i class="fa-regular fa-pen-to-square" aria-hidden="true" style="cursor: pointer; color: #5534A5"></i>
                                             </a>
                                             <a href="javascript:" class="remove-exam-test-info"
                                                data-removed-name="{{ $testInfo->name ?? '' }}"
@@ -120,8 +120,8 @@
                                                                 @foreach($testInfo->optionsInfo ?? [] as $optionKey=>$options)
                                                                     @php($option_sn = $optionKey +1)
                                                                     <div class="form-check ps-0">
-                                                                        <input class="form-check-input" type="radio" name="test_option[{{$testInfo->id}}][]" id="customRadio{{ $options->id }}">
-                                                                        <label class="custom-control-label" for="customRadio{{ $options->id }}">{{ $options->name ?? '' }}</label>
+                                                                        <input type="checkbox" class="checkbox form-check-input test-radio-option{{$testInfo->id ?? 0}}" name="test_option[{{$testInfo->id}}][]" id="customRadio{{ $options->id }}">
+                                                                        <label class="custom-control-label pt-1" for="customRadio{{ $options->id }}">{{ $options->name ?? '' }}</label>
                                                                     </div>
                                                                 @endforeach
                                                             </div>
