@@ -9,7 +9,6 @@ use App\Models\Exam;
 use App\Models\InstructionVideo;
 use App\Models\MainFirstVideo;
 use App\Models\Payment;
-use App\Models\Resource;
 use App\Models\Result;
 use App\Models\ResultDetail;
 use App\Models\Student;
@@ -629,7 +628,7 @@ class SettingsController extends Controller
         ]);
 
         try {
-            if(count($request->options ?? []) == 0){
+            if (count($request->options ?? []) == 0) {
                 $response = ResponseMessage::ResponseNotifyWarning('Warning!', 'Please select the exam option, test and its option first to set result.');
                 return response()->json($response);
             }
@@ -649,15 +648,17 @@ class SettingsController extends Controller
                 }
 
                 $option_info = $request->options;
-                foreach ($option_info as $exam_id => $test_options) {
-                    foreach ($test_options as $test_id => $option_val) {
-                        $resultDetailInfo = new ResultDetail;
-                        $resultDetailInfo->result_id = $decResultId ?? null;
-                        $resultDetailInfo->exam_id = $exam_id;
-                        $resultDetailInfo->test_id = $test_id;
-                        $resultDetailInfo->option_id = $option_val;
-                        $resultDetailInfo->added_by = auth()->user()->id;
-                        $resultDetailInfo->save();
+                foreach ($option_info as $exam_id => $test_questions) {
+                    foreach ($test_questions as $test_id => $test_options) {
+                        foreach ($test_options as $option_val) {
+                            $resultDetailInfo = new ResultDetail;
+                            $resultDetailInfo->result_id = $decResultId ?? null;
+                            $resultDetailInfo->exam_id = $exam_id;
+                            $resultDetailInfo->test_id = $test_id;
+                            $resultDetailInfo->option_id = $option_val;
+                            $resultDetailInfo->added_by = auth()->user()->id;
+                            $resultDetailInfo->save();
+                        }
                     }
                 }
 
@@ -670,15 +671,17 @@ class SettingsController extends Controller
                 $resultInfo->save();
 
                 $option_info = $request->options;
-                foreach ($option_info as $exam_id => $test_options) {
-                    foreach ($test_options as $test_id => $option_val) {
-                        $resultDetailInfo = new ResultDetail;
-                        $resultDetailInfo->result_id = $resultInfo->id ?? null;
-                        $resultDetailInfo->exam_id = $exam_id;
-                        $resultDetailInfo->test_id = $test_id;
-                        $resultDetailInfo->option_id = $option_val;
-                        $resultDetailInfo->added_by = auth()->user()->id;
-                        $resultDetailInfo->save();
+                foreach ($option_info as $exam_id => $test_questions) {
+                    foreach ($test_questions as $test_id => $test_options) {
+                        foreach ($test_options as $option_val) {
+                            $resultDetailInfo = new ResultDetail;
+                            $resultDetailInfo->result_id = $resultInfo->id ?? null;
+                            $resultDetailInfo->exam_id = $exam_id;
+                            $resultDetailInfo->test_id = $test_id;
+                            $resultDetailInfo->option_id = $option_val;
+                            $resultDetailInfo->added_by = auth()->user()->id;
+                            $resultDetailInfo->save();
+                        }
                     }
                 }
 

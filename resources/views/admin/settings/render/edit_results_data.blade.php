@@ -23,10 +23,12 @@
                         @foreach($testInfo->optionsInfo ?? [] as $optionKey=>$options)
                             @php($option_sn = $optionKey +1)
                             <div class="form-check ps-0">
-                                <input class="form-check-input test-radio-option{{$testInfo->id ?? 0}}" type="radio" name="options[{{$examAddInfo->id ?? 0}}][{{$testInfo->id ?? 0}}]"
-                                       value="{{ $options->id }}" id="customRadio{{ $options->id }}"
-                                        {{ count($optionEditInfo) > 0 && in_array($options->id, $optionEditInfo) ? 'checked' : '' }}>
-                                <label class="custom-control-label" for="customRadio{{ $options->id }}">{{ $options->name ?? '' }}</label>
+                                <div class="form-check ps-0">
+                                    <input type="checkbox" class="checkbox form-check-input test-radio-option{{$testInfo->id ?? 0}}" name="options[{{$examAddInfo->id ?? 0}}][{{$testInfo->id ?? 0}}][{{ $options->id ?? 0}}]"
+                                           value="{{ $options->id }}" id="customRadio{{ $options->id }}"
+                                            {{ count($optionEditInfo) > 0 && in_array($options->id, $optionEditInfo) ? 'checked' : '' }}>
+                                    <label class="custom-control-label pt-1 text-bold" for="customRadio{{ $options->id }}">{{ $options->name ?? '' }}</label>
+                                </div>
                             </div>
                         @endforeach
                     </div>
