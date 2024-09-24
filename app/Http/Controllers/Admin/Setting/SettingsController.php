@@ -624,7 +624,7 @@ class SettingsController extends Controller
     public function setResultInfoSave(Request $request)
     {
         $request->validate([
-            'result_name' => ['required', 'string', 'max:255'],
+            'result_name' => ['required'],
         ]);
 
         try {

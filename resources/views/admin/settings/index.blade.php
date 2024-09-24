@@ -907,7 +907,12 @@
                             <label class="font-weight-bold">Enter Result Name</label>
                             <div class="input-group input-group-outline mb-1">
                                 <input type="hidden" class="form-control" id="resultEditId" placeholder="Result Id">
-                                <input type="text" class="form-control" id="resultNameInfo" placeholder="Result Name">
+                                <textarea rows="4" class="form-control w-100"
+                                          id="resultNameInfo"
+                                          name="resultNameInfo"
+                                          aria-describedby="Result Name" onfocus="focused(this)"
+                                          onfocusout="defocused(this)" style="resize: none;"
+                                          placeholder="Please enter result name."></textarea>
                             </div>
                         </div>
                         <button type="button" class="btn btn-primary float-end btn-md mt-3 mb-0 text-white save-give-result-name" data-action-url="{{ route('admin.setting.set.result.info.save') }}">
@@ -1330,7 +1335,7 @@
             let resultId = $(this).attr('data-result-id') ?? '';
             let resultValue = $(this).attr('data-result-value') ?? '';
             $('#resultEditId').val(resultId);
-            $('#resultNameInfo').val(resultValue);
+            $('#resultNameInfo').html(resultValue);
             $(`#${showModalId}`).modal('show')
         });
 
