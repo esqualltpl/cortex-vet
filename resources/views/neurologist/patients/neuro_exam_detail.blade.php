@@ -253,7 +253,7 @@
                     <div class="row mt-3  gap-8 ms-1">
                         <div class="col-md-5 p-2  border-radius-lg " style="border:1px solid #bab8b8;">
                             <strong style="color: #2E97A9;">Results:</strong>
-                            <p>{{ $neuroExamInfo->result ?? '' }}</p>
+                            <p>{{ $neuroExamInfo->result ?? 'The combination of exam findings have either not yet been programed, or represent a combination that would benefit from human input due to its highly complicated nature. Consultation with a neurologist is recommended.' }}</p>
                         </div>
                     </div>
                 </div>
