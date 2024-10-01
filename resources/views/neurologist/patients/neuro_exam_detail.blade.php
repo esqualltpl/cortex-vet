@@ -136,99 +136,100 @@
                 @foreach($examsInfo as $examInfo)
                     @if(isset($neurologicalExamSteps[$examInfo->id ?? 0]))
                         <div class="accordion mt-2">
-                        <div class="accordion-item">
-                            <p class="accordion-header" id="localizationExamFormData{{ $examInfo->id ?? 0 }}">
-                                <button class="accordion-button py-3 px-2 border-bottom font-weight-bold" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapseLocalizationExamFormData{{ $examInfo->id ?? 0 }}"
-                                        aria-expanded="false"
-                                        aria-controls="collapseLocalizationExamFormData{{ $examInfo->id ?? 0 }}"
-                                        style="background-color: #E1DAF1; border-radius: 10px; color: #6647B1;">
-                                    {{ $examInfo->step_name ?? '' }}
-                                    <i class="collapse-close fa fa-sort-desc text-xs pt-1 position-absolute end-0 me-3" aria-hidden="true"></i>
-                                    <i class="collapse-open fa fa-caret-up text-xs pt-1 position-absolute end-0 me-3" aria-hidden="true"></i>
-                                </button>
-                            </p>
-                            <div id="collapseLocalizationExamFormData{{ $examInfo->id ?? 0 }}" class="accordion-collapse collapse"
-                                 aria-labelledby="localizationExamFormData{{ $examInfo->id ?? 0 }}"
-                                 data-bs-parent="#accordionRental">
-                                <div class="exam-test-option-data accordion-body p-3">
-                                    <div class="d-flex justify-content-end mb-2">
-                                        <div class="form-check form-switch ms-2">
-                                            <input class="form-check-input"
-                                                   type="checkbox"
-                                                   id="flexSwitchCheckDefaultQuestion"
-                                                   onchange="toggleVideo('examVideoData{{ $examInfo->id ?? 0 }}' , this.checked ? 'show' : 'hide')"
-                                            >
+                            <div class="accordion-item">
+                                <p class="accordion-header" id="localizationExamFormData{{ $examInfo->id ?? 0 }}">
+                                    <button class="accordion-button py-3 px-2 border-bottom font-weight-bold" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#collapseLocalizationExamFormData{{ $examInfo->id ?? 0 }}"
+                                            aria-expanded="false"
+                                            aria-controls="collapseLocalizationExamFormData{{ $examInfo->id ?? 0 }}"
+                                            style="background-color: #E1DAF1; border-radius: 10px; color: #6647B1;">
+                                        {{ $examInfo->step_name ?? '' }}
+                                        <i class="collapse-close fa fa-sort-desc text-xs pt-1 position-absolute end-0 me-3" aria-hidden="true"></i>
+                                        <i class="collapse-open fa fa-caret-up text-xs pt-1 position-absolute end-0 me-3" aria-hidden="true"></i>
+                                    </button>
+                                </p>
+                                <div id="collapseLocalizationExamFormData{{ $examInfo->id ?? 0 }}" class="accordion-collapse collapse"
+                                     aria-labelledby="localizationExamFormData{{ $examInfo->id ?? 0 }}"
+                                     data-bs-parent="#accordionRental">
+                                    <div class="exam-test-option-data accordion-body p-3">
+                                        <div class="d-flex justify-content-end mb-2">
+                                            <div class="form-check form-switch ms-2">
+                                                <input class="form-check-input"
+                                                       type="checkbox"
+                                                       id="flexSwitchCheckDefaultQuestion"
+                                                       onchange="toggleVideo('examVideoData{{ $examInfo->id ?? 0 }}' , this.checked ? 'show' : 'hide')"
+                                                >
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div id="examVideoData{{ $examInfo->id ?? 0 }}" style="display: none;">
-                                        <div class="p-5 border-radius-lg">
-                                            <div class="p-2 d-flex justify-content-center">
-                                                @if($examInfo->instructionVideoInfo != null)
-                                                    @if($examInfo->instructionVideoInfo->video ?? '' != null)
-                                                        <video controls="" style="width: 70%">
-                                                            <source src="{{ $examInfo->instructionVideoInfo->getExamVideo() ?? '' }}">
-                                                            Your browser does not support the video tag.
-                                                        </video>
-                                                    @elseif($examInfo->instructionVideoInfo->url ?? '' != null)
-                                                        <iframe width="70%" height="415" src="{{ $examInfo->instructionVideoInfo->url ?? '' }}" frameborder="0"
-                                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                                                allowfullscreen></iframe>
+                                        <div id="examVideoData{{ $examInfo->id ?? 0 }}" style="display: none;">
+                                            <div class="p-5 border-radius-lg">
+                                                <div class="p-2 d-flex justify-content-center">
+                                                    @if($examInfo->instructionVideoInfo != null)
+                                                        @if($examInfo->instructionVideoInfo->video ?? '' != null)
+                                                            <video controls="" style="width: 70%">
+                                                                <source src="{{ $examInfo->instructionVideoInfo->getExamVideo() ?? '' }}">
+                                                                Your browser does not support the video tag.
+                                                            </video>
+                                                        @elseif($examInfo->instructionVideoInfo->url ?? '' != null)
+                                                            <iframe width="70%" height="415" src="{{ $examInfo->instructionVideoInfo->url ?? '' }}" frameborder="0"
+                                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                                    allowfullscreen></iframe>
+                                                        @else
+                                                            <p class="text-center mt-3 font-weight-bold">No Instruction Video/URL Found.</p>
+                                                        @endif
                                                     @else
                                                         <p class="text-center mt-3 font-weight-bold">No Instruction Video/URL Found.</p>
                                                     @endif
-                                                @else
-                                                    <p class="text-center mt-3 font-weight-bold">No Instruction Video/URL Found.</p>
-                                                @endif
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <div class="exam-test-option-data{{ $examInfo->id ?? 0 }}">
-                                        @if(count($examInfo->testInfo) > 0)
-                                            @foreach($examInfo->testInfo as $testKey=>$testInfo)
-                                                @php($test_sn = $testKey+1)
-                                                <div id="cloningTestContainer{{ $test_sn }}">
-                                                    <div class="mt-2" id="cloningTest{{ $test_sn }}">
-                                                        <div class="border-radius-lg"
-                                                             style="border:1px solid #e8e8e8;">
-                                                            <div class="col-md-12 p-2 d-flex flex-wrap justify-content-between">
-                                                                <div class="col-md-12">
-                                                                    <div class="container">
-                                                                        <div class="pt-3 row">
-                                                                            <div class="col-md-2 col-sm-12">
-                                                                                <p class="font-weight-bold text-dark mb-0">
-                                                                                    Test: {{ $test_sn ?? 0 }}</p>
+                                        <div class="exam-test-option-data{{ $examInfo->id ?? 0 }}">
+                                            @if(count($examInfo->testInfo) > 0)
+                                                @foreach($examInfo->testInfo as $testKey=>$testInfo)
+                                                    @php($test_sn = $testKey+1)
+                                                    <div id="cloningTestContainer{{ $test_sn }}">
+                                                        <div class="mt-2" id="cloningTest{{ $test_sn }}">
+                                                            <div class="border-radius-lg"
+                                                                 style="border:1px solid #e8e8e8;">
+                                                                <div class="col-md-12 p-2 d-flex flex-wrap justify-content-between">
+                                                                    <div class="col-md-12">
+                                                                        <div class="container">
+                                                                            <div class="pt-3 row">
+                                                                                <div class="col-md-2 col-sm-12">
+                                                                                    <p class="font-weight-bold text-dark mb-0">
+                                                                                        Test: {{ $test_sn ?? 0 }}</p>
+                                                                                </div>
+                                                                                <div class="col-md-10 col-sm-12 show-updated-test-info{{ $testInfo->id }}">
+                                                                                    <p class="font-weight-normal text-dark opacity-8">
+                                                                                        {{ $testInfo->name ?? '' }}
+                                                                                    </p>
+                                                                                </div>
                                                                             </div>
-                                                                            <div class="col-md-10 col-sm-12 show-updated-test-info{{ $testInfo->id }}">
-                                                                                <p class="font-weight-normal text-dark opacity-8">
-                                                                                    {{ $testInfo->name ?? '' }}
-                                                                                </p>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="pb-3 row">
-                                                                            <div class="col-md-2 col-sm-12">
-                                                                                <p class="font-weight-bold text-dark mb-0">Answer</p>
-                                                                            </div>
-                                                                            <div class="col-md-10 col-sm-12">
-                                                                                <div class="test-options">
-                                                                                    <div class="row">
-                                                                                        @foreach($testInfo->optionsInfo ?? [] as $optionKey=>$options)
-                                                                                            @php($option_sn = $optionKey +1)
-                                                                                            @if(isset($neurologicalExamSteps[$examInfo->id ?? 0][$testInfo->id ?? 0]) && $neurologicalExamSteps[$examInfo->id ?? 0][$testInfo->id ?? 0] == $options->id)
-                                                                                                <div class="col-md-2 col-sm-6">
-                                                                                                    <p class="font-weight-bold">{{ $options->name ?? '' }}</p>
-                                                                                                    {{--<div class="form-check ps-0">
-                                                                                                        <input class="form-check-input" type="radio"
-                                                                                                               {{ isset($neurologicalExamSteps[$examInfo->id ?? 0][$testInfo->id ?? 0]) && $neurologicalExamSteps[$examInfo->id ?? 0][$testInfo->id ?? 0] == $options->id ? 'checked' : '' }}
-                                                                                                               name="options[{{$examInfo->id ?? 0}}][{{$testInfo->id ?? 0}}]" value="{{ $options->id }}"
-                                                                                                               id="customRadio{{ $options->id }}">
-                                                                                                        <label class="custom-control-label"
-                                                                                                               for="customRadio{{ $options->id }}">{{ $options->name ?? '' }}</label>
-                                                                                                    </div>--}}
-                                                                                                </div>
-                                                                                            @endif
-                                                                                        @endforeach
+                                                                            <div class="pb-3 row">
+                                                                                <div class="col-md-2 col-sm-12">
+                                                                                    <p class="font-weight-bold text-dark mb-0">Answer</p>
+                                                                                </div>
+                                                                                <div class="col-md-10 col-sm-12">
+                                                                                    <div class="test-options">
+                                                                                        <div class="row">
+                                                                                            @foreach($testInfo->optionsInfo ?? [] as $optionKey=>$options)
+                                                                                                @php($option_sn = $optionKey +1)
+                                                                                                @if(isset($neurologicalExamSteps[$examInfo->id ?? 0][$testInfo->id ?? 0]) && $neurologicalExamSteps[$examInfo->id ?? 0][$testInfo->id ?? 0] == $options->id)
+                                                                                                    <div class="col-md-2 col-sm-6">
+                                                                                                        <p class="font-weight-bold">{{ $options->name ?? '' }}</p>
+                                                                                                        {{--<div class="form-check ps-0">
+                                                                                                            <input class="form-check-input" type="radio"
+                                                                                                                   {{ isset($neurologicalExamSteps[$examInfo->id ?? 0][$testInfo->id ?? 0]) && $neurologicalExamSteps[$examInfo->id ?? 0][$testInfo->id ?? 0] == $options->id ? 'checked' : '' }}
+                                                                                                                   name="options[{{$examInfo->id ?? 0}}][{{$testInfo->id ?? 0}}]" value="{{ $options->id }}"
+                                                                                                                   id="customRadio{{ $options->id }}">
+                                                                                                            <label class="custom-control-label"
+                                                                                                                   for="customRadio{{ $options->id }}">{{ $options->name ?? '' }}</label>
+                                                                                                        </div>--}}
+                                                                                                    </div>
+                                                                                                @endif
+                                                                                            @endforeach
+                                                                                        </div>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -238,14 +239,14 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                @endforeach
+                                            @endif
+                                        </div>
                                     </div>
-                                    @endforeach
-                                    @endif
                                 </div>
                             </div>
                         </div>
-                        @endif
+                    @endif
                 @endforeach
                 <hr class="horizontal dark my-4"/>
                 <div class="row">
