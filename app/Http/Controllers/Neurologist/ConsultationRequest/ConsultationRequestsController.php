@@ -179,7 +179,7 @@ class ConsultationRequestsController extends Controller
             $htmlWithMargins = "
             <style>
                 @page {
-                    margin: 10mm 0;
+                    margin: 15mm 10mm 15mm;
                 }
                 body {
                     margin: 0;
