@@ -406,7 +406,7 @@
                                                                                                                         <div class="col-md-4 col-sm-6">
                                                                                                                             <div class="form-check ps-0">
                                                                                                                                 <input class="form-check-input" type="radio"
-                                                                                                                                       {{ isset($neurologicalExamStepInfo[$examInfo->id ?? 0][$testInfo->id ?? 0]) && $neurologicalExamStepInfo[$examInfo->id ?? 0][$testInfo->id ?? 0] == $options->id ? 'checked' ?? '' : '' }}
+                                                                                                                                       {{ isset($neurologicalExamStepInfo[$examInfo->id ?? 0][$testInfo->id ?? 0][$options->id ?? 0]) && $neurologicalExamStepInfo[$examInfo->id ?? 0][$testInfo->id ?? 0][$options->id ?? 0] == $options->id ? 'checked' ?? '' : '' }}
                                                                                                                                        name="options[{{$examInfo->id ?? 0}}][{{$testInfo->id ?? 0}}]" value="{{ $options->id }}"
                                                                                                                                        id="customRadio{{ $options->id }}">
                                                                                                                                 <label class="custom-control-label"
