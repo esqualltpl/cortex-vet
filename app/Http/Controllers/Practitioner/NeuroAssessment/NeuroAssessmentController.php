@@ -78,13 +78,15 @@ class NeuroAssessmentController extends Controller
             // Build the query using Eloquent
             $query = ResultDetail::query();
 
-            foreach ($request->options as $exam_id => $test_options) {
-                foreach ($test_options as $test_id => $option_id) {
-                    $query->orWhere(function ($q) use ($exam_id, $test_id, $option_id) {
-                        $q->where('exam_id', $exam_id)
-                            ->where('test_id', $test_id)
-                            ->where('option_id', $option_id);
-                    });
+            foreach ($request->options as $exam_id => $exams) {
+                foreach ($exams as $test_id => $test_options) {
+                    foreach ($test_options as $test_option => $option_id) {
+                        $query->orWhere(function ($q) use ($exam_id, $test_id, $option_id) {
+                            $q->where('exam_id', $exam_id)
+                                ->where('test_id', $test_id)
+                                ->where('option_id', $option_id);
+                        });
+                    }
                 }
             }
 
@@ -157,7 +159,7 @@ class NeuroAssessmentController extends Controller
             $practitionerName = auth()->user()->name ?? '';
             $practitionerId = auth()->user()->id ?? null;
             $consultationRequestNotification = new Notification();
-            $consultationRequestNotification->message = '<span class="text-primary text-capitalize">'.$practitionerName.'</span> request for Neurologist Consultation.';
+            $consultationRequestNotification->message = '<span class="text-primary text-capitalize">' . $practitionerName . '</span> request for Neurologist Consultation.';
             $consultationRequestNotification->notification_for = 0;
             $consultationRequestNotification->user_id = $practitionerId;
             $consultationRequestNotification->save();
