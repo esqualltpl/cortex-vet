@@ -170,7 +170,7 @@
                             </div>
                             <div>
                                 <button type="submit" class="btn btn-primary float-end btn-sm py-2 text-white mb-2">
-                                    Edit Student
+                                    Update Student
                                 </button>
                             </div>
                         </div>

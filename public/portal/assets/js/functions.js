@@ -213,7 +213,7 @@ function saveInfo(action_url, action_type, process_data, loader_id = null, reset
 }
 
 //---------|||--- Get Info Function ---|||---------//
-function getInfo(action_url, action_type, process_data, loader_id = null, show_render_data_class) {
+function getInfo(action_url, action_type, process_data, loader_id = null, show_render_data_class, data_type = 'html') {
     $.ajax({
         url: action_url,
         type: action_type,
@@ -245,7 +245,10 @@ function getInfo(action_url, action_type, process_data, loader_id = null, show_r
             });
 
             //Render Information
-            $(`.${show_render_data_class}`).html(responseRenderData)
+            if(data_type === 'html')
+                $(`.${show_render_data_class}`).html(responseRenderData);
+            else
+                $(`.${show_render_data_class}`).val(responseRenderData)
 
             //Redirect to URL
             setTimeout(function () {

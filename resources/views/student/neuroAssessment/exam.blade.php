@@ -403,7 +403,7 @@
                                                                                                                 <div class="row">
                                                                                                                     @foreach($testInfo->optionsInfo ?? [] as $optionKey=>$options)
                                                                                                                         @php($option_sn = $optionKey +1)
-                                                                                                                        <div class="col-md-2 col-sm-6">
+                                                                                                                        <div class="col-md-4 col-sm-6">
                                                                                                                             <div class="form-check ps-0">
                                                                                                                                 <input class="form-check-input" type="radio"
                                                                                                                                        {{ isset($neurologicalExamStepInfo[$examInfo->id ?? 0][$testInfo->id ?? 0]) && $neurologicalExamStepInfo[$examInfo->id ?? 0][$testInfo->id ?? 0] == $options->id ? 'checked' ?? '' : '' }}

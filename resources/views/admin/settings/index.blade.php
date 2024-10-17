@@ -1335,8 +1335,8 @@
             let resultId = $(this).attr('data-result-id') ?? '';
             let resultValue = $(this).attr('data-result-value') ?? '';
             $('#resultEditId').val(resultId);
-            $('#resultNameInfo').html(resultValue);
-            $(`#${showModalId}`).modal('show')
+            $('#resultNameInfo').val(resultValue);
+            $(`#${showModalId}`).modal('show');
         });
 
         $(document).on('click', '.save-give-result-name', function (e) {
@@ -1349,11 +1349,14 @@
             let formId = 'saveSetResultInfoForm';
             let closeModalId = 'giveResultNameModal';
             let processData = $(`#${formId}`).serialize();
+            $('.show-give-result-name-modal').removeAttr('data-result-id');
+            $('.show-give-result-name-modal').removeAttr('data-result-value');
             processData += `&result_id=${encodeURIComponent(result_id)}`; // Append the result_name to the serialized data
             processData += `&result_name=${encodeURIComponent(result_name)}`; // Append the result_name to the serialized data
             let renderClass = null;
 
             saveInfo(actionURL, actionType, processData, loaderId, formId, renderClass, closeModalId, null, clickClass);
+            $('#resultNameInfo').val('');
         });
 
         $(document).on('click', '.get-neurolocalization-info', function (e) {

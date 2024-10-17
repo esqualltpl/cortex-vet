@@ -405,7 +405,7 @@
                                                                                                                 <div class="row">
                                                                                                                     @foreach($testInfo->optionsInfo ?? [] as $optionKey=>$options)
                                                                                                                         @php($option_sn = $optionKey +1)
-                                                                                                                        <div class="col-md-2 col-sm-6">
+                                                                                                                        <div class="col-md-4 col-sm-6">
                                                                                                                             <div class="form-check ps-0">
                                                                                                                                 <input type="checkbox" class="checkbox form-check-input"
                                                                                                                                        {{ isset($neurologicalExamStepInfo[$examInfo->id ?? 0][$testInfo->id ?? 0]) && $neurologicalExamStepInfo[$examInfo->id ?? 0][$testInfo->id ?? 0] == $options->id ? 'checked' ?? '' : '' }}
@@ -579,8 +579,9 @@
             let actionURL = $(this).attr('data-action-url');
             let processData = $('.neuro-exam-form').serialize();
             let renderClass = 'neuro-exam-result';
+            let dataType = 'val';
 
-            getInfo(actionURL, actionType, processData, loaderId, renderClass);
+            getInfo(actionURL, actionType, processData, loaderId, renderClass, dataType);
         });
 
         $(document).on('click', '.request-consult-neurologist-data', function (e) {
