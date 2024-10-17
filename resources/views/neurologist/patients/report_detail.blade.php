@@ -129,7 +129,7 @@
                                         <p>{{ $testInfo->name ?? '' }}:
                                             @foreach($testInfo->optionsInfo ?? [] as $optionKey=>$options)
                                                 @php($option_sn = $optionKey +1)
-                                                <strong style="color: #866FBF;">{{ isset($neurologicalExamSteps[$examInfo->id ?? 0][$testInfo->id ?? 0]) && $neurologicalExamSteps[$examInfo->id ?? 0][$testInfo->id ?? 0] == $options->id ? $options->name ?? '' : '' }}</strong>
+                                                <strong style="color: #866FBF;">{{ isset($neurologicalExamSteps[$examInfo->id ?? 0][$testInfo->id ?? 0][$options->id ?? 0]) && $neurologicalExamSteps[$examInfo->id ?? 0][$testInfo->id ?? 0][$options->id ?? 0] == $options->id ? $options->name ?? '' : '' }}</strong>
                                             @endforeach
                                         </p>
                                     @endforeach

@@ -442,7 +442,7 @@
                                                                                                                     <div class="row">
                                                                                                                         @foreach($testInfo->optionsInfo ?? [] as $optionKey=>$options)
                                                                                                                             @php($option_sn = $optionKey +1)
-                                                                                                                            <b>{{ isset($neurologicalExamSteps[$examInfo->id ?? 0][$testInfo->id ?? 0]) && $neurologicalExamSteps[$examInfo->id ?? 0][$testInfo->id ?? 0] == $options->id ? $options->name ?? '' : '' }}</b>
+                                                                                                                            <b>{{ isset($neurologicalExamSteps[$examInfo->id ?? 0][$testInfo->id ?? 0][$options->id ?? 0]) && $neurologicalExamSteps[$examInfo->id ?? 0][$testInfo->id ?? 0][$options->id ?? 0] == $options->id ? $options->name ?? '' : '' }}</b>
                                                                                                                         @endforeach
                                                                                                                     </div>
                                                                                                                 </div>
