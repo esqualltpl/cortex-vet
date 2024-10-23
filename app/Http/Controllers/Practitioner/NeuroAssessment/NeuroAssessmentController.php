@@ -119,11 +119,10 @@ class NeuroAssessmentController extends Controller
                         }
                     }
                 }
-                // Get the results and eager load the related Result model
-                $results[] = $query->with('result')->get();
             }
-dd($results);
 
+            // Get the results and eager load the related Result model
+            $results = $query->with('result')->get();
 
 
             // Check if results are found
