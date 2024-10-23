@@ -153,12 +153,14 @@
                 @if(count($examInfo->testInfo) > 0)
                     @foreach($examInfo->testInfo as $testKey=>$testInfo)
                         @php($test_sn = $testKey+1)
-                        <p>{{ $testInfo->name ?? '' }}:
-                            @foreach($testInfo->optionsInfo ?? [] as $optionKey=>$options)
-                                @php($option_sn = $optionKey +1)
-                                <strong style="color: #866FBF;">{{ isset($neurologicalExamSteps[$examInfo->id ?? 0][$testInfo->id ?? 0][$options->id ?? 0]) && $neurologicalExamSteps[$examInfo->id ?? 0][$testInfo->id ?? 0][$options->id ?? 0] == $options->id ? $options->name ?? '' : '' }}</strong>
-                            @endforeach
-                        </p>
+                        @if(isset($neurologicalExamSteps[$examInfo->id ?? 0][$testInfo->id ?? 0]))
+                            <p>{{ $testInfo->name ?? '' }}:
+                                @foreach($testInfo->optionsInfo ?? [] as $optionKey=>$options)
+                                    @php($option_sn = $optionKey +1)
+                                    <strong style="color: #866FBF;">{{ isset($neurologicalExamSteps[$examInfo->id ?? 0][$testInfo->id ?? 0][$options->id ?? 0]) && $neurologicalExamSteps[$examInfo->id ?? 0][$testInfo->id ?? 0][$options->id ?? 0] == $options->id ? $options->name ?? '' : '' }}</strong>
+                                @endforeach
+                            </p>
+                        @endif
                     @endforeach
                 @endif
             @endif
