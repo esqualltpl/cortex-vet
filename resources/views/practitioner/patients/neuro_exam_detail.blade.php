@@ -188,6 +188,7 @@
                                             @if(count($examInfo->testInfo) > 0)
                                                 @foreach($examInfo->testInfo as $testKey=>$testInfo)
                                                     @php($test_sn = $testKey+1)
+                                                    @if(isset($neurologicalExamSteps[$examInfo->id ?? 0][$testInfo->id ?? 0]))
                                                     <div id="cloningTestContainer{{ $test_sn }}">
                                                         <div class="mt-2" id="cloningTest{{ $test_sn }}">
                                                             <div class="border-radius-lg"
@@ -239,6 +240,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    @endif
                                                 @endforeach
                                             @endif
                                         </div>
