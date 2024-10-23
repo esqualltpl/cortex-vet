@@ -75,7 +75,7 @@ class NeuroAssessmentController extends Controller
                 return response()->json($response);
             }
 
-            // Build the query using Eloquent
+            /*// Build the query using Eloquent
             $query = ResultDetail::query();
 
             foreach ($request->options as $exam_id => $exams) {
@@ -91,7 +91,40 @@ class NeuroAssessmentController extends Controller
             }
 
             // Get the results and eager load the related Result model
-            $results = $query->with('result')->get();
+            $results = $query->with('result')->get();*/
+
+            // Build the query using Eloquent
+            $query = ResultDetail::query();
+
+            $first = true; // A flag to manage the initial condition
+
+            foreach ($request->options as $exam_id => $exams) {
+                foreach ($exams as $test_id => $test_options) {
+                    foreach ($test_options as $test_option => $option_id) {
+                        // Use where instead of orWhere for precise filtering
+                        if ($first) {
+                            $query->where(function ($q) use ($exam_id, $test_id, $option_id) {
+                                $q->where('exam_id', $exam_id)
+                                    ->where('test_id', $test_id)
+                                    ->where('option_id', $option_id);
+                            });
+                            $first = false; // Set the flag to false after the first condition is set
+                        } else {
+                            // Combine subsequent conditions with orWhere
+                            $query->orWhere(function ($q) use ($exam_id, $test_id, $option_id) {
+                                $q->where('exam_id', $exam_id)
+                                    ->where('test_id', $test_id)
+                                    ->where('option_id', $option_id);
+                            });
+                        }
+                    }
+                }
+                // Get the results and eager load the related Result model
+                $results[] = $query->with('result')->get();
+            }
+dd($results);
+
+
 
             // Check if results are found
             if (count($results ?? []) == 0) {
