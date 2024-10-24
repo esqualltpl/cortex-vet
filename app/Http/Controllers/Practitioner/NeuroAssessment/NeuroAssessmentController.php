@@ -11,6 +11,7 @@ use App\Models\NeuroAssessment;
 use App\Models\Notification;
 use App\Models\Patient;
 use App\Models\Payment;
+use App\Models\Result;
 use App\Models\ResultDetail;
 use App\Models\User;
 use Carbon\Carbon;
@@ -75,72 +76,79 @@ class NeuroAssessmentController extends Controller
                 return response()->json($response);
             }
 
-            /*// Build the query using Eloquent
-            $query = ResultDetail::query();
+            $resultsArray = DB::table('result_details')
+                ->select('result_id', 'exam_id', 'test_id', 'option_id')
+                ->get()
+                ->groupBy('result_id') // Group the results by result_id
+                ->map(function ($group) {
+                    // Format each group (result_id) as an array of details
+                    return $group->map(function ($item) {
+                        return [
+                            'exam_id' => $item->exam_id,
+                            'test_id' => $item->test_id,
+                            'option_id' => $item->option_id
+                        ];
+                    });
+                })
+                ->toArray(); // Convert the collection to an array
 
-            foreach ($request->options as $exam_id => $exams) {
-                foreach ($exams as $test_id => $test_options) {
-                    foreach ($test_options as $test_option => $option_id) {
-                        $query->orWhere(function ($q) use ($exam_id, $test_id, $option_id) {
-                            $q->where('exam_id', $exam_id)
-                                ->where('test_id', $test_id)
-                                ->where('option_id', $option_id);
-                        });
+            $userOptions = [];
+            foreach ($request->options as $exam_id => $tests) {
+                foreach ($tests as $test_id => $options) {
+                    foreach ($options as $option_id => $option) {
+                        $userOptions[] = [
+                            'exam_id' => $exam_id,
+                            'test_id' => $test_id,
+                            'option_id' => $option_id
+                        ];
                     }
                 }
             }
 
-            // Get the results and eager load the related Result model
-            $results = $query->with('result')->get();*/
+            /*$resultsArray = [
+                1 => [
+                    ['exam_id' => 1, 'test_id' => 1, 'option_id' => 1],
+                    ['exam_id' => 1, 'test_id' => 2, 'option_id' => 5],
+                ],
+                2 => [
+                    ['exam_id' => 1, 'test_id' => 1, 'option_id' => 2],
+                    ['exam_id' => 1, 'test_id' => 2, 'option_id' => 6],
+                ],
+                3 => [
+                    ['exam_id' => 1, 'test_id' => 1, 'option_id' => 3],
+                    ['exam_id' => 1, 'test_id' => 2, 'option_id' => 7],
+                ],
+                4 => [
+                    ['exam_id' => 1, 'test_id' => 1, 'option_id' => 4],
+                    ['exam_id' => 1, 'test_id' => 2, 'option_id' => 8],
+                ],
+                5 => [
+                    ['exam_id' => 2, 'test_id' => 3, 'option_id' => 9],
+                    ['exam_id' => 2, 'test_id' => 4, 'option_id' => 13],
+                ],
+            ];
 
-            // Build the query using Eloquent
-            $query = ResultDetail::query();
+            $userOptions = [
+                ['exam_id' => 1, 'test_id' => 1, 'option_id' => 1],
+                ['exam_id' => 1, 'test_id' => 2, 'option_id' => 5],
+                ['exam_id' => 2, 'test_id' => 3, 'option_id' => 9],
+                ['exam_id' => 2, 'test_id' => 4, 'option_id' => 13],
+            ];*/
 
-            $first = true; // A flag to manage the initial condition
-
-            foreach ($request->options as $exam_id => $exams) {
-                foreach ($exams as $test_id => $test_options) {
-                    foreach ($test_options as $test_option => $option_id) {
-                        // Use where instead of orWhere for precise filtering
-                        if ($first) {
-                            $query->where(function ($q) use ($exam_id, $test_id, $option_id) {
-                                $q->where('exam_id', $exam_id)
-                                    ->where('test_id', $test_id)
-                                    ->where('option_id', $option_id);
-                            });
-                            $first = false; // Set the flag to false after the first condition is set
-                        } else {
-                            // Combine subsequent conditions with orWhere
-                            $query->orWhere(function ($q) use ($exam_id, $test_id, $option_id) {
-                                $q->where('exam_id', $exam_id)
-                                    ->where('test_id', $test_id)
-                                    ->where('option_id', $option_id);
-                            });
-                        }
-                    }
-                }
-            }
-
-            // Get the results and eager load the related Result model
-            $results = $query->with('result')->get();
-
+            $matchingResults = $this->findMatchingResults($resultsArray, $userOptions);
 
             // Check if results are found
-            if (count($results ?? []) == 0) {
+            if (count($matchingResults ?? []) == 0) {
                 $response = ResponseMessage::ResponseNotifyWarning('Result!', 'No disease detected.');
                 return response()->json($response);
             }
 
-            // Group results by result name and concatenate details
-            $groupedResults = $results->groupBy('result.name');
-
+            // Results by result name
             $output = [];
-            foreach ($groupedResults as $resultName => $resultDetails) {
-                /*$details = [];
-                foreach ($resultDetails as $detail) {
-                    $details[] = "Exam ID: {$detail->exam_id}, Test ID: {$detail->test_id}, Option ID: {$detail->option_id}";
-                }*/
-                $output[] = $resultName;
+            foreach ($matchingResults as $matchingResult) {
+                if($resultName = Result::find($matchingResult)?->name ?? null){
+                    $output[] = $resultName;
+                }
             }
 
             $response = ResponseMessage::ResponseNotifySuccess('Result!', 'Successfully get the neuro exam result info.');
@@ -254,5 +262,48 @@ class NeuroAssessmentController extends Controller
 
             return redirect()->back()->with($response);
         }
+    }
+
+    function findMatchingResults($results, $userOptions)
+    {
+        $matchedResults = [];
+
+        // Iterate over each result set
+        foreach ($results as $resultIndex => $resultOptions) {
+            // Use array to hold the option IDs from the result for comparison
+            $resultExamIds = array_column($resultOptions, 'exam_id');
+            $resultTestIds = array_column($resultOptions, 'test_id');
+            $resultOptionIds = array_column($resultOptions, 'option_id');
+
+            // Check if all options in the result match user options
+            $allMatch = true;
+
+            foreach ($resultOptions as $resultOption) {
+                // Check if this result option exists in the user options
+                $optionMatch = false;
+
+                foreach ($userOptions as $userOption) {
+                    if ($resultOption['exam_id'] === $userOption['exam_id'] &&
+                        $resultOption['test_id'] === $userOption['test_id'] &&
+                        $resultOption['option_id'] === $userOption['option_id']) {
+                        $optionMatch = true;
+                        break; // Break the inner loop if a match is found
+                    }
+                }
+
+                // If any option does not match, set allMatch to false
+                if (!$optionMatch) {
+                    $allMatch = false;
+                    break; // No need to check further, break the outer loop
+                }
+            }
+
+            // If all options in the result match user options, store the result index
+            if ($allMatch) {
+                $matchedResults[] = $resultIndex;
+            }
+        }
+
+        return $matchedResults; // Return an array of matched result IDs
     }
 }
